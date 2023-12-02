@@ -1,5 +1,6 @@
 import React from 'react';
 import './Login.scss';
+import { ButtonFilled, InputLight } from '~/component/Inputs/Inputs';
 
 function Login() {
     return (
@@ -9,9 +10,9 @@ function Login() {
                     Log in
                     <p>With your WorkFlow account</p>
                 </h3>
-                <input type="text" id="username" name="username" placeholder="example@email.com" />
-                <input type="password" id="password" name="password" placeholder="Enter password" />
-                <button type="submit">Log in</button>
+                <InputLight type={'email'} name={'email'} placeholder={'Enter email'} />
+                <InputLight type={'password'} name={'password'} placeholder={'Enter password'} />
+                <ButtonFilled content={'Log in'} type={'submit'} />
                 <p>OR</p>
             </form>
         </div>

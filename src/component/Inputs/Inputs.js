@@ -9,18 +9,18 @@ export function InputFilled({ placeholder, type, name }) {
     return <input class="input-filled" placeholder={placeholder} type={type} name={name} />;
 }
 
-export function ButtonLight({ content, type }) {
+export function ButtonLight({ children, type }) {
     return (
         <button class="button-light" type={type}>
-            {content}
+            {children}
         </button>
     );
 }
 
-export function ButtonFilled({ content, type }) {
+export function ButtonFilled({ children, type }) {
     return (
         <button class="button-filled" type={type}>
-            {content}
+            {children}
         </button>
     );
 }

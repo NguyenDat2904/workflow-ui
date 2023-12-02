@@ -10,6 +10,10 @@
     border-radius: 5px;
     border: none;
     border: 2px solid var(--jwm-color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 }
 
 .input-filled,

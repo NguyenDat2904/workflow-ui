@@ -10,9 +10,9 @@ export default function TestComponent() {
             <p>Input</p>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                 <InputLight placeholder={'Input'} type={'text'} name={'text'} />
-                <ButtonLight content={'Button'} type={'submit'} />
+                <ButtonLight type={'submit'}>Button</ButtonLight>
                 <InputFilled placeholder={'Input'} type={'text'} name={'text'} />
-                <ButtonFilled content={'Button'} type={'submit'} />
+                <ButtonFilled type={'submit'}>Button</ButtonFilled>
             </div>
         </div>
     );

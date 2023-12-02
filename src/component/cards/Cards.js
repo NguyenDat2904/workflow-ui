@@ -1,6 +1,6 @@
 import React from 'react';
 import './cards.scss';
 
-export function Cards() {
-    return <div className="card">Cards</div>;
+export function Card({ children, className }) {
+    return <div className={`card ${className}`}>{children}</div>;
 }

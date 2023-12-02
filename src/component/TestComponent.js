@@ -1,12 +1,12 @@
 import React from 'react';
-import { Cards } from './cards/Cards';
+import { Card } from './cards/Cards';
 import { ButtonFilled, ButtonLight, InputFilled, InputLight } from './Inputs/Inputs';
 
 export default function TestComponent() {
     return (
         <div>
             <p>Cards</p>
-            <Cards />
+            <Card>Card</Card>
             <p>Input</p>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                 <InputLight placeholder={'Input'} type={'text'} name={'text'} />

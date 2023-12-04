@@ -184,14 +184,14 @@ function Register() {
                                 </div>
                                 <div className={cx('css-option')}>
                                     <div className={cx('option-button')}>
-                                        <Link className={cx('button-gg')}>
-                                            {/* <img
+                                        {/* <Link className={cx('button-gg')}> */}
+                                        {/* <img
                                                 src="https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.51/static/media/google-logo.c21ca9d1.svg"
                                                 alt="button-gg"
                                             />
                                             <span>Continue with Google</span> */}
-                                            <LoginGG />
-                                        </Link>
+                                        <LoginGG />
+                                        {/* </Link> */}
                                         <div className={cx('or')}>
                                             <div className={cx('left')}></div>
                                             <span>OR</span>

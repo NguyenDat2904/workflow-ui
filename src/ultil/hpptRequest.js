@@ -8,12 +8,12 @@ export const get = async (path, option = {}, headers = {}) => {
         return response;
     } catch (error) {
         if (error.response) {
-            console.error('Lỗi:', error.response.status);
-            console.error('Thông tin lỗi:', error.response.data);
+            console.error('Error:', error.response.status);
+            console.error('Error info:', error.response.data);
         } else if (error.request) {
-            console.error('Không nhận được phản hồi từ máy chủ.');
+            console.error('No response received from the server.');
         } else {
-            console.error('Lỗi:', error.message);
+            console.error('Error:', error.message);
         }
         return error.response;
     }
@@ -24,12 +24,12 @@ export const post = async (path, option = {}, headers) => {
         return response;
     } catch (error) {
         if (error.response) {
-            console.error('Lỗi:', error.response.status);
-            console.error('Thông tin lỗi:', error.response.data);
+            console.error('Error:', error.response.status);
+            console.error('Error info:', error.response.data);
         } else if (error.request) {
-            console.error('Không nhận được phản hồi từ máy chủ.');
+            console.error('No response received from the server.');
         } else {
-            console.error('Lỗi:', error.message);
+            console.error('Error:', error.message);
         }
         return error.response;
     }
@@ -40,12 +40,12 @@ export const put = async (path, option = {}, headers) => {
         return response;
     } catch (error) {
         if (error.response) {
-            console.error('Lỗi:', error.response.status);
-            console.error('Thông tin lỗi:', error.response.data);
+            console.error('Error:', error.response.status);
+            console.error('Error info:', error.response.data);
         } else if (error.request) {
-            console.error('Không nhận được phản hồi từ máy chủ.');
+            console.error('No response received from the server.');
         } else {
-            console.error('Lỗi:', error.message);
+            console.error('Error:', error.message);
         }
         return error.response;
     }
@@ -56,12 +56,12 @@ export const remove = async (path, option = {}, header) => {
         return response;
     } catch (error) {
         if (error.response) {
-            console.error('Lỗi:', error.response.status);
-            console.error('Thông tin lỗi:', error.response.data);
+            console.error('Error:', error.response.status);
+            console.error('Error info:', error.response.data);
         } else if (error.request) {
-            console.error('Không nhận được phản hồi từ máy chủ.');
+            console.error('No response received from the server.');
         } else {
-            console.error('Lỗi:', error.message);
+            console.error('Error:', error.message);
         }
         return error.response;
     }
@@ -72,12 +72,12 @@ export const patch = async (path, option = {}) => {
         return response;
     } catch (error) {
         if (error.response) {
-            console.error('Lỗi:', error.response.status);
-            console.error('Thông tin lỗi:', error.response.data);
+            console.error('Error:', error.response.status);
+            console.error('Error info:', error.response.data);
         } else if (error.request) {
-            console.error('Không nhận được phản hồi từ máy chủ.');
+            console.error('No response received from the server.');
         } else {
-            console.error('Lỗi:', error.message);
+            console.error('Error:', error.message);
         }
         return error.response;
     }

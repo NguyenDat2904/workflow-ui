@@ -3,6 +3,7 @@ import Board from '~/pages/Board/Board';
 import Login from '~/pages/Login/Login';
 import Register from '~/pages/Register/Register';
 import TestComponent from '~/component/TestComponent';
+import Verify from '~/pages/Verify/Verify';
 
 const publicRoutes = [
     {
@@ -13,6 +14,7 @@ const publicRoutes = [
     { path: '/register', component: Register, layout: null },
     { path: '/login', component: Login, layout: null },
     { path: '/test', component: TestComponent },
+    { path: '/verify', component: Verify, layout: null },
 ];
 
 export default publicRoutes;

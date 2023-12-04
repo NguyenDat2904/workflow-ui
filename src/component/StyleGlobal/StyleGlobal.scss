@@ -55,3 +55,17 @@ body {
     color: var(--ds-text, #172b4d);
     line-height: 20px;
 }
+a {
+    text-decoration: none;
+    color: inherit;
+}
+ul {
+    list-style: none;
+}
+.container-fluid {
+    margin-right: auto;
+    margin-left: auto;
+    min-width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+}

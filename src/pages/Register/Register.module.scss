@@ -247,3 +247,360 @@
     background-color: rgb(232, 233, 238);
     box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
 }
+// FORM
+.form-submit {
+    font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
+        'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 500;
+    max-width: 400px;
+    .email-field {
+        position: relative;
+        margin-bottom: 16px;
+        font-weight: 500;
+        font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
+            'Droid Sans', 'Helvetica Neue', sans-serif;
+    }
+    .label-email {
+        transition: all 0.1s linear 0s;
+        opacity: 1;
+        display: flex;
+        span {
+            color: rgb(66, 82, 110);
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            line-height: normal;
+        }
+    }
+    .input-wrapper {
+    }
+    .input-container {
+        align-items: center;
+        background-color: var(--ds-background-input, #fafbfc);
+        border-color: var(--ds-border-input, #dfe1e6);
+        color: var(--ds-text, #091e42);
+        cursor: text;
+        border-radius: 3px;
+        border-width: 2px;
+        border-style: solid;
+        box-sizing: border-box;
+        display: flex;
+        flex: 1 1 100%;
+        font-size: 14px;
+        justify-content: space-between;
+        max-width: 100%;
+        overflow: hidden;
+        transition: background-color 0.2s ease-in-out 0s, border-color 0.2s ease-in-out 0s;
+        overflow-wrap: break-word;
+        vertical-align: top;
+        pointer-events: auto;
+        input {
+            height: inherit;
+            color: rgb(9, 30, 68);
+            padding: 8px 10px;
+            background-color: transparent;
+            border: 0px;
+            box-sizing: border-box;
+            color: inherit;
+            cursor: inherit;
+            font-size: 14px;
+            min-width: 0px;
+            outline: none;
+            width: 100%;
+            line-height: 1.42857;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans',
+                'Droid Sans', 'Helvetica Neue', sans-serif;
+        }
+        .input-icon {
+            padding-right: 8px;
+            display: flex;
+            font-size: 16px;
+            -webkit-box-align: center;
+            align-items: center;
+            span {
+                --icon-primary-color: #36b37e;
+                --icon-secondary-color: var(--ds-surface, #ffffff);
+                svg {
+                    overflow: hidden;
+                    pointer-events: none;
+                    max-width: 100%;
+                    max-height: 100%;
+                    color: var(--icon-primary-color);
+                    fill: var(--icon-secondary-color);
+                    vertical-align: bottom;
+                }
+            }
+        }
+    }
+    .input-container.success {
+        transition: all 0.1s linear 0s;
+        max-height: 40px;
+        opacity: 1;
+        background: rgb(255, 255, 255);
+        border-color: rgb(54, 179, 126);
+    }
+    .input-container.error {
+        transition: all 0.1s linear 0s;
+        max-height: 40px;
+        opacity: 1;
+        background: rgb(255, 255, 255);
+        border-color: rgb(222, 53, 11);
+    }
+    .errorMessage {
+        color: rgb(222, 53, 11);
+        font-weight: 400;
+        margin: 6px 0px;
+        font-size: 12px;
+        line-height: 12px;
+        max-height: 40px;
+        opacity: 1;
+        background-color: white;
+        transition: all 0.1s linear 0s;
+    }
+}
+
+.rules {
+    font-size: 12px;
+    line-height: 16px;
+    color: rgb(107, 119, 140);
+    vertical-align: middle;
+    padding: 0px 0px 5px;
+    font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
+        'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    span {
+        p {
+            font-size: 12px;
+            line-height: 16px;
+            margin-bottom: 24px;
+            margin-top: 0px;
+            a {
+                color: rgb(0, 82, 204);
+                text-decoration: none;
+                cursor: pointer;
+            }
+        }
+    }
+}
+.submit {
+    align-items: baseline;
+    border-width: 0px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    display: inline-flex;
+    font-size: 16px;
+    font-style: normal;
+    font-family: inherit;
+    font-weight: 500;
+    max-width: 100%;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
+    white-space: nowrap;
+    background: var(--ds-background-brand-bold, #0052cc);
+    cursor: pointer;
+    height: 2.28571em;
+    line-height: 2.28571em;
+    padding: 0px 10px;
+    vertical-align: middle;
+    width: 100%;
+    justify-content: center;
+    color: var(--ds-text-inverse, #ffffff);
+}
+.submit.disable {
+    background: var(--ds-background-disabled, rgba(9, 30, 66, 0.04));
+    cursor: not-allowed;
+    text-decoration: none;
+    color: var(--ds-text-disabled, #a5adba);
+    opacity: 0.6;
+}
+.submit.disable:hover {
+    background-color: rgb(235, 236, 240);
+    opacity: 0.6;
+    color: rgb(151, 160, 175);
+}
+.card {
+    margin-top: 15px;
+    font-weight: 500;
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: 14px;
+    letter-spacing: 1px;
+    line-height: 1.25;
+    font-family: 'Charlie Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
+        'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-style: normal;
+}
+.capcha {
+    margin-top: 40px;
+    font-size: 12px;
+    color: rgb(107, 119, 140);
+    line-height: 16px;
+    text-align: center;
+    a {
+        color: rgb(107, 119, 140);
+        text-decoration: underline;
+    }
+}
+
+// SECTION 2
+.main {
+    .title {
+        padding-top: 64px;
+        padding-bottom: 0;
+        .row {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            .column {
+                padding: 16px 16px 0 16px;
+                h2 {
+                    color: #253858;
+                    font-weight: 500;
+                    line-height: 1.33333333;
+                    margin-bottom: 24px;
+                    font-size: 36px;
+                }
+            }
+        }
+    }
+}
+// Trust
+.main .trusted {
+    padding-top: 64px;
+    padding-bottom: 64px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    .row {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1200px;
+        display: flex;
+        flex-wrap: wrap;
+        .header {
+            text-align: center;
+            min-height: 1px;
+            padding-left: 16px;
+            padding-right: 16px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            position: relative;
+            width: 100%;
+            .heading {
+                h2 {
+                    font-weight: 500;
+                    letter-spacing: 0.3px;
+                    line-height: 32px;
+                    font-size: 24px;
+                }
+            }
+        }
+        .brand {
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+            width: 66.66666%;
+            margin-left: 16.66666%;
+            padding-left: 16px;
+            padding-right: 16px;
+            .component-img {
+                img {
+                    height: 45px;
+                }
+                .img {
+                    padding-left: 40px;
+                }
+            }
+        }
+    }
+}
+
+// Footer
+footer {
+    background-color: #f4f5f7;
+    padding: 16px 0;
+}
+.main .footer-link {
+    padding-top: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 16px;
+    .row {
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1200px;
+        .column {
+            width: 16.66666%;
+            padding-left: 16px;
+            padding-right: 16px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            flex: 1;
+            .component-img {
+                a {
+                    color: #42526e;
+                    line-height: 1.125;
+                    font-size: 14px;
+                    img {
+                        width: 125px;
+                        max-width: 100%;
+                        margin-bottom: 16px;
+                    }
+                }
+            }
+            .heading {
+                h3 {
+                    font-size: 14px;
+                    letter-spacing: 1px;
+                    margin-bottom: 20px;
+                    color: #42526e;
+                    margin-bottom: 20px;
+                    color: #42526e;
+                }
+            }
+            .list-block {
+                ul {
+                    margin: 0;
+                    padding: 0;
+                    border: 0;
+                    font-size: 100%;
+                    vertical-align: baseline;
+                    .plan {
+                        p {
+                            line-height: 1.5;
+                            a {
+                                color: #42526e;
+                                font-size: 14px;
+                                line-height: 1.125;
+                                &:hover {
+                                    text-decoration: underline;
+                                }
+                            }
+                        }
+                    }
+                    .view-all {
+                        margin-top: 16px;
+                        p {
+                            line-height: 1.5;
+                            a {
+                                font-weight: 500;
+                                color: #0052cc;
+                                font-size: 14px;
+                                line-height: 1.125;
+                                &:hover {
+                                    text-decoration: underline;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

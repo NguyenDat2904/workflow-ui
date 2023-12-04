@@ -2,6 +2,7 @@ import BlackLog from '~/pages/BlackLog/BlackLog';
 import Board from '~/pages/Board/Board';
 import Login from '~/pages/Login/Login';
 import Register from '~/pages/Register/Register';
+import Verify from '~/pages/Verify/Verify';
 
 const publicRoutes = [
     {
@@ -11,6 +12,7 @@ const publicRoutes = [
     { path: '/board', component: Board },
     { path: '/register', component: Register, layout: null },
     { path: '/login', component: Login, layout: null },
+    { path: '/verify', component: Verify, layout: null },
 ];
 
 export default publicRoutes;

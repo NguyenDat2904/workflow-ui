@@ -8,7 +8,7 @@ const cx = classNames.bind(style);
 function Tab() {
     const location = useLocation();
     const [activeTab, setActiveTab] = useState('');
-
+    console.log(activeTab);
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const queryTab = searchParams.get('tab');
@@ -18,7 +18,7 @@ function Tab() {
         <>
             <div className={cx('component')}>
                 <ul className={cx('tab-list')}>
-                    <li className={cx(activeTab === 'boards' ? 'active' : '')}>
+                    <li className={cx(activeTab === 'boards' || activeTab === '' ? 'active' : '')}>
                         <Link to="/register?tab=boards" className={cx('tab-item')}>
                             Boards
                         </Link>
@@ -33,14 +33,14 @@ function Tab() {
                             Reports
                         </Link>
                     </li>
-                    <li className={cx('mf', activeTab === 'automation' ? 'active' : '')}>
+                    <li className={cx('mf', activeTab === 'automation' ? 'active' : '')}> 
                         <Link to="/register?tab=automation" className={cx('tab-item')}>
                             Automation
                         </Link>
                     </li>
                 </ul>
             </div>
-            <div className={cx('container-fluid', 'tab-img', activeTab === 'boards' && 'active')}>
+            <div className={cx('container-fluid', 'tab-img', (activeTab === 'boards' || activeTab === '') && 'active')}>
                 <ListBlog
                     data={{
                         title: 'Powerful agile boards',

@@ -118,6 +118,11 @@ function Register() {
             [name]: value,
         }));
     };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
+
     const shouldDisable =
         classError.email === null ||
         classError.email === false ||
@@ -202,7 +207,7 @@ function Register() {
                                                 <span>Sign up with email</span>
                                             </div>
                                         ) : (
-                                            <form action="" className={cx('form-submit')}>
+                                            <form action="" className={cx('form-submit')} onSubmit={handleSubmit}>
                                                 <div className={cx('email-field')}>
                                                     <label htmlFor="email-field-input" className={cx('label-email')}>
                                                         <span>Work email</span>

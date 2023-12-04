@@ -1,0 +1,21 @@
+.wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: rgb(250, 251, 252);
+    background-image: url(https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.519/default_left.dfc31853.svg),
+        url(https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.519/default_right.a801c0cc.svg);
+    background-repeat: no-repeat, no-repeat;
+    background-attachment: fixed, fixed;
+    background-size: 368px, 368px;
+    background-position: left bottom, right bottom;
+}
+.main {
+    min-height: calc(100% - 100px);
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin: 50px 0px;
+}

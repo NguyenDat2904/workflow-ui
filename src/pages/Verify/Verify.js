@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import style from './Verify.module.scss';
 import { EyeIcon, EyeIconPassword, EyeIconText, GreenTickIcon, LogoIcon } from '~/component/icon/icon';
 import { Link } from 'react-router-dom';
+import HeaderSuffix from '~/component/HeaderSuffix/HeaderSuffix';
 const cx = classNames.bind(style);
 
 function Verify() {
@@ -49,22 +50,7 @@ function Verify() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('main')}>
-                <div className={cx('header')}>
-                    <span className={cx('header-logo')}>
-                        <LogoIcon nameCss={cx('logo')} />
-                    </span>
-                    <div className={cx('header-suffix')}>
-                        <div className={cx('suffix')}>
-                            <div className={cx('title')}>
-                                <h5>Đã xác minh địa chỉ email</h5>
-                                <span>
-                                    <GreenTickIcon nameCss={cx('tick')} />
-                                </span>
-                            </div>
-                            Finish setting up your account
-                        </div>
-                    </div>
-                </div>
+                <HeaderSuffix title="Đã xác minh địa chỉ email" icon />
                 <div>
                     <form action="" id="form-sign-up">
                         <div className={cx('input-wrapper')}>

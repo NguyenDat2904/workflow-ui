@@ -13,7 +13,7 @@ const publicRoutes = [
     { path: '/board', component: Board },
     { path: '/register', component: Register, layout: null },
     { path: '/login', component: Login, layout: null },
-    { path: '/test', component: TestComponent },
+    { path: '/test', component: TestComponent, layout: null },
     { path: '/verify', component: Verify, layout: null },
 ];
 

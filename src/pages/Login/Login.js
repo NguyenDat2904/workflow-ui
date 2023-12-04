@@ -3,6 +3,8 @@ import './Login.scss';
 import { ButtonFilled, ButtonLight, InputLight } from '~/component/Inputs/Inputs';
 import { Card } from '~/component/cards/Cards';
 import { ReactComponent as GoogleIcon } from '../../asset/icons/google.svg';
+import { Divider } from '~/component/dividers/Dividers';
+import { NavigationLinks } from '~/component/links/Links';
 
 function Login() {
     return (
@@ -20,6 +22,11 @@ function Login() {
                     <GoogleIcon />
                     <span>Continue with Google</span>
                 </ButtonLight>
+                <Divider />
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <NavigationLinks navLink="/forgot">Forgot password?</NavigationLinks>|
+                    <NavigationLinks navLink="/register">Sign up for an account</NavigationLinks>
+                </div>
             </Card>
         </div>
     );

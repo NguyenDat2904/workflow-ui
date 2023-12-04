@@ -42,13 +42,23 @@
     }
 }
 
+.button-light,
+.button-filled {
+    transition: background-color 0.25s;
+}
+
 .button-light {
     background: var(--jwm-background-neutral);
+    &:hover,
+    &:focus {
+        background: var(--jwm-background-surface);
+    }
 }
 
 .button-filled {
     background-color: var(--jwm-color-link);
     color: white;
+    &:hover,
     &:focus {
         background-color: var(--jwm-color-link-pressed);
     }

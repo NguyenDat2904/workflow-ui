@@ -2,9 +2,15 @@
     padding: 2rem;
 }
 
+@media (max-width: 500px) {
+    #login {
+        padding: 2rem 0;
+    }
+}
+
 .login-container {
     margin: 0 auto;
-    width: 30% !important;
+    width: clamp(20rem, 30%, 30rem);
     h3 {
         text-align: center;
         font-size: 1.2rem;

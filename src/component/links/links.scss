@@ -1,0 +1,8 @@
+@import '../StyleGlobal.scss';
+
+.links {
+    color: var(--jwm-color-link);
+    &:hover {
+        color: var(--jwm-color-link-pressed);
+    }
+}

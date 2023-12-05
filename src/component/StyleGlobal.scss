@@ -19,7 +19,6 @@
     --jwm-color-text-subtlest: var(--ds-text-subtlest, #626f86);
     --jwm-color-text-disabled: var(--ds-text-disabled, #091e424f);
 
-    // with, height
     --rightSidebarWidth: 0px;
     --leftSidebarWidth: 240px;
     --leftPanelWidth: 0px;
@@ -51,21 +50,7 @@ body {
         'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 16px;
+    font-size: 14px;
     color: var(--ds-text, #172b4d);
     line-height: 20px;
-}
-a {
-    text-decoration: none;
-    color: inherit;
-}
-ul {
-    list-style: none;
-}
-.container-fluid {
-    margin-right: auto;
-    margin-left: auto;
-    min-width: 100%;
-    padding-left: 16px;
-    padding-right: 16px;
 }

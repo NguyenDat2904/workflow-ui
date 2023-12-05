@@ -1,0 +1,65 @@
+@import '../StyleGlobal.scss';
+
+.input-light,
+.input-filled,
+.button-light,
+.button-filled {
+    padding: 0 1.25rem;
+    height: 40px;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    border: 2px solid var(--jwm-color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.input-filled,
+.input-light {
+    transition: border-color 0.25s;
+}
+
+.input-light {
+    background: var(--jwm-background-neutral);
+    &:focus {
+        border-color: var(--jwm-color-text-selected);
+    }
+}
+
+.input-filled {
+    background: var(--jwm-color-link);
+    color: white;
+}
+
+.button-filled,
+.button-light {
+    transition: background-color 0.25s;
+    svg {
+        width: 1rem;
+        height: fit-content;
+    }
+}
+
+.button-light,
+.button-filled {
+    transition: background-color 0.25s;
+}
+
+.button-light {
+    background: var(--jwm-background-neutral);
+    &:hover,
+    &:focus {
+        background: var(--jwm-background-surface);
+    }
+}
+
+.button-filled {
+    background-color: var(--jwm-color-link);
+    color: white;
+    &:hover,
+    &:focus {
+        background-color: var(--jwm-color-link-pressed);
+    }
+}

@@ -1,0 +1,27 @@
+#login {
+    padding: 2rem;
+}
+
+@media (max-width: 500px) {
+    #login {
+        padding: 2rem 0;
+    }
+}
+
+.login-container {
+    margin: 0 auto;
+    width: clamp(20rem, 30%, 30rem);
+    h3 {
+        text-align: center;
+        font-size: 1.2rem;
+        p {
+            margin-top: 0.5rem;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+    }
+    input,
+    button {
+        width: 100%;
+    }
+}

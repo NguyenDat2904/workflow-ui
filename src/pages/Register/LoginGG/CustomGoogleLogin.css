@@ -1,0 +1,5 @@
+.custom-google-login .google-login-button {
+    /* Áp dụng CSS cho button của Google Login */
+    background-color: blue;
+    color: white;
+}

@@ -458,6 +458,7 @@
             flex-wrap: wrap;
             justify-content: center;
             .column {
+                text-align: center;
                 padding: 16px 16px 0 16px;
                 h2 {
                     color: #253858;
@@ -470,6 +471,53 @@
         }
     }
 }
+// Banner
+.banner {
+    background-image: url(https://wac-cdn.atlassian.com/dam/jcr:8a9ac4bd-71f9-4af4-b859-f9c132e12f80/JSW_CTA_bg.png?cdnVersion=1339);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-bottom: 64px;
+    padding-top: 64px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    .row {
+        .column {
+            padding: 16px;
+            margin-left: 25%;
+            width: 50%;
+            text-align: center;
+            .heading {
+                h2 {
+                    color: #ffffff;
+                    line-height: 48px;
+                    margin-bottom: 24px;
+                    font-size: 36px;
+                    font-weight: 500;
+                }
+            }
+        }
+        .link {
+            a {
+                background: #ffab00;
+                border: 1px solid #ffab00;
+                color: #172b4d;
+                border-radius: 3px;
+                text-align: center;
+                display: inline-block;
+                transition: all 250ms;
+                padding: 7px 16px;
+                font-size: 16px;
+                line-height: 24px;
+                font-weight: 500;
+                &:hover {
+                    background: #ff991f;
+                }
+            }
+        }
+    }
+}
+
 // Trust
 .main .trusted {
     padding-top: 64px;
@@ -598,6 +646,37 @@ footer {
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Tablet
+
+@media only screen and (max-width: 992px) {
+    .column-right {
+        .layout-standalone {
+            width: 303px;
+        }
+    }
+    .component {
+        h1 {
+            font-size: 44px;
+            line-height: 1.18181818;
+            margin-bottom: 16px;
+        }
+        h4 {
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+    }
+    .main {
+        .title {
+            .row {
+                .column {
+                    h2 {
                     }
                 }
             }

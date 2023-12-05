@@ -266,3 +266,34 @@ export const GreenTickIcon = ({ nameCss }) => {
         </svg>
     );
 };
+export const BagIcon = ({ nameCss }) => {
+    return (
+        <svg className={nameCss} width={24} height={24} viewBox="0 0 24 24" role="presentation">
+            <path
+                fill="currentColor"
+                fillRule="evenodd"
+                d="M17 14h2V9H5v5h2v-1a1 1 0 012 0v1h6v-1a1 1 0 012 0v1zm0 2v1a1 1 0 01-2 0v-1H9v1a1 1 0 01-2 0v-1H5v3h14v-3h-2zM9 7h6V6H9v1zM7 7V5a1 1 0 011-1h8a1 1 0 011 1v2h2a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h2z"
+            />
+        </svg>
+    );
+};
+export const SuccessIcon = ({ nameCss }) => {
+    return (
+        <svg className={nameCss} width={24} height={24} viewBox="0 0 24 24" role="presentation">
+            <path
+                d="M6.735 12.322a1 1 0 00-1.47 1.356l3.612 3.919c.537.526 1.337.526 1.834.03l.364-.359a2335.638 2335.638 0 003.939-3.883l.04-.04a492.598 492.598 0 003.658-3.643 1 1 0 00-1.424-1.404 518.42 518.42 0 01-3.64 3.625l-.04.04a2049.114 2049.114 0 01-3.775 3.722l-3.098-3.363z"
+                fill="currentColor"
+            />
+        </svg>
+    );
+};
+export const CloseIcon = ({ nameCss }) => {
+    return (
+        <svg className={nameCss} width={24} height={24} viewBox="0 0 24 24" role="presentation">
+            <path
+                d="M12 10.586L6.707 5.293a1 1 0 00-1.414 1.414L10.586 12l-5.293 5.293a1 1 0 001.414 1.414L12 13.414l5.293 5.293a1 1 0 001.414-1.414L13.414 12l5.293-5.293a1 1 0 10-1.414-1.414L12 10.586z"
+                fill="currentColor"
+            />
+        </svg>
+    );
+};

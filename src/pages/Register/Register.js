@@ -4,6 +4,7 @@ import style from './Register.module.scss';
 import { Link } from 'react-router-dom';
 import Tab from './Tab/Tab';
 import LoginGG from './LoginGG/LoginGG';
+import { post } from '~/ultil/hpptRequest';
 const cx = classNames.bind(style);
 
 function Register() {
@@ -119,8 +120,12 @@ function Register() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        if (classError.email && classError.full_name && classError.username) {
+            const verifyEmail = await post('/auth/verify', { email: values.email, userName: values.username });
+            console.log(verifyEmail);
+        }
     };
 
     const shouldDisable =
@@ -392,6 +397,18 @@ function Register() {
             </div>
             <div className={cx('container-fluid', 'tab-container')}>
                 <Tab />
+            </div>
+            <div className={cx('container-fluid', 'banner')}>
+                <div className={cx('row')}>
+                    <div className={cx('column')}>
+                        <div className={cx('heading')}>
+                            <h2>Move fast, stay aligned, and build better - together</h2>
+                        </div>
+                        <div className={cx('link')}>
+                            <Link to="/register?tab=board"> Get it free </Link>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div className={cx('container-fluid', 'trusted')}>
                 <div className={cx('row')}>

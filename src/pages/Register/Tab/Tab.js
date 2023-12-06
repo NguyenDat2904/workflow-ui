@@ -8,7 +8,6 @@ const cx = classNames.bind(style);
 function Tab() {
     const location = useLocation();
     const [activeTab, setActiveTab] = useState('');
-    console.log(activeTab);
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const queryTab = searchParams.get('tab');
@@ -33,7 +32,7 @@ function Tab() {
                             Reports
                         </Link>
                     </li>
-                    <li className={cx('mf', activeTab === 'automation' ? 'active' : '')}> 
+                    <li className={cx('mf', activeTab === 'automation' ? 'active' : '')}>
                         <Link to="/register?tab=automation" className={cx('tab-item')}>
                             Automation
                         </Link>
@@ -217,19 +216,6 @@ function Tab() {
                                     freely across people, teams, and tools.
                                 </p>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className={cx('container-fluid', 'banner')}>
-                <div className={cx('row')}>
-                    <div className={cx('column')}>
-                        <div className={cx('heading')}>
-                            <h2>Move fast, stay aligned, and build better - together</h2>
-                        </div>
-                        <div className={cx('link')}>
-                            <Link to="/register?tab=board"> Get it free </Link>
                         </div>
                     </div>
                 </div>

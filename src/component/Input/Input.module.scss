@@ -1,0 +1,71 @@
+.wrapper {
+    flex-grow: 1;
+    margin-left: var(--ds-space-100, 8px);
+}
+.field-wrapper {
+    display: flex;
+    align-items: flex-start;
+    color: var(--ds-text, #172b4d);
+}
+.form-wrapper {
+    width: 100%;
+    margin-right: -8px;
+    display: flex;
+    flex-direction: column;
+    label {
+        font-size: 12px;
+        color: var(--ds-text-subtle, #6b778c);
+        line-height: var(--ds-space-200, 16px);
+        vertical-align: middle;
+        margin-bottom: var(--ds-space-050, 4px);
+        span {
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--ds-text-subtle, #6b778c);
+            line-height: var(--ds-space-200, 16px);
+        }
+    }
+}
+.field-edit {
+    margin: -var(--ds-space-100, 8px) var(--ds-space-100, 8px) 0 -var(--ds-space-100, 8px);
+    .form {
+        margin: var(--ds-space-150, 12px) 0 0 0;
+        .form-input {
+            display: inline-block;
+            box-sizing: border-box;
+            max-width: 100%;
+            border: 2px solid transparent;
+            border-radius: 3px;
+            transition: background 0.2s ease 0s;
+            width: 100%;
+            &:hover {
+                background: var(--ds-background-neutral-subtle-hovered, #ebecf0);
+            }
+            &:focus-within {
+                background-color: var(--ds-background-input-pressed, #ffffff);
+                border-color: var(--ds-border-focused, #2684ff);
+            }
+            .input {
+                padding: 8px 6px 8px 8px;
+                line-height: 20px;
+                font-size: 14px;
+                overflow-wrap: break-word;
+                word-break: break-word;
+                color: inherit;
+            }
+        }
+    }
+}
+.inputClass {
+    background-color: transparent;
+    border: 0px;
+    box-sizing: border-box;
+    color: inherit;
+    cursor: inherit;
+    font-size: 14px;
+    min-width: 0px;
+    outline: none;
+    width: 100%;
+    line-height: 1.42857;
+    padding: var(--ds-space-100, 8px) var(--ds-space-075, 6px);
+}

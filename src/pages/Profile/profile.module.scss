@@ -1,0 +1,127 @@
+.mainProfile {
+    .profileUser {
+        .backgroundImgUser {
+            width: 100%;
+            height: 192px;
+            position: relative;
+            .bgrimg {
+                width: 100%;
+                height: 100%;
+                background-color: #091e42;
+                position: relative;
+                .imgCover {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .addImg {
+                    height: 50%;
+                    display: none;
+                    cursor: pointer;
+                    transition: all 3ms ease;
+                    position: absolute;
+                    z-index: 1;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    form {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        svg {
+                            width: 36px;
+                            height: 36px;
+                            color: #fff;
+                        }
+                        h4 {
+                            color: #fff;
+                            font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                                'Noto Sans', Ubuntu, 'Droid Sans', 'Helvetica Neue', sans-serif;
+                        }
+                        .labelUploadImg {
+                            display: block;
+                            margin-top: 10px;
+                            border-radius: 3px;
+                            background-color: #fff;
+                            width: auto;
+                            height: auto;
+                            padding: 5px 0;
+                            h4 {
+                                padding: 10px;
+
+                                color: black;
+                                font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                                    'Noto Sans', Ubuntu, 'Droid Sans', 'Helvetica Neue', sans-serif;
+                                &:hover {
+                                    background-color: rgba(192, 192, 192, 0.3);
+                                }
+                            }
+                        }
+                        .notShownUploadImg,
+                        input {
+                            display: none;
+                        }
+                    }
+                }
+                &:hover {
+                    .addImg {
+                        display: block;
+                    }
+                    .imgCover {
+                        display: none;
+                    }
+                }
+            }
+
+            .avatarUser {
+                margin-left: 20%;
+                position: absolute;
+                top: 100%;
+                transform: translateY(-50%);
+                .bagrAvatar {
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    background-color: #fff;
+                    position: relative;
+                    input {
+                        display: none;
+                    }
+                    .avatarImg {
+                        width: 95%;
+                        height: 95%;
+                        border-radius: 50%;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+                    .uploadAvatar {
+                        display: none;
+                        width: 95%;
+                        height: 95%;
+                        border-radius: 50%;
+                        background-color: rgba(192, 192, 192, 0.3);
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        svg {
+                            width: 40px;
+                            height: 40px;
+                            color: #fff;
+                        }
+                    }
+                    &:hover {
+                        .uploadAvatar {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

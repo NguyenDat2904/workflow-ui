@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from './cards/Cards';
-import { ButtonFilled, ButtonLight, Button, InputFilled, InputLight } from './Inputs/Inputs';
+import { Button, Input } from './Inputs/Inputs';
 import { ReactComponent as GoogleIcon } from '../asset/icons/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 
@@ -24,13 +24,14 @@ export default function TestComponent() {
             <Card>Card</Card>
             <p>Input</p>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <InputLight placeholder={'Input'} type={'text'} name={'text'} />
-                <ButtonLight type={'submit'} onClick={handleButtonClick}>
+                <Input inputStyle={'light'} placeholder={'Input'} type={'text'} name={'text'} />
+                <Button inputStyle={'light'} type={'submit'} onClick={handleButtonClick}>
                     Button
-                </ButtonLight>{' '}
-                {/* Call handleButtonClick onClick */}
-                <InputFilled placeholder={'Input'} type={'text'} name={'text'} />
-                <ButtonFilled type={'submit'}>Button</ButtonFilled>
+                </Button>
+                <Input inputStyle={'filled'} placeholder={'Input'} type={'text'} name={'text'} />
+                <Button buttonStyle="filled" type={'submit'}>
+                    Button
+                </Button>
                 <br />
                 <Button buttonStyle="light" onClick={() => handleButtonClick()}>
                     <GoogleIcon />

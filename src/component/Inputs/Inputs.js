@@ -1,32 +1,34 @@
 import React from 'react';
 import './inputs.scss';
 
-export function InputLight({ placeholder, type, name }) {
-    return <input className="input-light" placeholder={placeholder} type={type} name={name} />;
+export function Input({ inputStyle, name, onChange, placeholder, type }) {
+    let className;
+    switch (inputStyle) {
+        case 'filled':
+            className = 'input-filled';
+            break;
+        case 'light':
+        default:
+            className = 'input-light';
+            break;
+    }
+
+    return <input className={className} name={name} onChange={onChange} placeholder={placeholder} type={type} />;
 }
 
-export function InputFilled({ placeholder, type, name }) {
-    return <input className="input-filled" placeholder={placeholder} type={type} name={name} />;
-}
-
-export function ButtonLight({ children, type, onClick }) {
-    return (
-        <button className="button-light" type={type} onClick={onClick}>
-            {children}
-        </button>
-    );
-}
-
-export function ButtonFilled({ children, type, onClick }) {
-    return (
-        <button className="button-filled" type={type} onClick={onClick}>
-            {children}
-        </button>
-    );
-}
-
-export function Button({ children, type, onClick, buttonStyle }) {
-    const className = buttonStyle === 'light' ? 'button-light' : 'button-filled';
+export function Button({ children, buttonStyle, onClick, type }) {
+    let className;
+    switch (buttonStyle) {
+        case 'light':
+            className = 'button-light';
+            break;
+        case 'filled':
+            className = 'button-filled';
+            break;
+        default:
+            className = 'button-light';
+            break;
+    }
 
     return (
         <button className={className} type={type} onClick={onClick}>

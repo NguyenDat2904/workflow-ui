@@ -17,7 +17,23 @@ function Login() {
 
     const googleLogin = useGoogleLogin({
         onSuccess: (codeResponse) => {
-            console.log(codeResponse);
+            async function sendingGoogleToken() {
+                const response = await post('/users/loginGoogle', {
+                    tokenGoogle: codeResponse.access_token,
+                });
+                if (response.status === 200) {
+                    navigate('/');
+                } else {
+                    switch (response.status) {
+                        case 404:
+                            setError('This email is not registered yet.');
+                            break;
+                        default:
+                            setError('Something went wrong. Please try again later.');
+                    }
+                }
+            }
+            sendingGoogleToken();
         },
         onError: (error) => {
             console.log('Login Failed:', error);
@@ -55,14 +71,18 @@ function Login() {
                     <p>With your WorkFlow account</p>
                 </h3>
                 <Input
+                    id={'username'}
                     inputStyle={'light'}
-                    type={'email'}
-                    name={'email'}
-                    placeholder={'Enter email'}
+                    label={'Email or username:'}
+                    type={'username'}
+                    name={'username'}
+                    placeholder={'Enter email or username'}
                     onChange={(e) => setUsername(e.target.value)}
                 />
                 <Input
+                    id={'password'}
                     inputStyle={'light'}
+                    label={'Password:'}
                     type={'password'}
                     name={'password'}
                     placeholder={'Enter password'}

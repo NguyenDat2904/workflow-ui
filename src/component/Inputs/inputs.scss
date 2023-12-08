@@ -1,5 +1,13 @@
 @import '../StyleGlobal.scss';
 
+.input-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    align-items: baseline;
+}
+
 .input-light,
 .input-filled,
 .button-light,

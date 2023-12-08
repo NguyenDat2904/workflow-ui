@@ -1,0 +1,48 @@
+.wrapper {
+    position: absolute;
+    inset: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .loading {
+        animation-delay: 0ms;
+        width: 24px;
+        height: 24px;
+        display: inline-flex;
+        vertical-align: middle;
+        animation: 0.86s cubic-bezier(0.4, 0.15, 0.6, 0.85) 0s infinite normal none running animation-n2ntg8;
+        transform-origin: center center;
+        text-align: center;
+        white-space: nowrap;
+        line-height: 36px;
+        .icon-loading {
+            animation: 1s ease-in-out 0s 1 normal forwards running animation-1rxe0gr;
+            opacity: 0;
+            circle {
+                fill: none;
+                stroke-dasharray: 60;
+                stroke-dashoffset: inherit;
+                stroke-linecap: round;
+                stroke-width: 1.5;
+            }
+        }
+    }
+}
+
+@keyframes animation-n2ntg8 {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes animation-1rxe0gr {
+    0% {
+        transform: rotate(50deg);
+        opacity: 0;
+        stroke-dashoffset: 60;
+    }
+    100% {
+        transform: rotate(230deg);
+        opacity: 1;
+        stroke-dashoffset: 50;
+    }
+}

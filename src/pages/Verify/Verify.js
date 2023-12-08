@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './Verify.module.scss';
-import { EyeIcon, EyeIconPassword, EyeIconText, GreenTickIcon, LogoIcon } from '~/component/icon/icon';
-import { Link } from 'react-router-dom';
+import { EyeIconPassword, EyeIconText, LoadingIcon, LogoIcon } from '~/component/icon/icon';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import HeaderSuffix from '~/component/HeaderSuffix/HeaderSuffix';
+import { post } from '~/ultil/hpptRequest';
+import { AppContext } from '~/hook/context/context';
 const cx = classNames.bind(style);
 
 function Verify() {
+    const { values, handleChange, errors, setErrors, setClassError, classError } = useContext(AppContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const Url = new URLSearchParams(location.search);
+
+    const params = Object.fromEntries(Url.entries());
+    const { token, fullName, email, username } = params;
     // 1. State
-    const [values, setValue] = useState({
-        password: '',
-        cfmPassword: '',
-    });
-    const [errors, setErrors] = useState({
-        password: '',
-        cfmPassword: '',
-    });
+    const [hashError, setHashError] = useState(null);
+
     const [eye, setEye] = useState({
         password: false,
         cfmPassword: false,
@@ -26,36 +29,75 @@ function Verify() {
         const newErrors = {};
         if (values.password.length < 8 && values.password.length > 0) {
             newErrors.cfmPassword = 'Mật khẩu phải ít nhất 8 ký tự';
+            setHashError(true);
         } else {
             newErrors.cfmPassword = '';
+            setHashError(false);
         }
         setErrors(newErrors);
     }, [values]);
 
     // 3. Func
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setValue((prevValues) => ({
-            ...prevValues,
-            [name]: value,
-        }));
-    };
     const handleSeePassword = (name) => {
-        console.log(eye.name);
         setEye((pre) => ({
             ...pre,
             [name]: !eye[name],
         }));
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (classError.loadingRegister) {
+            return;
+        }
+
+        if (values.password !== values.cfmPassword) {
+            setErrors((prev) => ({
+                ...prev,
+                cfmPassword: 'Mật khẩu không trùng khớp',
+            }));
+            setHashError(true);
+            return;
+        }
+        if (!hashError) {
+            setClassError((pre) => ({
+                ...pre,
+                loadingRegister: true,
+            }));
+            const register = await post(
+                '/auth/register',
+                {
+                    email: email,
+                    fullName: fullName,
+                    userName: username,
+                    password: values.password,
+                },
+                {
+                    headers: { 'verify-token': `${token}` },
+                },
+            );
+            setClassError((pre) => ({
+                ...pre,
+                loadingRegister: false,
+            }));
+            if (register.status === 200) {
+                navigate('/profile');
+            }
+            if (register.status === 404) {
+                if (register.data.message === 'Token is incorrect') {
+                }
+            }
+        }
     };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('main')}>
                 <HeaderSuffix title="Đã xác minh địa chỉ email" icon />
                 <div>
-                    <form action="" id="form-sign-up">
+                    <form action="" id="form-sign-up" onSubmit={handleSubmit}>
                         <div className={cx('input-wrapper')}>
                             <label htmlFor="">Địa chỉ Email</label>
-                            <p>dat43563@nuce.edu.vn</p>
+                            <p>{email}</p>
                         </div>
                         <div className={cx('input-wrapper')}>
                             <div className={cx('input')}>
@@ -100,7 +142,7 @@ function Verify() {
                         </div>
                         <div className={cx('button-submit')}>
                             <button type="submit">
-                                <span>Tiếp tục</span>
+                                {!classError.loadingRegister ? <span>Agree</span> : <LoadingIcon />}
                             </button>
                         </div>
                     </form>

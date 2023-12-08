@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import style from './Input.module.scss';
 const cx = classNames.bind(style);
 
-function Input({ className, inputClass, type, id, placeholder, value, name, onClick, label, ...passProps }) {
+function Input({ className, inputClass, type, id, placeholder, value, name, onClick, label, onSubmit, ...passProps }) {
     const classes = cx('input', {
         [className]: className,
         inputClass,
@@ -18,7 +18,7 @@ function Input({ className, inputClass, type, id, placeholder, value, name, onCl
                     </label>
                     <div className={cx('field-edit')}>
                         <div>
-                            <form className={cx('form')}>
+                            <form className={cx('form')} onSubmit={onSubmit}>
                                 <div className={cx('form-input')}>
                                     <input
                                         className={classes}

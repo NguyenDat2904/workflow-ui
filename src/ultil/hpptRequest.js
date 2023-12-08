@@ -2,9 +2,9 @@ import axios from 'axios';
 export const httpRequest = axios.create({
     baseURL: 'https://workflow-sever.onrender.com',
 });
-export const get = async (path, option = {}, headers = {}) => {
+export const get = async (path, headers = {}) => {
     try {
-        const response = await httpRequest.get(path, option, headers);
+        const response = await httpRequest.get(path, headers);
         return response;
     } catch (error) {
         if (error.response) {

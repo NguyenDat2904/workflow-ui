@@ -6,6 +6,7 @@ import Login from '~/pages/Login/Login';
 import Register from '~/pages/Register/Register';
 import TestComponent from '~/component/TestComponent';
 import Verify from '~/pages/Verify/Verify';
+import Notification from '~/pages/Notication/Notication';
 
 const publicRoutes = [
     {
@@ -19,6 +20,7 @@ const publicRoutes = [
     { path: '/verify', component: Verify, layout: null },
     { path: '/forgot', component: Forgot, layout: null },
     { path: '/forgot/change-password', component: ChangePassword, layout: null },
+    { path: '/register/verify', component: Notification, layout: null },
 ];
 
 export default publicRoutes;

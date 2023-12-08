@@ -1,5 +1,6 @@
 import BlackLog from '~/pages/BlackLog/BlackLog';
 import Board from '~/pages/Board/Board';
+import ProfileSecurity from '~/pages/Profile/ProfileSecurity';
 import ChangePassword from '~/pages/ChangePassword/ChangePassword';
 import Forgot from '~/pages/Forgot/Forgot';
 import Login from '~/pages/Login/Login';
@@ -14,6 +15,7 @@ const publicRoutes = [
         component: BlackLog,
     },
     { path: '/board', component: Board },
+    { path: '/profile/security', component: ProfileSecurity },
     { path: '/register', component: Register, layout: null },
     { path: '/login', component: Login, layout: null },
     { path: '/test', component: TestComponent, layout: null },

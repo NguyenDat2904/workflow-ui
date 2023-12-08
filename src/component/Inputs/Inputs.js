@@ -48,3 +48,11 @@ export function Button({ children, buttonStyle, onClick, type }) {
         </button>
     );
 }
+
+export function Form({ children, className, onSubmit }) {
+    return (
+        <form className={`form ${className}`} onSubmit={onSubmit}>
+            {children}
+        </form>
+    );
+}

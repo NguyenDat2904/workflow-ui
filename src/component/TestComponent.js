@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from './cards/Cards';
-import { Button, Input } from './Inputs/Inputs';
+import { Button, Input } from './inputs/Inputs';
+import { Article } from './articles/Articles';
 import { ReactComponent as GoogleIcon } from '../asset/icons/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 
@@ -19,11 +20,11 @@ export default function TestComponent() {
     };
 
     return (
-        <div>
-            <p>Cards</p>
+        <Article>
+            <h3>Cards</h3>
             <Card>Card</Card>
-            <p>Input</p>
-            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <h3>Input</h3>
+            <div>
                 <Input inputStyle={'light'} placeholder={'Input'} type={'text'} name={'text'} />
                 <Button inputStyle={'light'} type={'submit'} onClick={handleButtonClick}>
                     Button
@@ -38,6 +39,6 @@ export default function TestComponent() {
                     Continue with Google
                 </Button>
             </div>
-        </div>
+        </Article>
     );
 }

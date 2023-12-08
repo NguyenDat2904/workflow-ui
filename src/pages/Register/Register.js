@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import style from './Register.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import Tab from './Tab/Tab';
-import { Button } from '~/component/Inputs/Inputs';
+import { Button } from '~/component/inputs/Inputs';
 import { post } from '~/ultil/hpptRequest';
 import { LoadingIcon } from '~/component/icon/icon';
 import { AppContext } from '~/hook/context/context';

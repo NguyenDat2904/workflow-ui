@@ -26,6 +26,7 @@
 
 .input-filled,
 .input-light {
+    width: 40rem;
     transition: border-color 0.25s;
 }
 
@@ -43,16 +44,12 @@
 
 .button-filled,
 .button-light {
+    width: fit-content;
     transition: background-color 0.25s;
     svg {
         width: 1rem;
         height: fit-content;
     }
-}
-
-.button-light,
-.button-filled {
-    transition: background-color 0.25s;
 }
 
 .button-light {
@@ -70,4 +67,11 @@
     &:focus {
         background-color: var(--jwm-color-link-pressed);
     }
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }

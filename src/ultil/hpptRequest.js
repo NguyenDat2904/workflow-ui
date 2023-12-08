@@ -66,9 +66,9 @@ export const remove = async (path, option = {}, header) => {
         return error.response;
     }
 };
-export const patch = async (path, option = {}) => {
+export const patch = async (path, option = {}, headers = {}) => {
     try {
-        const response = await httpRequest.patch(path, option);
+        const response = await httpRequest.patch(path, option, headers);
         return response;
     } catch (error) {
         if (error.response) {

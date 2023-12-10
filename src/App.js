@@ -2,10 +2,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Fragment } from 'react';
 import routes from '~/routes/routes';
 import DefaultLayout from './layout/DefaultLayout/DefaultLayout';
+import { AppProvider } from './hook/context/context';
 
 function App() {
     return (
-        <BrowserRouter>
+        <AppProvider>
+             <BrowserRouter>
             <div className="App">
                 <Routes>
                     {routes.map((route, index) => {
@@ -32,6 +34,8 @@ function App() {
                 </Routes>
             </div>
         </BrowserRouter>
+        </AppProvider>
+       
     );
 }
 

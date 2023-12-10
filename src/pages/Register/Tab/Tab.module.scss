@@ -1,0 +1,138 @@
+.component {
+    margin: 0 auto;
+    margin-top: 40px;
+    max-width: 1440px;
+    position: relative;
+    z-index: 3;
+    .tab-list {
+        display: flex;
+        padding-left: 0;
+        justify-content: center;
+        list-style: none;
+        li {
+            padding: 10px 30px;
+            border-radius: 50px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0);
+            color: #6b778c;
+
+            &:hover {
+                border-color: rgb(222, 235, 255);
+                cursor: pointer;
+            }
+            .tab-item {
+                font-weight: 500;
+                font-size: 20px;
+                margin: 0;
+                transition: all 0.25s;
+            }
+        }
+        li.active {
+            background-color: #deebff;
+            color: #091e42;
+        }
+        .mf {
+            margin-left: 8px;
+        }
+    }
+}
+.tab-img {
+    padding-bottom: 32px;
+    padding-top: 32px;
+    padding-left: 0;
+    padding-right: 0;
+    visibility: hidden;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.tab-img.active {
+    visibility: visible;
+    position: relative;
+    opacity: 1;
+    width: auto;
+    height: auto;
+    transition: opacity 0.5s;
+}
+
+// Comfortable
+.block {
+    background-image: linear-gradient(225deg, #deebff 0%, #ffffff 100%);
+    background-repeat: no-repeat;
+}
+.comfortable {
+    padding-top: 16px;
+    padding-left: 0 !important;
+    padding-bottom: 16px;
+    padding-right: 0 !important;
+}
+.comfortable-top {
+    padding-top: 64px;
+    padding-left: 0 !important;
+    padding-bottom: 16px;
+    padding-right: 0 !important;
+}
+.comfortable-bottom {
+    padding-top: 16px;
+    padding-left: 0 !important;
+    padding-bottom: 64px;
+    padding-right: 0 !important;
+}
+.row {
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+}
+.left {
+    align-self: center;
+    width: 50%;
+    padding: 16px;
+}
+.right {
+    width: 50%;
+    padding: 16px;
+}
+.column {
+    align-self: center;
+    img {
+        max-width: 100%;
+        vertical-align: bottom;
+    }
+    .heading {
+        h2 {
+            font-size: 36px;
+            font-weight: 500;
+            line-height: 1.3333333;
+            margin-bottom: 24px;
+        }
+    }
+    .rule {
+        hr {
+            margin: 0 auto 40px 0;
+            max-width: 1200px;
+            height: 2px;
+            background-color: #b2d4ff;
+            border: 0;
+            color: transparent;
+        }
+    }
+    .text {
+        p {
+            color: #091e42;
+            line-height: 1.5;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+    }
+}
+
+// Banner
+
+

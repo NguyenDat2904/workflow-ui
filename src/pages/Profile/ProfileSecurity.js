@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Article } from '~/component/articles/Articles';
-import { Form, Input, Button } from '~/component/inputs/Inputs';
+import { Form, Input, Button } from '../../component/Inputs/Inputs';
 import './profileSecurity.scss';
 import { patch } from '../../ultil/hpptRequest';
 

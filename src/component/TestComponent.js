@@ -4,6 +4,7 @@ import { Button, Input } from './inputs/Inputs';
 import { Article } from './articles/Articles';
 import { ReactComponent as GoogleIcon } from '../asset/icons/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
+import { Table } from './tables/Tables';
 
 export default function TestComponent() {
     const login = useGoogleLogin({
@@ -39,6 +40,7 @@ export default function TestComponent() {
                     Continue with Google
                 </Button>
             </div>
+            <h3>Table</h3>
         </Article>
     );
 }

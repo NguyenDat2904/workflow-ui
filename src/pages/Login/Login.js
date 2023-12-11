@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.scss';
-import { Input, Button, Form } from '~/component/inputs/Inputs';
+import { Input, Button, Form } from '../../component/inputs/Inputs';
 import { Card } from '~/component/cards/Cards';
 import { ReactComponent as GoogleIcon } from '../../asset/icons/google.svg';
 import { Divider } from '~/component/dividers/Dividers';
-import { NavigationLinks } from '~/component/links/Links';
+import { NavigationLinks } from '../../component/links/Links';
 import { useGoogleLogin } from '@react-oauth/google';
 import { post } from '../../ultil/hpptRequest';
 

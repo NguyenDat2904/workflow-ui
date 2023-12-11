@@ -1,10 +1,10 @@
 import React from 'react';
 import { Card } from './cards/Cards';
-import { Button, Input } from './inputs/Inputs';
 import { Article } from './articles/Articles';
 import { ReactComponent as GoogleIcon } from '../asset/icons/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import { Table } from './tables/Tables';
+import { Button, Input } from '../component/Inputs/Inputs';
 
 export default function TestComponent() {
     const login = useGoogleLogin({

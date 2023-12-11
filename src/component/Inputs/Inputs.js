@@ -28,22 +28,22 @@ export function Input({ id, inputStyle, label, name, onChange, placeholder, type
     );
 }
 
-export function Button({ children, buttonStyle, onClick, type }) {
-    let className;
+export function Button({ children, buttonStyle, className, onClick, type }) {
+    let buttonType;
     switch (buttonStyle) {
         case 'light':
-            className = 'button-light';
+            buttonType = 'button-light';
             break;
         case 'filled':
-            className = 'button-filled';
+            buttonType = 'button-filled';
             break;
         default:
-            className = 'button-light';
+            buttonType = 'button-light';
             break;
     }
 
     return (
-        <button className={className} type={type} onClick={onClick}>
+        <button className={`button ${buttonType} ${className}`} type={type} onClick={onClick}>
             {children}
         </button>
     );

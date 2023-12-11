@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Button } from '../../component/inputs/Inputs';
+import { Button } from '~/component/Inputs/Inputs';
 import { ReactComponent as GoogleIcon } from '../../asset/icons/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import { post } from '../../ultil/hpptRequest';

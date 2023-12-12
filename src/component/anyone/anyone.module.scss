@@ -1,0 +1,37 @@
+.buttonAnyone {
+    .iconAnyone {
+        padding: 8px;
+        border-radius: 3px;
+        display: flex;
+        justify-content: space-between;
+        .iconleftAnyone {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .titleAnyone {
+                font-size: 16px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                min-width: 0px;
+
+                max-width: 120px;
+                font-style: normal;
+                font-family: inherit;
+                font-weight: 500;
+                color: var(--ds-text, #42526e);
+            }
+        }
+        .iconRightAnyone {
+            display: none;
+        }
+        &:hover {
+            background-color: rgb(240, 240, 240);
+            .iconRightAnyone {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+}

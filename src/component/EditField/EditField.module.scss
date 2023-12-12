@@ -1,0 +1,10 @@
+.childrenAboutYou {
+    display: flex;
+    gap: 20px;
+    .canSee {
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+}

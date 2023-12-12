@@ -30,6 +30,7 @@
     margin: -var(--ds-space-100, 8px) var(--ds-space-100, 8px) 0 -var(--ds-space-100, 8px);
     .form {
         margin: var(--ds-space-150, 12px) 0 0 0;
+
         .form-input {
             display: inline-block;
             box-sizing: border-box;
@@ -38,20 +39,53 @@
             border-radius: 3px;
             transition: background 0.2s ease 0s;
             width: 100%;
-            &:hover {
-                background: var(--ds-background-neutral-subtle-hovered, #ebecf0);
-            }
+            position: relative;
             &:focus-within {
                 background-color: var(--ds-background-input-pressed, #ffffff);
                 border-color: var(--ds-border-focused, #2684ff);
+                .formSaveInfo {
+                    display: block;
+                }
             }
             .input {
+                width: 100%;
+                border: none;
+                outline: none;
                 padding: 8px 6px 8px 8px;
                 line-height: 20px;
                 font-size: 14px;
                 overflow-wrap: break-word;
                 word-break: break-word;
                 color: inherit;
+                &:hover {
+                    background: var(--ds-background-neutral-subtle-hovered, #ebecf0);
+                }
+            }
+            .formSaveInfo {
+                display: none;
+                .saveInfo {
+                    padding-top: 10px;
+                    width: 100%;
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 5px;
+                    position: absolute;
+                    z-index: 10;
+                    top: 90%;
+                    .buttonClose,
+                    .buttonSave {
+                        cursor: pointer;
+                        background-color: #fff;
+                        padding: 6px 8px 4px 8px;
+                        border: 1px solid #0208120f;
+                        border-radius: 3px;
+                        box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+                        svg {
+                            width: 16px;
+                            height: 16px;
+                        }
+                    }
+                }
             }
         }
     }
@@ -68,4 +102,7 @@
     width: 100%;
     line-height: 1.42857;
     padding: var(--ds-space-100, 8px) var(--ds-space-075, 6px);
+}
+.noneformSaveInfo {
+    display: none;
 }

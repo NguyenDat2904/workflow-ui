@@ -1,7 +1,7 @@
 import React from 'react';
 import './inputs.scss';
 
-export function Input({ inputStyle, name, onChange, placeholder, type }) {
+export function Input({ id, inputStyle, label, name, onChange, placeholder, type }) {
     let className;
     switch (inputStyle) {
         case 'filled':
@@ -13,7 +13,19 @@ export function Input({ inputStyle, name, onChange, placeholder, type }) {
             break;
     }
 
-    return <input className={className} name={name} onChange={onChange} placeholder={placeholder} type={type} />;
+    return (
+        <div className="input-container">
+            {label && <label htmlFor={id}>{label}</label>}
+            <input
+                className={className}
+                id={id}
+                name={name}
+                onChange={onChange}
+                placeholder={placeholder}
+                type={type}
+            />
+        </div>
+    );
 }
 
 export function Button({ children, buttonStyle, onClick, type }) {
@@ -34,5 +46,13 @@ export function Button({ children, buttonStyle, onClick, type }) {
         <button className={className} type={type} onClick={onClick}>
             {children}
         </button>
+    );
+}
+
+export function Form({ children, className, onSubmit }) {
+    return (
+        <form className={`form ${className}`} onSubmit={onSubmit}>
+            {children}
+        </form>
     );
 }

@@ -13,7 +13,7 @@ function Button({
     whiteBackGround,
     leftIcon,
     rightIcon,
-    round,
+    loading,
     className,
     small = false,
     large = false,
@@ -49,7 +49,6 @@ function Button({
         disable,
         small,
         large,
-        round,
     });
     return (
         <Comp className={classes} {..._props}>

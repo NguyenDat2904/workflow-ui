@@ -1,30 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './Register.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Tab from './Tab/Tab';
-import { Button } from '~/component/Inputs/Inputs';
+import { Button } from '../../component/Inputs/Inputs';
 import { post } from '~/ultil/hpptRequest';
+import { LoadingIcon } from '~/component/icon/icon';
+import { AppContext } from '~/hook/context/context';
+import LoginGG from './LoginGG/LoginGG';
 const cx = classNames.bind(style);
 
 function Register() {
+    const navigate = useNavigate();
+    // 0. Context
+    const { values, handleChange, errors, setErrors, classError, setClassError } = useContext(AppContext);
     // 1. State
     const [toggleForm, setToggleForm] = useState(true);
-    const [classError, setClassError] = useState({
-        email: null,
-        full_name: null,
-        username: null,
-    });
-    const [values, setValue] = useState({
-        email: '',
-        full_name: '',
-        username: '',
-    });
-    const [errors, setErrors] = useState({
-        email: '',
-        full_name: '',
-        username: '',
-    });
 
     // 2. UseEffect
     useEffect(() => {
@@ -112,29 +103,60 @@ function Register() {
     }, [values]);
 
     // 3. Func
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setValue((prevValues) => ({
-            ...prevValues,
-            [name]: value,
-        }));
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (classError.email && classError.full_name && classError.username) {
-            const verifyEmail = await post('/auth/verify', { email: values.email, userName: values.username });
-            console.log(verifyEmail);
-        }
-    };
-
     const shouldDisable =
         classError.email === null ||
         classError.email === false ||
         classError.username === null ||
         classError.username === false ||
         classError.full_name === null ||
-        classError.full_name === false;
+        classError.full_name === false ||
+        classError.loading === true;
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (shouldDisable) {
+            return;
+        }
+        if (classError.email && classError.full_name && classError.username) {
+            setClassError((pre) => ({
+                ...pre,
+                loading: true,
+            }));
+            const verifyEmail = await post('/auth/verify', {
+                email: values.email,
+                userName: values.username,
+                fullName: values.full_name,
+            });
+            if (verifyEmail.status === 200) {
+                navigate(`/register/verify?email=${values.email}`);
+            }
+            if (verifyEmail.status === 400) {
+                if (verifyEmail.data.errEmail) {
+                    setErrors((prev) => ({
+                        ...prev,
+                        email: 'The Email was registered',
+                    }));
+                    setClassError((pre) => ({
+                        ...pre,
+                        email: false,
+                        loading: false,
+                    }));
+                }
+
+                if (verifyEmail.data.errUserName) {
+                    setErrors((prev) => ({
+                        ...prev,
+                        username: 'The Username was registered',
+                    }));
+                    setClassError((pre) => ({
+                        ...pre,
+                        username: false,
+                        loading: false,
+                    }));
+                }
+            }
+        }
+    };
 
     // 4. Render
     return (
@@ -194,7 +216,14 @@ function Register() {
                                 </div>
                                 <div className={cx('css-option')}>
                                     <div className={cx('option-button')}>
-                                        <Button buttonStyle={'light'}></Button>
+                                        <Link className={cx('button-gg')}>
+                                            {/* <img
+                                                src="https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.51/static/media/google-logo.c21ca9d1.svg"
+                                                alt="button-gg"
+                                            />
+                                            <span>Continue with Google</span> */}
+                                            <LoginGG />
+                                        </Link>
                                         <div className={cx('or')}>
                                             <div className={cx('left')}></div>
                                             <span>OR</span>
@@ -360,7 +389,7 @@ function Register() {
                                                     className={cx('submit', shouldDisable && 'disable')}
                                                     type="submit"
                                                 >
-                                                    <span>Agree</span>
+                                                    {!classError.loading ? <span>Agree</span> : <LoadingIcon />}
                                                 </button>
                                                 <div className={cx('card')}>NO CREDIT CARD REQUIRED</div>
                                                 <div>

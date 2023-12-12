@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.scss';
-import { Input, Button } from '~/component/Inputs/Inputs';
+import { Input, Button, Form } from '../../component/Inputs/Inputs';
 import { Card } from '~/component/cards/Cards';
 import { ReactComponent as GoogleIcon } from '../../asset/icons/google.svg';
 import { Divider } from '~/component/dividers/Dividers';
@@ -17,7 +17,23 @@ function Login() {
 
     const googleLogin = useGoogleLogin({
         onSuccess: (codeResponse) => {
-            console.log(codeResponse);
+            async function sendingGoogleToken() {
+                const response = await post('/users/loginGoogle', {
+                    tokenGoogle: codeResponse.access_token,
+                });
+                if (response.status === 200) {
+                    navigate('/');
+                } else {
+                    switch (response.status) {
+                        case 404:
+                            setError('This email is not registered yet.');
+                            break;
+                        default:
+                            setError('Something went wrong. Please try again later.');
+                    }
+                }
+            }
+            sendingGoogleToken();
         },
         onError: (error) => {
             console.log('Login Failed:', error);
@@ -28,13 +44,15 @@ function Login() {
         googleLogin();
     };
 
-    const handleLoginWithUsername = async () => {
+    const handleLoginWithUsername = async (e) => {
+        e.preventDefault();
         setError('');
         const response = await post('/users/login', {
-            email: username,
-            password: password,
+            userName: username,
+            passWord: password,
         });
         if (response.status === 200) {
+            localStorage.setItem('user', JSON.stringify(response.data));
             navigate('/');
         } else {
             switch (response.status) {
@@ -54,24 +72,34 @@ function Login() {
                     Log in
                     <p>With your WorkFlow account</p>
                 </h3>
-                <Input
-                    inputStyle={'light'}
-                    type={'email'}
-                    name={'email'}
-                    placeholder={'Enter email'}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <Input
-                    inputStyle={'light'}
-                    type={'password'}
-                    name={'password'}
-                    placeholder={'Enter password'}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <p className="login-error">{error}</p>
-                <Button buttonStyle={'filled'} type={'submit'} onClick={() => handleLoginWithUsername()}>
-                    Log in
-                </Button>
+                <Form
+                    onSubmit={(e) => {
+                        handleLoginWithUsername(e);
+                    }}
+                >
+                    <Input
+                        id={'username'}
+                        inputStyle={'light'}
+                        label={'Email or username:'}
+                        type={'username'}
+                        name={'username'}
+                        placeholder={'Enter email or username'}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <Input
+                        id={'password'}
+                        inputStyle={'light'}
+                        label={'Password:'}
+                        type={'password'}
+                        name={'password'}
+                        placeholder={'Enter password'}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <p className="login-error">{error}</p>
+                    <Button buttonStyle={'filled'} type={'submit'}>
+                        Log in
+                    </Button>
+                </Form>
                 <p>OR</p>
                 <Button buttonStyle={'light'} onClick={() => handleLoginWithGoogle()}>
                     <GoogleIcon />

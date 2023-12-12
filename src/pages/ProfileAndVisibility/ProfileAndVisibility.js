@@ -40,30 +40,15 @@ const ProfileAndVisibility = () => {
                     Who can see this?
                 </p>
                 <div className={cx('whoSee')}>
-                    <EditField
-                        placeholder="Your name"
-                        label="Full name"
-                        name="inputName"
-                        valueInput={valueInput.inputName}
-                    />
-                    <EditField
-                        placeholder="Your gender"
-                        label="Gender"
-                        name="inputGender"
-                        valueInput={valueInput.inputGender}
-                    />
+                    <EditField placeholder="Your name" label="Full name" name="name" valueInput={valueInput.name} />
+                    <EditField placeholder="Your gender" label="Gender" name="gender" valueInput={valueInput.gender} />
                     <EditField
                         placeholder="Your birthDay"
                         label="BirthDay"
-                        name="inputBirthDay"
-                        valueInput={valueInput.inputBirthDay}
+                        name="birthDay"
+                        valueInput={valueInput.birthDay.slice(0, 10)}
                     />
-                    <EditField
-                        placeholder="Your desc"
-                        label="Desc"
-                        name="inputDesc"
-                        valueInput={valueInput.inputDesc}
-                    />
+                    <EditField placeholder="Your desc" label="Desc" name="desc" valueInput={valueInput.desc} />
                 </div>
             </div>
             <h3 className={cx('ProfilePhotoAndHeaderImage')}>Contact</h3>
@@ -75,14 +60,14 @@ const ProfileAndVisibility = () => {
                     <EditField
                         placeholder="Your email"
                         label="Email address"
-                        name="inputEmail"
-                        valueInput={valueInput.inputEmail}
+                        name="email"
+                        valueInput={valueInput.email}
                     />
                     <EditField
                         placeholder="Your phone"
                         label="Phone address"
-                        name="inputPhone"
-                        valueInput={valueInput.inputPhone}
+                        name="phone"
+                        valueInput={valueInput.phone}
                     />
                 </div>
             </div>

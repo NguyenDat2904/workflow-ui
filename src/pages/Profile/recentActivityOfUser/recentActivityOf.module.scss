@@ -41,6 +41,7 @@
             }
         }
     }
+
     .newesWork {
         margin-top: 20px;
         border: 1px solid #02060c0f;
@@ -51,6 +52,10 @@
             display: flex;
             cursor: pointer;
             gap: 10px;
+            img {
+                width: 28px;
+                height: auto;
+            }
             .ingredientDetail {
                 font-size: 14px;
                 line-height: 16px;

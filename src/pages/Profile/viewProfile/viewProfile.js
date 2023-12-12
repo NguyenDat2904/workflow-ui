@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames/bind';
+
 import styles from './viewProfile.module.scss';
 import { AppContext } from '~/hook/context/context';
 import { Buiding, Location, BagIcon, TreeIcon, Email, Phone, AddIcon } from '~/component/icon/icon';
@@ -8,12 +9,12 @@ import RecentActivityOfUser from '../recentActivityOfUser/recentActivityOf';
 
 const cx = classNames.bind(styles);
 const ViewProfile = () => {
-    const { formButton, valueInput, handleFormButton, handleSubmit, handleOnchange } = useContext(AppContext);
-
+    const { formButton, valueInput, handleFormButton, handleSubmit, handleOnchange, dataUserProfile, dataListWork } =
+        useContext(AppContext);
     return (
         <div className={cx('viewProfile')}>
             <div className={cx('viewInfoUser')}>
-                <h2>Nguyễn Văn Hùng</h2>
+                <h2>{dataUserProfile.name}</h2>
                 <button className={cx('moreInformationUser')}>Manage your account</button>
                 <div className={cx('viewInfo')}>
                     <div className={cx('info')}>
@@ -27,11 +28,11 @@ const ViewProfile = () => {
                                 <Input
                                     onSubmit={handleSubmit}
                                     onChange={handleOnchange}
-                                    name="bagIcon"
+                                    name="jopTitle"
                                     placeholder={'Your jop title'}
                                     onClick={handleFormButton}
                                     formButton={formButton}
-                                    value={valueInput.bagIcon}
+                                    value={valueInput.jopTitle}
                                     type="text"
                                 />
                             </div>
@@ -42,11 +43,11 @@ const ViewProfile = () => {
                                 <Input
                                     onSubmit={handleSubmit}
                                     onChange={handleOnchange}
-                                    name="treeIcon"
+                                    name="department"
                                     placeholder={'Your department'}
                                     onClick={handleFormButton}
                                     formButton={formButton}
-                                    value={valueInput.treeIcon}
+                                    value={valueInput.department}
                                     type="text"
                                 />
                             </div>
@@ -57,11 +58,11 @@ const ViewProfile = () => {
                                 <Input
                                     onSubmit={handleSubmit}
                                     onChange={handleOnchange}
-                                    name="buiding"
+                                    name="organization"
                                     placeholder={'Your organization'}
                                     onClick={handleFormButton}
                                     formButton={formButton}
-                                    value={valueInput.buiding}
+                                    value={valueInput.organization}
                                     type="text"
                                 />
                             </div>
@@ -90,13 +91,13 @@ const ViewProfile = () => {
                                     <Email />
                                 </span>
 
-                                <p className={cx('addressContact')}> vanhungnvh1712004@gmail.com</p>
+                                <p className={cx('addressContact')}>{dataUserProfile.email}</p>
                             </div>
                             <div className={cx('methotContact')}>
                                 <span>
                                     <Phone className="svgPhone" />
                                 </span>
-                                <p className={cx('addressContact')}> 0862625207</p>
+                                <p className={cx('addressContact')}>{dataUserProfile.phone}</p>
                             </div>
                         </div>
                     </div>
@@ -115,7 +116,7 @@ const ViewProfile = () => {
                 </div>
             </div>
             <div className={cx('recentActivityOfUser')}>
-                <RecentActivityOfUser />
+                <RecentActivityOfUser dataListWork={dataListWork} />
             </div>
         </div>
     );

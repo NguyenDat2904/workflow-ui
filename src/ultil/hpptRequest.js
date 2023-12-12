@@ -2,9 +2,9 @@ import axios from 'axios';
 export const httpRequest = axios.create({
     baseURL: 'https://workflow-sever.onrender.com',
 });
-export const get = async (path, option = {}, headers = {}) => {
+export const get = async (path, headers = {}) => {
     try {
-        const response = await httpRequest.get(path, option, headers);
+        const response = await httpRequest.get(path, headers);
         return response;
     } catch (error) {
         if (error.response) {
@@ -18,7 +18,7 @@ export const get = async (path, option = {}, headers = {}) => {
         return error.response;
     }
 };
-export const post = async (path, option = {}, headers) => {
+export const post = async (path, option = {}, headers = {}) => {
     try {
         const response = await httpRequest.post(path, option, headers);
         return response;
@@ -66,9 +66,9 @@ export const remove = async (path, option = {}, header) => {
         return error.response;
     }
 };
-export const patch = async (path, option = {}) => {
+export const patch = async (path, option = {}, headers = {}) => {
     try {
-        const response = await httpRequest.patch(path, option);
+        const response = await httpRequest.patch(path, option, headers);
         return response;
     } catch (error) {
         if (error.response) {

@@ -83,3 +83,11 @@
         }
     }
 }
+@media only screen and (max-width: 640px) {
+    .recentActivityOf {
+        .titleRecentActivityOf {
+            display: grid;
+            grid-template-columns: 5fr 2fr;
+        }
+    }
+}

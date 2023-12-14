@@ -18,7 +18,7 @@ export const get = async (path, headers = {}) => {
         return error.response;
     }
 };
-export const post = async (path, option = {}, headers) => {
+export const post = async (path, option = {}, headers = {}) => {
     try {
         const response = await httpRequest.post(path, option, headers);
         return response;

@@ -13,15 +13,15 @@ export default function ProfileSecurity() {
         e.preventDefault();
         const user = JSON.parse(localStorage.getItem('user'));
         const response = await patch(
-            `/users/profile/changePassword/${user._id}`,
+            `/users/profile/changePassword/${user?._id}`,
             {
                 oldPassword: currentPassword,
                 newPassword: password,
             },
             {
                 headers: {
-                    authorization: `${user.accessToken}`,
-                    refresh_token: `${user.refreshToken}`,
+                    authorization: `${user?.accessToken}`,
+                    refresh_token: `${user?.refreshToken}`,
                 },
             },
         );

@@ -1,0 +1,178 @@
+.modalSelectImg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(192, 192, 192, 0.3);
+    z-index: 100;
+    position: fixed;
+}
+.noneModalSelectImg {
+    display: none;
+}
+.profileUser {
+    .backgroundImgUser {
+        width: 100%;
+
+        position: relative;
+        .bgrimg {
+            width: 100%;
+            height: 100%;
+            background: var(--ds-background-accent-gray-bolder, rgba(9, 30, 66, 0.54));
+            position: relative;
+            .imgCover {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .addImg {
+                height: 50%;
+                display: none;
+                cursor: pointer;
+                transition: all 3ms ease;
+                position: absolute;
+                z-index: 1;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                form {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    svg {
+                        width: 36px;
+                        height: 36px;
+                        color: #fff;
+                    }
+                    h4 {
+                        color: #fff;
+                        font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans',
+                            Ubuntu, 'Droid Sans', 'Helvetica Neue', sans-serif;
+                    }
+                    .labelUploadImg {
+                        box-shadow: var(
+                            --ds-shadow-overlay,
+                            0 4px 8px -2px rgba(9, 30, 66, 0.25),
+                            0 0 1px rgba(9, 30, 66, 0.31)
+                        );
+                        display: block;
+                        margin-top: 10px;
+                        border-radius: 3px;
+                        background-color: #fff;
+                        width: auto;
+                        height: auto;
+                        padding: 5px 0;
+                        h4 {
+                            padding: 10px;
+
+                            color: black;
+                            font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                                'Noto Sans', Ubuntu, 'Droid Sans', 'Helvetica Neue', sans-serif;
+                            &:hover {
+                                background-color: rgba(192, 192, 192, 0.3);
+                            }
+                        }
+                    }
+                }
+            }
+            &:hover {
+                .addImg {
+                    display: block;
+                }
+                .imgCover {
+                    display: none;
+                }
+            }
+        }
+
+        .avatarUser {
+            margin-left: 20%;
+            position: absolute;
+            top: 100%;
+            transform: translateY(-75%);
+            .bagrAvatar {
+                border-radius: 50%;
+                background-color: #fff;
+                position: relative;
+                .avatar {
+                    .avatarBackground,
+                    .avatarImg {
+                        width: 95%;
+                        height: 95%;
+                        border-radius: 50%;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+                    .avatarBackground {
+                        background-color: violet;
+                        .textAvatarBackground {
+                            font-size: 50px;
+                            font-weight: 600;
+
+                            font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                                'Noto Sans', Ubuntu, 'Droid Sans', 'Helvetica Neue', sans-serif;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
+                    .uploadAvatar {
+                        display: none;
+                        width: 95%;
+                        height: 95%;
+                        border-radius: 50%;
+                        background-color: rgba(192, 192, 192, 0.3);
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        svg {
+                            width: 40px;
+                            height: 40px;
+                            color: #fff;
+                        }
+                    }
+                    &:hover {
+                        .uploadAvatar {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                    }
+                }
+
+                .ShownUploadImgAvatar {
+                    width: 120%;
+                    background-color: #fff;
+                    border-radius: 3px;
+                    border: 0.1px solid #06152d0f;
+                    display: flex;
+                    flex-direction: column;
+                    position: absolute;
+                    z-index: 10;
+                    top: 75%;
+                    left: -10%;
+                    p,
+                    .labeluploadAvatarImg {
+                        margin: 0;
+                        padding: 10px;
+                        cursor: pointer;
+                        &:hover {
+                            background-color: #091e420f;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.notShownUploadImg,
+.inputUploadFile {
+    display: none;
+}

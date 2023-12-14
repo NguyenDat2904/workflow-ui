@@ -1,9 +1,25 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import style from './Input.module.scss';
+import { SuccessIcon, CloseIcon } from '../icon/icon';
+
 const cx = classNames.bind(style);
 
-function Input({ className, inputClass, type, id, placeholder, value, name, onClick, label, onSubmit, ...passProps }) {
+function Input({
+    className,
+    inputClass,
+    type,
+    id,
+    placeholder,
+    value,
+    name,
+    onSubmit,
+    onChange,
+    onClick,
+    formButton,
+    label,
+    ...passProps
+}) {
     const classes = cx('input', {
         [className]: className,
         inputClass,
@@ -18,7 +34,7 @@ function Input({ className, inputClass, type, id, placeholder, value, name, onCl
                     </label>
                     <div className={cx('field-edit')}>
                         <div>
-                            <form className={cx('form')} onSubmit={onSubmit}>
+                            <form onSubmit={onSubmit} className={cx('form')}>
                                 <div className={cx('form-input')}>
                                     <input
                                         className={classes}
@@ -29,7 +45,18 @@ function Input({ className, inputClass, type, id, placeholder, value, name, onCl
                                         value={value}
                                         name={name}
                                         onClick={onClick}
+                                        onChange={onChange}
                                     />
+                                    <div className={cx(formButton ? 'formSaveInfo' : 'noneformSaveInfo')}>
+                                        <div className={cx('saveInfo')}>
+                                            <button type="submit" className={cx('buttonSave')}>
+                                                <SuccessIcon />
+                                            </button>
+                                            <button onClick={onClick} type="button" className={cx('buttonClose')}>
+                                                <CloseIcon />
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>

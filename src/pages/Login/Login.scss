@@ -10,7 +10,7 @@
 
 .login-container {
     margin: 0 auto;
-    width: clamp(20rem, 30%, 30rem);
+    width: clamp(30rem, 35%, 40rem);
     h3 {
         text-align: center;
         font-size: 1.2rem;
@@ -35,4 +35,8 @@
     .login-error {
         color: red;
     }
+}
+
+.login-google-button {
+    width: 100%;
 }

@@ -305,7 +305,7 @@ export const GreenTickIcon = ({ nameCss }) => {
 };
 export const BagIcon = ({ nameCss }) => {
     return (
-        <svg className={nameCss} width={24} height={24} viewBox="0 0 24 24" role="presentation">
+        <svg width={24} height={24} viewBox="0 0 24 24" role="presentation">
             <path
                 fill="currentColor"
                 fillRule="evenodd"
@@ -342,6 +342,54 @@ export const UserIcon = ({ nameCss }) => {
             className={cx('user-img')}
             style={{ borderRadius: '50%' }}
         />
+    );
+};
+export const Buiding = ({ nameCss }) => {
+    return (
+        <svg className={nameCss}>
+            <g fill="currentColor" fillRule="evenodd">
+                <path
+                    d="M8 6H5.009C3.902 6 3 6.962 3 8.15v10.7C3 20.04 3.9 21 5.009 21h5.487H8v-2.145c-1.616-.001-3-.003-3-.004 0 0 .005-10.708.009-10.708L8 8.144V6z"
+                    fillRule="nonzero"
+                />
+                <path d="M12 7h2v2h-2zm-6 3h2v2H6zm0 3h2v2H6zm6-3h2v2h-2zm0 3h2v2h-2zm2 3h2v3h-2zm2-9h2v2h-2zm0 3h2v2h-2zm0 3h2v2h-2z" />
+                <path
+                    d="M18.991 19C18.998 19 19 4.995 19 4.995c0 .006-7.991.005-7.991.005C11.002 5 11 19 11 19h7.991zM9 4.995C9 3.893 9.902 3 11.009 3h7.982C20.101 3 21 3.893 21 4.995v14.01A2.004 2.004 0 0118.991 21H9V4.995z"
+                    fillRule="nonzero"
+                />
+            </g>
+        </svg>
+    );
+};
+export const Location = ({ nameCss }) => {
+    return (
+        <svg className={nameCss}>
+            <path
+                d="M12 21c-2.28 0-6-8.686-6-12a6 6 0 1112 0c0 3.314-3.72 12-6 12zm0-9a2.912 2.912 0 100-5.824A2.912 2.912 0 0012 12z"
+                fill="currentColor"
+                fillRule="evenodd"
+            />
+        </svg>
+    );
+};
+export const Email = ({ nameCss }) => {
+    return (
+        <svg className={nameCss}>
+            <g fill="currentColor" fillRule="evenodd">
+                <path
+                    d="M5 7v10h14V7H5zm14-2c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h14z"
+                    fillRule="nonzero"
+                ></path>
+                <path d="M5.498 6.5H3.124c.149.44.399.854.75 1.205l5.882 5.881a3.117 3.117 0 004.41 0l5.882-5.881c.35-.351.6-.765.749-1.205h-2.373l-5.672 5.672a1.119 1.119 0 01-1.583 0L5.498 6.5z"></path>
+            </g>
+        </svg>
+    );
+};
+export const Phone = ({ nameCss }) => {
+    return (
+        <svg className={nameCss} height="16" width="16" viewBox="0 0 512 512">
+            <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />
+        </svg>
     );
 };
 export const LoadingIcon = ({ nameCss }) => {

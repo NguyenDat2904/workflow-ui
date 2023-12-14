@@ -1,0 +1,62 @@
+.viewWorkSelect {
+    margin-top: 10px;
+    padding-left: 10px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    .nameProject {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        .nameProjectRight {
+            padding-left: 10px;
+            .nameP {
+                font-size: 14px;
+            }
+            .nameUser {
+                margin: 0;
+                font-size: 12px;
+                .nameUserspan {
+                    font-weight: 500;
+                }
+            }
+        }
+
+        .imgFile {
+            width: 24px;
+            height: 30px;
+        }
+    }
+    .positionSelect {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        .select {
+            width: 45%;
+            height: 80%;
+            background-color: #fff;
+            border: 2px solid #02060c0f;
+            border-radius: 3px;
+            padding-right: 5px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            .selectNameProject {
+                cursor: pointer;
+                padding: 5px;
+                font-size: 14px;
+                border: none;
+                outline: none;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans',
+                    'Droid Sans', 'Helvetica Neue', sans-serif;
+                .opacity {
+                    color: rgb(171, 171, 171);
+                }
+            }
+        }
+    }
+
+    &:hover {
+        background-color: rgb(245, 245, 245);
+    }
+}

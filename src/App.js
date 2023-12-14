@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 import routes from '~/routes/routes';
 import DefaultLayout from './layout/DefaultLayout/DefaultLayout';
 import { AppProvider } from './hook/context/context';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
     return (
@@ -33,6 +34,7 @@ function App() {
                         })}
                     </Routes>
                 </div>
+                <ToastContainer />
             </BrowserRouter>
         </AppProvider>
     );

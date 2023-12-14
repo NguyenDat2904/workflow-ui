@@ -3,6 +3,22 @@
     padding-bottom: 100px;
     padding-top: 50px;
     margin: 0 auto;
+    .headerWorkOn {
+        margin-top: 40px;
+        margin-bottom: 20px;
+        font-weight: 400;
+        color: #44546f;
+        font-size: 16px;
+        font-style: normal;
+        font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
+            'Droid Sans', 'Helvetica Neue', sans-serif;
+        .linkProfile {
+            cursor: pointer;
+            &:hover {
+                color: #2684ff;
+            }
+        }
+    }
     .titleProfileAndVisibility {
         font-size: 1.71429em;
         font-style: inherit;
@@ -22,7 +38,6 @@
         color: var(--ds-text, #172b4d);
     }
     .SeeDetails {
-        cursor: pointer;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans', 'Droid Sans',
             'Helvetica Neue', sans-serif;
         color: #0052cc;

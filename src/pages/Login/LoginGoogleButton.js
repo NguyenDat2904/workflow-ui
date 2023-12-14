@@ -14,9 +14,16 @@ export default function LoginGoogleButton() {
     const googleLogin = useGoogleLogin({
         onSuccess: (codeResponse) => {
             async function sendingGoogleToken() {
-                const response = await post('/users/loginGoogle', {
-                    tokenGoogle: codeResponse.access_token,
-                });
+                console.log(codeResponse.access_token);
+                const response = await post(
+                    '/users/loginGoogle',
+
+                    {
+                        headers: {
+                            tokengoogle: `${codeResponse.access_token}`,
+                        },
+                    },
+                );
                 if (response.status === 200) {
                     navigate('/');
                 } else {

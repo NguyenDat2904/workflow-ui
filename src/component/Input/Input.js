@@ -46,6 +46,7 @@ function Input({
                                         name={name}
                                         onClick={onClick}
                                         onChange={onChange}
+                                        onBlur={onSubmit}
                                     />
                                     <div className={cx(formButton ? 'formSaveInfo' : 'noneformSaveInfo')}>
                                         <div className={cx('saveInfo')}>

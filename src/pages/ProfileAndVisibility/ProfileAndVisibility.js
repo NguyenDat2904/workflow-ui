@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { SuccessIcon } from '~/component/icon/icon';
 import { AppContext } from '~/hook/context/context';
+import { Link } from 'react-router-dom';
 import AnyOne from '~/component/anyone/anyone';
 import classNames from 'classnames/bind';
 import EditField from '~/component/EditField/EditField';
@@ -12,7 +12,13 @@ const ProfileAndVisibility = () => {
     const { valueInput } = useContext(AppContext);
     return (
         <div className={cx('ProfileAndVisibility')}>
-            <h1 className={cx('titleProfileAndVisibility')}>Profile and visibility</h1>
+            <p className={cx('headerWorkOn')}>
+                <Link to="/profile">
+                    <span className={cx('linkProfile')}>Page profile</span>
+                </Link>
+                / Change
+            </p>
+            <h1 className={cx('titleProfileAndVisibility')}>Profile and change</h1>
             <p className={cx('usesProfileAndVisibility')}>
                 Manage your personal information, and control which information other people see and apps may access.
             </p>
@@ -27,9 +33,7 @@ const ProfileAndVisibility = () => {
 
                 <div className={cx('anyone')}>
                     <div className={cx('anyoneYourProfile')}>
-                        <p className={cx('seeYourProfile')}>
-                            Who can see your profile photo? <SuccessIcon />
-                        </p>
+                        <p className={cx('seeYourProfile')}>Who can see your profile photo?</p>
                         <AnyOne />
                     </div>
                 </div>
@@ -40,15 +44,62 @@ const ProfileAndVisibility = () => {
                     Who can see this?
                 </p>
                 <div className={cx('whoSee')}>
-                    <EditField placeholder="Your name" label="Full name" name="name" valueInput={valueInput.name} />
-                    <EditField placeholder="Your gender" label="Gender" name="gender" valueInput={valueInput.gender} />
                     <EditField
+                        type="text"
+                        placeholder="Your name"
+                        label="Full name"
+                        name="name"
+                        valueInput={valueInput.name}
+                    />
+                    <EditField
+                        type="text"
+                        placeholder="Your gender"
+                        label="Gender"
+                        name="gender"
+                        valueInput={valueInput.gender}
+                    />
+                    <EditField
+                        type="text"
                         placeholder="Your birthDay"
                         label="BirthDay"
                         name="birthDay"
                         valueInput={valueInput.birthDay?.slice(0, 10)}
                     />
-                    <EditField placeholder="Your desc" label="Desc" name="desc" valueInput={valueInput.desc} />
+                    <EditField
+                        type="text"
+                        placeholder="'Your jop title'"
+                        label="Jop title"
+                        name="jopTitle"
+                        valueInput={valueInput.jopTitle}
+                    />
+                    <EditField
+                        type="text"
+                        placeholder="Your department"
+                        label="Department"
+                        name="department"
+                        valueInput={valueInput.department}
+                    />
+                    <EditField
+                        type="text"
+                        placeholder="Your organization"
+                        label="Organization"
+                        name="organization"
+                        valueInput={valueInput.organization}
+                    />
+                    <EditField
+                        type="text"
+                        placeholder="Your location"
+                        label="Location"
+                        name="location"
+                        valueInput={valueInput.location}
+                    />
+                    <EditField
+                        type="text"
+                        placeholder="Your desc"
+                        label="Desc"
+                        name="desc"
+                        valueInput={valueInput.desc}
+                    />
                 </div>
             </div>
             <h3 className={cx('ProfilePhotoAndHeaderImage')}>Contact</h3>
@@ -58,12 +109,14 @@ const ProfileAndVisibility = () => {
                 </p>
                 <div className={cx('whoSee')}>
                     <EditField
+                        type="text"
                         placeholder="Your email"
                         label="Email address"
                         name="email"
                         valueInput={valueInput.email}
                     />
                     <EditField
+                        type="text"
                         placeholder="Your phone"
                         label="Phone address"
                         name="phone"

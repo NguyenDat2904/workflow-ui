@@ -1,0 +1,23 @@
+.wrapper {
+    position: fixed;
+    inset: 0px auto auto 0px;
+    transform: translate(164px, 52px);
+    display: block;
+    box-sizing: border-box;
+    z-index: 400;
+    flex: 1 1 auto;
+    background-color: var(--ds-surface-overlay, #ffffff);
+    border-radius: var(--ds-border-radius, 3px);
+    box-shadow: var(--ds-shadow-overlay, 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31));
+    --ds-elevation-surface-current: var(--ds-surface-overlay, #ffffff);
+    overflow: auto;
+    .width {
+        min-width: var(--_1d8u6ab);
+        .height {
+            display: flex;
+            position: static;
+            flex-direction: column;
+            overflow: auto;
+        }
+    }
+}

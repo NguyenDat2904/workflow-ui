@@ -29,8 +29,8 @@ const ViewAllListWork = () => {
                 },
                 {
                     headers: {
-                        authorization: `${parseuser.accessToken}`,
-                        refresh_token: `${parseuser.refreshToken}`,
+                        authorization: `${parseuser?.accessToken}`,
+                        refresh_token: `${parseuser?.refreshToken}`,
                     },
                 },
             );
@@ -121,7 +121,7 @@ const ViewAllListWork = () => {
                                         </option>
                                         {dataProject?.map((product) => {
                                             return (
-                                                <option key={product._id} value={product.nameProject}>
+                                                <option key={product?._id} value={product.nameProject}>
                                                     {product.nameProject}
                                                 </option>
                                             );
@@ -134,7 +134,7 @@ const ViewAllListWork = () => {
 
                         {resultdataListWork?.map((product) => {
                             return (
-                                <div key={product._id} className={cx('viewWorkSelect')}>
+                                <div key={product?._id} className={cx('viewWorkSelect')}>
                                     <div className={cx('nameProject')}>
                                         <img
                                             className={cx('imgFile')}

@@ -18,7 +18,7 @@ const RecentActivityOfUser = ({ dataListWork }) => {
             <div className={cx('newesWork')}>
                 {dataListWork.listWorkID?.map((product) => {
                     return (
-                        <div key={product._id} className={cx('ingredient')}>
+                        <div key={product?._id} className={cx('ingredient')}>
                             <img
                                 src="https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=xsmall"
                                 alt=""
@@ -27,7 +27,7 @@ const RecentActivityOfUser = ({ dataListWork }) => {
                             <h4 className={cx('ingredientDetail')}>
                                 {product.nameWork} <br />
                                 <p className={cx('ingredientDetailName')}>
-                                    creation time: {product.dateCreated.slice(0, 10)}
+                                    creation time: {product.dateCreated?.slice(0, 10)}
                                 </p>
                             </h4>
                         </div>

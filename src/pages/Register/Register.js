@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './Register.module.scss';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { post } from '~/ultil/hpptRequest';
 import { LoadingIcon } from '~/component/icon/icon';
 import { AppContext } from '~/hook/context/context';
@@ -11,12 +11,27 @@ const cx = classNames.bind(style);
 
 function Register() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const Url = new URLSearchParams(location.search);
+    const params = Object.fromEntries(Url.entries());
+    const { email } = params;
+
     // 0. Context
-    const { values, handleChange, errors, setErrors, classError, setClassError } = useContext(AppContext);
+    const { values, setValue, handleChange, errors, setErrors, classError, setClassError } = useContext(AppContext);
     // 1. State
     const [toggleForm, setToggleForm] = useState(true);
 
     // 2. UseEffect
+    useEffect(() => {
+        if (email) {
+            setValue((prevValues) => ({
+                ...prevValues,
+                email: email,
+            }));
+            setToggleForm(false);
+        }
+    }, [email]);
+    console.log(values);
     useEffect(() => {
         const emailRegex = /^$|^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const userRegex = /^$|(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,20}$/;

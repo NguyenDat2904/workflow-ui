@@ -6,7 +6,7 @@ const TaskMaster = ({ dataListWork }) => {
     return dataListWork.map((product) => {
         return product.creatorID.map((item) => {
             return (
-                <div key={product._id} className={cx('viewWorkSelect')}>
+                <div key={product?._id} className={cx('viewWorkSelect')}>
                     <div className={cx('nameProject')}>
                         <img
                             className={cx('imgFile')}

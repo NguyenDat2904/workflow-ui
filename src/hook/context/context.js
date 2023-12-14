@@ -31,6 +31,7 @@ const AppProvider = (props) => {
             setImgAvatar(true);
         } else {
             setModalSelectImg(number);
+            setImgAvatar(true);
         }
     };
 
@@ -74,18 +75,20 @@ const AppProvider = (props) => {
     }, []);
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const addUserInfo = await patch(
-            `/users/updateUser/${dataUserProfile._id}`,
-            { nameFill: namefillInput, contenEditing: valueInputAny },
-            {
-                headers: {
-                    authorization: `${parseuser.accessToken}`,
-                    refresh_token: `${parseuser.refreshToken}`,
+        if (namefillInput !== '') {
+            const addUserInfo = await patch(
+                `/users/updateUser/${dataUserProfile._id}`,
+                { nameFill: namefillInput, contenEditing: valueInputAny },
+                {
+                    headers: {
+                        authorization: `${parseuser.accessToken}`,
+                        refresh_token: `${parseuser.refreshToken}`,
+                    },
                 },
-            },
-        );
-        if (addUserInfo.status === 200) {
-            callApi();
+            );
+            if (addUserInfo.status === 200) {
+                callApi();
+            }
         }
     };
     const apiListWork = async () => {

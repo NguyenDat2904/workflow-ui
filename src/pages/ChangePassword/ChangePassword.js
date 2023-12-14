@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './ChangePassword.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Wrapper from '~/component/WrapperForm/Wrapper';
 import HeaderSuffix from '~/component/HeaderSuffix/HeaderSuffix';
-import { EyeIconPassword, EyeIconText, LogoIcon } from '~/component/icon/icon';
+import { EyeIconPassword, EyeIconText, LoadingIcon, LogoIcon } from '~/component/icon/icon';
+import { patch } from '~/ultil/hpptRequest';
 const cx = classNames.bind(style);
 
 function ChangePassword() {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const Url = new URLSearchParams(location.search);
+    const params = Object.fromEntries(Url.entries());
+    const { tokenUSer, id } = params;
+    // 1. State
     const [password, setPassword] = useState('');
     const [eyePassword, setEyePassword] = useState(false);
+    const [toggle, setToggle] = useState(false);
+
+    // 2. Func
     const handleChange = (e) => {
         setPassword(e.target.value);
     };
@@ -17,11 +27,32 @@ function ChangePassword() {
         setEyePassword(!eyePassword);
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (toggle === true) {
+            return;
+        }
+        setToggle(true);
+        const resetPassword = await patch(
+            `/users/forgot/changePassword/${id}`,
+            { passWord: password },
+            {
+                headers: {
+                    'verify-token': tokenUSer,
+                },
+            },
+        );
+        setToggle(false);
+        if (resetPassword.status === 200) {
+            navigate('/profile');
+        }
+    };
+
     return (
         <Wrapper>
             <section className={cx('main')}>
                 <HeaderSuffix title="Chọn mật khẩu mới" />
-                <form action="">
+                <form action="" onSubmit={handleSubmit}>
                     <div className={cx('input-wrapper')}>
                         <div className={cx('input')}>
                             <div className={cx('presentation')}>
@@ -38,12 +69,12 @@ function ChangePassword() {
                             {eyePassword ? <EyeIconText /> : <EyeIconPassword />}
                         </span>
                     </div>
+                    <div className={cx('button-submit')}>
+                        <button type="submit" className={cx(toggle && 'disable')}>
+                            {toggle ? <LoadingIcon /> : <span>Tiếp tục</span>}
+                        </button>
+                    </div>
                 </form>
-                <div className={cx('button-submit')}>
-                    <button type="submit">
-                        <span>Tiếp tục</span>
-                    </button>
-                </div>
                 <div className={cx('back')}>
                     <Link>Bạn vẫn gặp vấn đề khi đăng nhập?</Link>
                 </div>

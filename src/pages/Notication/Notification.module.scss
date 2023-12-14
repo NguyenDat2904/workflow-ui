@@ -5,13 +5,25 @@
     justify-content: center;
     margin: 50px 0px;
 }
+.main {
+    display: flex;
+    flex-direction: column;
+    margin: 0px auto;
+    width: 400px;
+    padding: 32px 40px;
+    background: rgb(255, 255, 255);
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
+    box-sizing: border-box;
+    color: rgb(94, 108, 132);
+}
 section {
     display: flex;
     flex-direction: column;
     margin: 0px auto;
     width: 522px;
     padding: 32px 40px;
-    background: rgb(255, 255, 255);
+    background: transparent;
     border-radius: 3px;
     box-shadow: none;
     color: rgb(94, 108, 132);
@@ -84,6 +96,8 @@ section {
     font-size: 14px;
     text-align: center;
     line-height: 20px;
+    display: flex;
+    justify-content: center;
     a {
         color: var(--ds-link, #0052cc);
         &:hover {
@@ -103,6 +117,45 @@ section {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+        }
+    }
+}
+.dot {
+    margin: 0px 8px;
+}
+.footer {
+    color: rgb(107, 119, 140);
+    padding-top: 16px;
+    font-size: 11px;
+    text-align: center;
+    line-height: 14px;
+    .footer-logo {
+        background: transparent;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        box-sizing: border-box;
+        flex-direction: column;
+        margin: 0px auto;
+        border-top: 1px solid rgb(193, 199, 208);
+        padding-top: 24px;
+        font-size: 11px;
+        color: rgb(23, 43, 77);
+        .logo {
+            --logo-color: inherit;
+            --logo-fill: currentColor;
+            display: inline-block;
+            position: relative;
+            color: var(--logo-color);
+            fill: var(--logo-fill);
+            line-height: 1;
+            user-select: none;
+            white-space: normal;
+            height: 24px;
+            svg {
+                height: 100%;
+                fill: inherit;
+            }
         }
     }
 }

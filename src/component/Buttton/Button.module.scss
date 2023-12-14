@@ -22,12 +22,12 @@
     vertical-align: middle;
     width: auto;
     justify-content: center;
-    color: var(--ds-text, #42526e) !important;
+    color: var(--ds-text, #42526e);
     &:hover {
         background: var(--ds-background-neutral-hovered, rgba(9, 30, 66, 0.08));
         text-decoration: inherit;
         transition-duration: 0s, 0.15s;
-        color: var(--ds-text, #42526e) !important;
+        color: var(--ds-text, #42526e);
     }
 }
 .title {
@@ -56,9 +56,11 @@
     font-size: 0px;
     line-height: 0;
     user-select: none;
+    // height: 100%;
 }
 .backgroundNone {
     background: var(--ds-background-neutral-subtle, none);
+    padding: 0 4px;
     &:hover {
         background: var(--ds-background-neutral-subtle-hovered, rgba(9, 30, 66, 0.08));
         text-decoration: inherit;
@@ -78,4 +80,41 @@
 .whiteBackGround {
     background-color: var(--ds-surface-overlay, #fff);
     box-shadow: var(--ds-shadow-overlay, 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31));
+}
+.blue {
+    background: var(--ds-background-brand-bold-hovered, #0065ff);
+    border-width: 0px;
+    border-radius: var(--ds-border-radius, 3px);
+    text-decoration: none;
+    transition: background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
+    white-space: nowrap;
+    padding: 0px 10px;
+    color: var(--ds-text-inverse, #ffffff);
+    &:hover {
+        background-color: var(--ds-background-brand-bold, #0052cc);
+        text-decoration: inherit;
+        transition-duration: 0s, 0.15s;
+        color: var(--ds-text-inverse, #ffffff);
+    }
+}
+.viewAll {
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 40px;
+    margin: var(--ds-space-0, 0px);
+    -webkit-box-align: center;
+    align-items: center;
+    border: 0px;
+    font-size: var(--ds-font-size-100, 14px);
+    outline: 0px;
+    text-decoration: none;
+    user-select: none;
+    padding-block: var(--ds-space-100, 8px);
+    padding-inline: var(--ds-space-200, 16px);
+    background-color: var(--ds-background-neutral-subtle, transparent);
+    color: currentcolor;
+    cursor: pointer;
+    text-align: start;
 }

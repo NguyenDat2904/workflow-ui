@@ -1,23 +1,37 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './Register.module.scss';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Tab from './Tab/Tab';
-import { Button } from '~/component/inputs/Inputs';
 import { post } from '~/ultil/hpptRequest';
 import { LoadingIcon } from '~/component/icon/icon';
 import { AppContext } from '~/hook/context/context';
-import LoginGG from './LoginGG/LoginGG';
+import { useGoogleLogin } from '@react-oauth/google';
 const cx = classNames.bind(style);
 
 function Register() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const Url = new URLSearchParams(location.search);
+    const params = Object.fromEntries(Url.entries());
+    const { email } = params;
+
     // 0. Context
-    const { values, handleChange, errors, setErrors, classError, setClassError } = useContext(AppContext);
+    const { values, setValue, handleChange, errors, setErrors, classError, setClassError } = useContext(AppContext);
     // 1. State
     const [toggleForm, setToggleForm] = useState(true);
 
     // 2. UseEffect
+    useEffect(() => {
+        if (email) {
+            setValue((prevValues) => ({
+                ...prevValues,
+                email: email,
+            }));
+            setToggleForm(false);
+        }
+    }, [email]);
+    console.log(values);
     useEffect(() => {
         const emailRegex = /^$|^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const userRegex = /^$|(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,20}$/;
@@ -158,6 +172,32 @@ function Register() {
         }
     };
 
+    const handleLoginGg = useGoogleLogin({
+        onSuccess: (codeResponse) => {
+            async function sendingGoogleToken() {
+                const response = await post('/users/loginGoogle', {
+                    tokenGoogle: codeResponse.access_token,
+                });
+                if (response.status === 200) {
+                    navigate('/');
+                } else {
+                    switch (response.status) {
+                        case 404:
+                            // setError('This email is not registered yet.');
+                            console.log('error');
+                            break;
+                        default:
+                        // setError('Something went wrong. Please try again later.');
+                    }
+                }
+            }
+            sendingGoogleToken();
+        },
+        onError: (error) => {
+            console.log('Login Failed:', error);
+        },
+    });
+
     // 4. Render
     return (
         <div className={cx('main')}>
@@ -216,13 +256,12 @@ function Register() {
                                 </div>
                                 <div className={cx('css-option')}>
                                     <div className={cx('option-button')}>
-                                        <Link className={cx('button-gg')}>
-                                            {/* <img
+                                        <Link className={cx('button-gg')} onClick={() => handleLoginGg()}>
+                                            <img
                                                 src="https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.51/static/media/google-logo.c21ca9d1.svg"
                                                 alt="button-gg"
                                             />
-                                            <span>Continue with Google</span> */}
-                                            <LoginGG />
+                                            <span>Continue with Google</span>
                                         </Link>
                                         <div className={cx('or')}>
                                             <div className={cx('left')}></div>

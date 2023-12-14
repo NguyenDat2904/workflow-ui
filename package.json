@@ -23,7 +23,7 @@
         "sass": "^1.69.5"
     },
     "scripts": {
-        "start": "react-app-rewired start",
+        "start": "react-app-rewired start --public-url /register",
         "build": "react-app-rewired build",
         "test": "react-app-rewired test",
         "eject": "react-app-rewired eject"

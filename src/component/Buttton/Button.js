@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import style from './Button.module.scss';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 const cx = classNames.bind(style);
 
 function Button({
@@ -14,7 +14,9 @@ function Button({
     leftIcon,
     rightIcon,
     loading,
+    blue,
     className,
+    viewAll,
     small = false,
     large = false,
     outline = false,
@@ -35,7 +37,7 @@ function Button({
     }
     if (to) {
         _props.to = to;
-        Comp = Link;
+        Comp = NavLink;
     } else if (href) {
         _props.href = href;
         Comp = 'a';
@@ -46,6 +48,8 @@ function Button({
         noChildren,
         borderRadius,
         whiteBackGround,
+        viewAll,
+        blue,
         disable,
         small,
         large,

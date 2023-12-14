@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.scss';
-import { Input, Button, Form } from '../../component/inputs/Inputs';
+import { Input, Button, Form } from '../../component/Inputs/Inputs';
 import { Card } from '~/component/cards/Cards';
 import { ReactComponent as GoogleIcon } from '../../asset/icons/google.svg';
 import { Divider } from '~/component/dividers/Dividers';
@@ -18,9 +18,15 @@ function Login() {
     const googleLogin = useGoogleLogin({
         onSuccess: (codeResponse) => {
             async function sendingGoogleToken() {
-                const response = await post('/users/loginGoogle', {
-                    tokenGoogle: codeResponse.access_token,
-                });
+                const response = await post(
+                    '/users/loginGoogle',
+                    {},
+                    {
+                        headers: {
+                            tokengoogle: codeResponse.access_token,
+                        },
+                    },
+                );
                 if (response.status === 200) {
                     navigate('/');
                 } else {
@@ -80,7 +86,7 @@ function Login() {
                     <Input
                         id={'username'}
                         inputStyle={'light'}
-                        label={'Email or username:'}
+                        label={'Username:'}
                         type={'username'}
                         name={'username'}
                         placeholder={'Enter email or username'}

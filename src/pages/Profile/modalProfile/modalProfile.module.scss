@@ -8,3 +8,14 @@
     left: 50%;
     transform: translateX(-50%);
 }
+@media only screen and (max-width: 1024px) and (min-width: 640px) {
+    .modalSelect {
+        width: 350px;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .modalSelect {
+        width: 300px;
+    }
+}

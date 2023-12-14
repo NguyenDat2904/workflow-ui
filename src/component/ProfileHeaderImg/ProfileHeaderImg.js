@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { AppContext } from '~/hook/context/context';
+import { patch } from '~/ultil/hpptRequest';
 import ModalSelectImg from '~/pages/Profile/modalSelectImg/modalSelectImg';
 import AddProfilePhoto from '~/pages/Profile/addProfilePhoto/addProfilePhoto';
 import classNames from 'classnames/bind';
@@ -8,7 +9,8 @@ import styles from './ProfileHeaderImg.module.scss';
 const cx = classNames.bind(styles);
 
 const ProfileHeaderImg = ({ heightt, widthbagrAvatar, heightbagrAvatar }) => {
-    const { onclickSeeModalSelectImg, modalSelectImg, imgAvatar, setImgAvatar } = useContext(AppContext);
+    const { callApi, onclickSeeModalSelectImg, dataUserProfile, modalSelectImg, imgAvatar, setImgAvatar } =
+        useContext(AppContext);
     const [imgCover, setImgCover] = useState(true);
     const clickIconOpenFile = (value) => {
         switch (value) {
@@ -42,6 +44,22 @@ const ProfileHeaderImg = ({ heightt, widthbagrAvatar, heightbagrAvatar }) => {
             document.removeEventListener('mousedown', Handlemouse);
         };
     });
+    const hendleOnchange = async (e) => {
+        const user = localStorage.getItem('user');
+        const parseuser = JSON.parse(user);
+        const formData = new FormData();
+        formData.append('imgCover', e.target.files[0]);
+        const upload = await patch(`/users/uploadimg/${dataUserProfile._id}`, formData, {
+            headers: {
+                authorization: `${parseuser.accessToken}`,
+                refresh_token: `${parseuser.refreshToken}`,
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        if (upload.status === 200) {
+            await callApi();
+        }
+    };
     return (
         <div>
             <div className={cx('profileUser')}>
@@ -50,12 +68,22 @@ const ProfileHeaderImg = ({ heightt, widthbagrAvatar, heightbagrAvatar }) => {
                         <img
                             className={cx('imgCover')}
                             name="imgCover"
-                            src="https://ptc-directory-sited-static.us-east-1.prod.public.atl-paas.net/gradients/2.svg"
+                            src={
+                                dataUserProfile.imgCover
+                                    ? dataUserProfile.imgCover
+                                    : 'https://ptc-directory-sited-static.us-east-1.prod.public.atl-paas.net/gradients/2.svg'
+                            }
                             alt=""
                         />
                         <div className={cx('addImg')}>
                             <form action="">
-                                <input className={cx('inputUploadFile')} type="file" name="img_cover" id="img_cover" />
+                                <input
+                                    onChange={hendleOnchange}
+                                    className={cx('inputUploadFile')}
+                                    type="file"
+                                    name="imgCover"
+                                    id="img_cover"
+                                />
                                 <span onClick={() => clickIconOpenFile('imgCover')}>
                                     <svg viewBox="0 0 24 24" role="presentation">
                                         <path
@@ -79,17 +107,24 @@ const ProfileHeaderImg = ({ heightt, widthbagrAvatar, heightbagrAvatar }) => {
                     <div className={cx('avatarUser')}>
                         <div style={{ width: widthbagrAvatar, height: heightbagrAvatar }} className={cx('bagrAvatar')}>
                             <div className={cx('avatar')}>
-                                {/* kiểm tra xem có background vs name background ko ,không có thì chuyển sang img  */}
-                                {/* <img
-                                    className={cx('avatarImg')}
-                                    name="img"
-                                    src="https://thespiritofsaigon.net/wp-content/uploads/2022/10/avatar-vo-danh-15.jpg"
-                                    alt=""
-                                /> */}
-                                <div className={cx('avatarBackground')}>
-                                    <span className={cx('textAvatarBackground')}>V</span>
-                                </div>
-
+                                {dataUserProfile.img ? (
+                                    <img className={cx('avatarImg')} src={dataUserProfile.img} alt="" />
+                                ) : dataUserProfile.backgroundProfile ? (
+                                    <div
+                                        style={{ backgroundColor: dataUserProfile.backgroundProfile }}
+                                        className={cx('avatarBackground')}
+                                    >
+                                        <span className={cx('textAvatarBackground')}>
+                                            {dataUserProfile.textInBackgroundProfile}
+                                        </span>
+                                    </div>
+                                ) : (
+                                    <img
+                                        className={cx('avatarImg')}
+                                        src="https://thespiritofsaigon.net/wp-content/uploads/2022/10/avatar-vo-danh-15.jpg"
+                                        alt=""
+                                    />
+                                )}
                                 <div className={cx('uploadAvatar')}>
                                     <svg
                                         onClick={() => clickIconOpenFile('avatarImg')}

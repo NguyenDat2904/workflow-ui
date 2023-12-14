@@ -12,6 +12,7 @@ const AppProvider = (props) => {
     const [dataListWork, setDataListWork] = useState([]);
     const [dataProject, setDataProject] = useState([]);
     const [namefillInput, setNamefillInput] = useState('');
+    const [valueInputAny, setValueInputAny] = useState('');
     const [valueInput, setValueInput] = useState({
         jopTitle: '',
         department: '',
@@ -35,24 +36,14 @@ const AppProvider = (props) => {
 
     const handleOnchange = (e) => {
         setNamefillInput(e.target.name);
-        setValueInput(e.target.value);
+        setValueInputAny(e.target.value);
+        const { name, value } = e.target;
+        setValueInput((prevValues) => ({
+            ...prevValues,
+            [name]: value,
+        }));
     };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const addUserInfo = await patch(
-            `/users/updateUser/${dataUserProfile._id}`,
-            { nameFill: namefillInput, contenEditing: valueInput },
-            {
-                headers: {
-                    authorization: `${parseuser.accessToken}`,
-                    refresh_token: `${parseuser.refreshToken}`,
-                },
-            },
-        );
-        if (addUserInfo.status === 200) {
-            window.location.reload();
-        }
-    };
+
     const handleFormButton = () => {
         if (formButton === true) {
             setFormButton(false);
@@ -81,6 +72,22 @@ const AppProvider = (props) => {
     useEffect(() => {
         callApi();
     }, []);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const addUserInfo = await patch(
+            `/users/updateUser/${dataUserProfile._id}`,
+            { nameFill: namefillInput, contenEditing: valueInputAny },
+            {
+                headers: {
+                    authorization: `${parseuser.accessToken}`,
+                    refresh_token: `${parseuser.refreshToken}`,
+                },
+            },
+        );
+        if (addUserInfo.status === 200) {
+            callApi();
+        }
+    };
     const apiListWork = async () => {
         const popDataProject = dataProject.length - 1;
         const user = localStorage.getItem('user');
@@ -160,6 +167,7 @@ const AppProvider = (props) => {
         dataListWork,
         setDataListWork,
         dataProject,
+        callApi,
     };
     return <AppContext.Provider value={value} {...props}></AppContext.Provider>;
 };

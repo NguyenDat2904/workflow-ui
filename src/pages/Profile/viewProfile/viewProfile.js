@@ -1,85 +1,46 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames/bind';
-
+import { Link } from 'react-router-dom';
 import styles from './viewProfile.module.scss';
 import { AppContext } from '~/hook/context/context';
 import { Buiding, Location, BagIcon, TreeIcon, Email, Phone, AddIcon } from '~/component/icon/icon';
-import Input from '~/component/Input/Input';
 import RecentActivityOfUser from '../recentActivityOfUser/recentActivityOf';
 
 const cx = classNames.bind(styles);
 const ViewProfile = () => {
-    const { formButton, valueInput, handleFormButton, handleSubmit, handleOnchange, dataUserProfile, dataListWork } =
-        useContext(AppContext);
+    const { dataUserProfile, dataListWork } = useContext(AppContext);
     return (
         <div className={cx('viewProfile')}>
             <div className={cx('viewInfoUser')}>
                 <h2>{dataUserProfile.name}</h2>
-                <button className={cx('moreInformationUser')}>Manage your account</button>
+                <Link to="/profile/profile-and-visibility">
+                    <button className={cx('moreInformationUser')}>Edit information</button>
+                </Link>
                 <div className={cx('viewInfo')}>
                     <div className={cx('info')}>
                         <h3 className={cx('titleViewInfo')}>ABOUT</h3>
                         <div className={cx('fillView')}>
                             <div className={cx('fillViewInfo')}>
-                                <span>
-                                    <BagIcon />
-                                </span>
+                                <BagIcon />
 
-                                <Input
-                                    onSubmit={handleSubmit}
-                                    onChange={handleOnchange}
-                                    name="jopTitle"
-                                    placeholder={'Your jop title'}
-                                    onClick={handleFormButton}
-                                    formButton={formButton}
-                                    value={valueInput.jopTitle}
-                                    type="text"
-                                />
+                                <span className={cx('showProfile')}>{dataUserProfile.jopTitle?.slice(0, 20)}...</span>
                             </div>
                             <div className={cx('fillViewInfo')}>
-                                <span>
-                                    <TreeIcon />
-                                </span>
-                                <Input
-                                    onSubmit={handleSubmit}
-                                    onChange={handleOnchange}
-                                    name="department"
-                                    placeholder={'Your department'}
-                                    onClick={handleFormButton}
-                                    formButton={formButton}
-                                    value={valueInput.department}
-                                    type="text"
-                                />
+                                <TreeIcon />
+
+                                <span className={cx('showProfile')}>{dataUserProfile.department?.slice(0, 20)}...</span>
                             </div>
                             <div className={cx('fillViewInfo')}>
-                                <span>
-                                    <Buiding />
+                                <Buiding />
+
+                                <span className={cx('showProfile')}>
+                                    {dataUserProfile.organization?.slice(0, 20)}...
                                 </span>
-                                <Input
-                                    onSubmit={handleSubmit}
-                                    onChange={handleOnchange}
-                                    name="organization"
-                                    placeholder={'Your organization'}
-                                    onClick={handleFormButton}
-                                    formButton={formButton}
-                                    value={valueInput.organization}
-                                    type="text"
-                                />
                             </div>
                             <div className={cx('fillViewInfo')}>
-                                <span>
-                                    <Location />
-                                </span>
-                                <Input
-                                    onSubmit={handleSubmit}
-                                    onChange={handleOnchange}
-                                    name="location"
-                                    placeholder={'Your location'}
-                                    onClick={handleFormButton}
-                                    formButton={formButton}
-                                    value={valueInput.location}
-                                    type="text"
-                                />
+                                <Location />
+
+                                <span className={cx('showProfile')}>{dataUserProfile.location?.slice(0, 20)}...</span>
                             </div>
                         </div>
                     </div>

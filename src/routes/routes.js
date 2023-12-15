@@ -15,6 +15,7 @@ import Header from '~/layout/Header/Header';
 import Reset from '~/pages/Notication/Reset';
 import ViewAllListWork from '~/pages/Profile/viewAllListWork/viewAllListWork';
 import DefaultLayout from '~/layout/DefaultLayout/DefaultLayout';
+import CreateProject from '~/pages/Projects/Create/CreateProject';
 
 const publicRoutes = [
     { path: '/register', component: Register, layout: null },
@@ -36,6 +37,7 @@ const publicRoutes = [
     { path: '/forgot/change-password', component: ChangePassword, layout: null },
     { path: '/register/verify', component: Notification, layout: null },
     { path: '/project', component: Projects, layout: Header },
+    { path: '/project/create', component: CreateProject },
 ];
 
 export default publicRoutes;

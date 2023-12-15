@@ -37,6 +37,9 @@ export function Button({ children, buttonStyle, className, onClick, type }) {
         case 'filled':
             buttonType = 'button-filled';
             break;
+        case 'disabled':
+            buttonType = 'button-disabled';
+            break;
         default:
             buttonType = 'button-light';
             break;

@@ -1,0 +1,28 @@
+$color-border: rgba(9, 30, 66, 0.08);
+$light-background: rgba(9, 30, 66, 0.04);
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 2px solid $color-border;
+    th {
+        border-bottom: 1px solid $color-border;
+        padding: 1rem 0.5rem;
+    }
+    tbody {
+        tr {
+            &:hover {
+                background-color: $light-background;
+            }
+        }
+        td {
+            padding: 1rem 0.5rem;
+        }
+    }
+    .number {
+        text-align: right;
+    }
+    .string {
+        text-align: left;
+    }
+}

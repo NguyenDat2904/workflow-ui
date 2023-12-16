@@ -27,6 +27,7 @@ function Login() {
             passWord: password,
         });
         if (response.status === 200) {
+            console.log(response.data);
             localStorage.setItem('user', JSON.stringify(response.data));
             localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
             setIsAuthenticated(true);

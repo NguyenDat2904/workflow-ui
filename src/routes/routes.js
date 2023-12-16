@@ -11,9 +11,9 @@ import Verify from '~/pages/Verify/Verify';
 import ProfileAndVisibility from '~/pages/ProfileAndVisibility/ProfileAndVisibility';
 import Notification from '~/pages/Notication/Notication';
 import Projects from '~/pages/Projects/Projects';
-import Header from '~/layout/Header/Header';
 import Reset from '~/pages/Notication/Reset';
 import ViewAllListWork from '~/pages/Profile/viewAllListWork/viewAllListWork';
+import HeaderOnly from '~/layout/HeaderOnly/HeaderOnly';
 
 const publicRoutes = [
     { path: '/register', component: Register, layout: null },
@@ -33,7 +33,7 @@ const publicRoutes = [
     { path: '/reset-password', component: Reset, layout: null },
     { path: '/forgot/change-password', component: ChangePassword, layout: null },
     { path: '/register/verify', component: Notification, layout: null },
-    { path: '/project', component: Projects, layout: Header },
+    { path: '/project', component: Projects, layout: HeaderOnly },
 ];
 
 export default publicRoutes;

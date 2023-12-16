@@ -17,10 +17,11 @@ function Button({
     blue,
     className,
     viewAll,
+    noHover,
+    tdIcon,
     small = false,
     large = false,
     outline = false,
-    disable = false,
     children,
     onClick,
     type,
@@ -28,13 +29,7 @@ function Button({
 }) {
     let Comp = 'button';
     const _props = { onClick, type, ...passProps };
-    if (disable) {
-        Object.keys(_props).forEach((key) => {
-            if (key.startsWith('on') && typeof _props[key] === 'function') {
-                delete _props[key];
-            }
-        });
-    }
+
     if (to) {
         _props.to = to;
         Comp = NavLink;
@@ -50,9 +45,10 @@ function Button({
         whiteBackGround,
         viewAll,
         blue,
-        disable,
         small,
         large,
+        noHover,
+        tdIcon,
     });
     return (
         <Comp className={classes} {..._props}>

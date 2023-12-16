@@ -106,3 +106,58 @@
 .noneformSaveInfo {
     display: none;
 }
+.search {
+    height: 32px;
+    .field-edit {
+        margin: 0;
+        .form {
+            margin: 0;
+            .form-input {
+                border: 2px solid var(--ds-border-input, #dfe1e6);
+                .input {
+                    &:hover {
+                        background: transparent;
+                    }
+                }
+                .paddingLeft {
+                    padding: 0px var(--ds-space-150, 12px) 0px 30px;
+                }
+            }
+        }
+    }
+}
+
+.left-icon {
+    top: 8px;
+    left: 8px;
+}
+.input-icon {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    color: var(--ds-text-subtlest, #6b778c);
+    span {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        line-height: 0;
+        svg {
+            --icon-primary-color: var(--ds-text-subtlest, #6b778c);
+            --icon-secondary-color: var(--ds-surface, #ffffff);
+            width: 16px;
+            height: 16px;
+            overflow: hidden;
+            pointer-events: none;
+            max-width: 100%;
+            max-height: 100%;
+            color: var(--icon-primary-color);
+            fill: var(--icon-secondary-color);
+            vertical-align: bottom;
+        }
+    }
+}
+.right-icon {
+    top: 50%;
+    transform: translateY(-50%);
+    right: 8px;
+}

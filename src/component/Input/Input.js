@@ -18,24 +18,35 @@ function Input({
     onClick,
     formButton,
     label,
+    search,
+    leftIcon,
+    rightIcon,
     ...passProps
 }) {
-    const classes = cx('input', {
+    const classes = cx('input', leftIcon && 'paddingLeft', rightIcon && 'paddingRight', {
         [className]: className,
         inputClass,
+        search,
     });
 
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper', search)}>
             <div className={cx('field-wrapper')}>
                 <div className={cx('form-wrapper')}>
-                    <label htmlFor={id}>
-                        <span>{label}</span>
-                    </label>
+                    {label && (
+                        <label htmlFor={id}>
+                            <span>{label}</span>
+                        </label>
+                    )}
                     <div className={cx('field-edit')}>
                         <div>
                             <form onSubmit={onSubmit} className={cx('form')}>
                                 <div className={cx('form-input')}>
+                                    {leftIcon && (
+                                        <span className={cx('input-icon', 'left-icon')}>
+                                            <span>{leftIcon}</span>
+                                        </span>
+                                    )}
                                     <input
                                         className={classes}
                                         type={type}
@@ -47,6 +58,11 @@ function Input({
                                         onClick={onClick}
                                         onChange={onChange}
                                     />
+                                    {rightIcon && (
+                                        <span className={cx('input-icon', 'right-icon')}>
+                                            <span>{rightIcon}</span>
+                                        </span>
+                                    )}
                                     <div className={cx(formButton ? 'formSaveInfo' : 'noneformSaveInfo')}>
                                         <div className={cx('saveInfo')}>
                                             <button type="submit" className={cx('buttonSave')}>

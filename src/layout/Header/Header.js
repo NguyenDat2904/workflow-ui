@@ -1,21 +1,57 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '~/component/Buttton/Button';
 import classNames from 'classnames/bind';
 import style from './Header.module.scss';
-import { DownIcon, HelpIcon, NotificationIcon, SettingIcon, ShuttleIcon, UserIcon } from '~/component/icon/icon';
+import {
+    DownIcon,
+    HelpIcon,
+    NotificationIcon,
+    SearchIcon,
+    SettingIcon,
+    ShuttleIcon,
+    UserIcon,
+} from '~/component/icon/icon';
 import { useLocation } from 'react-router-dom';
 import ModalProject from '~/pages/Projects/ModalProject/ModalProject';
+import ModalAccount from '~/pages/Profile/ModalAccount/ModalAccount';
+import Input from '~/component/Input/Input';
 const cx = classNames.bind(style);
 
 function Header() {
     const location = useLocation();
+    const elementRef = useRef(null);
+
     // 1. State
     const [toggleMenu, setToggleMenu] = useState({
         yourWork: false,
         project: false,
         team: false,
+        user: false,
     });
+    const [position, setPosition] = useState({ left: 0 });
 
+    // 2. useEffect
+
+    useEffect(() => {
+        const getElementPosition = () => {
+            const element = elementRef.current;
+
+            if (element) {
+                const { left } = element.getBoundingClientRect();
+                setPosition({ left });
+            }
+        };
+
+        getElementPosition();
+
+        // Lắng nghe sự kiện resize trên cửa sổ trình duyệt
+        window.addEventListener('resize', getElementPosition);
+
+        // Hủy bỏ lắng nghe khi component unmount
+        return () => {
+            window.removeEventListener('resize', getElementPosition);
+        };
+    }, []);
     // 3. Func
     const handleToggle = (toggle) => {
         switch (toggle) {
@@ -35,6 +71,12 @@ function Header() {
                 setToggleMenu((pre) => ({
                     ...pre,
                     team: !toggleMenu.team,
+                }));
+                break;
+            case 'user':
+                setToggleMenu((pre) => ({
+                    ...pre,
+                    user: !toggleMenu.user,
                 }));
                 break;
             default:
@@ -83,6 +125,9 @@ function Header() {
             </nav>
             <div className={cx('nav-right')}>
                 <div className={cx('nav-icon')}>
+                    <Input placeholder="Search" leftIcon={<SearchIcon />} type="text" search="search" />
+                </div>
+                <div className={cx('nav-icon')}>
                     <Button
                         className={cx('button-icon')}
                         noChildren
@@ -109,7 +154,7 @@ function Header() {
                         leftIcon={<SettingIcon />}
                     ></Button>
                 </div>
-                <div className={cx('nav-icon')}>
+                <div ref={elementRef} className={cx('nav-icon')} onClick={() => handleToggle('user')}>
                     <Button
                         className={cx('button-icon')}
                         noChildren
@@ -118,6 +163,7 @@ function Header() {
                         leftIcon={<UserIcon />}
                     ></Button>
                 </div>
+                {toggleMenu.user && <ModalAccount handleToggle={() => handleToggle('user')} position={position.left} />}
             </div>
         </header>
     );

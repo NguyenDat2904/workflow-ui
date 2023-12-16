@@ -1,57 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '~/component/Buttton/Button';
 import classNames from 'classnames/bind';
-import style from './Header.module.scss';
-import {
-    DownIcon,
-    HelpIcon,
-    NotificationIcon,
-    SearchIcon,
-    SettingIcon,
-    ShuttleIcon,
-    UserIcon,
-} from '~/component/icon/icon';
+import { Link } from 'react-router-dom';
+import style from './HeaderSetting.module.scss';
+import { DownIcon, HelpIcon, NotificationIcon, SettingIcon, ShuttleIcon, UserIcon } from '~/component/icon/icon';
 import { useLocation } from 'react-router-dom';
 import ModalProject from '~/pages/Projects/ModalProject/ModalProject';
-import ModalAccount from '~/pages/Profile/ModalAccount/ModalAccount';
-import Input from '~/component/Input/Input';
 const cx = classNames.bind(style);
 
-function Header() {
+function HeaderSetting() {
     const location = useLocation();
-    const elementRef = useRef(null);
-
     // 1. State
     const [toggleMenu, setToggleMenu] = useState({
         yourWork: false,
         project: false,
         team: false,
-        user: false,
     });
-    const [position, setPosition] = useState({ left: 0 });
 
-    // 2. useEffect
-
-    useEffect(() => {
-        const getElementPosition = () => {
-            const element = elementRef.current;
-
-            if (element) {
-                const { left } = element.getBoundingClientRect();
-                setPosition({ left });
-            }
-        };
-
-        getElementPosition();
-
-        // Lắng nghe sự kiện resize trên cửa sổ trình duyệt
-        window.addEventListener('resize', getElementPosition);
-
-        // Hủy bỏ lắng nghe khi component unmount
-        return () => {
-            window.removeEventListener('resize', getElementPosition);
-        };
-    }, []);
     // 3. Func
     const handleToggle = (toggle) => {
         switch (toggle) {
@@ -73,12 +38,6 @@ function Header() {
                     team: !toggleMenu.team,
                 }));
                 break;
-            case 'user':
-                setToggleMenu((pre) => ({
-                    ...pre,
-                    user: !toggleMenu.user,
-                }));
-                break;
             default:
                 setToggleMenu({
                     yourWork: false,
@@ -93,14 +52,6 @@ function Header() {
                 <Button leftIcon={<ShuttleIcon />} backgroundNone noChildren to="/"></Button>
                 <div className={cx('list-menu')}>
                     <div
-                        className={cx('menu', location.pathname === '/your-work' && 'active')}
-                        onClick={() => handleToggle('yourWork')}
-                    >
-                        <Button rightIcon={<DownIcon />} backgroundNone to="/your-work">
-                            Your work
-                        </Button>
-                    </div>
-                    <div
                         className={cx('menu', location.pathname === '/project' && 'active')}
                         onClick={() => handleToggle('project')}
                     >
@@ -112,21 +63,21 @@ function Header() {
                             Projects
                         </Button>
                     </div>
+
                     {toggleMenu.project && <ModalProject handleToggle={() => handleToggle('project')} />}
-                    <div className={cx('menu')} onClick={() => handleToggle('team')}>
-                        <Button rightIcon={<DownIcon />} backgroundNone>
-                            Teams
-                        </Button>
-                    </div>
-                    <div className={cx('menu')}>
-                        <Button blue>Create</Button>
-                    </div>
+                    <Link to={'/profile/profile-and-visibility'}>
+                        <div className={cx('menu')} onClick={() => handleToggle('team')}>
+                            <Button backgroundNone  className={cx(toggleMenu.team && 'toggle', 'text-blue')}>Profile And visibility</Button>
+                        </div>
+                    </Link>
+                    <Link to={'/profile/security'}>
+                        <div className={cx('menu')} onClick={() => handleToggle('yourWork')}>
+                            <Button backgroundNone className={cx(toggleMenu.yourWork && 'toggle', 'text-blue')}>Security</Button>
+                        </div>
+                    </Link>
                 </div>
             </nav>
             <div className={cx('nav-right')}>
-                <div className={cx('nav-icon')}>
-                    <Input placeholder="Search" leftIcon={<SearchIcon />} type="text" search="search" />
-                </div>
                 <div className={cx('nav-icon')}>
                     <Button
                         className={cx('button-icon')}
@@ -154,7 +105,7 @@ function Header() {
                         leftIcon={<SettingIcon />}
                     ></Button>
                 </div>
-                <div ref={elementRef} className={cx('nav-icon')} onClick={() => handleToggle('user')}>
+                <div className={cx('nav-icon')}>
                     <Button
                         className={cx('button-icon')}
                         noChildren
@@ -163,10 +114,9 @@ function Header() {
                         leftIcon={<UserIcon />}
                     ></Button>
                 </div>
-                {toggleMenu.user && <ModalAccount handleToggle={() => handleToggle('user')} position={position.left} />}
             </div>
         </header>
     );
 }
 
-export default Header;
+export default HeaderSetting;

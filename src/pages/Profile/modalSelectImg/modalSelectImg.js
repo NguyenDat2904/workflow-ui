@@ -59,12 +59,12 @@ const ModalSelectImg = () => {
             const user = localStorage.getItem('user');
             const parseuser = JSON.parse(user);
             const addUserInfo = await patch(
-                `/users/updateUser/background/${dataUserProfile._id}`,
+                `/users/updateUser/background/${dataUserProfile?._id}`,
                 { backgroundProfile: viewBackround, contentProfile: value.name },
                 {
                     headers: {
-                        authorization: `${parseuser.accessToken}`,
-                        refresh_token: `${parseuser.refreshToken}`,
+                        authorization: `${parseuser?.accessToken}`,
+                        refresh_token: `${parseuser?.refreshToken}`,
                     },
                 },
             );

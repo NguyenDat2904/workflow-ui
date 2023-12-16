@@ -20,10 +20,10 @@ const AddProfilePhoto = () => {
 
         const user = localStorage.getItem('user');
         const parseuser = JSON.parse(user);
-        const upload = await patch(`/users/uploadimg/${dataUserProfile._id}`, formData, {
+        const upload = await patch(`/users/uploadimg/${dataUserProfile?._id}`, formData, {
             headers: {
-                authorization: `${parseuser.accessToken}`,
-                refresh_token: `${parseuser.refreshToken}`,
+                authorization: `${parseuser?.accessToken}`,
+                refresh_token: `${parseuser?.refreshToken}`,
                 'Content-Type': 'multipart/form-data',
             },
         });

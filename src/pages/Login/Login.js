@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.scss';
 import { Input, Button, Form } from '../../component/Inputs/Inputs';
@@ -9,8 +9,11 @@ import { NavigationLinks } from '../../component/links/Links';
 import { post } from '../../ultil/hpptRequest';
 import HomeLayout from '~/layout/HomeLayout/HomeLayout';
 import LoginGoogleButton from './LoginGoogleButton';
+import { AppContext } from '~/hook/context/context';
 
 function Login() {
+    const { setIsAuthenticated } = useContext(AppContext);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -26,6 +29,8 @@ function Login() {
         if (response.status === 200) {
             console.log(response.data);
             localStorage.setItem('user', JSON.stringify(response.data));
+            localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
+            setIsAuthenticated(true);
             navigate('/');
         } else {
             switch (response.status) {

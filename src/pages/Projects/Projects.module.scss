@@ -1,0 +1,21 @@
+.create-icon {
+    max-width: 100%;
+    margin-bottom: var(--ds-space-100, 8px);
+    margin-left: auto;
+    padding-left: var(--ds-space-400, 32px);
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+.input-filter {
+    display: flex;
+    margin-bottom: var(--ds-space-200, 1pc);
+    gap: var(--ds-space-200, 1pc);
+    .input-wrapper {
+        max-width: 14pc;
+        min-width: 14pc;
+    }
+}
+.project-list {
+    padding-bottom: var(--ds-space-200, 1pc);
+    position: relative;
+}

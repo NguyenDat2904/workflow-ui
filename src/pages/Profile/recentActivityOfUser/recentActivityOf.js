@@ -16,7 +16,7 @@ const RecentActivityOfUser = ({ dataListWork }) => {
                 </Link>
             </div>
             <div className={cx('newesWork')}>
-                {dataListWork.listWorkID?.map((product) => {
+                {dataListWork?.map((product) => {
                     return (
                         <div key={product?._id} className={cx('ingredient')}>
                             <img

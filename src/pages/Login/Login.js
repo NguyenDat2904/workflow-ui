@@ -59,10 +59,10 @@ function Login() {
                         <Input
                             id={'username'}
                             inputStyle={'light'}
-                            label={'Email or username:'}
+                            label={'Username:'}
                             type={'username'}
                             name={'username'}
-                            placeholder={'Enter email or username'}
+                            placeholder={'Enter username'}
                             onChange={(e) => setUsername(e.target.value)}
                         />
                         <Input

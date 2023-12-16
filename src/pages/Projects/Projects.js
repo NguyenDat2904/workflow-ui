@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import style from './Projects.module.scss';
 import Main from '~/component/Main/Main';
@@ -9,6 +10,7 @@ import ProjectList from './ProjectList/ProjectList';
 const cx = classNames.bind(style);
 
 function Projects() {
+    const navigate = useNavigate();
     return (
         <Main>
             <div className={cx('home-title')}>
@@ -17,7 +19,14 @@ function Projects() {
                         <h1>Projects</h1>
                     </div>
                     <div className={cx('create-icon')}>
-                        <Button blue>Create project</Button>
+                        <Button
+                            blue
+                            onClick={() => {
+                                navigate('/project/create');
+                            }}
+                        >
+                            Create project
+                        </Button>
                     </div>
                 </div>
             </div>

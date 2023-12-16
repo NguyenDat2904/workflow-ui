@@ -3,6 +3,7 @@ import { Article } from '~/component/articles/Articles';
 import { Form, Input, Button } from '~/component/Inputs/Inputs';
 import './profileSecurity.scss';
 import { patch } from '../../ultil/hpptRequest';
+import HeaderSetting from '~/layout/HeaderSetting/HeaderSetting';
 
 export default function ProfileSecurity() {
     const [currentPassword, setCurrentPassword] = useState('');
@@ -33,33 +34,36 @@ export default function ProfileSecurity() {
     };
 
     return (
-        <Article>
-            <h2>Security</h2>
-            <h4>Change your password</h4>
-            <Form className="security-form" onSubmit={(e) => handleChangePassword(e)}>
-                <Input
-                    id="currentPassword"
-                    label="Current password"
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                    placeholder="Current password"
-                    type="password"
-                />
-                <Input
-                    id="password"
-                    label="New password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="New password"
-                    type="password"
-                />
-                {status === 'success' ? (
-                    <p>Change password success</p>
-                ) : status === 'error' ? (
-                    <p>Change password error</p>
-                ) : null}
-                <Button buttonStyle={'filled'} type={'submit'}>
-                    Change Password
-                </Button>
-            </Form>
-        </Article>
+        <>
+            <HeaderSetting />
+            <Article>
+                <h2>Security</h2>
+                <h4>Change your password</h4>
+                <Form className="security-form" onSubmit={(e) => handleChangePassword(e)}>
+                    <Input
+                        id="currentPassword"
+                        label="Current password"
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                        placeholder="Current password"
+                        type="password"
+                    />
+                    <Input
+                        id="password"
+                        label="New password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="New password"
+                        type="password"
+                    />
+                    {status === 'success' ? (
+                        <p>Change password success</p>
+                    ) : status === 'error' ? (
+                        <p>Change password error</p>
+                    ) : null}
+                    <Button buttonStyle={'filled'} type={'submit'}>
+                        Change Password
+                    </Button>
+                </Form>
+            </Article>
+        </>
     );
 }

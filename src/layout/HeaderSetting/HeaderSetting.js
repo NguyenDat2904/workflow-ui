@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '~/component/Buttton/Button';
 import classNames from 'classnames/bind';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import style from './HeaderSetting.module.scss';
 import { DownIcon, HelpIcon, NotificationIcon, SettingIcon, ShuttleIcon, UserIcon } from '~/component/icon/icon';
 import { useLocation } from 'react-router-dom';
@@ -65,11 +65,16 @@ function HeaderSetting() {
                     </div>
 
                     {toggleMenu.project && <ModalProject handleToggle={() => handleToggle('project')} />}
-                    <NavLink to={'/profile/security'}>
+                    <Link to={'/profile/profile-and-visibility'}>
                         <div className={cx('menu')} onClick={() => handleToggle('team')}>
-                            <Button backgroundNone>Security</Button>
+                            <Button backgroundNone  className={cx(toggleMenu.team && 'toggle', 'text-blue')}>Profile And visibility</Button>
                         </div>
-                    </NavLink>
+                    </Link>
+                    <Link to={'/profile/security'}>
+                        <div className={cx('menu')} onClick={() => handleToggle('yourWork')}>
+                            <Button backgroundNone className={cx(toggleMenu.yourWork && 'toggle', 'text-blue')}>Security</Button>
+                        </div>
+                    </Link>
                 </div>
             </nav>
             <div className={cx('nav-right')}>

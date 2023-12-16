@@ -25,6 +25,12 @@ const AppProvider = (props) => {
         email: '',
         phone: '',
     });
+
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        const accessToken = localStorage.getItem('accessToken');
+        return !!accessToken;
+    });
+
     const onclickSeeModalSelectImg = (number) => {
         if (modalSelectImg > 0) {
             setModalSelectImg(number);
@@ -54,10 +60,10 @@ const AppProvider = (props) => {
     };
     // call dataUser
     const callApi = async () => {
-        const APIuser = await get(`/users/${parseuser._id}`, {
+        const APIuser = await get(`/users/${parseuser?._id}`, {
             headers: {
-                authorization: `${parseuser.accessToken}`,
-                refresh_token: `${parseuser.refreshToken}`,
+                authorization: `${parseuser?.accessToken}`,
+                refresh_token: `${parseuser?.refreshToken}`,
             },
         });
         setDataUserProfile(APIuser.data);
@@ -83,12 +89,12 @@ const AppProvider = (props) => {
         e.preventDefault();
         if (namefillInput !== '') {
             const addUserInfo = await patch(
-                `/users/updateUser/${dataUserProfile._id}`,
+                `/users/updateUser/${dataUserProfile?._id}`,
                 { nameFill: namefillInput, contenEditing: valueInputAny },
                 {
                     headers: {
-                        authorization: `${parseuser.accessToken}`,
-                        refresh_token: `${parseuser.refreshToken}`,
+                        authorization: `${parseuser?.accessToken}`,
+                        refresh_token: `${parseuser?.refreshToken}`,
                     },
                 },
             );
@@ -108,8 +114,8 @@ const AppProvider = (props) => {
             },
             {
                 headers: {
-                    authorization: `${parseuser.accessToken}`,
-                    refresh_token: `${parseuser.refreshToken}`,
+                    authorization: `${parseuser?.accessToken}`,
+                    refresh_token: `${parseuser?.refreshToken}`,
                 },
             },
         );
@@ -181,6 +187,8 @@ const AppProvider = (props) => {
         setDataListWork,
         dataProject,
         callApi,
+        isAuthenticated,
+        setIsAuthenticated,
     };
     return <AppContext.Provider value={value} {...props}></AppContext.Provider>;
 };

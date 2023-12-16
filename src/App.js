@@ -1,42 +1,78 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Fragment } from 'react';
-import routes from '~/routes/routes';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Fragment, useContext, useEffect, useState } from 'react';
+import { publicRoutes, privateRoutes } from '~/routes/routes';
 import DefaultLayout from './layout/DefaultLayout/DefaultLayout';
-import { AppProvider } from './hook/context/context';
+import { AppContext, AppProvider } from './hook/context/context';
 import { ToastContainer } from 'react-toastify';
 
 function App() {
-    return (
-        <AppProvider>
-            <BrowserRouter>
-                <div className="App">
-                    <Routes>
-                        {routes.map((route, index) => {
-                            const Page = route.component;
-                            let Layout = DefaultLayout;
-                            if (route.layout) {
-                                Layout = route.layout;
-                            } else if (route.layout === null) {
-                                Layout = Fragment;
-                            }
+    const { isAuthenticated, setIsAuthenticated } = useContext(AppContext);
+    // 1. State
 
-                            return (
-                                <Route
-                                    key={index}
-                                    path={route.path}
-                                    element={
+    // 2. useEffect
+    useEffect(() => {
+        const accessToken = localStorage.getItem('accessToken');
+        setIsAuthenticated(!!accessToken);
+    }, []);
+
+    return (
+        <BrowserRouter>
+            <div className="App">
+                <Routes>
+                    {privateRoutes.map((route, index) => {
+                        const Page = route.component;
+                        let Layout = DefaultLayout;
+                        if (route.layout) {
+                            Layout = route.layout;
+                        } else if (route.layout === null) {
+                            Layout = Fragment;
+                        }
+
+                        return (
+                            <Route
+                                key={index}
+                                path={route.path}
+                                element={
+                                    isAuthenticated ? (
                                         <Layout>
                                             <Page />
                                         </Layout>
-                                    }
-                                />
-                            );
-                        })}
-                    </Routes>
-                </div>
-                <ToastContainer />
-            </BrowserRouter>
-        </AppProvider>
+                                    ) : (
+                                        <Navigate to="/login" />
+                                    )
+                                }
+                            />
+                        );
+                    })}
+                    {publicRoutes.map((route, index) => {
+                        const Page = route.component;
+                        let Layout = DefaultLayout;
+                        if (route.layout) {
+                            Layout = route.layout;
+                        } else if (route.layout === null) {
+                            Layout = Fragment;
+                        }
+
+                        return (
+                            <Route
+                                key={index}
+                                path={route.path}
+                                element={
+                                    isAuthenticated ? (
+                                        <Navigate to="/" />
+                                    ) : (
+                                        <Layout>
+                                            <Page />
+                                        </Layout>
+                                    )
+                                }
+                            />
+                        );
+                    })}
+                </Routes>
+            </div>
+            <ToastContainer />
+        </BrowserRouter>
     );
 }
 

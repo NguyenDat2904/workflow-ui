@@ -50,8 +50,7 @@ const ViewAllListWork = () => {
                   return true;
               });
     return (
-        <>
-            <Header />
+       
             <div className={cx('ViewAllListWork')}>
                 <p className={cx('headerWorkOn')}>
                     <Link to="/profile">
@@ -163,7 +162,7 @@ const ViewAllListWork = () => {
                     )}
                 </div>
             </div>
-        </>
+        
     );
 };
 export default ViewAllListWork;

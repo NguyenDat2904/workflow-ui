@@ -8,8 +8,7 @@
 
 .input-light,
 .input-filled,
-.button-light,
-.button-filled {
+.button {
     padding: 0 1.25rem;
     height: 40px;
     outline: none;
@@ -40,8 +39,7 @@
     color: white;
 }
 
-.button-filled,
-.button-light {
+.button {
     width: fit-content;
     transition: background-color 0.25s;
     svg {
@@ -65,6 +63,12 @@
     &:focus {
         background-color: var(--jwm-color-link-pressed);
     }
+}
+
+.button-disabled {
+    background-color: var(--jwm-color-text-disabled);
+    color: gray;
+    cursor: not-allowed;
 }
 
 .form {

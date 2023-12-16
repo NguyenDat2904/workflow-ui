@@ -6,11 +6,12 @@ import AnyOne from '../anyone/anyone';
 import styles from './EditField.module.scss';
 const cx = classNames.bind(styles);
 
-const EditField = ({ name, label, placeholder, valueInput }) => {
+const EditField = ({ type, name, label, placeholder, valueInput }) => {
     const { formButton, handleFormButton, handleSubmit, handleOnchange } = useContext(AppContext);
     return (
         <div className={cx('childrenAboutYou')}>
             <Input
+                type={type}
                 name={name}
                 value={valueInput}
                 onClick={handleFormButton}

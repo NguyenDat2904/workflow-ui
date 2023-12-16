@@ -19,18 +19,7 @@
                 font-style: normal;
                 font-family: inherit;
                 font-weight: 500;
-                color: var(--ds-text, #42526e);
-            }
-        }
-        .iconRightAnyone {
-            display: none;
-        }
-        &:hover {
-            background-color: rgb(240, 240, 240);
-            .iconRightAnyone {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                color: rgb(195, 193, 193);
             }
         }
     }

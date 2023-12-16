@@ -57,6 +57,7 @@ function Input({
                                         name={name}
                                         onClick={onClick}
                                         onChange={onChange}
+                                        onBlur={onSubmit}
                                     />
                                     {rightIcon && (
                                         <span className={cx('input-icon', 'right-icon')}>

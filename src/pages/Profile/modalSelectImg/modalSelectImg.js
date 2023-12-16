@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import classNames from 'classnames/bind';
 import { AppContext } from '~/hook/context/context';
+import { patch } from '~/ultil/hpptRequest';
 import { Link } from 'react-router-dom';
 import styles from './modalSelectImg.module.scss';
 import ModalProfile from '../modalProfile/modalProfile';
@@ -9,7 +10,7 @@ import * as yup from 'yup';
 const cx = classNames.bind(styles);
 
 const ModalSelectImg = () => {
-    const { onclickSeeModalSelectImg } = useContext(AppContext);
+    const { onclickSeeModalSelectImg, callApi, dataUserProfile } = useContext(AppContext);
     const [viewBackround, setViewBackground] = useState('rgb(0, 82, 204)');
     const [classNameButton, setClassNameButton] = useState('button1');
     const selectBackgroundImgProfile = (number) => {
@@ -54,8 +55,23 @@ const ModalSelectImg = () => {
         validationSchema: yup.object({
             name: yup.string().required('Please enter at least 1 initial'),
         }),
-        onSubmit: (value) => {
-            console.log(value);
+        onSubmit: async (value) => {
+            const user = localStorage.getItem('user');
+            const parseuser = JSON.parse(user);
+            const addUserInfo = await patch(
+                `/users/updateUser/background/${dataUserProfile?._id}`,
+                { backgroundProfile: viewBackround, contentProfile: value.name },
+                {
+                    headers: {
+                        authorization: `${parseuser?.accessToken}`,
+                        refresh_token: `${parseuser?.refreshToken}`,
+                    },
+                },
+            );
+            if (addUserInfo.status === 200) {
+                await callApi();
+                await onclickSeeModalSelectImg(0);
+            }
         },
     });
     return (

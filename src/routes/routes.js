@@ -14,26 +14,30 @@ import Projects from '~/pages/Projects/Projects';
 import Reset from '~/pages/Notication/Reset';
 import ViewAllListWork from '~/pages/Profile/viewAllListWork/viewAllListWork';
 import HeaderOnly from '~/layout/HeaderOnly/HeaderOnly';
+import DefaultLayout from '~/layout/DefaultLayout/DefaultLayout';
 
-const publicRoutes = [
-    { path: '/register', component: Register, layout: null },
+const privateRoutes = [
     {
         path: '/',
         component: BlackLog,
     },
     { path: '/board', component: Board },
     { path: '/profile/security', component: ProfileSecurity },
-    { path: '/login', component: Login, layout: null },
-    { path: '/profile', component: Profile, layout: null },
+    { path: '/profile', component: Profile, layout: HeaderOnly },
     { path: '/profile/profile-and-visibility', component: ProfileAndVisibility, layout: null },
-    { path: '/profile/view-all-list-work', component: ViewAllListWork, layout: null },
+    { path: '/profile/view-all-list-work', component: ViewAllListWork, layout: DefaultLayout },
     { path: '/test', component: TestComponent, layout: null },
-    { path: '/verify', component: Verify, layout: null },
-    { path: '/forgot', component: Forgot, layout: null },
-    { path: '/reset-password', component: Reset, layout: null },
     { path: '/forgot/change-password', component: ChangePassword, layout: null },
     { path: '/register/verify', component: Notification, layout: null },
     { path: '/project', component: Projects, layout: HeaderOnly },
 ];
 
-export default publicRoutes;
+const publicRoutes = [
+    { path: '/verify', component: Verify, layout: null },
+    { path: '/forgot', component: Forgot, layout: null },
+    { path: '/reset-password', component: Reset, layout: null },
+    { path: '/login', component: Login, layout: null },
+    { path: '/register', component: Register, layout: null },
+];
+
+export { privateRoutes, publicRoutes };

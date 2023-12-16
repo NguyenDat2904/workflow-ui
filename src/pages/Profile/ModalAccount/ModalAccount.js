@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Modal from '~/component/Modal/Modal';
 import classNames from 'classnames/bind';
 import style from './ModalAccount.module.scss';
 import Button from '~/component/Buttton/Button';
 import { ManagerIcon } from '~/component/icon/icon';
+import { AppContext } from '~/hook/context/context';
 const cx = classNames.bind(style);
 function ModalAccount({ handleToggle, position }) {
-    console.log(`${position}px`);
+    const { setIsAuthenticated } = useContext(AppContext);
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        handleToggle();
+        setIsAuthenticated(false);
+        localStorage.clear();
+    };
+
     return (
         <Modal width="234px" locationTransform={`${position - 290}px`}>
             <div className={cx('top', 'modal-top')}>
@@ -47,7 +56,9 @@ function ModalAccount({ handleToggle, position }) {
                 </div>
             </div>
             <div className={cx('bottom', 'modal-bottom')}>
-                <Button viewAll>Logout</Button>
+                <Button viewAll onClick={handleLogout}>
+                    Logout
+                </Button>
             </div>
         </Modal>
     );

@@ -2,19 +2,35 @@ import React, { useContext, useState } from 'react';
 import ModalProfile from '../modalProfile/modalProfile';
 import { AppContext } from '~/hook/context/context';
 import Button from '~/component/Buttton/Button';
+import { patch } from '~/ultil/hpptRequest';
 import classNames from 'classnames/bind';
 import styles from './addProfilePhoto.module.scss';
 const cx = classNames.bind(styles);
 
 const AddProfilePhoto = () => {
-    const { onclickSeeModalSelectImg } = useContext(AppContext);
+    const { onclickSeeModalSelectImg, dataUserProfile, callApi } = useContext(AppContext);
     const [image, setImage] = useState(null);
     const handalUploadImg = (e) => {
         setImage(e.target.files[0]);
     };
-    const handleSubmitUploadImg = () => {
+    const handleSubmitUploadImg = async (e) => {
+        e.preventDefault();
         const formData = new FormData();
-        formData.append('image_avatar', image);
+        formData.append('img', image);
+
+        const user = localStorage.getItem('user');
+        const parseuser = JSON.parse(user);
+        const upload = await patch(`/users/uploadimg/${dataUserProfile?._id}`, formData, {
+            headers: {
+                authorization: `${parseuser?.accessToken}`,
+                refresh_token: `${parseuser?.refreshToken}`,
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        if (upload.status === 200) {
+            await callApi();
+            await onclickSeeModalSelectImg(0);
+        }
     };
     return (
         <ModalProfile>
@@ -34,6 +50,7 @@ const AddProfilePhoto = () => {
 
                     <input
                         className={cx('upfileDisplayNone')}
+                        name="img"
                         type="file"
                         id="uploadAvatarImg"
                         onChange={handalUploadImg}

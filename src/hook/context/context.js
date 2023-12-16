@@ -68,12 +68,18 @@ const AppProvider = (props) => {
         });
         setDataUserProfile(APIuser.data);
         setValueInput({ ...APIuser.data });
-        const getWorkProject = await get(`/work/project/${parseuser?._id}`, {
-            headers: {
-                authorization: `${parseuser?.accessToken}`,
-                refresh_token: `${parseuser?.refreshToken}`,
+        const getWorkProject = await post(
+            `/work/project/${parseuser._id}`,
+            {
+                deleteProject: false,
             },
-        });
+            {
+                headers: {
+                    authorization: `${parseuser.accessToken}`,
+                    refresh_token: `${parseuser.refreshToken}`,
+                },
+            },
+        );
         setDataProject(getWorkProject.data);
     };
     useEffect(() => {
@@ -113,7 +119,11 @@ const AppProvider = (props) => {
                 },
             },
         );
-        setDataListWork(postdataListWork.data);
+        const positionEnd = postdataListWork.data.listWorkID?.length;
+        const positionStart = postdataListWork.data.listWorkID?.length - 6;
+        const dataListWork = postdataListWork.data.listWorkID?.slice(positionStart, positionEnd);
+
+        setDataListWork(dataListWork);
     };
 
     useEffect(() => {

@@ -49,10 +49,10 @@ const ProfileHeaderImg = ({ heightt, widthbagrAvatar, heightbagrAvatar }) => {
         const parseuser = JSON.parse(user);
         const formData = new FormData();
         formData.append('imgCover', e.target.files[0]);
-        const upload = await patch(`/users/uploadimg/${dataUserProfile._id}`, formData, {
+        const upload = await patch(`/users/uploadimg/${dataUserProfile?._id}`, formData, {
             headers: {
-                authorization: `${parseuser.accessToken}`,
-                refresh_token: `${parseuser.refreshToken}`,
+                authorization: `${parseuser?.accessToken}`,
+                refresh_token: `${parseuser?.refreshToken}`,
                 'Content-Type': 'multipart/form-data',
             },
         });

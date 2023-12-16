@@ -1,16 +1,20 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { post } from '~/ultil/hpptRequest';
-// import Header from '../Header/Header';
-// import SideBar from '../SideBar/SideBar';
+import classNames from 'classnames/bind';
+import style from './DefaultLayout.module.scss';
+import Header from '../Header/Header';
+import SideBar from '../SideBar/SideBar';
+const cx = classNames.bind(style);
 
 function DefaultLayout({ children }) {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const navigate = useNavigate();
-    if (!user) {
-        navigate('/login');
-    }
-    return <div>{children}</div>;
+    return (
+        <div>
+            <Header />
+            <div className={cx('wrapper')}>
+                <SideBar />
+                <div className={cx('content')}>{children}</div>
+            </div>
+        </div>
+    );
 }
 
 export default DefaultLayout;

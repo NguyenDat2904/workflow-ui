@@ -7,8 +7,8 @@ import Button from '~/component/Buttton/Button';
 const cx = classNames.bind(style);
 function ModalProject({ handleToggle }) {
     return (
-        <Modal width="320px">
-            <div className={cx('top')}>
+        <Modal width="320px" locationTransform="164px">
+            <div className={cx('top', 'modal-top')}>
                 <img
                     style={{ '--_ve50id': '138px' }}
                     src="https://jira-frontend-bifrost.prod-east.frontend.public.atl-paas.net/assets/project-empty.0864e274.svg"
@@ -23,7 +23,7 @@ function ModalProject({ handleToggle }) {
                     </div>
                 </div>
             </div>
-            <div className={cx('bottom')}>
+            <div className={cx('bottom', '.modal-bottom ')}>
                 <span>
                     <Button viewAll to="/project" onClick={handleToggle}>
                         View all projects

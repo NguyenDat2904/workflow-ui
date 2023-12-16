@@ -9,7 +9,6 @@ const cx = classNames.bind(styles);
 const Profile = () => {
     return (
         <div className={cx('mainProfile')}>
-            <Header />
             <ProfileHeaderImg heightt="192px" widthbagrAvatar="128px" heightbagrAvatar={'128px'} />
             <ViewProfile />
         </div>

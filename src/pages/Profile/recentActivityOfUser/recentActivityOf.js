@@ -4,6 +4,7 @@ import classNames from 'classnames/bind';
 import styles from './recentActivityOf.module.scss';
 const cx = classNames.bind(styles);
 const RecentActivityOfUser = ({ dataListWork }) => {
+    console.log(dataListWork)
     return (
         <div className={cx('recentActivityOf')}>
             <div className={cx('titleRecentActivityOf')}>
@@ -16,7 +17,7 @@ const RecentActivityOfUser = ({ dataListWork }) => {
                 </Link>
             </div>
             <div className={cx('newesWork')}>
-                {dataListWork.listWorkID?.map((product) => {
+                {dataListWork?.map((product) => {
                     return (
                         <div key={product?._id} className={cx('ingredient')}>
                             <img

@@ -4,6 +4,7 @@ import { Button, Input } from './Inputs/Inputs';
 import { Article } from './articles/Articles';
 import { ReactComponent as GoogleIcon } from '../asset/icons/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
+import { Table } from './tables/Tables';
 
 export default function TestComponent() {
     const login = useGoogleLogin({
@@ -40,6 +41,14 @@ export default function TestComponent() {
                 </Button>
             </div>
             <h3>Table</h3>
+            <Table
+                actions={['Edit', 'Delete']}
+                colWidthRatio={[10, 80]}
+                data={[
+                    { id: 1, name: 'John' },
+                    { id: 2, name: 'Jane' },
+                ]}
+            />
         </Article>
     );
 }

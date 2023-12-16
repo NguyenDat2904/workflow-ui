@@ -4,7 +4,6 @@ import classNames from 'classnames/bind';
 import styles from './recentActivityOf.module.scss';
 const cx = classNames.bind(styles);
 const RecentActivityOfUser = ({ dataListWork }) => {
-    console.log(dataListWork)
     return (
         <div className={cx('recentActivityOf')}>
             <div className={cx('titleRecentActivityOf')}>

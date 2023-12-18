@@ -1,14 +1,84 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './TrashProjects.scss';
 import { Table } from '~/component/tables/Tables';
+import { post, patch } from '~/ultil/hpptRequest';
 
 export default function TrashProjects() {
-   const handleRestoreProject = (project) => {
-      console.log(project);
+   const [trashProject, setTrashProject] = useState([]);
+   const [renderedTrashProject, setRenderedTrashProject] = useState([]);
+   const user = JSON.parse(localStorage.getItem('user'));
+   const navigate = useNavigate();
+
+   const getProjects = async () => {
+      const response = await post(
+         `work/project/${user._id}?page=1&sortKey=nameProject`,
+         { deleteProject: true },
+         {
+            headers: {
+               authorization: `${user.accessToken}`,
+               refresh_token: `${user.refreshToken}`,
+            },
+         },
+      );
+      switch (response.status) {
+         case 200:
+            const workProject = response.data.workProject;
+            console.log(workProject);
+            setTrashProject(workProject);
+            const newProjects = [];
+            for (let i = 0; i < workProject.length; i++) {
+               newProjects.push({ name: workProject[i].nameProject, key: workProject[i].codeProject });
+            }
+            setRenderedTrashProject(newProjects);
+            break;
+         case 404:
+            navigate('/login');
+            break;
+         default:
+            break;
+      }
+   };
+
+   useEffect(() => {
+      getProjects();
+   }, []);
+
+   const handleRestoreProject = async (project) => {
+      const response = await patch(
+         `/work/restore-project/${project}`,
+         { _idUser: user._id },
+         { headers: { authorization: `${user.accessToken}`, refresh_token: `${user.refreshToken}` } },
+      );
+      switch (response.status) {
+         case 200:
+            getProjects();
+            break;
+         case 404:
+            // navigate('/login');
+            break;
+         default:
+            break;
+      }
    };
 
    const handleDeleteProject = (project) => {
-      console.log(project);
+      const response = patch(
+         `/work/delete-project/${project}`,
+         { _idUser: user._id },
+         { headers: { authorization: `${user.accessToken}`, refresh_token: `${user.refreshToken}` } },
+      );
+      switch (response.status) {
+         case 200:
+            console.log('deleted');
+            getProjects();
+            break;
+         case 404:
+            // navigate('/login');
+            break;
+         default:
+            break;
+      }
    };
 
    return (
@@ -19,12 +89,10 @@ export default function TrashProjects() {
                { label: 'Restore', method: handleRestoreProject },
                { label: 'Permanently Delete', method: handleDeleteProject },
             ]}
-            colWidthRatio={[40, 20, 40]}
-            data={[
-               { name: 'Project 1', key: 'P1', leader: 'John' },
-               { name: 'Project 2', key: 'P2', leader: 'Jane' },
-               { name: 'Project 3', key: 'P3', leader: 'Bob' },
-            ]}
+            colWidthRatio={[40, 60]}
+            data={renderedTrashProject}
+            idList={trashProject.map((project) => project._id)}
+            labels={['Name', 'Key']}
          />
       </div>
    );

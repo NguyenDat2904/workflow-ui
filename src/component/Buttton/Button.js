@@ -19,6 +19,7 @@ function Button({
     viewAll,
     noHover,
     tdIcon,
+    disable,
     small = false,
     large = false,
     outline = false,
@@ -49,6 +50,7 @@ function Button({
         large,
         noHover,
         tdIcon,
+        disable,
     });
     return (
         <Comp className={classes} {..._props}>

@@ -7,7 +7,7 @@ import { ManagerIcon } from '~/component/icon/icon';
 import { AppContext } from '~/hook/context/context';
 const cx = classNames.bind(style);
 function ModalAccount({ handleToggle, position }) {
-    const { setIsAuthenticated } = useContext(AppContext);
+    const { setIsAuthenticated, dataUserProfile } = useContext(AppContext);
 
     const handleLogout = (e) => {
         e.preventDefault();
@@ -26,14 +26,18 @@ function ModalAccount({ handleToggle, position }) {
                             <div className={cx('img')}>
                                 <span>
                                     <img
-                                        src="https://secure.gravatar.com/avatar/96bd7f66bb5903b12b40d3696a36bd7a?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Fdefault-avatar-5.png"
+                                        src={
+                                            dataUserProfile?.img
+                                                ? dataUserProfile?.img
+                                                : 'https://secure.gravatar.com/avatar/96bd7f66bb5903b12b40d3696a36bd7a?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Fdefault-avatar-5.png'
+                                        }
                                         alt=""
                                     />
                                 </span>
                             </div>
                             <div className={cx('name')}>
-                                <div>Đạt Nguyễn Thành</div>
-                                <small>dathhcc2@gmail.com</small>
+                                <div>{dataUserProfile?.name}</div>
+                                <small>{dataUserProfile.email}</small>
                             </div>
                         </div>
                     </Button>

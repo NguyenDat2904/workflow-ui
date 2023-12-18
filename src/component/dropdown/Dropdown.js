@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './Dropdown.scss';
 
-const Dropdown = ({ children, actions }) => {
+const Dropdown = ({ children, actions, target }) => {
    const [isOpen, setIsOpen] = useState(false);
    const dropdownRef = useRef(null);
 
@@ -32,7 +32,7 @@ const Dropdown = ({ children, actions }) => {
          {isOpen && (
             <div className="dropdown-menu">
                {actions.map((action, index) => (
-                  <div key={index} className="dropdown-item" onClick={action.method}>
+                  <div key={index} className="dropdown-item" onClick={() => action.method(target)}>
                      {action.label}
                   </div>
                ))}

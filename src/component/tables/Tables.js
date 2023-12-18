@@ -33,7 +33,7 @@ export function Table({ actions, data, colWidthRatio, ...props }) {
                      </td>
                   ))}
                   <td>
-                     <Dropdown actions={actions}>
+                     <Dropdown actions={actions} target={item}>
                         <DotMenu />
                      </Dropdown>
                   </td>

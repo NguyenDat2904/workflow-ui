@@ -463,7 +463,7 @@ export const StarIcon = () => {
             <path
                 d="M12.072 17.284l-3.905 2.053a1 1 0 01-1.451-1.054l.745-4.349-3.159-3.08a1 1 0 01.554-1.705l4.366-.635 1.953-3.956a1 1 0 011.794 0l1.952 3.956 4.366.635a1 1 0 01.555 1.705l-3.16 3.08.746 4.349a1 1 0 01-1.45 1.054l-3.906-2.053z"
                 fill="currentColor"
-                fill-rule="evenodd"
+                fillRule="evenodd"
             ></path>
         </svg>
     );
@@ -475,6 +475,28 @@ export const FilterIcon = () => {
                 d="M11 6v9.586l-3.793-3.793a.999.999 0 00-1.414 0c-.39.39-.39 1.024 0 1.415l5.5 5.499A.993.993 0 0012 19a.993.993 0 00.707-.293l5.5-5.499a1 1 0 10-1.414-1.415L13 15.586V6a1 1 0 00-2 0z"
                 fill="currentColor"
                 fillRule="evenodd"
+            />
+        </svg>
+    );
+};
+export const LeftIcon = () => {
+    return (
+        <svg width={24} height={24} viewBox="0 0 24 24" role="presentation">
+            <path
+                fill="currentColor"
+                fillRule="evenodd"
+                d="M9.005 10.995l4.593-4.593a.99.99 0 111.4 1.4l-3.9 3.9 3.9 3.9a.99.99 0 01-1.4 1.4L9.005 12.41a1 1 0 010-1.414z"
+            />
+        </svg>
+    );
+};
+export const RightIcon = () => {
+    return (
+        <svg width={24} height={24} viewBox="0 0 24 24" role="presentation">
+            <path
+                fill="currentColor"
+                fillRule="evenodd"
+                d="M14.995 10.995a1 1 0 010 1.414l-4.593 4.593a.99.99 0 01-1.4-1.4l3.9-3.9-3.9-3.9a.99.99 0 011.4-1.4l4.593 4.593z"
             />
         </svg>
     );

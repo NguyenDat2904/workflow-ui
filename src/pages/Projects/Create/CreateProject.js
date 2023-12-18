@@ -44,7 +44,7 @@ export default function CreateProject() {
     };
     return (
         <Card className={'create-project-container'}>
-            <Form onSubmit={(e) => handleCreateProject(e)}>
+            <Form onSubmit={handleCreateProject}>
                 <Input
                     id="project-name"
                     label="Project Name"

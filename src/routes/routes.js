@@ -18,28 +18,28 @@ import DefaultLayout from '~/layout/DefaultLayout/DefaultLayout';
 import CreateProject from '~/pages/Projects/Create/CreateProject';
 
 const privateRoutes = [
-    {
-        path: '/',
-        component: BlackLog,
-    },
-    { path: '/board', component: Board },
-    { path: '/profile/security', component: ProfileSecurity, layout: null },
-    { path: '/profile', component: Profile, layout: HeaderOnly },
-    { path: '/profile/profile-and-visibility', component: ProfileAndVisibility, layout: null },
-    { path: '/profile/view-all-list-work', component: ViewAllListWork, layout: HeaderOnly },
-    { path: '/test', component: TestComponent, layout: null },
-    { path: '/forgot/change-password', component: ChangePassword, layout: null },
-    { path: '/project', component: Projects, layout: HeaderOnly },
-    { path: '/project/create', component: CreateProject, layout: null },
+   {
+      path: '/',
+      component: BlackLog,
+   },
+   { path: '/board', component: Board },
+   { path: '/profile/security', component: ProfileSecurity, layout: null },
+   { path: '/profile', component: Profile, layout: HeaderOnly },
+   { path: '/profile/profile-and-visibility', component: ProfileAndVisibility, layout: null },
+   { path: '/profile/view-all-list-work', component: ViewAllListWork, layout: HeaderOnly },
+   { path: '/test', component: TestComponent, layout: null },
+   { path: '/project', component: Projects, layout: HeaderOnly },
+   { path: '/project/create', component: CreateProject, layout: null },
 ];
 
 const publicRoutes = [
-    { path: '/verify', component: Verify, layout: null },
-    { path: '/forgot', component: Forgot, layout: null },
-    { path: '/reset-password', component: Reset, layout: null },
-    { path: '/login', component: Login, layout: null },
-    { path: '/register', component: Register, layout: null },
-    { path: '/register/verify', component: Notification, layout: null },
+   { path: '/verify', component: Verify, layout: null },
+   { path: '/forgot', component: Forgot, layout: null },
+   { path: '/reset-password', component: Reset, layout: null },
+   { path: '/login', component: Login, layout: null },
+   { path: '/register', component: Register, layout: null },
+   { path: '/register/verify', component: Notification, layout: null },
+   { path: '/forgot/change-password', component: ChangePassword, layout: null },
 ];
 
 export { privateRoutes, publicRoutes };

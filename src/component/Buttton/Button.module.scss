@@ -16,9 +16,9 @@
     white-space: nowrap;
     background: var(--ds-background-neutral, rgba(9, 30, 66, 0.04));
     cursor: pointer;
-    height: 2.28571em;
-    line-height: 2.28571em;
+    line-height: 32px;
     padding: 0px 10px;
+    height: 2.28571em;
     vertical-align: middle;
     width: auto;
     justify-content: center;
@@ -153,5 +153,15 @@
             fill: var(--icon-secondary-color);
             vertical-align: bottom;
         }
+    }
+}
+.disable {
+    background: var(--ds-background-neutral-subtle, none);
+    cursor: not-allowed;
+    text-decoration: none;
+    color: var(--ds-text-disabled, #a5adba) !important;
+    &:hover {
+        background-color: transparent;
+        color: var(--ds-text-disabled, #a5adba) !important;
     }
 }

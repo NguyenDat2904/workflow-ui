@@ -1,15 +1,72 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './RowProject.module.scss';
 import Button from '../Buttton/Button';
 import { MenuIcon } from '../icon/icon';
 import { Link } from 'react-router-dom';
 import MenuProject from './MenuProject/MenuProject';
+import { patch, post } from '~/ultil/hpptRequest';
+import { AppContext } from '~/hook/context/context';
 const cx = classNames.bind(style);
 
-function RowProject() {
+function RowProject({ project }) {
+    const { accessToken, parseuser, setDataProject } = useContext(AppContext);
     // 1. State
     const [toggle, setToggle] = useState(false);
+
+    // 2. Func
+    const handleMoveToTrash = async () => {
+        if (accessToken) {
+            const moveToTrash = await patch(
+                `/work/delete-project/${project._id}`,
+                { _idUser: parseuser._id },
+                {
+                    headers: {
+                        authorization: `${accessToken}`,
+                        refresh_token: `${parseuser?.refreshToken}`,
+                    },
+                },
+            );
+            if (moveToTrash.data.accessToken) {
+                const moveToTrashAgain = await patch(
+                    `/work/delete-project/${project._id}`,
+                    { _idUser: parseuser._id },
+                    {
+                        headers: {
+                            authorization: `${moveToTrash.data.accessToken}`,
+                            refresh_token: `${parseuser?.refreshToken}`,
+                        },
+                    },
+                );
+                localStorage.setItem('accessToken', moveToTrash.data.accessToken);
+                if (moveToTrashAgain.status === 200) {
+                    const listProject = await post(
+                        `/work/project/${parseuser?._id}`,
+                        { deleteProject: false },
+                        {
+                            headers: {
+                                authorization: `${moveToTrash.data.accessToken}`,
+                                refresh_token: `${parseuser?.refreshToken}`,
+                            },
+                        },
+                    );
+                    setDataProject(listProject.data);
+                }
+            } else if (moveToTrash.status === 200) {
+                const listProject = await post(
+                    `/work/project/${parseuser?._id}`,
+                    { deleteProject: false },
+                    {
+                        headers: {
+                            authorization: `${accessToken}`,
+                            refresh_token: `${parseuser?.refreshToken}`,
+                        },
+                    },
+                );
+                setDataProject(listProject.data);
+            }
+        }
+    };
 
     return (
         <tr className={cx('row')}>
@@ -19,21 +76,18 @@ function RowProject() {
                     <div className={cx('block')}>
                         <div className={cx('img')}>
                             <span style={{ borderRadius: '3px' }}>
-                                <img
-                                    src="https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10415?size=medium"
-                                    alt=""
-                                />
+                                <img src={project.imgProject} alt="" />
                             </span>
                         </div>
                         <div className={cx('name')}>
                             <div>
-                                <Link>My Scrum Project</Link>
+                                <Link>{project.nameProject}</Link>
                             </div>
                         </div>
                     </div>
                 </Button>
             </td>
-            <td>SCRUM</td>
+            <td>{project.codeProject}</td>
             <td>
                 <div>Team-managed software</div>
             </td>
@@ -61,7 +115,7 @@ function RowProject() {
                 <div onClick={() => setToggle(!toggle)}>
                     <Button noChildren backgroundNone leftIcon={<MenuIcon />} />
                 </div>
-                {toggle && <MenuProject />}
+                {toggle && <MenuProject onClick={handleMoveToTrash} />}
             </td>
         </tr>
     );

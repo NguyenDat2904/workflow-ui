@@ -3,8 +3,14 @@ import './tables.scss';
 import { ReactComponent as DotMenu } from '~/asset/icons/dotMenu.svg';
 import Dropdown from '../dropdown/Dropdown';
 
-export function Table({ actions, data, colWidthRatio, ...props }) {
-   const colType = Object.values(data[0]).map((value) => typeof value);
+export function Table({ actions, data, colWidthRatio, idList, labels, ...props }) {
+   let colType;
+
+   if (!data || data.length === 0) {
+      colType = labels.map(() => 'string');
+   } else {
+      colType = Object.values(data[0]).map((value) => typeof value);
+   }
 
    return (
       <table className="table">
@@ -16,7 +22,7 @@ export function Table({ actions, data, colWidthRatio, ...props }) {
          </colgroup>
          <thead>
             <tr>
-               {Object.keys(data[0]).map((key, index) => (
+               {labels.map((key, index) => (
                   <th key={key} className={`${colType[index]}`}>
                      {key.charAt(0).toUpperCase() + key.slice(1)}
                   </th>
@@ -24,22 +30,24 @@ export function Table({ actions, data, colWidthRatio, ...props }) {
                <th></th>
             </tr>
          </thead>
-         <tbody>
-            {data.map((item, index) => (
-               <tr key={index}>
-                  {Object.values(item).map((value, index) => (
-                     <td key={index} className={`${colType[index]}`}>
-                        {value}
+         {data && (
+            <tbody>
+               {data.map((item, index) => (
+                  <tr key={index}>
+                     {Object.values(item).map((value, index) => (
+                        <td key={index} className={`${colType[index]}`}>
+                           {value}
+                        </td>
+                     ))}
+                     <td>
+                        <Dropdown actions={actions} target={idList[index]}>
+                           <DotMenu />
+                        </Dropdown>
                      </td>
-                  ))}
-                  <td>
-                     <Dropdown actions={actions}>
-                        <DotMenu />
-                     </Dropdown>
-                  </td>
-               </tr>
-            ))}
-         </tbody>
+                  </tr>
+               ))}
+            </tbody>
+         )}
       </table>
    );
 }

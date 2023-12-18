@@ -5,6 +5,7 @@ const AppContext = createContext();
 const AppProvider = (props) => {
     const user = localStorage.getItem('user');
     const parseuser = JSON.parse(user);
+    const accessToken = localStorage.getItem('accessToken');
     const [modalSelectImg, setModalSelectImg] = useState(0);
     const [imgAvatar, setImgAvatar] = useState(true);
     const [formButton, setFormButton] = useState(true);
@@ -25,10 +26,14 @@ const AppProvider = (props) => {
         email: '',
         phone: '',
     });
-
+    //
     const [isAuthenticated, setIsAuthenticated] = useState(() => {
         const accessToken = localStorage.getItem('accessToken');
         return !!accessToken;
+    });
+    const [pageProject, setPageProject] = useState({
+        page: 0,
+        total: 0,
     });
 
     const onclickSeeModalSelectImg = (number) => {
@@ -59,22 +64,75 @@ const AppProvider = (props) => {
         }
     };
     // call dataUser
+    useEffect(() => {
+        const GetListProject = async () => {
+            if (accessToken) {
+                const listProject = await post(
+                    `/work/project/${parseuser?._id}`,
+                    { deleteProject: false },
+                    {
+                        headers: {
+                            authorization: `${accessToken}`,
+                            refresh_token: `${parseuser?.refreshToken}`,
+                        },
+                    },
+                );
+                if (listProject.data.accessToken) {
+                    const getListAgain = await post(
+                        `/work/project/${parseuser?._id}`,
+                        { deleteProject: false },
+                        {
+                            headers: {
+                                authorization: `${listProject.data.accessToken}`,
+                                refresh_token: `${parseuser?.refreshToken}`,
+                            },
+                        },
+                    );
+                    localStorage.setItem('accessToken', listProject.data.accessToken);
+                    setDataProject(getListAgain.data.workProject);
+                    setPageProject(() => {
+                        setPageProject({
+                            page: getListAgain.data.page,
+                            total: getListAgain.data.totalPages,
+                        });
+                    });
+                } else {
+                    setDataProject(listProject.data.workProject);
+                    setPageProject(() => {
+                        setPageProject({
+                            page: listProject.data.page,
+                            total: listProject.data.totalPages,
+                        });
+                    });
+                }
+            }
+        };
+        GetListProject();
+    }, []);
+
     const callApi = async () => {
-        const APIuser = await get(`/users/${parseuser?._id}`, {
-            headers: {
-                authorization: `${parseuser?.accessToken}`,
-                refresh_token: `${parseuser?.refreshToken}`,
-            },
-        });
-        setDataUserProfile(APIuser.data);
-        setValueInput({ ...APIuser.data });
-        const getWorkProject = await get(`/work/project/${parseuser?._id}`, {
-            headers: {
-                authorization: `${parseuser?.accessToken}`,
-                refresh_token: `${parseuser?.refreshToken}`,
-            },
-        });
-        setDataProject(getWorkProject.data);
+        if (accessToken) {
+            const APIuser = await get(`/users/${parseuser?._id}`, {
+                headers: {
+                    authorization: `${accessToken}`,
+                    refresh_token: `${parseuser?.refreshToken}`,
+                },
+            });
+            if (APIuser.data.accessToken) {
+                const APIuserAgain = await get(`/users/${parseuser?._id}`, {
+                    headers: {
+                        authorization: `${APIuser.data.accessToken}`,
+                        refresh_token: `${parseuser?.refreshToken}`,
+                    },
+                });
+                localStorage.setItem('accessToken', APIuserAgain.data.accessToken);
+                setDataUserProfile(APIuserAgain.data);
+                setValueInput({ ...APIuserAgain.data });
+            } else {
+                setDataUserProfile(APIuser.data);
+                setValueInput({ ...APIuser.data });
+            }
+        }
     };
     useEffect(() => {
         callApi();
@@ -98,7 +156,7 @@ const AppProvider = (props) => {
         }
     };
     const apiListWork = async () => {
-        const popDataProject = dataProject.length - 1;
+        const popDataProject = dataProject?.length - 1;
         const user = localStorage.getItem('user');
         const parseuser = JSON.parse(user);
         const postdataListWork = await post(
@@ -117,7 +175,7 @@ const AppProvider = (props) => {
     };
 
     useEffect(() => {
-        if (dataProject.length > 0) {
+        if (dataProject?.length > 0) {
             apiListWork();
         }
     }, [dataProject]);
@@ -176,9 +234,14 @@ const AppProvider = (props) => {
         dataListWork,
         setDataListWork,
         dataProject,
+        setDataProject,
         callApi,
         isAuthenticated,
         setIsAuthenticated,
+        parseuser,
+        accessToken,
+        pageProject,
+        setPageProject,
     };
     return <AppContext.Provider value={value} {...props}></AppContext.Provider>;
 };

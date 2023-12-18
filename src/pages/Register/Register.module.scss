@@ -28,7 +28,7 @@
 .container {
     position: relative;
     min-height: 60px;
-    max-height: 120px;
+    maxheight: 120px;
     overflow: visible;
     z-index: 9;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
@@ -325,7 +325,7 @@
                     overflow: hidden;
                     pointer-events: none;
                     max-width: 100%;
-                    max-height: 100%;
+                    maxheight: 100%;
                     color: var(--icon-primary-color);
                     fill: var(--icon-secondary-color);
                     vertical-align: bottom;
@@ -335,14 +335,14 @@
     }
     .input-container.success {
         transition: all 0.1s linear 0s;
-        max-height: 40px;
+        maxheight: 40px;
         opacity: 1;
         background: rgb(255, 255, 255);
         border-color: rgb(54, 179, 126);
     }
     .input-container.error {
         transition: all 0.1s linear 0s;
-        max-height: 40px;
+        maxheight: 40px;
         opacity: 1;
         background: rgb(255, 255, 255);
         border-color: rgb(222, 53, 11);
@@ -353,7 +353,7 @@
         margin: 6px 0px;
         font-size: 12px;
         line-height: 12px;
-        max-height: 40px;
+        maxheight: 40px;
         opacity: 1;
         background-color: white;
         transition: all 0.1s linear 0s;

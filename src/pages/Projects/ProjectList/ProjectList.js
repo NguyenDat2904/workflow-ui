@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import classNames from 'classnames/bind';
 import style from './ProjectList.module.scss';
 import { FilterIcon, StarIcon } from '~/component/icon/icon';
 import Button from '~/component/Buttton/Button';
 import RowProject from '~/component/RowProject/RowProject';
+import { AppContext } from '~/hook/context/context';
 const cx = classNames.bind(style);
 function ProjectList() {
+    const { dataProject } = useContext(AppContext);
+
     return (
         <table className={cx('table-list')}>
             <thead>
@@ -38,7 +41,9 @@ function ProjectList() {
                 </tr>
             </thead>
             <tbody>
-                <RowProject />
+                {dataProject?.map((project) => {
+                    return <RowProject key={project._id} project={project} />;
+                })}
             </tbody>
         </table>
     );

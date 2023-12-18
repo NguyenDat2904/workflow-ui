@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import style from './Projects.module.scss';
 import Main from '~/component/Main/Main';
@@ -6,9 +6,18 @@ import Button from '~/component/Buttton/Button';
 import Input from '~/component/Input/Input';
 import { SearchIcon } from '~/component/icon/icon';
 import ProjectList from './ProjectList/ProjectList';
+import Pagination from '~/component/Pagination/Pagination';
+import { post } from '~/ultil/hpptRequest';
+import { AppContext } from '~/hook/context/context';
 const cx = classNames.bind(style);
 
 function Projects() {
+    const { pageProject } = useContext(AppContext);
+
+    // 1. State
+
+    // 2. useEffect
+
     return (
         <Main>
             <div className={cx('home-title')}>
@@ -29,6 +38,7 @@ function Projects() {
             <div className={cx('project-list')}>
                 <ProjectList />
             </div>
+            <Pagination page={pageProject} />
         </Main>
     );
 }

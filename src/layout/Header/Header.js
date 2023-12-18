@@ -112,7 +112,9 @@ function Header() {
                             Projects
                         </Button>
                     </div>
-                    {toggleMenu.project && <ModalProject handleToggle={() => handleToggle('project')} />}
+                    {toggleMenu.project && (
+                        <ModalProject handleToggle={() => handleToggle('project')} onBlur={() => console.log(1)} />
+                    )}
                     <div className={cx('menu')} onClick={() => handleToggle('team')}>
                         <Button rightIcon={<DownIcon />} backgroundNone>
                             Teams

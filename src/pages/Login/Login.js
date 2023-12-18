@@ -12,7 +12,7 @@ import LoginGoogleButton from './LoginGoogleButton';
 import { AppContext } from '~/hook/context/context';
 
 function Login() {
-    const { setIsAuthenticated } = useContext(AppContext);
+    const { setIsAuthenticated, setDataUserProfile } = useContext(AppContext);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -29,6 +29,7 @@ function Login() {
         if (response.status === 200) {
             localStorage.setItem('user', JSON.stringify(response.data));
             localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
+            setDataUserProfile(response.data);
             setIsAuthenticated(true);
             navigate('/');
         } else {

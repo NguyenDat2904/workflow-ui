@@ -27,8 +27,6 @@ const privateRoutes = [
     { path: '/profile/profile-and-visibility', component: ProfileAndVisibility, layout: null },
     { path: '/profile/view-all-list-work', component: ViewAllListWork, layout: DefaultLayout },
     { path: '/test', component: TestComponent, layout: null },
-    { path: '/forgot/change-password', component: ChangePassword, layout: null },
-    { path: '/register/verify', component: Notification, layout: null },
     { path: '/project', component: Projects, layout: HeaderOnly },
 ];
 
@@ -38,6 +36,8 @@ const publicRoutes = [
     { path: '/reset-password', component: Reset, layout: null },
     { path: '/login', component: Login, layout: null },
     { path: '/register', component: Register, layout: null },
+    { path: '/register/verify', component: Notification, layout: null },
+    { path: '/forgot/change-password', component: ChangePassword, layout: null },
 ];
 
 export { privateRoutes, publicRoutes };

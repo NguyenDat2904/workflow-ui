@@ -12,85 +12,91 @@ import LoginGoogleButton from './LoginGoogleButton';
 import { AppContext } from '~/hook/context/context';
 
 function Login() {
-    const { setIsAuthenticated, setDataUserProfile } = useContext(AppContext);
+   const { setIsAuthenticated, setDataUserProfile } = useContext(AppContext);
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+   const [username, setUsername] = useState('');
+   const [password, setPassword] = useState('');
+   const [error, setError] = useState('');
+   const navigate = useNavigate();
 
-    const handleLoginWithUsername = async (e) => {
-        e.preventDefault();
-        setError('');
-        const response = await post('/users/login', {
-            userName: username,
-            passWord: password,
-        });
-        if (response.status === 200) {
-            console.log(response.data);
-            localStorage.setItem('user', JSON.stringify(response.data));
-            localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
-            setDataUserProfile(response.data);
-            setIsAuthenticated(true);
-            navigate('/');
-        } else {
-            switch (response.status) {
-                case 404:
-                    setError('Invalid email or password.');
-                    break;
-                default:
-                    setError('Something went wrong. Please try again later.');
-            }
-        }
-    };
+   const handleLoginWithUsername = async (e) => {
+      e.preventDefault();
+      setError('');
 
-    return (
-        <HomeLayout>
-            <div id="login">
-                <Card className="login-container">
-                    <h3>
-                        Log in
-                        <p>With your WorkFlow account</p>
-                    </h3>
-                    <Form
-                        onSubmit={(e) => {
-                            handleLoginWithUsername(e);
-                        }}
-                    >
-                        <Input
-                            id={'username'}
-                            inputStyle={'light'}
-                            label={'Username:'}
-                            type={'username'}
-                            name={'username'}
-                            placeholder={'Enter username'}
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <Input
-                            id={'password'}
-                            inputStyle={'light'}
-                            label={'Password:'}
-                            type={'password'}
-                            name={'password'}
-                            placeholder={'Enter password'}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <p className="login-error">{error}</p>
-                        <Button buttonStyle={'filled'} type={'submit'}>
-                            Log in
-                        </Button>
-                    </Form>
-                    <p>OR</p>
-                    <LoginGoogleButton />
-                    <Divider />
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                        <NavigationLinks navLink="/forgot">Forgot password?</NavigationLinks>|
-                        <NavigationLinks navLink="/register">Sign up for an account</NavigationLinks>
-                    </div>
-                </Card>
-            </div>
-        </HomeLayout>
-    );
+      if (!username || !password) {
+         setError('Please enter both username and password.');
+         return;
+      }
+
+      const response = await post('/users/login', {
+         userName: username,
+         passWord: password,
+      });
+      if (response.status === 200) {
+         console.log(response.data);
+         localStorage.setItem('user', JSON.stringify(response.data));
+         localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
+         setDataUserProfile(response.data);
+         setIsAuthenticated(true);
+         navigate('/');
+      } else {
+         switch (response.status) {
+            case 404:
+               setError('Invalid email or password.');
+               break;
+            default:
+               setError('Something went wrong. Please try again later.');
+         }
+      }
+   };
+
+   return (
+      <HomeLayout>
+         <div id="login">
+            <Card className="login-container">
+               <h3>
+                  Log in
+                  <p>With your WorkFlow account</p>
+               </h3>
+               <Form
+                  onSubmit={(e) => {
+                     handleLoginWithUsername(e);
+                  }}
+               >
+                  <Input
+                     id={'username'}
+                     inputStyle={'light'}
+                     label={'Username:'}
+                     type={'username'}
+                     name={'username'}
+                     placeholder={'Enter username'}
+                     onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <Input
+                     id={'password'}
+                     inputStyle={'light'}
+                     label={'Password:'}
+                     type={'password'}
+                     name={'password'}
+                     placeholder={'Enter password'}
+                     onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <p className="login-error">{error}</p>
+                  <Button buttonStyle={'filled'} type={'submit'}>
+                     Log in
+                  </Button>
+               </Form>
+               <p>OR</p>
+               <LoginGoogleButton />
+               <Divider />
+               <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                  <NavigationLinks navLink="/forgot">Forgot password?</NavigationLinks>|
+                  <NavigationLinks navLink="/register">Sign up for an account</NavigationLinks>
+               </div>
+            </Card>
+         </div>
+      </HomeLayout>
+   );
 }
 
 export default Login;

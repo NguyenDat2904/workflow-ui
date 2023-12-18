@@ -69,15 +69,6 @@ function Forgot() {
                             Một tài khoản cho Jira, Confluence, Trello và <Link>sản phẩm khác.</Link>
                         </div>
                     </div>
-                    <ul className={cx('support')}>
-                        <li>
-                            <Link>Trợ giúp đăng nhập</Link>
-                        </li>
-                        <p>•</p>
-                        <li>
-                            <Link>Liên hệ với bộ phận hỗ trợ</Link>
-                        </li>
-                    </ul>
                 </footer>
             </section>
         </Wrapper>

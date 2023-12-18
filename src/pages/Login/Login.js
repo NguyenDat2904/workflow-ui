@@ -27,6 +27,7 @@ function Login() {
             passWord: password,
         });
         if (response.status === 200) {
+            console.log(response.data);
             localStorage.setItem('user', JSON.stringify(response.data));
             localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
             setDataUserProfile(response.data);
@@ -59,10 +60,10 @@ function Login() {
                         <Input
                             id={'username'}
                             inputStyle={'light'}
-                            label={'Email or username:'}
+                            label={'Username:'}
                             type={'username'}
                             name={'username'}
-                            placeholder={'Enter email or username'}
+                            placeholder={'Enter username'}
                             onChange={(e) => setUsername(e.target.value)}
                         />
                         <Input

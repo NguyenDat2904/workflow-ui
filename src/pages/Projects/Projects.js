@@ -9,38 +9,46 @@ import ProjectList from './ProjectList/ProjectList';
 import Pagination from '~/component/Pagination/Pagination';
 import { post } from '~/ultil/hpptRequest';
 import { AppContext } from '~/hook/context/context';
+import { Navigate } from 'react-router-dom';
 const cx = classNames.bind(style);
 
 function Projects() {
-    const { pageProject } = useContext(AppContext);
+   const { pageProject } = useContext(AppContext);
 
-    // 1. State
+   // 1. State
 
-    // 2. useEffect
+   // 2. useEffect
 
-    return (
-        <Main>
-            <div className={cx('home-title')}>
-                <div className={cx('flex-start')}>
-                    <div className={cx('home-title-header')}>
-                        <h1>Projects</h1>
-                    </div>
-                    <div className={cx('create-icon')}>
-                        <Button blue>Create project</Button>
-                    </div>
-                </div>
+   return (
+      <Main>
+         <div className={cx('home-title')}>
+            <div className={cx('flex-start')}>
+               <div className={cx('home-title-header')}>
+                  <h1>Projects</h1>
+               </div>
+               <div className={cx('create-icon')}>
+                  <Button
+                     blue
+                     onClick={() => {
+                        Navigate('/project/create');
+                     }}
+                  >
+                     Create project
+                  </Button>
+               </div>
             </div>
-            <div className={cx('input-filter')}>
-                <div className={cx('input-wrapper')}>
-                    <Input placeholder="Search Projects" rightIcon={<SearchIcon />} search="search" />
-                </div>
+         </div>
+         <div className={cx('input-filter')}>
+            <div className={cx('input-wrapper')}>
+               <Input placeholder="Search Projects" rightIcon={<SearchIcon />} search="search" />
             </div>
-            <div className={cx('project-list')}>
-                <ProjectList />
-            </div>
-            <Pagination page={pageProject} />
-        </Main>
-    );
+         </div>
+         <div className={cx('project-list')}>
+            <ProjectList />
+         </div>
+         <Pagination page={pageProject} />
+      </Main>
+   );
 }
 
 export default Projects;

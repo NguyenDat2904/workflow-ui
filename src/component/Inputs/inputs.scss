@@ -1,3 +1,5 @@
+$color-border: rgba(9, 30, 66, 0.08);
+
 .input-container {
     width: 100%;
     display: flex;
@@ -14,7 +16,7 @@
     outline: none;
     border-radius: 5px;
     border: none;
-    border: 2px solid var(--jwm-color-border);
+    border: 2px solid $color-border;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,7 +25,8 @@
 
 .input-filled,
 .input-light {
-    width: 40rem;
+    width: 100%;
+    max-width: 40rem;
     transition: border-color 0.25s;
 }
 

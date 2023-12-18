@@ -80,12 +80,19 @@ function Verify() {
                 ...pre,
                 loadingRegister: false,
             }));
-            if (register.status === 200) {
-                navigate('/profile');
-            }
-            if (register.status === 404) {
-                if (register.data.message === 'Token is incorrect') {
-                }
+            switch (register.status) {
+                case 200:
+                    navigate('/profile');
+                    break;
+                case 400:
+                    navigate('/profile');
+                    break;
+                case 404:
+                    if (register.data.message === 'Token is incorrect') {
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     };
@@ -147,20 +154,6 @@ function Verify() {
                         </div>
                     </form>
                 </div>
-                <footer>
-                    <div className={cx('page-footer')}>
-                        <span>
-                            <LogoIcon />
-                        </span>
-                        <div className={cx('txt')}>
-                            Một tài khoản cho Jira, Confluence, Trello và <Link>sản phẩm khác.</Link>
-                        </div>
-                    </div>
-                    <div className={cx('txt')}>
-                        Trang này được bảo vệ bởi reCAPTCHA cũng như tuân theo <Link>Chính sách quyền riêng tư</Link> và{' '}
-                        <Link>Điều khoản dịch vụ</Link> của Google.
-                    </div>
-                </footer>
             </div>
         </div>
     );

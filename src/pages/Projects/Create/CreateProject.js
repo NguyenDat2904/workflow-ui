@@ -1,14 +1,46 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './CreateProject.scss';
 import { Button, Form, Input } from '~/component/Inputs/Inputs';
 import { Card } from '~/component/cards/Cards';
+import { post } from '~/ultil/hpptRequest';
 
 export default function CreateProject() {
     const [projectName, setProjectName] = useState('');
     const [projectKey, setProjectKey] = useState('');
-    const handleCreateProject = (e) => {
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem('user'));
+    const handleCreateProject = async (e) => {
         e.preventDefault();
-        // Wait for api
+        setError('');
+        const response = await post(
+            `/work/add-new-project/${user._id}`,
+            {
+                nameProject: projectName,
+                codeProject: projectKey,
+            },
+            {
+                headers: {
+                    authorization: `${user.accessToken}`,
+                    refresh_token: `${user.refreshToken}`,
+                },
+            },
+        );
+        switch (response.status) {
+            case 200:
+                console.log(response);
+                break;
+            case 400:
+                navigate('/login');
+                break;
+            case 401:
+                setError('The key is already used.');
+                break;
+            default:
+                setError('Something went wrong. Please try again later.');
+                break;
+        }
     };
     return (
         <Card className={'create-project-container'}>
@@ -27,6 +59,7 @@ export default function CreateProject() {
                     onChange={(e) => setProjectKey(e.target.value)}
                     placeholder="Project Key"
                 />
+                {error && <p className="error">{error}</p>}
                 <Button buttonStyle={projectName && projectKey ? 'filled' : 'disabled'} type="submit">
                     Create a new project
                 </Button>

@@ -1,0 +1,23 @@
+$box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+$light-background: rgba(9, 30, 66, 0.04);
+
+.dropdown {
+   position: relative;
+   .dropdown-menu {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+      min-width: 10rem;
+      text-align: right;
+      background-color: white;
+      box-shadow: $box-shadow;
+      .dropdown-item {
+         padding: 0.5rem 1rem;
+         cursor: pointer;
+         &:hover {
+            background-color: $light-background;
+         }
+      }
+   }
+}

@@ -11,7 +11,6 @@ export default function CreateProject() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user);
     const handleCreateProject = async (e) => {
         e.preventDefault();
         setError('');

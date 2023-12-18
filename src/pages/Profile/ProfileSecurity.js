@@ -4,6 +4,7 @@ import { Form, Input, Button } from '~/component/Inputs/Inputs';
 import './profileSecurity.scss';
 import { patch } from '../../ultil/hpptRequest';
 import HeaderSetting from '~/layout/HeaderSetting/HeaderSetting';
+import Status from '~/component/status/Status';
 
 export default function ProfileSecurity() {
     const [currentPassword, setCurrentPassword] = useState('');
@@ -54,11 +55,7 @@ export default function ProfileSecurity() {
                         placeholder="New password"
                         type="password"
                     />
-                    {status === 'success' ? (
-                        <p>Change password success</p>
-                    ) : status === 'error' ? (
-                        <p>Change password error</p>
-                    ) : null}
+                    <Status status={status}>Password changed successfully.</Status>
                     <Button buttonStyle={'filled'} type={'submit'}>
                         Change Password
                     </Button>

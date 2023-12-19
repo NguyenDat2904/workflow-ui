@@ -14,9 +14,9 @@ import Projects from '~/pages/Projects/Projects';
 import Reset from '~/pages/Notication/Reset';
 import ViewAllListWork from '~/pages/Profile/viewAllListWork/viewAllListWork';
 import HeaderOnly from '~/layout/HeaderOnly/HeaderOnly';
-import DefaultLayout from '~/layout/DefaultLayout/DefaultLayout';
 import CreateProject from '~/pages/Projects/Create/CreateProject';
 import TrashProjects from '~/pages/Projects/Trash/TrashProjects';
+import ProjectAccess from '~/pages/Projects/Access/ProjectAccess';
 
 const privateRoutes = [
    {
@@ -33,6 +33,7 @@ const privateRoutes = [
    { path: '/project', component: Projects, layout: HeaderOnly },
    { path: '/project/create', component: CreateProject, layout: null },
    { path: '/project/trash', component: TrashProjects, layout: HeaderOnly },
+   { path: '/project/settings/access', component: ProjectAccess, layout: HeaderOnly },
 ];
 
 const publicRoutes = [

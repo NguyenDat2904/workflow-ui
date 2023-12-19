@@ -24,8 +24,11 @@ export default function TrashProjects() {
       switch (response.status) {
          case 200:
             const workProject = response.data.workProject;
-            console.log(workProject);
-            setTrashProject(workProject);
+            if (workProject) {
+               setTrashProject(workProject);
+            } else {
+               setTrashProject([]);
+            }
             const newProjects = [];
             for (let i = 0; i < workProject.length; i++) {
                newProjects.push({ name: workProject[i].nameProject, key: workProject[i].codeProject });

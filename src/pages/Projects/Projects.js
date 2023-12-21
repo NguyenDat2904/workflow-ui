@@ -15,10 +15,6 @@ const cx = classNames.bind(style);
 function Projects() {
    const { pageProject } = useContext(AppContext);
 
-   // 1. State
-
-   // 2. useEffect
-
    return (
       <Main>
          <div className={cx('home-title')}>

@@ -7,12 +7,13 @@ import { post, patch } from '~/ultil/hpptRequest';
 export default function TrashProjects() {
    const [trashProject, setTrashProject] = useState([]);
    const [renderedTrashProject, setRenderedTrashProject] = useState([]);
+   const [page, setPage] = useState(1);
    const user = JSON.parse(localStorage.getItem('user'));
    const navigate = useNavigate();
 
    const getProjects = async () => {
       const response = await post(
-         `work/project/${user._id}?page=1&sortKey=nameProject`,
+         `work/project/${user._id}?page=${page}&sortKey=nameProject`,
          { deleteProject: true },
          {
             headers: {
@@ -21,19 +22,29 @@ export default function TrashProjects() {
             },
          },
       );
+      console.log(response);
       switch (response.status) {
          case 200:
             const workProject = response.data.workProject;
             if (workProject) {
                setTrashProject(workProject);
+               const newProjects = [];
+               for (let i = 0; i < workProject.length; i++) {
+                  newProjects.push({
+                     name: (
+                        <div className="trash-project-name">
+                           <img src={workProject[i].imgProject} alt="" />
+                           <span>{workProject[i].nameProject}</span>
+                        </div>
+                     ),
+                     key: workProject[i].codeProject,
+                  });
+               }
+               setRenderedTrashProject(newProjects);
             } else {
                setTrashProject([]);
+               setRenderedTrashProject([]);
             }
-            const newProjects = [];
-            for (let i = 0; i < workProject.length; i++) {
-               newProjects.push({ name: workProject[i].nameProject, key: workProject[i].codeProject });
-            }
-            setRenderedTrashProject(newProjects);
             break;
          case 404:
             navigate('/login');
@@ -58,7 +69,7 @@ export default function TrashProjects() {
             getProjects();
             break;
          case 404:
-            // navigate('/login');
+            navigate('/login');
             break;
          default:
             break;
@@ -93,6 +104,7 @@ export default function TrashProjects() {
                { label: 'Permanently Delete', method: handleDeleteProject },
             ]}
             colWidthRatio={[40, 60]}
+            colType={['string', 'string']}
             data={renderedTrashProject}
             idList={trashProject.map((project) => project._id)}
             labels={['Name', 'Key']}

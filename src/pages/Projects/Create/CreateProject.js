@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CreateProject.scss';
 import { Button, Form, Input } from '~/component/Inputs/Inputs';
 import { Card } from '~/component/cards/Cards';
+import { toast } from 'react-toastify';
 import { post } from '~/ultil/hpptRequest';
+import { AppContext } from '~/hook/context/context';
 
 export default function CreateProject() {
+   const { GetListProject } = useContext(AppContext);
    const [projectName, setProjectName] = useState('');
    const [projectKey, setProjectKey] = useState('');
-   const [error, setError] = useState('');
    const navigate = useNavigate();
    const user = JSON.parse(localStorage.getItem('user'));
    const handleCreateProject = async (e) => {
       e.preventDefault();
-      setError('');
       if (projectName && projectKey) {
          const response = await post(
             `/work/add-new-project/${user._id}`,
@@ -31,17 +32,20 @@ export default function CreateProject() {
          switch (response.status) {
             case 200:
                console.log(response);
+               GetListProject();
+               navigate('/project');
                break;
             case 400:
                navigate('/login');
                break;
             case 401:
-               setError('The key is already used.');
+               toast.error('Either the project name or project key already exists.');
                break;
             default:
-               setError('Something went wrong. Please try again later.');
+               toast.error('Something went wrong. Please try again later.');
                break;
          }
+         return;
       }
    };
    return (
@@ -64,7 +68,6 @@ export default function CreateProject() {
                onChange={(e) => setProjectKey(e.target.value)}
                placeholder="Project Key"
             />
-            {error && <p className="error">{error}</p>}
             <Button
                buttonStyle={projectName && projectKey ? 'filled' : 'disabled'}
                type="submit"

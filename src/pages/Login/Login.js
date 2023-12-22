@@ -91,7 +91,7 @@ function Login() {
                      placeholder={'Enter password'}
                      onChange={(e) => setPassword(e.target.value)}
                   />
-                  <Button buttonStyle={'filled'} type={'submit'}>
+                  <Button buttonStyle={username && password ? 'filled' : 'disabled'} type={'submit'}>
                      Log in
                   </Button>
                </Form>

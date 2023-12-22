@@ -9,16 +9,12 @@ import ProjectList from './ProjectList/ProjectList';
 import Pagination from '~/component/Pagination/Pagination';
 import { post } from '~/ultil/hpptRequest';
 import { AppContext } from '~/hook/context/context';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(style);
 
 function Projects() {
    const { pageProject } = useContext(AppContext);
-
-   // 1. State
-
-   // 2. useEffect
-
+   const navigate = useNavigate();
    return (
       <Main>
          <div className={cx('home-title')}>
@@ -30,7 +26,7 @@ function Projects() {
                   <Button
                      blue
                      onClick={() => {
-                        Navigate('/project/create');
+                        navigate('/project/create');
                      }}
                   >
                      Create project

@@ -22,6 +22,7 @@ export default function TrashProjects() {
             },
          },
       );
+      console.log(response);
       switch (response.status) {
          case 200:
             const workProject = response.data.workProject;
@@ -29,7 +30,15 @@ export default function TrashProjects() {
                setTrashProject(workProject);
                const newProjects = [];
                for (let i = 0; i < workProject.length; i++) {
-                  newProjects.push({ name: workProject[i].nameProject, key: workProject[i].codeProject });
+                  newProjects.push({
+                     name: (
+                        <div className="trash-project-name">
+                           <img src={workProject[i].imgProject} alt="" />
+                           <span>{workProject[i].nameProject}</span>
+                        </div>
+                     ),
+                     key: workProject[i].codeProject,
+                  });
                }
                setRenderedTrashProject(newProjects);
             } else {

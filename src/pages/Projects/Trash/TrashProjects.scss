@@ -5,3 +5,13 @@
       margin-bottom: 1rem;
    }
 }
+
+.trash-project-name {
+   display: flex;
+   align-items: center;
+   gap: 0.5rem;
+   img {
+      width: 1.5rem;
+      border-radius: 5px;
+   }
+}

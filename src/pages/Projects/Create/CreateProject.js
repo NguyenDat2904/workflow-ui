@@ -31,6 +31,7 @@ export default function CreateProject() {
          switch (response.status) {
             case 200:
                console.log(response);
+               navigate('/project');
                break;
             case 400:
                navigate('/login');

@@ -26,14 +26,15 @@ export default function TrashProjects() {
             const workProject = response.data.workProject;
             if (workProject) {
                setTrashProject(workProject);
+               const newProjects = [];
+               for (let i = 0; i < workProject.length; i++) {
+                  newProjects.push({ name: workProject[i].nameProject, key: workProject[i].codeProject });
+               }
+               setRenderedTrashProject(newProjects);
             } else {
                setTrashProject([]);
+               setRenderedTrashProject([]);
             }
-            const newProjects = [];
-            for (let i = 0; i < workProject.length; i++) {
-               newProjects.push({ name: workProject[i].nameProject, key: workProject[i].codeProject });
-            }
-            setRenderedTrashProject(newProjects);
             break;
          case 404:
             navigate('/login');
@@ -93,6 +94,7 @@ export default function TrashProjects() {
                { label: 'Permanently Delete', method: handleDeleteProject },
             ]}
             colWidthRatio={[40, 60]}
+            colType={['string', 'string']}
             data={renderedTrashProject}
             idList={trashProject.map((project) => project._id)}
             labels={['Name', 'Key']}

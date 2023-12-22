@@ -10,21 +10,29 @@ import { post } from '../../ultil/hpptRequest';
 import HomeLayout from '~/layout/HomeLayout/HomeLayout';
 import LoginGoogleButton from './LoginGoogleButton';
 import { AppContext } from '~/hook/context/context';
+import { toast } from 'react-toastify';
 
 function Login() {
    const { setIsAuthenticated, setDataUserProfile } = useContext(AppContext);
 
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
-   const [error, setError] = useState('');
+   const [usernameError, setUsernameError] = useState('');
+   const [passwordError, setPasswordError] = useState('');
    const navigate = useNavigate();
 
    const handleLoginWithUsername = async (e) => {
       e.preventDefault();
-      setError('');
 
+      setUsernameError('');
+      setPasswordError('');
       if (!username || !password) {
-         setError('Please enter both username and password.');
+         if (!username) {
+            setUsernameError('Please enter your username');
+         }
+         if (!password) {
+            setPasswordError('Please enter your password');
+         }
          return;
       }
 
@@ -42,10 +50,10 @@ function Login() {
       } else {
          switch (response.status) {
             case 404:
-               setError('Invalid email or password.');
+               toast.error('Invalid username or password.');
                break;
             default:
-               setError('Something went wrong. Please try again later.');
+               toast.error('Something went wrong. Please try again later.');
          }
       }
    };
@@ -64,6 +72,7 @@ function Login() {
                   }}
                >
                   <Input
+                     error={usernameError}
                      id={'username'}
                      inputStyle={'light'}
                      label={'Username:'}
@@ -73,6 +82,7 @@ function Login() {
                      onChange={(e) => setUsername(e.target.value)}
                   />
                   <Input
+                     error={passwordError}
                      id={'password'}
                      inputStyle={'light'}
                      label={'Password:'}
@@ -81,7 +91,6 @@ function Login() {
                      placeholder={'Enter password'}
                      onChange={(e) => setPassword(e.target.value)}
                   />
-                  <p className="login-error">{error}</p>
                   <Button buttonStyle={'filled'} type={'submit'}>
                      Log in
                   </Button>

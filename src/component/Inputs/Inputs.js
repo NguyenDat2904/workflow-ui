@@ -1,7 +1,7 @@
 import React from 'react';
 import './inputs.scss';
 
-export function Input({ id, inputStyle, label, name, onChange, placeholder, type }) {
+export function Input({ error, id, inputStyle, label, ...props }) {
    let className;
    switch (inputStyle) {
       case 'filled':
@@ -16,12 +16,13 @@ export function Input({ id, inputStyle, label, name, onChange, placeholder, type
    return (
       <div className="input-container">
          {label && <label htmlFor={id}>{label}</label>}
-         <input className={className} id={id} name={name} onChange={onChange} placeholder={placeholder} type={type} />
+         <input className={`${className} ${error && 'input-error'}`} id={id} {...props} />
+         {error && <p className="input-error-message">{error}</p>}
       </div>
    );
 }
 
-export function Button({ children, buttonStyle, className, disabled, onClick, type }) {
+export function Button({ children, buttonStyle, className, ...props }) {
    let buttonType;
    switch (buttonStyle) {
       case 'light':
@@ -39,15 +40,15 @@ export function Button({ children, buttonStyle, className, disabled, onClick, ty
    }
 
    return (
-      <button className={`button ${buttonType} ${className}`} disabled={disabled} type={type} onClick={onClick}>
+      <button className={`button ${buttonType} ${className}`} {...props}>
          {children}
       </button>
    );
 }
 
-export function Form({ children, className, onSubmit }) {
+export function Form({ children, className, ...props }) {
    return (
-      <form className={`form ${className}`} onSubmit={onSubmit}>
+      <form className={`form ${className}`} {...props}>
          {children}
       </form>
    );

@@ -69,7 +69,7 @@ export default function TrashProjects() {
             getProjects();
             break;
          case 404:
-            // navigate('/login');
+            navigate('/login');
             break;
          default:
             break;

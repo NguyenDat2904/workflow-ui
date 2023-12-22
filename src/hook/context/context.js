@@ -64,49 +64,49 @@ const AppProvider = (props) => {
       }
    };
    // call dataUser
-   useEffect(() => {
-      const GetListProject = async () => {
-         if (accessToken) {
-            const listProject = await post(
+   const GetListProject = async () => {
+      if (accessToken) {
+         const listProject = await post(
+            `/work/project/${parseuser?._id}`,
+            { deleteProject: false },
+            {
+               headers: {
+                  authorization: `${accessToken}`,
+                  refresh_token: `${parseuser?.refreshToken}`,
+               },
+            },
+         );
+         if (listProject.data.accessToken) {
+            const getListAgain = await post(
                `/work/project/${parseuser?._id}`,
                { deleteProject: false },
                {
                   headers: {
-                     authorization: `${accessToken}`,
+                     authorization: `${listProject.data.accessToken}`,
                      refresh_token: `${parseuser?.refreshToken}`,
                   },
                },
             );
-            if (listProject.data.accessToken) {
-               const getListAgain = await post(
-                  `/work/project/${parseuser?._id}`,
-                  { deleteProject: false },
-                  {
-                     headers: {
-                        authorization: `${listProject.data.accessToken}`,
-                        refresh_token: `${parseuser?.refreshToken}`,
-                     },
-                  },
-               );
-               localStorage.setItem('accessToken', listProject.data.accessToken);
-               setDataProject(getListAgain.data.workProject);
-               setPageProject(() => {
-                  setPageProject({
-                     page: getListAgain.data.page,
-                     total: getListAgain.data.totalPages,
-                  });
+            localStorage.setItem('accessToken', listProject.data.accessToken);
+            setDataProject(getListAgain.data.workProject);
+            setPageProject(() => {
+               setPageProject({
+                  page: getListAgain.data.page,
+                  total: getListAgain.data.totalPages,
                });
-            } else {
-               setDataProject(listProject.data.workProject);
-               setPageProject(() => {
-                  setPageProject({
-                     page: listProject.data.page,
-                     total: listProject.data.totalPages,
-                  });
+            });
+         } else {
+            setDataProject(listProject.data.workProject);
+            setPageProject(() => {
+               setPageProject({
+                  page: listProject.data.page,
+                  total: listProject.data.totalPages,
                });
-            }
+            });
          }
-      };
+      }
+   };
+   useEffect(() => {
       GetListProject();
    }, []);
 
@@ -246,6 +246,7 @@ const AppProvider = (props) => {
       accessToken,
       pageProject,
       setPageProject,
+      GetListProject,
    };
    return <AppContext.Provider value={value} {...props}></AppContext.Provider>;
 };

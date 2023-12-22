@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CreateProject.scss';
 import { Button, Form, Input } from '~/component/Inputs/Inputs';
 import { Card } from '~/component/cards/Cards';
 import { toast } from 'react-toastify';
 import { post } from '~/ultil/hpptRequest';
+import { AppContext } from '~/hook/context/context';
 
 export default function CreateProject() {
+   const { GetListProject } = useContext(AppContext);
    const [projectName, setProjectName] = useState('');
    const [projectKey, setProjectKey] = useState('');
    const navigate = useNavigate();
@@ -30,6 +32,7 @@ export default function CreateProject() {
          switch (response.status) {
             case 200:
                console.log(response);
+               GetListProject();
                navigate('/project');
                break;
             case 400:

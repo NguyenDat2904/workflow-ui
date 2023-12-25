@@ -14,8 +14,8 @@ import Projects from '~/pages/Projects/Projects';
 import Reset from '~/pages/Notication/Reset';
 import ViewAllListWork from '~/pages/Profile/viewAllListWork/viewAllListWork';
 import HeaderOnly from '~/layout/HeaderOnly/HeaderOnly';
-import DefaultLayout from '~/layout/DefaultLayout/DefaultLayout';
 import CreateProject from '~/pages/Projects/Create/CreateProject';
+import DetailProject from '~/pages/DetailProject/DetailProject';
 
 const privateRoutes = [
    {
@@ -30,6 +30,7 @@ const privateRoutes = [
    { path: '/test', component: TestComponent, layout: null },
    { path: '/project', component: Projects, layout: HeaderOnly },
    { path: '/project/create', component: CreateProject, layout: null },
+   { path: '/project/:_id/settings/details', component: DetailProject },
 ];
 
 const publicRoutes = [

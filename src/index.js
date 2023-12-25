@@ -5,16 +5,19 @@ import reportWebVitals from './reportWebVitals';
 import StyleGlobal from './component/StyleGlobal/StyleGlobal';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AppProvider } from './hook/context/context';
+import { SkeletonTheme } from 'react-loading-skeleton';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <GoogleOAuthProvider clientId="927156751612-1uvnfve8d0oo0l9ekmoeenf09ji6llub.apps.googleusercontent.com">
-        <StyleGlobal>
+   <GoogleOAuthProvider clientId="927156751612-1uvnfve8d0oo0l9ekmoeenf09ji6llub.apps.googleusercontent.com">
+      <SkeletonTheme highlightColor="#444">
+         <StyleGlobal>
             <AppProvider>
-                <App />
+               <App />
             </AppProvider>
-        </StyleGlobal>
-    </GoogleOAuthProvider>,
+         </StyleGlobal>
+      </SkeletonTheme>
+   </GoogleOAuthProvider>,
 );
 
 // If you want to start measuring performance in your app, pass a function

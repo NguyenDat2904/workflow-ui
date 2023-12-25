@@ -1,0 +1,13 @@
+.wrapper {
+   display: flex;
+   height: 100%;
+   position: relative;
+   grid-area: content;
+   .content {
+      width: calc(
+         100vw - var(--leftPanelWidth, 0px) - var(--leftSidebarWidth, 0px) - var(--rightPanelWidth, 0px) -
+            var(--rightSidebarWidth, 0px)
+      ) !important;
+      transition: width 0.3s cubic-bezier(0.2, 0, 0, 1) 0s;
+   }
+}

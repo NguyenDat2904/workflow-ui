@@ -31,11 +31,17 @@ const AppProvider = (props) => {
       const accessToken = localStorage.getItem('accessToken');
       return !!accessToken;
    });
+   const [loadingGetProject, setLoadingGetProject] = useState(true);
+
    const [pageProject, setPageProject] = useState({
       page: 0,
       total: 0,
    });
 
+   const [detailProject, setDetailProject] = useState({});
+   const [loadingDetailsProject, setLoadingDetailsProject] = useState(false);
+
+   // Func
    const onclickSeeModalSelectImg = (number) => {
       if (modalSelectImg > 0) {
          setModalSelectImg(number);
@@ -63,50 +69,52 @@ const AppProvider = (props) => {
          setFormButton(true);
       }
    };
-   // call dataUser
-   useEffect(() => {
-      const GetListProject = async () => {
-         if (accessToken) {
-            const listProject = await post(
+   // GET project
+   const GetListProject = async () => {
+      if (accessToken) {
+         setLoadingGetProject(true);
+         const listProject = await post(
+            `/work/project/${parseuser?._id}`,
+            { deleteProject: false },
+            {
+               headers: {
+                  authorization: `${accessToken}`,
+                  refresh_token: `${parseuser?.refreshToken}`,
+               },
+            },
+         );
+         if (listProject.data.accessToken) {
+            const getListAgain = await post(
                `/work/project/${parseuser?._id}`,
                { deleteProject: false },
                {
                   headers: {
-                     authorization: `${accessToken}`,
+                     authorization: `${listProject.data.accessToken}`,
                      refresh_token: `${parseuser?.refreshToken}`,
                   },
                },
             );
-            if (listProject.data.accessToken) {
-               const getListAgain = await post(
-                  `/work/project/${parseuser?._id}`,
-                  { deleteProject: false },
-                  {
-                     headers: {
-                        authorization: `${listProject.data.accessToken}`,
-                        refresh_token: `${parseuser?.refreshToken}`,
-                     },
-                  },
-               );
-               localStorage.setItem('accessToken', listProject.data.accessToken);
-               setDataProject(getListAgain.data.workProject);
-               setPageProject(() => {
-                  setPageProject({
-                     page: getListAgain.data.page,
-                     total: getListAgain.data.totalPages,
-                  });
+            localStorage.setItem('accessToken', listProject.data.accessToken);
+            setDataProject(getListAgain.data.workProject);
+            setPageProject(() => {
+               setPageProject({
+                  page: getListAgain.data.page,
+                  total: getListAgain.data.totalPages,
                });
-            } else {
-               setDataProject(listProject.data.workProject);
-               setPageProject(() => {
-                  setPageProject({
-                     page: listProject.data.page,
-                     total: listProject.data.totalPages,
-                  });
+            });
+         } else {
+            setDataProject(listProject.data.workProject);
+            setPageProject(() => {
+               setPageProject({
+                  page: listProject.data.page,
+                  total: listProject.data.totalPages,
                });
-            }
+            });
          }
-      };
+         setLoadingGetProject(false);
+      }
+   };
+   useEffect(() => {
       GetListProject();
    }, []);
 
@@ -216,6 +224,61 @@ const AppProvider = (props) => {
          [name]: value,
       }));
    };
+
+   // Move to Trash
+   const handleMoveToTrash = async (id) => {
+      if (accessToken) {
+         const moveToTrash = await patch(
+            `/work/delete-project/${id}`,
+            { _idUser: parseuser._id },
+            {
+               headers: {
+                  authorization: `${accessToken}`,
+                  refresh_token: `${parseuser?.refreshToken}`,
+               },
+            },
+         );
+         if (moveToTrash.data.accessToken) {
+            const moveToTrashAgain = await patch(
+               `/work/delete-project/${id}`,
+               { _idUser: parseuser._id },
+               {
+                  headers: {
+                     authorization: `${moveToTrash.data.accessToken}`,
+                     refresh_token: `${parseuser?.refreshToken}`,
+                  },
+               },
+            );
+            localStorage.setItem('accessToken', moveToTrash.data.accessToken);
+            if (moveToTrashAgain.status === 200) {
+               const listProject = await post(
+                  `/work/project/${parseuser?._id}`,
+                  { deleteProject: false },
+                  {
+                     headers: {
+                        authorization: `${moveToTrash.data.accessToken}`,
+                        refresh_token: `${parseuser?.refreshToken}`,
+                     },
+                  },
+               );
+               setDataProject(listProject.data);
+            }
+         } else if (moveToTrash.status === 200) {
+            const listProject = await post(
+               `/work/project/${parseuser?._id}`,
+               { deleteProject: false },
+               {
+                  headers: {
+                     authorization: `${accessToken}`,
+                     refresh_token: `${parseuser?.refreshToken}`,
+                  },
+               },
+            );
+            setDataProject(listProject.data);
+         }
+      }
+   };
+
    const value = {
       formButton,
       valueInput,
@@ -246,6 +309,14 @@ const AppProvider = (props) => {
       accessToken,
       pageProject,
       setPageProject,
+      handleMoveToTrash,
+      loadingGetProject,
+      setLoadingGetProject,
+      GetListProject,
+      detailProject,
+      setDetailProject,
+      loadingDetailsProject,
+      setLoadingDetailsProject,
    };
    return <AppContext.Provider value={value} {...props}></AppContext.Provider>;
 };

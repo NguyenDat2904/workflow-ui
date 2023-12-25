@@ -18,7 +18,7 @@ export function Table({ actions, data, colWidthRatio, ...props }) {
             <tr>
                {Object.keys(data[0]).map((key, index) => (
                   <th key={key} className={`${colType[index]}`}>
-                     {key.charAt(0).toUpperCase() + key.slice(1)}
+                     {key.charAt(0).toUpperCase() + key?.slice(1)}
                   </th>
                ))}
                <th></th>

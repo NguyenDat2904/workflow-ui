@@ -1,0 +1,172 @@
+.sidebar-nav {
+   display: flex;
+   width: 100%;
+   min-width: 240px;
+   height: 100%;
+   position: relative;
+   flex-direction: column;
+   background-color: var(--ds-surface, #fafbfc);
+   color: var(--ds-text-subtle, #42526e);
+   overflow: hidden;
+}
+.sidebar-info {
+   margin-left: 8px;
+}
+.project-info {
+   box-sizing: border-box;
+   appearance: none;
+   display: block;
+   padding-right: 8px;
+   padding-bottom: 8px;
+   padding-left: 8px;
+   padding-top: var(--ds-space-300, 24px);
+   border-width: initial;
+   border-style: none;
+   border-color: initial;
+   border-image: initial;
+}
+.block {
+   display: flex;
+   .img {
+      margin-right: var(--ds-space-100, 8px);
+      span {
+         height: 32px;
+         width: 32px;
+         -webkit-box-align: stretch;
+         align-items: stretch;
+         background-color: var(--ds-surface-overlay, #ffffff);
+         border-radius: 50%;
+         box-sizing: content-box;
+         cursor: inherit;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         outline: none;
+         overflow: hidden;
+         position: static;
+         transform: translateZ(0px);
+         transition: transform 200ms ease 0s, opacity 200ms ease 0s;
+         box-shadow: 0 0 0 2px var(--ds-surface-overlay, #ffffff);
+         border: none;
+         margin: var(--ds-space-025, 2px);
+         padding: var(--ds-space-0, 0px);
+         font-size: inherit;
+         font-family: inherit;
+         img {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            flex: 1 1 100%;
+         }
+      }
+   }
+   .name {
+      line-height: normal;
+      div {
+         font-size: 14px;
+         letter-spacing: -0.003em;
+         font-weight: 600;
+         color: var(--ds-text, #42526e);
+      }
+   }
+}
+
+.sidebar-menu {
+   height: 100%;
+   position: relative;
+   outline: none;
+   .wrapper-menu {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      flex-direction: column;
+      .list-menu {
+         --_6w8gix: 60px;
+         --_1qrlsbv: 4px;
+         height: calc(100% - var(--_6w8gix));
+      }
+   }
+   .list {
+      display: flex;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      .line {
+         display: flex;
+         overflow: auto;
+         width: 100%;
+         position: relative;
+         box-sizing: border-box;
+         flex-direction: column;
+
+         &::before {
+            content: '';
+            display: block;
+            left: var(--ds-space-100, 8px);
+            right: 25px;
+            height: 2px;
+            border-radius: var(--ds-border-radius-050, 1px);
+            background-color: var(--ds-menu-seperator-color, var(--ds-border, #ebecf0));
+            position: absolute;
+            z-index: 1;
+         }
+         &::after {
+            content: '';
+            position: absolute;
+            display: block;
+            border-radius: var(--ds-border-radius-050, 1px);
+            flex-shrink: 0;
+            height: 2px;
+            left: var(--ds-space-100, 8px);
+            right: 25px;
+            bottom: 0px;
+            z-index: 1;
+            background-color: var(--ds-menu-seperator-color, var(--ds-border, #ebecf0));
+         }
+      }
+   }
+}
+.button-back {
+   box-sizing: border-box;
+   appearance: none;
+   border: none;
+   padding-block: var(--ds-space-075, 6px);
+   padding-inline: var(--ds-space-100, 8px);
+}
+.custom-button {
+   width: 100%;
+   height: 40px;
+   align-items: center;
+   padding-left: 18.6px;
+   &:hover {
+      background-color: var(--ds-background-selected, #e6effc);
+   }
+}
+.sidebar-footer {
+   box-sizing: border-box;
+   appearance: none;
+   border: none;
+   padding: var(--ds-space-100, 8px);
+   padding-block-end: var(--ds-space-200, 16px);
+   position: relative;
+   .block-footer {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      flex-grow: 1;
+      line-height: var(--ds-font-lineHeight-100, 16px);
+      outline: none;
+      overflow: hidden;
+      align-items: center;
+      span {
+         text-align: center;
+         white-space: normal;
+         line-height: initial;
+         font-size: 12px;
+      }
+      .desc-footer {
+         margin: var(--ds-space-075, 6px);
+      }
+   }
+}

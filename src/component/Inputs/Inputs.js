@@ -16,7 +16,7 @@ export function Input({ error, id, inputStyle, label, ...props }) {
    return (
       <div className="input-container">
          {label && <label htmlFor={id}>{label}</label>}
-         <input className={`${className} ${error && 'input-error'}`} id={id} {...props} />
+         <input className={`input ${className} ${error && 'input-error'}`} id={id} {...props} />
          {error && <p className="input-error-message">{error}</p>}
       </div>
    );

@@ -12,8 +12,7 @@ $error: rgb(255, 0, 0);
    }
 }
 
-.input-light,
-.input-filled,
+.input,
 .button {
    padding: 0 1.25rem;
    height: 40px;
@@ -27,10 +26,8 @@ $error: rgb(255, 0, 0);
    gap: 5px;
 }
 
-.input-filled,
-.input-light {
+.input {
    width: 100%;
-   max-width: 40rem;
    transition: border-color 0.25s;
 }
 

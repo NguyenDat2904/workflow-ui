@@ -68,13 +68,16 @@ export default function CreateProject() {
                onChange={(e) => setProjectKey(e.target.value)}
                placeholder="Project Key"
             />
-            <Button
-               buttonStyle={projectName && projectKey ? 'filled' : 'disabled'}
-               type="submit"
-               disabled={!projectName || !projectKey}
-            >
-               Create a new project
-            </Button>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+               <Button onClick={() => navigate('/project')}>Cancel</Button>
+               <Button
+                  buttonStyle={projectName && projectKey ? 'filled' : 'disabled'}
+                  type="submit"
+                  disabled={!projectName || !projectKey}
+               >
+                  Create a new project
+               </Button>
+            </div>
          </Form>
       </Card>
    );

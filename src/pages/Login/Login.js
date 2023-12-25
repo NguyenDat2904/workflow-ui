@@ -10,48 +10,50 @@ import { post } from '../../ultil/hpptRequest';
 import HomeLayout from '~/layout/HomeLayout/HomeLayout';
 import LoginGoogleButton from './LoginGoogleButton';
 import { AppContext } from '~/hook/context/context';
+import { toast } from 'react-toastify';
 
 function Login() {
-   const { setIsAuthenticated, setDataUserProfile, setDataProject, setLoadingGetProject } = useContext(AppContext);
+   const { setIsAuthenticated, setDataUserProfile } = useContext(AppContext);
 
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
-   const [error, setError] = useState('');
+   const [usernameError, setUsernameError] = useState('');
+   const [passwordError, setPasswordError] = useState('');
    const navigate = useNavigate();
 
    const handleLoginWithUsername = async (e) => {
       e.preventDefault();
-      setError('');
+
+      setUsernameError('');
+      setPasswordError('');
+      if (!username || !password) {
+         if (!username) {
+            setUsernameError('Please enter your username');
+         }
+         if (!password) {
+            setPasswordError('Please enter your password');
+         }
+         return;
+      }
+
       const response = await post('/users/login', {
          userName: username,
          passWord: password,
       });
       if (response.status === 200) {
+         console.log(response.data);
          localStorage.setItem('user', JSON.stringify(response.data));
          localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
          setDataUserProfile(response.data);
          setIsAuthenticated(true);
-         navigate('/project');
-         setLoadingGetProject(true);
-         const listProject = await post(
-            `/work/project/${response.data._id}`,
-            { deleteProject: false },
-            {
-               headers: {
-                  authorization: `${response.data.accessToken}`,
-                  refresh_token: `${response.data.refreshToken}`,
-               },
-            },
-         );
-         setDataProject(listProject.data.workProject);
-         setLoadingGetProject(false);
+         navigate('/');
       } else {
          switch (response.status) {
             case 404:
-               setError('Invalid email or password.');
+               toast.error('Invalid username or password.');
                break;
             default:
-               setError('Something went wrong. Please try again later.');
+               toast.error('Something went wrong. Please try again later.');
          }
       }
    };
@@ -70,6 +72,7 @@ function Login() {
                   }}
                >
                   <Input
+                     error={usernameError}
                      id={'username'}
                      inputStyle={'light'}
                      label={'Username:'}
@@ -79,6 +82,7 @@ function Login() {
                      onChange={(e) => setUsername(e.target.value)}
                   />
                   <Input
+                     error={passwordError}
                      id={'password'}
                      inputStyle={'light'}
                      label={'Password:'}
@@ -87,8 +91,7 @@ function Login() {
                      placeholder={'Enter password'}
                      onChange={(e) => setPassword(e.target.value)}
                   />
-                  <p className="login-error">{error}</p>
-                  <Button buttonStyle={'filled'} type={'submit'}>
+                  <Button buttonStyle={username && password ? 'filled' : 'disabled'} type={'submit'}>
                      Log in
                   </Button>
                </Form>

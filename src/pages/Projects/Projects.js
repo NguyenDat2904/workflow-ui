@@ -8,12 +8,12 @@ import { SearchIcon } from '~/component/icon/icon';
 import ProjectList from './ProjectList/ProjectList';
 import Pagination from '~/component/Pagination/Pagination';
 import { AppContext } from '~/hook/context/context';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(style);
 
 function Projects() {
    const { pageProject, loadingGetProject } = useContext(AppContext);
-
+   const navigate = useNavigate();
    // 1. State
 
    // 2. useEffect
@@ -29,7 +29,7 @@ function Projects() {
                   <Button
                      blue
                      onClick={() => {
-                        Navigate('/project/create');
+                        navigate('/project/create');
                      }}
                   >
                      Create project

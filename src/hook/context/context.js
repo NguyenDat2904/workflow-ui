@@ -317,6 +317,7 @@ const AppProvider = (props) => {
       setDetailProject,
       loadingDetailsProject,
       setLoadingDetailsProject,
+      GetListProject,
    };
    return <AppContext.Provider value={value} {...props}></AppContext.Provider>;
 };

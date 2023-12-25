@@ -53,6 +53,8 @@ export default function TestComponent() {
                { label: 'Delete', method: () => {} },
             ]}
             colWidthRatio={[10, 80]}
+            colType={['string', 'string']}
+            labels={['ID', 'Name']}
             data={[
                { id: 1, name: 'John' },
                { id: 2, name: 'Jane' },

@@ -261,7 +261,7 @@ const AppProvider = (props) => {
                      },
                   },
                );
-               setDataProject(listProject.data);
+               setDataProject(listProject.data.workProject);
             }
          } else if (moveToTrash.status === 200) {
             const listProject = await post(
@@ -274,7 +274,7 @@ const AppProvider = (props) => {
                   },
                },
             );
-            setDataProject(listProject.data);
+            setDataProject(listProject.data.workProject);
          }
       }
    };

@@ -1,0 +1,80 @@
+.wrapper {
+   //    animation: auto ease 0s 1 normal none running none;
+   transition: none 0s ease 0s;
+   width: var(--leftSidebarWidth, 0px);
+   position: fixed;
+   inset-block-end: 0px;
+   inset-block-start: calc(var(--bannerHeight, 0px) + var(--topNavigationHeight, 0px));
+   inset-inline-start: var(--leftPanelWidth, 0px);
+}
+.sidebar-show {
+   height: 100%;
+   opacity: 1;
+   overflow: hidden auto;
+   transition: none 0s ease 0s;
+   visibility: visible;
+}
+.sidebar-disable {
+   height: 100%;
+   opacity: 0;
+   visibility: hidden;
+   overflow: hidden auto;
+}
+.sidebar-width {
+   min-width: 240px;
+   height: 100%;
+}
+.sidebar-resize {
+   position: absolute;
+   inset-block: 0px;
+   inset-inline-start: 100%;
+   outline: none;
+   .sidebar-thumb {
+      width: 3px;
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: -1px;
+      background: var(
+         --ds-border,
+         linear-gradient(
+            to left,
+            rgba(0, 0, 0, 0.2) 0px,
+            rgba(0, 0, 0, 0.2) 1px,
+            rgba(0, 0, 0, 0.1) 1px,
+            rgba(0, 0, 0, 0) 100%
+         )
+      );
+      opacity: 0.5;
+      pointer-events: none;
+      transition-duration: 0.22s;
+      transition-property: left, opacity, width;
+      transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+   }
+}
+.sidebar-icon {
+   width: 24px;
+   .custom-icon {
+      width: 24px;
+      height: 24px;
+      padding: var(--ds-space-0, 0px);
+      position: absolute;
+      background-color: var(--ds-surface-overlay, #ffffff);
+      border: 0px;
+      border-radius: var(--ds-border-radius-circle, 50%);
+      box-shadow: rgba(9, 30, 66, 0.08) 0px 0px 0px 1px, rgba(9, 30, 66, 0.08) 0px 2px 4px 1px;
+      color: var(--ds-text-subtle, #6b778c);
+      cursor: pointer;
+      inset-block-start: var(--ds-space-400, 32px);
+      inset-inline-start: 0px;
+      opacity: var(--ds--resize-button--opacity, 1);
+      outline: 0px;
+      transform: translateX(-50%);
+      transition: background-color 100ms linear 0s, color 100ms linear 0s, opacity 350ms cubic-bezier(0.2, 0, 0, 1) 0s;
+      &:hover {
+         background-color: var(--ds-background-selected-bold, #4c9aff);
+         color: var(--ds-text-inverse, #ffffff);
+         opacity: 1;
+      }
+   }
+}

@@ -7,14 +7,17 @@ import Input from '~/component/Input/Input';
 import { SearchIcon } from '~/component/icon/icon';
 import ProjectList from './ProjectList/ProjectList';
 import Pagination from '~/component/Pagination/Pagination';
-import { post } from '~/ultil/hpptRequest';
 import { AppContext } from '~/hook/context/context';
 import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(style);
 
 function Projects() {
-   const { pageProject } = useContext(AppContext);
+   const { pageProject, loadingGetProject } = useContext(AppContext);
    const navigate = useNavigate();
+   // 1. State
+
+   // 2. useEffect
+
    return (
       <Main>
          <div className={cx('home-title')}>
@@ -42,7 +45,7 @@ function Projects() {
          <div className={cx('project-list')}>
             <ProjectList />
          </div>
-         <Pagination page={pageProject} />
+         {!loadingGetProject && <Pagination page={pageProject} />}
       </Main>
    );
 }

@@ -1,0 +1,33 @@
+.list-url {
+   color: var(--ds-text-subtlest, #6b778c);
+   display: flex;
+   margin: var(--ds-space-0, 0px);
+   padding: var(--ds-space-0, 0px);
+   flex-wrap: wrap;
+}
+.item-url {
+   display: flex;
+   box-sizing: border-box;
+   max-width: 100%;
+   height: 24px;
+   margin: var(--ds-space-0, 0px);
+   padding: var(--ds-space-0, 0px);
+   flex-direction: row;
+   line-height: 24px;
+   span {
+      &:hover {
+         text-decoration: underline;
+      }
+   }
+}
+.link-url {
+   position: relative;
+
+   &::after {
+      width: 8px;
+      padding: var(--ds-space-0, 0px) var(--ds-space-100, 8px);
+      flex-shrink: 0;
+      content: '/';
+      text-align: center;
+   }
+}

@@ -59,7 +59,7 @@ function App() {
                         path={route.path}
                         element={
                            isAuthenticated ? (
-                              <Navigate to="/" />
+                              <Navigate to="/project" />
                            ) : (
                               <Layout>
                                  <Page />

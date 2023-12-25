@@ -15,6 +15,7 @@ import Reset from '~/pages/Notication/Reset';
 import ViewAllListWork from '~/pages/Profile/viewAllListWork/viewAllListWork';
 import HeaderOnly from '~/layout/HeaderOnly/HeaderOnly';
 import CreateProject from '~/pages/Projects/Create/CreateProject';
+import DetailProject from '~/pages/DetailProject/DetailProject';
 import TrashProjects from '~/pages/Projects/Trash/TrashProjects';
 import ProjectAccess from '~/pages/Projects/Access/ProjectAccess';
 
@@ -32,6 +33,7 @@ const privateRoutes = [
    { path: '/forgot/change-password', component: ChangePassword, layout: null },
    { path: '/project', component: Projects, layout: HeaderOnly },
    { path: '/project/create', component: CreateProject, layout: null },
+   { path: '/project/:_id/settings/details', component: DetailProject },
    { path: '/project/trash', component: TrashProjects, layout: HeaderOnly },
    { path: '/project/settings/access', component: ProjectAccess, layout: HeaderOnly },
 ];

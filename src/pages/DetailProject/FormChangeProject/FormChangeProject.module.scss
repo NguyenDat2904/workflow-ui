@@ -1,0 +1,19 @@
+.form {
+   .change-icon {
+      display: flex;
+      justify-content: center;
+      padding-bottom: var(--ds-space-050, 4px);
+   }
+   .change-input {
+      margin-top: var(--ds-space-250, 20px);
+      width: 22pc;
+   }
+}
+.edit-change {
+   height: 100%;
+}
+.img-leader {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}

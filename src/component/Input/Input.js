@@ -54,7 +54,7 @@ function Input({
                               </span>
                            )}
                            <input
-                              style={{ height: height }}
+                              style={{ height: height}}
                               className={classes}
                               type={type}
                               {...passProps}

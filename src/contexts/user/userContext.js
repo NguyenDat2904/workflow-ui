@@ -143,19 +143,32 @@ const UserProvider = ({ children }) => {
    }, []);
    const handleSubmit = async (e) => {
       e.preventDefault();
-      if (namefillInput !== '') {
-         const addUserInfo = await patch(
-            `/users/updateUser/${dataUserProfile?._id}`,
-            { nameFill: namefillInput, contenEditing: valueInputAny },
-            {
-               headers: {
-                  authorization: `${parseuser?.accessToken}`,
-                  refresh_token: `${parseuser?.refreshToken}`,
+      if (
+         valueInput.jopTitle !== dataUserProfile.jopTitle ||
+         valueInput.department !== dataUserProfile.department ||
+         valueInput.organization !== dataUserProfile.organization ||
+         valueInput.location !== dataUserProfile.location ||
+         valueInput.name !== dataUserProfile.name ||
+         valueInput.gender !== dataUserProfile.gender ||
+         valueInput.birthDay !== dataUserProfile.birthDay ||
+         valueInput.desc !== dataUserProfile.desc ||
+         valueInput.email !== dataUserProfile.email ||
+         valueInput.phone !== dataUserProfile.phone
+      ) {
+         if (namefillInput !== '') {
+            const addUserInfo = await patch(
+               `/users/updateUser/${dataUserProfile?._id}`,
+               { nameFill: namefillInput, contenEditing: valueInputAny },
+               {
+                  headers: {
+                     authorization: `${parseuser?.accessToken}`,
+                     refresh_token: `${parseuser?.refreshToken}`,
+                  },
                },
-            },
-         );
-         if (addUserInfo.status === 200) {
-            callApi();
+            );
+            if (addUserInfo.status === 200) {
+               callApi();
+            }
          }
       }
    };

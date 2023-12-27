@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './recentActivityOf.module.scss';
+import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(styles);
 const RecentActivityOfUser = ({ dataListWork }) => {
+    const workServices= new WorkService()
+    const [dataListProject,setDataListProject]=useState()
+    const APIListWork=async()=>{
+        const user = localStorage.getItem('user');
+        const parseuser = JSON.parse(user);
+        const dataProject=await workServices.getListProject(parseuser?._id)
+        setDataListProject(dataProject.data.workProject)
+    }
+    useEffect(()=>{
+        APIListWork()
+    },[])
     return (
         <div className={cx('recentActivityOf')}>
             <div className={cx('titleRecentActivityOf')}>

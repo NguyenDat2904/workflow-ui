@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { AppContext } from '~/hook/context/context';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import TaskMaster from '../taskMaster/taskMaster';
 import { SearchIcon } from '~/component/icon/icon';
 import WorkService from '~/services/work/workServices';
 import styles from './viewAllListWork.module.scss';
+import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(styles);
+
 const ViewAllListWork = () => {
-   const { dataUserProfile } = useContext(AppContext);
+   const { dataUserProfile } = useContext(UserContext);
    const workServices = new WorkService();
    const [dataListProject, setDataListProject] = useState([]);
    const [dataListWork, setDataListWork] = useState([]);

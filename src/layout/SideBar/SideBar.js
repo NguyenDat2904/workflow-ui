@@ -4,13 +4,13 @@ import style from './SideBar.module.scss';
 import WrapperSideBar from './WrapperSideBar/WrapperSideBar';
 import Button from '~/component/Buttton/Button';
 import { LeftIcon } from '~/component/icon/icon';
-import { AppContext } from '~/hook/context/context';
 import Skeleton from 'react-loading-skeleton';
+import { UserContext } from '~/contexts/user/userContext';
 
 const cx = classNames.bind(style);
 
 function SideBar() {
-   const { detailProject } = useContext(AppContext);
+   const { detailProject } = useContext(UserContext);
 
    return (
       <WrapperSideBar>

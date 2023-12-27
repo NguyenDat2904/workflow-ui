@@ -4,16 +4,18 @@ import style from './ProjectList.module.scss';
 import { FilterIcon, StarIcon } from '~/component/icon/icon';
 import Button from '~/component/Buttton/Button';
 import RowProject from '~/component/RowProject/RowProject';
-import { AppContext } from '~/hook/context/context';
 import { post } from '~/ultil/hpptRequest';
 import { useLocation } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { UserContext } from '~/contexts/user/userContext';
+import { AuthContext } from '~/contexts/auth/authContext';
 
 const cx = classNames.bind(style);
 function ProjectList() {
-   const { dataProject, accessToken, parseuser, setDataProject, setPageProject, loadingGetProject } =
-      useContext(AppContext);
+   const { dataProject, parseuser, setDataProject, setPageProject, loadingGetProject } = useContext(UserContext);
+   const { accessToken } = useContext(AuthContext);
+
    const location = useLocation();
    //    1. State
    const [sortKey, setSortKey] = useState({

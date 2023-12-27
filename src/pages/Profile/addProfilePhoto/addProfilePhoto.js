@@ -4,6 +4,7 @@ import Button from '~/component/Buttton/Button';
 import classNames from 'classnames/bind';
 import UserService from '~/services/user/userServices';
 import styles from './addProfilePhoto.module.scss';
+import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(styles);
 
 const AddProfilePhoto = ({ onclickSeeModalSelectImg, dataUserProfile, callApi }) => {

@@ -7,11 +7,14 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { post } from '../../ultil/hpptRequest';
 import 'react-toastify/dist/ReactToastify.css';
 import './Login.scss';
-import { AppContext } from '~/hook/context/context';
+import { UserContext } from '~/contexts/user/userContext';
+import { AuthContext } from '~/contexts/auth/authContext';
 
 export default function LoginGoogleButton() {
     const navigate = useNavigate();
-    const { setIsAuthenticated, setDataUserProfile } = useContext(AppContext);
+
+    const { setDataUserProfile } = useContext(UserContext);
+    const { setIsAuthenticated } = useContext(AuthContext);
 
     const googleLogin = useGoogleLogin({
         onSuccess: async (codeResponse) => {

@@ -4,10 +4,10 @@ import style from './ModalProject.module.scss';
 import Modal from '~/component/Modal/Modal';
 import { NavLink } from 'react-router-dom';
 import Button from '~/component/Buttton/Button';
-import { AppContext } from '~/hook/context/context';
+import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(style);
 function ModalProject({ handleToggle, onBlur }) {
-   const { dataProject } = useContext(AppContext);
+   const { dataProject } = useContext(UserContext);
    // 3. Func
    function renderNumbers(arr) {
       const displayedNumbers = arr?.slice(-4).reverse();

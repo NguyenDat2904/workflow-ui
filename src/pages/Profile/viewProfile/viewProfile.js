@@ -2,9 +2,9 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import styles from './viewProfile.module.scss';
-
 import { Buiding, Location, BagIcon, TreeIcon, Email, Phone, AddIcon } from '~/component/icon/icon';
 import RecentActivityOfUser from '../recentActivityOfUser/recentActivityOf';
+import { UserContext } from '~/contexts/user/userContext';
 
 const cx = classNames.bind(styles);
 const ViewProfile = ({ dataUserProfile }) => {

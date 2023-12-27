@@ -52,7 +52,6 @@ const ProfileHeaderImg = ({ dataUserProfile, callApi, heightt, widthbagrAvatar, 
          document.removeEventListener('mousedown', Handlemouse);
       };
    });
-   console.log(dataUserProfile);
    const hendleOnchange = async (e) => {
       const user = localStorage.getItem('user');
       const parseuser = JSON.parse(user);

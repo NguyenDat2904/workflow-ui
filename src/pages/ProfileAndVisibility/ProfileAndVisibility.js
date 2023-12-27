@@ -7,9 +7,11 @@ import EditField from '~/component/EditField/EditField';
 import HeaderSetting from '~/layout/HeaderSetting/HeaderSetting';
 import styles from './ProfileAndVisibility.module.scss';
 import ProfileHeaderImg from '~/component/ProfileHeaderImg/ProfileHeaderImg';
+import UserService from '~/services/user/userServices';
 const cx = classNames.bind(styles);
 
 const ProfileAndVisibility = () => {
+   const userServices = new UserService();
    const [namefillInput, setNamefillInput] = useState('');
    const [valueInputAny, setValueInputAny] = useState('');
    const [dataUserProfile, setDataUserProfile] = useState({});
@@ -37,26 +39,9 @@ const ProfileAndVisibility = () => {
    };
 
    const callApi = async () => {
-      const APIuser = await get(`/users/${parseuser?._id}`, {
-         headers: {
-            authorization: `${parseuser?.accessToken}`,
-            refresh_token: `${parseuser?.refreshToken}`,
-         },
-      });
-      if (APIuser.data.accessToken) {
-         const APIuserAgain = await get(`/users/${parseuser?._id}`, {
-            headers: {
-               authorization: `${APIuser.data.accessToken}`,
-               refresh_token: `${parseuser?.refreshToken}`,
-            },
-         });
-         localStorage.setItem('accessToken', APIuserAgain.data.accessToken);
-         setDataUserProfile(APIuserAgain.data);
-         setValueInput({ ...APIuserAgain.data });
-      } else {
-         setDataUserProfile(APIuser.data);
-         setValueInput({ ...APIuser.data });
-      }
+      const APIuser = await userServices.getUserProfile(parseuser?._id);
+      setDataUserProfile(APIuser.data);
+      setValueInput({ ...APIuser.data });
    };
    useEffect(() => {
       callApi();
@@ -135,7 +120,13 @@ const ProfileAndVisibility = () => {
                Learn more about your profile and visibility <span>or</span> view our privacy policy.
             </p>
             <h3 className={cx('ProfilePhotoAndHeaderImage')}>Profile photo and header image</h3>
-            <ProfileHeaderImg dataUserProfile={dataUserProfile} callApi={callApi} heightt="112px" widthbagrAvatar="96px" heightbagrAvatar={'96px'} />
+            <ProfileHeaderImg
+               dataUserProfile={dataUserProfile}
+               callApi={callApi}
+               heightt="112px"
+               widthbagrAvatar="96px"
+               heightbagrAvatar={'96px'}
+            />
             <div className={cx('ProfileHeaderImg')}>
                <div className={cx('anyone')}>
                   <div className={cx('anyoneYourProfile')}>

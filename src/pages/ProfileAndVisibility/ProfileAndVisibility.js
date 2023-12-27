@@ -55,16 +55,7 @@ const ProfileAndVisibility = () => {
          [name]: value,
       }));
       if (e.target.value === 'Male' || e.target.value === 'Female') {
-         const addUserInfo = await patch(
-            `/users/updateUser/${dataUserProfile?._id}`,
-            { nameFill: e.target.name, contenEditing: e.target.value },
-            {
-               headers: {
-                  authorization: `${parseuser?.accessToken}`,
-                  refresh_token: `${parseuser?.refreshToken}`,
-               },
-            },
-         );
+         const addUserInfo = await userServices.updateUser(`${dataUserProfile?._id}`, e.target.name, e.target.value);
          if (addUserInfo.status === 200) {
             callApi();
          }
@@ -86,16 +77,7 @@ const ProfileAndVisibility = () => {
          valueInput.phone !== dataUserProfile.phone
       ) {
          if (namefillInput !== '') {
-            const addUserInfo = await patch(
-               `/users/updateUser/${dataUserProfile?._id}`,
-               { nameFill: namefillInput, contenEditing: valueInputAny },
-               {
-                  headers: {
-                     authorization: `${parseuser?.accessToken}`,
-                     refresh_token: `${parseuser?.refreshToken}`,
-                  },
-               },
-            );
+            const addUserInfo = await userServices.updateUser(`${dataUserProfile?._id}`, namefillInput, valueInputAny);
             if (addUserInfo.status === 200) {
                callApi();
             }

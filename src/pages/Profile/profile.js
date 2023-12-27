@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import ProfileHeaderImg from '~/component/ProfileHeaderImg/ProfileHeaderImg';
-import { get } from '~/ultil/hpptRequest';
 import styles from './profile.module.scss';
 import ViewProfile from './viewProfile/viewProfile';
 import UserService from '~/services/user/userServices';
@@ -18,7 +17,7 @@ const Profile = () => {
    };
    useEffect(() => {
       callApi();
-   }, []);
+   },[]);
    return (
       <div className={cx('mainProfile')}>
          <ProfileHeaderImg

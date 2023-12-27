@@ -1,188 +1,210 @@
 .ViewAllListWork {
-    width: 60%;
-    margin: 0 auto;
-    .headerWorkOn {
-        margin-top: 60px;
-        font-weight: 400;
-        color: #44546f;
-        font-size: 14px;
-        font-style: normal;
-        font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
-            'Droid Sans', 'Helvetica Neue', sans-serif;
-        .linkProfile {
+   width: 60%;
+   margin: 0 auto;
+   .headerWorkOn {
+      margin-top: 60px;
+      margin-bottom: 20px;
+      font-weight: 400;
+      color: #44546f;
+      font-size: 14px;
+      font-style: normal;
+      font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
+         'Droid Sans', 'Helvetica Neue', sans-serif;
+
+      .linkProfile {
+         border-top: 1px solid #172b4d;
+         border-bottom: 1px solid #172b4d;
+         font-size: 18px;
+         font-weight: 500;
+         cursor: pointer;
+         position: relative;
+         &::before {
+            border-left: 1px solid #172b4d;
+            border-bottom: 1px solid #172b4d;
+            content: '';
+            width: 60%;
+            height: 100%;
+            rotate: 50deg;
+            position: absolute;
+            top: 0;
+            left: -10px;
+            bottom: 0;
+         }
+         &:hover {
+            background-color: rgb(247, 246, 246);
+         }
+      }
+   }
+   .titleWorkOn {
+      margin-top: 10px;
+      color: #172b4d;
+      font-size: 24px;
+      font-style: inherit;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans', 'Droid Sans',
+         'Helvetica Neue', sans-serif;
+      font-weight: 600;
+   }
+   .WorkOn {
+      margin-top: 20px;
+      .searchTitle {
+         display: flex;
+         justify-content: space-between;
+         .Recent {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #172b4d;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans',
+               'Droid Sans', 'Helvetica Neue', sans-serif;
+         }
+         .filterTitle {
+            border-radius: 3px;
+            border: 2px solid #02060c0f;
+            height: 35px;
+            padding-left: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            svg {
+               width: 16px;
+               height: 16px;
+            }
+            .inputSearchTitle {
+               border: none;
+               outline: none;
+               padding: 8px;
+            }
+            &:hover {
+               background-color: rgb(248, 248, 248);
+               .inputSearchTitle {
+                  background-color: rgb(248, 248, 248);
+               }
+            }
+            &:focus-within {
+               border-color: var(--ds-border-focused, #2684ff);
+            }
+         }
+      }
+      .workOnAndviewed {
+         display: flex;
+         gap: 15px;
+         .view {
             cursor: pointer;
-        }
-    }
-    .titleWorkOn {
-        margin-top: 10px;
-        color: #172b4d;
-        font-size: 24px;
-        font-style: inherit;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans', 'Droid Sans',
-            'Helvetica Neue', sans-serif;
-        font-weight: 600;
-    }
-    .WorkOn {
-        margin-top: 20px;
-        .searchTitle {
-            display: flex;
-            justify-content: space-between;
-            .Recent {
-                margin-top: 10px;
-                font-size: 16px;
-                font-weight: 600;
-                color: #172b4d;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans',
-                    'Droid Sans', 'Helvetica Neue', sans-serif;
-            }
-            .filterTitle {
-                border-radius: 3px;
-                border: 2px solid #02060c0f;
-                height: 35px;
-                padding-left: 10px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            font-size: 14px;
+            line-height: 40px;
+            font-weight: 500;
+            color: #172b4d;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans',
+               'Droid Sans', 'Helvetica Neue', sans-serif;
+         }
+      }
+      .bgrView {
+         width: 100%;
+         height: 3px;
+         background-color: rgb(196, 193, 193);
+         .bgrViewChildren {
+            width: 75px;
+            height: 100%;
+            background-color: #0c66e4;
+         }
+      }
+      .implementerMenber {
+         .project {
+            font-size: 16px;
+            font-weight: 600;
+            color: #172b4d;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans',
+               'Droid Sans', 'Helvetica Neue', sans-serif;
+         }
 
-                svg {
-                    width: 16px;
-                    height: 16px;
-                }
-                .inputSearchTitle {
-                    border: none;
-                    outline: none;
-                    padding: 8px;
-                }
-                &:hover {
-                    background-color: rgb(248, 248, 248);
-                    .inputSearchTitle {
-                        background-color: rgb(248, 248, 248);
-                    }
-                }
-                &:focus-within {
-                    border-color: var(--ds-border-focused, #2684ff);
-                }
+         .viewWorkSelect {
+            margin-top: 10px;
+            padding-left: 10px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            .nameProject {
+               display: flex;
+               justify-content: flex-start;
+               align-items: center;
+               .nameProjectRight {
+                  padding-left: 5px;
+                  .nameP {
+                     font-size: 14px;
+                  }
+                  .nameUser {
+                     margin: 0;
+                     font-size: 12px;
+                     .nameUserspan {
+                        font-weight: 500;
+                     }
+                  }
+               }
+
+               .imgFile {
+                  width: 24px;
+                  height: 30px;
+               }
             }
-        }
-        .workOnAndviewed {
-            display: flex;
-            gap: 15px;
-            .view {
-                cursor: pointer;
-                font-size: 14px;
-                line-height: 40px;
-                font-weight: 500;
-                color: #172b4d;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans',
-                    'Droid Sans', 'Helvetica Neue', sans-serif;
-            }
-        }
-        .bgrView {
-            width: 100%;
-            height: 3px;
-            background-color: rgb(196, 193, 193);
-            .bgrViewChildren {
-                width: 75px;
-                height: 100%;
-                background-color: #0c66e4;
-            }
-        }
-        .implementerMenber {
-            .project {
-                font-size: 16px;
-                font-weight: 600;
-                color: #172b4d;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans',
-                    'Droid Sans', 'Helvetica Neue', sans-serif;
+            .positionSelect {
+               display: flex;
+               justify-content: flex-end;
+               align-items: center;
+               .select {
+                  margin-left: 30%;
+                  width: 100%;
+                  height: 80%;
+                  background-color: #fff;
+                  border: 2px solid #02060c0f;
+                  border-radius: 3px;
+                  padding-right: 5px;
+                  display: flex;
+                  justify-content: flex-end;
+                  align-items: center;
+
+                  .selectNameProject {
+                     cursor: pointer;
+                     padding: 5px;
+                     font-size: 14px;
+                     border: none;
+                     outline: none;
+                     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans',
+                        'Droid Sans', 'Helvetica Neue', sans-serif;
+                     .opacity {
+                        color: rgb(171, 171, 171);
+                     }
+                  }
+               }
             }
 
-            .viewWorkSelect {
-                margin-top: 10px;
-                padding-left: 10px;
-                display: grid;
-                grid-template-columns: 2fr 1fr 1fr;
-                .nameProject {
-                    display: flex;
-                    justify-content: flex-start;
-                    align-items: center;
-                    .nameProjectRight {
-                        padding-left: 5px;
-                        .nameP {
-                            font-size: 14px;
-                        }
-                        .nameUser {
-                            margin: 0;
-                            font-size: 12px;
-                            .nameUserspan {
-                                font-weight: 500;
-                            }
-                        }
-                    }
-
-                    .imgFile {
-                        width: 24px;
-                        height: 30px;
-                    }
-                }
-                .positionSelect {
-                    display: flex;
-                    justify-content: flex-end;
-                    align-items: center;
-                    .select {
-                        margin-left: 30%;
-                        width: 100%;
-                        height: 80%;
-                        background-color: #fff;
-                        border: 2px solid #02060c0f;
-                        border-radius: 3px;
-                        padding-right: 5px;
-                        display: flex;
-                        justify-content: flex-end;
-                        align-items: center;
-
-                        .selectNameProject {
-                            cursor: pointer;
-                            padding: 5px;
-                            font-size: 14px;
-                            border: none;
-                            outline: none;
-                            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-                                'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-                            .opacity {
-                                color: rgb(171, 171, 171);
-                            }
-                        }
-                    }
-                }
-
-                &:hover {
-                    background-color: rgb(245, 245, 245);
-                }
+            &:hover {
+               background-color: rgb(245, 245, 245);
             }
-        }
-    }
+         }
+      }
+   }
 }
 @media only screen and (max-width: 1024px) and (min-width: 640px) {
-    .ViewAllListWork {
-        width: 80%;
-        margin: 0 auto;
-    }
+   .ViewAllListWork {
+      width: 80%;
+      margin: 0 auto;
+   }
 }
 @media only screen and (max-width: 640px) {
-    .ViewAllListWork {
-        width: 90%;
-        margin: 0 auto;
-        .WorkOn {
-            .implementerMenber {
-                .viewWorkSelect {
-                    display: grid;
-                    grid-template-columns: 2fr 1fr 1fr;
-                    gap: 2px;
-                    p {
-                        margin: 0;
-                    }
-                }
+   .ViewAllListWork {
+      width: 90%;
+      margin: 0 auto;
+      .WorkOn {
+         .implementerMenber {
+            .viewWorkSelect {
+               display: grid;
+               grid-template-columns: 2fr 1fr 1fr;
+               gap: 2px;
+               p {
+                  margin: 0;
+               }
             }
-        }
-    }
+         }
+      }
+   }
 }

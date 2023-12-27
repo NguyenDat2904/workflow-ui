@@ -44,6 +44,18 @@ class BaseServices {
       };
       return config;
    }
+   setConfigHeadersUpload() {
+      const user = localStorage.getItem('user');
+      const parseuser = JSON.parse(user);
+      const config = {
+         headers: {
+            authorization: `${parseuser?.accessToken}`,
+            'Content-Type': 'multipart/form-data',
+         },
+         ...this.configHeaders,
+      };
+      return config;
+   }
    get(url, configHeaders) {
       return this.http.get(url, { ...this.setConfigHeaders(), ...configHeaders });
    }
@@ -56,6 +68,18 @@ class BaseServices {
    put(url, data = {}, configHeaders) {
       return this.http.put(url, data, {
          ...this.setConfigHeaders(),
+         ...configHeaders,
+      });
+   }
+   patch(url, data = {}, configHeaders) {
+      return this.http.patch(url, data, {
+         ...this.setConfigHeaders(),
+         ...configHeaders,
+      });
+   }
+   patchUpload(url, data , configHeaders) {
+      return this.http.patch(url, data, {
+         ...this.setConfigHeadersUpload(),
          ...configHeaders,
       });
    }

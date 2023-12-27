@@ -7,6 +7,9 @@ class WorkService extends BaseServices{
     }
     getListProject(id){
         return this.post(`/work/project/${id}`,{ deleteProject:false })
+    };
+    listWork(nameProject){
+       return this.post('/work/listwork',{nameProject}) 
     }
 }
 export default WorkService

@@ -4,11 +4,13 @@ import { patch } from '~/ultil/hpptRequest';
 import { Link } from 'react-router-dom';
 import styles from './modalSelectImg.module.scss';
 import ModalProfile from '../modalProfile/modalProfile';
+import UserService from '~/services/user/userServices';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 const cx = classNames.bind(styles);
 
 const ModalSelectImg = ({ onclickSeeModalSelectImg, callApi, dataUserProfile }) => {
+   const userServices = new UserService();
    const [viewBackround, setViewBackground] = useState('rgb(0, 82, 204)');
    const [classNameButton, setClassNameButton] = useState('button1');
    const selectBackgroundImgProfile = (number) => {
@@ -54,18 +56,7 @@ const ModalSelectImg = ({ onclickSeeModalSelectImg, callApi, dataUserProfile }) 
          name: yup.string().required('Please enter at least 1 initial'),
       }),
       onSubmit: async (value) => {
-         const user = localStorage.getItem('user');
-         const parseuser = JSON.parse(user);
-         const addUserInfo = await patch(
-            `/users/updateUser/background/${dataUserProfile?._id}`,
-            { backgroundProfile: viewBackround, contentProfile: value.name },
-            {
-               headers: {
-                  authorization: `${parseuser?.accessToken}`,
-                  refresh_token: `${parseuser?.refreshToken}`,
-               },
-            },
-         );
+         const addUserInfo = await userServices.updateBackground(`${dataUserProfile?._id}`, viewBackround, value.name);
          if (addUserInfo.status === 200) {
             await callApi();
             await onclickSeeModalSelectImg(0);

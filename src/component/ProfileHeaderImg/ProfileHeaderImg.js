@@ -4,10 +4,11 @@ import ModalSelectImg from '~/pages/Profile/modalSelectImg/modalSelectImg';
 import AddProfilePhoto from '~/pages/Profile/addProfilePhoto/addProfilePhoto';
 import classNames from 'classnames/bind';
 import styles from './ProfileHeaderImg.module.scss';
-
+import UserService from '~/services/user/userServices';
 const cx = classNames.bind(styles);
 
 const ProfileHeaderImg = ({ dataUserProfile, callApi, heightt, widthbagrAvatar, heightbagrAvatar }) => {
+   const userServices = new UserService();
    const [modalSelectImg, setModalSelectImg] = useState(0);
    const [imgAvatar, setImgAvatar] = useState(true);
    const [imgCover, setImgCover] = useState(true);
@@ -53,17 +54,9 @@ const ProfileHeaderImg = ({ dataUserProfile, callApi, heightt, widthbagrAvatar, 
       };
    });
    const hendleOnchange = async (e) => {
-      const user = localStorage.getItem('user');
-      const parseuser = JSON.parse(user);
       const formData = new FormData();
       formData.append('imgCover', e.target.files[0]);
-      const upload = await patch(`/users/uploadimg/${dataUserProfile?._id}`, formData, {
-         headers: {
-            authorization: `${parseuser?.accessToken}`,
-            refresh_token: `${parseuser?.refreshToken}`,
-            'Content-Type': 'multipart/form-data',
-         },
-      });
+      const upload = await userServices.uploadImg(`${dataUserProfile._id}`, formData);
       if (upload.status === 200) {
          await callApi();
       }

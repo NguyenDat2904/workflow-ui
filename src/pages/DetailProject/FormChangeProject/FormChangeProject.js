@@ -4,15 +4,17 @@ import style from './FormChangeProject.module.scss';
 import Input from '~/component/Input/Input';
 import Button from '~/component/Buttton/Button';
 import { get, patch } from '~/ultil/hpptRequest';
-import { AppContext } from '~/hook/context/context';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { LoadingIcon } from '~/component/icon/icon';
+import { UserContext } from '~/contexts/user/userContext';
+import { AuthContext } from '~/contexts/auth/authContext';
 
 const cx = classNames.bind(style);
 function FormChangeProject({ id }) {
-   const { accessToken, parseuser, detailProject, setDetailProject, loadingDetailsProject, setLoadingDetailsProject } =
-      useContext(AppContext);
+   const { accessToken } = useContext(AuthContext);
+   const { parseuser, detailProject, setDetailProject, loadingDetailsProject, setLoadingDetailsProject } =
+      useContext(UserContext);
    const [values, setValue] = useState({
       name: '',
       key: '',

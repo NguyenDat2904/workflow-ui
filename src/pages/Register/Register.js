@@ -4,9 +4,9 @@ import style from './Register.module.scss';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { post } from '~/ultil/hpptRequest';
 import { LoadingIcon } from '~/component/icon/icon';
-import { AppContext } from '~/hook/context/context';
 import HomeLayout from '~/layout/HomeLayout/HomeLayout';
 import LoginGoogleButton from '../Login/LoginGoogleButton';
+import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(style);
 
 function Register() {
@@ -17,7 +17,7 @@ function Register() {
     const { email } = params;
 
     // 0. Context
-    const { values, setValue, handleChange, errors, setErrors, classError, setClassError } = useContext(AppContext);
+    const { values, setValue, handleChange, errors, setErrors, classError, setClassError } = useContext(UserContext);
     // 1. State
     const [toggleForm, setToggleForm] = useState(true);
 

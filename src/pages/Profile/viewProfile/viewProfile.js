@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import styles from './viewProfile.module.scss';
-import { AppContext } from '~/hook/context/context';
 import { Buiding, Location, BagIcon, TreeIcon, Email, Phone, AddIcon } from '~/component/icon/icon';
 import RecentActivityOfUser from '../recentActivityOfUser/recentActivityOf';
+import { UserContext } from '~/contexts/user/userContext';
 
 const cx = classNames.bind(styles);
 const ViewProfile = () => {
-    const { dataUserProfile, dataListWork } = useContext(AppContext);
+    const { dataUserProfile, dataListWork } = useContext(UserContext);
     return (
         <div className={cx('viewProfile')}>
             <div className={cx('viewInfoUser')}>

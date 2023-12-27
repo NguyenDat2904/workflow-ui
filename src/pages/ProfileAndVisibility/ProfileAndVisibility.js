@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { AppContext } from '~/hook/context/context';
 import { Link } from 'react-router-dom';
 import AnyOne from '~/component/anyone/anyone';
 import classNames from 'classnames/bind';
@@ -7,10 +6,11 @@ import EditField from '~/component/EditField/EditField';
 import HeaderSetting from '~/layout/HeaderSetting/HeaderSetting';
 import styles from './ProfileAndVisibility.module.scss';
 import ProfileHeaderImg from '~/component/ProfileHeaderImg/ProfileHeaderImg';
+import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(styles);
 
 const ProfileAndVisibility = () => {
-    const { valueInput } = useContext(AppContext);
+    const { valueInput } = useContext(UserContext);
     return (
         <>
             <HeaderSetting />

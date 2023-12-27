@@ -4,14 +4,14 @@ import style from './DetailProject.module.scss';
 import Button from '~/component/Buttton/Button';
 import { MenuIcon } from '~/component/icon/icon';
 import MenuProject from '~/component/RowProject/MenuProject/MenuProject';
-import { AppContext } from '~/hook/context/context';
 import FormChangeProject from './FormChangeProject/FormChangeProject';
 import { useParams } from 'react-router-dom';
 import NavUrl from '~/component/NavUrl/NavUrl';
 import Skeleton from 'react-loading-skeleton';
+import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(style);
 function DetailProject() {
-   const { handleMoveToTrash, detailProject, loadingDetailsProject } = useContext(AppContext);
+   const { handleMoveToTrash, detailProject, loadingDetailsProject } = useContext(UserContext);
    const [toggle, setToggle] = useState(false);
    const params = useParams();
 

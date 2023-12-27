@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames/bind';
 import Input from '../Input/Input';
-import { AppContext } from '~/hook/context/context';
 import AnyOne from '../anyone/anyone';
 import styles from './EditField.module.scss';
+import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(styles);
 
 const EditField = ({ type, name, label, placeholder, valueInput }) => {
-    const { formButton, handleFormButton, handleSubmit, handleOnchange } = useContext(AppContext);
+    const { formButton, handleFormButton, handleSubmit, handleOnchange } = useContext(UserContext);
     return (
         <div className={cx('childrenAboutYou')}>
             <Input

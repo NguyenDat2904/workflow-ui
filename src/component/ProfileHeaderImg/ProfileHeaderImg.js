@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import { AppContext } from '~/hook/context/context';
 import { patch } from '~/ultil/hpptRequest';
 import ModalSelectImg from '~/pages/Profile/modalSelectImg/modalSelectImg';
 import AddProfilePhoto from '~/pages/Profile/addProfilePhoto/addProfilePhoto';
 import classNames from 'classnames/bind';
 import styles from './ProfileHeaderImg.module.scss';
+import { UserContext } from '~/contexts/user/userContext';
 
 const cx = classNames.bind(styles);
 
 const ProfileHeaderImg = ({ heightt, widthbagrAvatar, heightbagrAvatar }) => {
     const { callApi, onclickSeeModalSelectImg, dataUserProfile, modalSelectImg, imgAvatar, setImgAvatar } =
-        useContext(AppContext);
+        useContext(UserContext);
     const [imgCover, setImgCover] = useState(true);
     const clickIconOpenFile = (value) => {
         switch (value) {

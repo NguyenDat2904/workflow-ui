@@ -1,11 +1,11 @@
 import { createContext, useState, useEffect } from 'react';
 import { get, post, patch } from '~/ultil/hpptRequest';
-const AppContext = createContext();
+const UserContext = createContext();
 
-const AppProvider = (props) => {
+const UserProvider = ({ children }) => {
+   const accessToken = localStorage.getItem('accessToken');
    const user = localStorage.getItem('user');
    const parseuser = JSON.parse(user);
-   const accessToken = localStorage.getItem('accessToken');
    const [modalSelectImg, setModalSelectImg] = useState(0);
    const [imgAvatar, setImgAvatar] = useState(true);
    const [formButton, setFormButton] = useState(true);
@@ -27,10 +27,6 @@ const AppProvider = (props) => {
       phone: '',
    });
    //
-   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-      const accessToken = localStorage.getItem('accessToken');
-      return !!accessToken;
-   });
    const [loadingGetProject, setLoadingGetProject] = useState(true);
 
    const [pageProject, setPageProject] = useState({
@@ -303,10 +299,7 @@ const AppProvider = (props) => {
       dataProject,
       setDataProject,
       callApi,
-      isAuthenticated,
-      setIsAuthenticated,
       parseuser,
-      accessToken,
       pageProject,
       setPageProject,
       handleMoveToTrash,
@@ -319,7 +312,7 @@ const AppProvider = (props) => {
       setLoadingDetailsProject,
       GetListProject,
    };
-   return <AppContext.Provider value={value} {...props}></AppContext.Provider>;
+   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
-export { AppProvider, AppContext };
+export { UserProvider, UserContext };

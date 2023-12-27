@@ -1,16 +1,16 @@
 import React, { useState, useContext } from 'react';
 import classNames from 'classnames/bind';
-import { AppContext } from '~/hook/context/context';
 import { patch } from '~/ultil/hpptRequest';
 import { Link } from 'react-router-dom';
 import styles from './modalSelectImg.module.scss';
 import ModalProfile from '../modalProfile/modalProfile';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(styles);
 
 const ModalSelectImg = () => {
-    const { onclickSeeModalSelectImg, callApi, dataUserProfile } = useContext(AppContext);
+    const { onclickSeeModalSelectImg, callApi, dataUserProfile } = useContext(UserContext);
     const [viewBackround, setViewBackground] = useState('rgb(0, 82, 204)');
     const [classNameButton, setClassNameButton] = useState('button1');
     const selectBackgroundImgProfile = (number) => {

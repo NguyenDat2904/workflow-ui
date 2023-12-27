@@ -5,11 +5,11 @@ import Button from '../Buttton/Button';
 import { MenuIcon } from '../icon/icon';
 import { Link } from 'react-router-dom';
 import MenuProject from './MenuProject/MenuProject';
-import { AppContext } from '~/hook/context/context';
+import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(style);
 
 function RowProject({ project }) {
-   const { handleMoveToTrash } = useContext(AppContext);
+   const { handleMoveToTrash } = useContext(UserContext);
    // 1. State
    const [toggle, setToggle] = useState(false);
 

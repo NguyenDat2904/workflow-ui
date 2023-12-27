@@ -7,12 +7,12 @@ import Input from '~/component/Input/Input';
 import { SearchIcon } from '~/component/icon/icon';
 import ProjectList from './ProjectList/ProjectList';
 import Pagination from '~/component/Pagination/Pagination';
-import { AppContext } from '~/hook/context/context';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(style);
 
 function Projects() {
-   const { pageProject, loadingGetProject } = useContext(AppContext);
+   const { pageProject, loadingGetProject } = useContext(UserContext);
    const navigate = useNavigate();
    // 1. State
 

@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
 import ModalProfile from '../modalProfile/modalProfile';
-import { AppContext } from '~/hook/context/context';
 import Button from '~/component/Buttton/Button';
 import { patch } from '~/ultil/hpptRequest';
 import classNames from 'classnames/bind';
 import styles from './addProfilePhoto.module.scss';
+import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(styles);
 
 const AddProfilePhoto = () => {
-    const { onclickSeeModalSelectImg, dataUserProfile, callApi } = useContext(AppContext);
+    const { onclickSeeModalSelectImg, dataUserProfile, callApi } = useContext(UserContext);
     const [image, setImage] = useState(null);
     const handalUploadImg = (e) => {
         setImage(e.target.files[0]);

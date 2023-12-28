@@ -4,7 +4,6 @@ import style from './FormChangeProject.module.scss';
 import Input from '~/component/Input/Input';
 import Button from '~/component/Buttton/Button';
 import { get, patch } from '~/ultil/hpptRequest';
-import { AppContext } from '~/hook/context/context';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { LoadingIcon } from '~/component/icon/icon';
@@ -12,11 +11,12 @@ import { useForm } from 'react-hook-form';
 import ControllerForm from '~/component/ControllerForm/ControllerForm';
 import schema from './FormValidation';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { UserContext } from '~/contexts/user/userContext';
 
 const cx = classNames.bind(style);
 function FormChangeProject({ id }) {
    const { accessToken, parseuser, detailProject, setDetailProject, loadingDetailsProject, setLoadingDetailsProject } =
-      useContext(AppContext);
+      useContext(UserContext);
    // useForm
    const form = useForm({
       mode: 'all',

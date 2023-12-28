@@ -4,23 +4,26 @@ import style from './ProjectList.module.scss';
 import { FilterIcon, StarIcon } from '~/component/icon/icon';
 import Button from '~/component/Buttton/Button';
 import RowProject from '~/component/RowProject/RowProject';
-import { AppContext } from '~/hook/context/context';
 import { post } from '~/ultil/hpptRequest';
 import { useLocation } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { UserContext } from '~/contexts/user/userContext';
+import { AuthContext } from '~/contexts/auth/authContext';
+import WorkService from '~/services/work/workServices';
 
 const cx = classNames.bind(style);
-function ProjectList() {
-   const { dataProject, accessToken, parseuser, setDataProject, setPageProject, loadingGetProject } =
-      useContext(AppContext);
+function ProjectList({ projectsList, setProjectsList }) {
+   const projectService = new WorkService();
+   const { parseuser, loadingGetProject } = useContext(UserContext);
+   const { accessToken } = useContext(AuthContext);
+
    const location = useLocation();
    //    1. State
    const [sortKey, setSortKey] = useState({
       Key: '',
       Order: '',
    });
-
    //    2. UseEffect
    useEffect(() => {
       const searchParams = new URLSearchParams(location.search);
@@ -32,52 +35,16 @@ function ProjectList() {
          Order: queryOrder || '',
       }));
    }, [location]);
+
    //    3.Func
    const handleSortName = async () => {
       if (accessToken) {
-         // setLoadingGetProject(true);
-         const sortName = await post(
-            `/work/project/${parseuser?._id}?&page=1&sortKey=${sortKey.Key}&sortOrder=${sortKey.Order}`,
-            { deleteProject: false },
-            {
-               headers: {
-                  authorization: `${accessToken}`,
-                  refresh_token: `${parseuser?.refreshToken}`,
-               },
-            },
-         );
-         if (sortName.data.accessToken) {
-            const sortNameAgain = await post(
-               `/work/project/${parseuser?._id}?&page=1&sortKey=${sortKey.Key}&sortOrder=${sortKey.Order}`,
-               { deleteProject: false },
-               {
-                  headers: {
-                     authorization: `${sortName.data.accessToken}`,
-                     refresh_token: `${parseuser?.refreshToken}`,
-                  },
-               },
-            );
-            localStorage.setItem('accessToken', sortName.data.accessToken);
-            setDataProject(sortNameAgain.data.workProject);
-            setPageProject(() => {
-               setPageProject({
-                  page: sortNameAgain.data.page,
-                  total: sortNameAgain.data.totalPages,
-               });
-            });
-         } else {
-            setDataProject(sortName.data.workProject);
-            setPageProject(() => {
-               setPageProject({
-                  page: sortName.data.page,
-                  total: sortName.data.totalPages,
-               });
-            });
+         const sortName = await projectService.sortProject(parseuser?._id, sortKey.Key, sortKey.Order);
+         if (sortName.status === 200) {
+            setProjectsList(sortName.data.workProject);
          }
-         // setLoadingGetProject(false);
       }
    };
-
    return (
       <table className={cx('table-list')}>
          <thead>
@@ -149,12 +116,8 @@ function ProjectList() {
                </tr>
             ) : (
                <>
-                  {dataProject?.map((project) => {
-                     return (
-                        <>
-                           <RowProject key={project._id} project={project} />
-                        </>
-                     );
+                  {projectsList?.map((project) => {
+                     return <RowProject key={project._id} project={project} />;
                   })}
                </>
             )}

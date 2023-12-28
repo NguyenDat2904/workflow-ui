@@ -218,3 +218,13 @@ small {
       }
    }
 }
+.successValidate {
+   .field-edit {
+      .success {
+         transition: all 0.1s linear 0s;
+         opacity: 1;
+         background: rgb(255, 255, 255);
+         border-color: rgb(54, 179, 126);
+      }
+   }
+}

@@ -12,7 +12,7 @@
    overflow: auto;
    .width {
       min-width: var(--_1d8u6ab);
-      
+
       .height {
          display: flex;
          position: static;
@@ -20,4 +20,10 @@
          overflow: auto;
       }
    }
+}
+.popup {
+   display: none;
+}
+.open {
+   display: block;
 }

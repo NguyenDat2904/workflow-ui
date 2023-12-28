@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './Projects.module.scss';
 import Main from '~/component/Main/Main';
@@ -7,16 +7,34 @@ import Input from '~/component/Input/Input';
 import { SearchIcon } from '~/component/icon/icon';
 import ProjectList from './ProjectList/ProjectList';
 import Pagination from '~/component/Pagination/Pagination';
-import { AppContext } from '~/hook/context/context';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '~/contexts/user/userContext';
+import { AuthContext } from '~/contexts/auth/authContext';
+import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(style);
 
 function Projects() {
-   const { pageProject, loadingGetProject } = useContext(AppContext);
+   const { loadingGetProject, parseuser } = useContext(UserContext);
+   const projectService = new WorkService();
+   const { accessToken } = useContext(AuthContext);
+
    const navigate = useNavigate();
    // 1. State
-
+   const [projectsList, setProjectsList] = useState([]);
+   const [page, setPage] = useState(null);
    // 2. useEffect
+   useEffect(() => {
+      const getProjects = async () => {
+         if (accessToken) {
+            const projects = await projectService.getListProject(parseuser._id);
+            if (projects.status === 200) {
+               setProjectsList(projects.data.workProject);
+               setPage(projects.data.page);
+            }
+         }
+      };
+      getProjects();
+   }, []);
 
    return (
       <Main>
@@ -43,9 +61,9 @@ function Projects() {
             </div>
          </div>
          <div className={cx('project-list')}>
-            <ProjectList />
+            <ProjectList projectsList={projectsList} setProjectsList={setProjectsList} />
          </div>
-         {!loadingGetProject && <Pagination page={pageProject} />}
+         {!loadingGetProject && <Pagination page={page} />}
       </Main>
    );
 }

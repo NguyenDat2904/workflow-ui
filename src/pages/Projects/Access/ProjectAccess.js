@@ -1,6 +1,5 @@
 import React from 'react';
 import { Table } from '~/component/tables/Tables';
-import { remove } from '~/ultil/hpptRequest';
 import './ProjectAccess.scss';
 
 export default function ProjectAccess() {

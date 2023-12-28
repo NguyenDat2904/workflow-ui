@@ -1,19 +1,30 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './ModalProject.module.scss';
 import Modal from '~/component/Modal/Modal';
 import { NavLink } from 'react-router-dom';
 import Button from '~/component/Buttton/Button';
-import { AppContext } from '~/hook/context/context';
+import { UserContext } from '~/contexts/user/userContext';
+import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(style);
-function ModalProject({ handleToggle, onBlur }) {
-   const { dataProject } = useContext(AppContext);
+function ModalProject({ handleToggle, isOpen }) {
+   const { parseuser } = useContext(UserContext);
+   const projectService = new WorkService();
+   // 1. useState
+   const [projectLimit, getProjectLimit] = useState([]);
+   // 2. useEffect
+   useEffect(() => {
+      const getProject = async () => {
+         const projects = await projectService.paginationProject(parseuser?._id, 4);
+         if (projects.status === 200) {
+            getProjectLimit(projects.data.workProject);
+         }
+      };
+      getProject();
+   }, []);
    // 3. Func
-   function renderNumbers(arr) {
-      const displayedNumbers = arr?.slice(-4).reverse();
-      return displayedNumbers;
-   }
-   const renderListProject = renderNumbers(dataProject)?.map((project) => {
+
+   const renderListProject = projectLimit?.map((project) => {
       return (
          <Button viewAll key={project._id} className={cx('custom-button')}>
             <div className={cx('block')}>
@@ -33,8 +44,8 @@ function ModalProject({ handleToggle, onBlur }) {
       );
    });
    return (
-      <Modal width="320px" locationTransform="164px" onBlur={onBlur}>
-         {dataProject?.length === 0 ? (
+      <Modal width="320px" locationTransform="164px" isOpen={isOpen} onClose={handleToggle}>
+         {projectLimit?.length === 0 ? (
             <div className={cx('top', 'modal-top')}>
                <img
                   style={{ '--_ve50id': '138px' }}

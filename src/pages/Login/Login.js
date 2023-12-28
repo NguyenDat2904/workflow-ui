@@ -9,11 +9,13 @@ import { NavigationLinks } from '../../component/links/Links';
 import { post } from '../../ultil/hpptRequest';
 import HomeLayout from '~/layout/HomeLayout/HomeLayout';
 import LoginGoogleButton from './LoginGoogleButton';
-import { AppContext } from '~/hook/context/context';
 import { toast } from 'react-toastify';
+import { UserContext } from '~/contexts/user/userContext';
+import { AuthContext } from '~/contexts/auth/authContext';
 
 function Login() {
-   const { setIsAuthenticated, setDataUserProfile } = useContext(AppContext);
+   const { setDataUserProfile } = useContext(UserContext);
+   const { setIsAuthenticated } = useContext(AuthContext);
 
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');

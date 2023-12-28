@@ -4,7 +4,6 @@ class BaseServices {
    baseURL;
    http;
    configHeaders;
-
    constructor(baseURL, configHeaders) {
       this.http = axios.create({
          baseURL: baseURL,
@@ -18,6 +17,8 @@ class BaseServices {
             const { response } = error;
             if (response) {
                switch (response.status) {
+                  case 400:
+                     return response;
                   case 401:
                      localStorage.clear();
                      window.location.reload();
@@ -77,7 +78,7 @@ class BaseServices {
          ...configHeaders,
       });
    }
-   patchUpload(url, data , configHeaders) {
+   patchUpload(url, data, configHeaders) {
       return this.http.patch(url, data, {
          ...this.setConfigHeadersUpload(),
          ...configHeaders,

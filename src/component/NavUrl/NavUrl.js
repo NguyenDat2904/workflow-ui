@@ -6,7 +6,7 @@ const cx = classNames.bind(style);
 function NavUrl({ url }) {
    const renderUrl = url.map((item, index) => {
       return (
-         <li className={cx('item-url')}>
+         <li className={cx('item-url')} key={index}>
             <Link className={cx(index !== url.length - 1 && 'link-url')}>
                <span>{item}</span>
             </Link>

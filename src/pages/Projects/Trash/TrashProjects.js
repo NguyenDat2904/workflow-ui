@@ -7,7 +7,7 @@ import { post, patch } from '~/ultil/hpptRequest';
 export default function TrashProjects() {
    const [trashProject, setTrashProject] = useState([]);
    const [renderedTrashProject, setRenderedTrashProject] = useState([]);
-   const [page, setPage] = useState(1);
+   const [page] = useState(1);
    const user = JSON.parse(localStorage.getItem('user'));
    const navigate = useNavigate();
 

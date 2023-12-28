@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { patch, get } from '~/ultil/hpptRequest';
 import { Link } from 'react-router-dom';
 import AnyOne from '~/component/anyone/anyone';
 import classNames from 'classnames/bind';

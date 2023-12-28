@@ -4,11 +4,9 @@ import classNames from 'classnames/bind';
 import style from './ModalAccount.module.scss';
 import Button from '~/component/Buttton/Button';
 import { ManagerIcon } from '~/component/icon/icon';
-import { UserContext } from '~/contexts/user/userContext';
 import { AuthContext } from '~/contexts/auth/authContext';
 const cx = classNames.bind(style);
-function ModalAccount({ handleToggle, position }) {
-   const { dataUserProfile } = useContext(UserContext);
+function ModalAccount({ handleToggle, position, getUserData, isOpen }) {
    const { setIsAuthenticated } = useContext(AuthContext);
 
    const handleLogout = (e) => {
@@ -19,7 +17,7 @@ function ModalAccount({ handleToggle, position }) {
    };
 
    return (
-      <Modal width="234px" locationTransform={`${position - 290}px`}>
+      <Modal width="234px" locationTransform={`${position - 324}px`} isOpen={isOpen} onClose={handleToggle}>
          <div className={cx('top', 'modal-top')}>
             <div className={cx('modal-title')}>Account</div>
             <div>
@@ -29,8 +27,8 @@ function ModalAccount({ handleToggle, position }) {
                         <span>
                            <img
                               src={
-                                 dataUserProfile?.img
-                                    ? dataUserProfile?.img
+                                 getUserData?.img
+                                    ? getUserData?.img
                                     : 'https://secure.gravatar.com/avatar/96bd7f66bb5903b12b40d3696a36bd7a?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Fdefault-avatar-5.png'
                               }
                               alt=""
@@ -38,8 +36,8 @@ function ModalAccount({ handleToggle, position }) {
                         </span>
                      </div>
                      <div className={cx('name')}>
-                        <div>{dataUserProfile?.name}</div>
-                        <small>{dataUserProfile.email}</small>
+                        <div>{getUserData?.name}</div>
+                        <small>{getUserData.email}</small>
                      </div>
                   </div>
                </Button>

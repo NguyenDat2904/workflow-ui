@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './Verify.module.scss';
-import { EyeIconPassword, EyeIconText, LoadingIcon, LogoIcon } from '~/component/icon/icon';
+import { EyeIconPassword, EyeIconText, LoadingIcon } from '~/component/icon/icon';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import HeaderSuffix from '~/component/HeaderSuffix/HeaderSuffix';
 import { post } from '~/ultil/hpptRequest';

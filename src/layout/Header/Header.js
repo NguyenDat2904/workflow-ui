@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Button from '~/component/Buttton/Button';
 import classNames from 'classnames/bind';
 import style from './Header.module.scss';
@@ -15,12 +15,17 @@ import { useLocation } from 'react-router-dom';
 import ModalProject from '~/pages/Projects/ModalProject/ModalProject';
 import ModalAccount from '~/pages/Profile/ModalAccount/ModalAccount';
 import Input from '~/component/Input/Input';
-import Navigation from '~/component/Navigation/Navigation';
+import { AuthContext } from '~/contexts/auth/authContext';
+import { UserContext } from '~/contexts/user/userContext';
+import UserService from '~/services/user/userServices';
 const cx = classNames.bind(style);
 
 function Header() {
+   const userServices = new UserService();
    const location = useLocation();
    const elementRef = useRef(null);
+   const { accessToken } = useContext(AuthContext);
+   const { parseuser } = useContext(UserContext);
 
    // 1. State
    const [toggleMenu, setToggleMenu] = useState({
@@ -30,28 +35,37 @@ function Header() {
       user: false,
    });
    const [position, setPosition] = useState({ left: 0 });
+   const [getUserData, setGetUserData] = useState({});
 
    // 2. useEffect
 
    useEffect(() => {
       const getElementPosition = () => {
          const element = elementRef.current;
-
          if (element) {
             const { left } = element.getBoundingClientRect();
             setPosition({ left });
          }
       };
-
       getElementPosition();
-
       // Lắng nghe sự kiện resize trên cửa sổ trình duyệt
       window.addEventListener('resize', getElementPosition);
-
       // Hủy bỏ lắng nghe khi component unmount
       return () => {
          window.removeEventListener('resize', getElementPosition);
       };
+   }, []);
+
+   useEffect(() => {
+      const getUser = async () => {
+         if (accessToken) {
+            const users = await userServices.getUserProfile(parseuser?._id);
+            if (users.status === 200) {
+               setGetUserData(users.data);
+            }
+         }
+      };
+      getUser();
    }, []);
    // 3. Func
    const handleToggle = (toggle) => {
@@ -103,7 +117,12 @@ function Header() {
                </div>
                <div
                   className={cx('menu', location.pathname === '/project' && 'active')}
-                  onClick={() => handleToggle('project')}
+                  onClick={() =>
+                     setToggleMenu((pre) => ({
+                        ...pre,
+                        project: true,
+                     }))
+                  }
                >
                   <Button
                      rightIcon={<DownIcon />}
@@ -113,9 +132,15 @@ function Header() {
                      Projects
                   </Button>
                </div>
-               {toggleMenu.project && (
-                  <ModalProject handleToggle={() => handleToggle('project')} onBlur={() => console.log(1)} />
-               )}
+               <ModalProject
+                  handleToggle={() =>
+                     setToggleMenu((pre) => ({
+                        ...pre,
+                        project: !toggleMenu.project,
+                     }))
+                  }
+                  isOpen={toggleMenu.project}
+               />
                <div className={cx('menu')} onClick={() => handleToggle('team')}>
                   <Button rightIcon={<DownIcon />} backgroundNone>
                      Teams
@@ -158,16 +183,39 @@ function Header() {
                   leftIcon={<SettingIcon />}
                ></Button>
             </div>
-            <div ref={elementRef} className={cx('nav-icon')} onClick={() => handleToggle('user')}>
-               <Button
-                  className={cx('button-icon')}
-                  noChildren
-                  backgroundNone
-                  borderRadius
-                  leftIcon={<UserIcon />}
-               ></Button>
+            <div
+               className={cx('nav-icon')}
+               onClick={() =>
+                  setToggleMenu((pre) => ({
+                     ...pre,
+                     user: true,
+                  }))
+               }
+               ref={elementRef}
+            >
+               {getUserData?.img === '' || getUserData?.img === undefined ? (
+                  <Button
+                     className={cx('button-icon')}
+                     noChildren
+                     backgroundNone
+                     borderRadius
+                     leftIcon={<UserIcon />}
+                  ></Button>
+               ) : (
+                  <img src={getUserData?.img} alt="" />
+               )}
             </div>
-            {toggleMenu.user && <ModalAccount handleToggle={() => handleToggle('user')} position={position.left} />}
+            <ModalAccount
+               getUserData={getUserData}
+               position={position.left}
+               handleToggle={() =>
+                  setToggleMenu((pre) => ({
+                     ...pre,
+                     user: false,
+                  }))
+               }
+               isOpen={toggleMenu.user}
+            />
          </div>
       </header>
    );

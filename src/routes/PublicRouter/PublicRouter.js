@@ -1,11 +1,10 @@
-import { Fragment, useContext, React } from 'react';
-import { Navigate, Outlet, Route } from 'react-router-dom';
+import { useContext, React } from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 import { AuthContext } from '~/contexts/auth/authContext';
-import DefaultLayout from '~/layout/DefaultLayout/DefaultLayout';
 
 const PublicRouter = () => {
    const { isAuthenticated } = useContext(AuthContext);
-   return isAuthenticated ? <Navigate to="/" /> : <Outlet />;
+   return isAuthenticated ? <Navigate to="/project" /> : <Outlet />;
 };
 
 export default PublicRouter;

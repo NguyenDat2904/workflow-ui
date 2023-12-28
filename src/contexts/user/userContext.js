@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { get, post, patch } from '~/ultil/hpptRequest';
+import { post, patch } from '~/ultil/hpptRequest';
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
@@ -114,33 +114,6 @@ const UserProvider = ({ children }) => {
       GetListProject();
    }, []);
 
-   const callApi = async () => {
-      if (accessToken) {
-         const APIuser = await get(`/users/${parseuser?._id}`, {
-            headers: {
-               authorization: `${accessToken}`,
-               refresh_token: `${parseuser?.refreshToken}`,
-            },
-         });
-         if (APIuser.data.accessToken) {
-            const APIuserAgain = await get(`/users/${parseuser?._id}`, {
-               headers: {
-                  authorization: `${APIuser.data.accessToken}`,
-                  refresh_token: `${parseuser?.refreshToken}`,
-               },
-            });
-            localStorage.setItem('accessToken', APIuserAgain.data.accessToken);
-            setDataUserProfile(APIuserAgain.data);
-            setValueInput({ ...APIuserAgain.data });
-         } else {
-            setDataUserProfile(APIuser.data);
-            setValueInput({ ...APIuser.data });
-         }
-      }
-   };
-   useEffect(() => {
-      callApi();
-   }, []);
    const handleSubmit = async (e) => {
       e.preventDefault();
       if (
@@ -167,7 +140,6 @@ const UserProvider = ({ children }) => {
                },
             );
             if (addUserInfo.status === 200) {
-               callApi();
             }
          }
       }
@@ -311,7 +283,7 @@ const UserProvider = ({ children }) => {
       setDataListWork,
       dataProject,
       setDataProject,
-      callApi,
+
       parseuser,
       pageProject,
       setPageProject,

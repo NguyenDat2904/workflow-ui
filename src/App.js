@@ -1,14 +1,12 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Fragment, useContext, useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Fragment } from 'react';
 import { publicRoutes, privateRoutes } from '~/routes/routes';
 import DefaultLayout from './layout/DefaultLayout/DefaultLayout';
 import { ToastContainer } from 'react-toastify';
-import { AuthContext } from './contexts/auth/authContext';
 import PrivateRouter from './routes/PrivateRouter/PrivateRouter';
 import PublicRouter from './routes/PublicRouter/PublicRouter';
 
 function App() {
-   const { isAuthenticated } = useContext(AuthContext);
    return (
       <BrowserRouter>
          <div className="App">

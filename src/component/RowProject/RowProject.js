@@ -13,7 +13,10 @@ function RowProject({ project }) {
    // 1. State
    const [toggle, setToggle] = useState(false);
 
-   // 2. Func
+   // 3. Func
+   function handlePopupClick(event) {
+      event.stopPropagation(); // Ngăn chặn sự kiện click từ việc lan truyền lên phần tử cha
+   }
 
    return (
       <tr className={cx('row')}>
@@ -62,11 +65,15 @@ function RowProject({ project }) {
             </Button>
          </td>
          <td></td>
-         <td className={cx('menu-icon')}>
-            <div onClick={() => setToggle(!toggle)}>
+         <td className={cx('menu-icon')} onClick={() => setToggle(!toggle)} onBlur={() => setToggle(false)}>
+            <div>
                <Button noChildren backgroundNone leftIcon={<MenuIcon />} />
             </div>
-            {toggle && <MenuProject disable id={project._id} onClick={() => handleMoveToTrash(project._id)} />}
+            {toggle && (
+               <div onClick={handlePopupClick}>
+                  <MenuProject disable id={project._id} onClick={() => handleMoveToTrash(project._id)} />
+               </div>
+            )}
          </td>
       </tr>
    );

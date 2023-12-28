@@ -17,7 +17,7 @@ function ModalAccount({ handleToggle, position }) {
     };
 
     return (
-        <Modal width="234px" locationTransform={`${position - 290}px`}>
+        <Modal width="234px" locationTransform={`${position - 290}px`} >
             <div className={cx('top', 'modal-top')}>
                 <div className={cx('modal-title')}>Account</div>
                 <div>

@@ -1,4 +1,3 @@
-import React from 'react';
 import classNames from 'classnames/bind';
 import style from './MenuProject.module.scss';
 import Button from '~/component/Buttton/Button';

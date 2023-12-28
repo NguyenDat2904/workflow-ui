@@ -6,6 +6,7 @@ const cx = classNames.bind(style);
 function Modal({ className, width, locationTransform, children, onBlur, maxWidth }) {
    return (
       <div
+         
          className={cx('wrapper', className)}
          style={{ transform: `translate(${locationTransform}, 52px)` }}
          onBlur={onBlur}

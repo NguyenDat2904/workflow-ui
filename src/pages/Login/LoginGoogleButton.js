@@ -10,45 +10,45 @@ import './Login.scss';
 import { AppContext } from '~/hook/context/context';
 
 export default function LoginGoogleButton() {
-    const navigate = useNavigate();
-    const { setIsAuthenticated, setDataUserProfile } = useContext(AppContext);
+   const navigate = useNavigate();
+   const { setIsAuthenticated, setDataUserProfile } = useContext(AppContext);
 
-    const googleLogin = useGoogleLogin({
-        onSuccess: async (codeResponse) => {
-            const response = await post(
-                '/users/loginGoogle',
-                {},
-                {
-                    headers: {
-                        tokengoogle: codeResponse.access_token,
-                    },
-                },
-            );
-            if (response.status === 200) {
-                localStorage.setItem('user', JSON.stringify(response.data));
-                localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
-                setIsAuthenticated(true);
-                navigate('/');
-            } else {
-                switch (response.status) {
-                    case 404:
-                        toast.error('Invalid email or password');
-                        break;
-                    default:
-                        toast.error('Something went wrong. Please try again later');
-                        break;
-                }
+   const googleLogin = useGoogleLogin({
+      onSuccess: async (codeResponse) => {
+         const response = await post(
+            '/users/loginGoogle',
+            {},
+            {
+               headers: {
+                  tokengoogle: codeResponse.access_token,
+               },
+            },
+         );
+         if (response.status === 200) {
+            localStorage.setItem('user', JSON.stringify(response.data));
+            localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
+            setIsAuthenticated(true);
+            navigate('/project');
+         } else {
+            switch (response.status) {
+               case 404:
+                  toast.error('Invalid email or password');
+                  break;
+               default:
+                  toast.error('Something went wrong. Please try again later');
+                  break;
             }
-        },
-        onError: (error) => {
-            console.log('Login Failed:', error);
-        },
-    });
+         }
+      },
+      onError: (error) => {
+         console.log('Login Failed:', error);
+      },
+   });
 
-    return (
-        <Button buttonStyle={'light'} className="login-google-button" onClick={() => googleLogin()}>
-            <GoogleIcon />
-            <span>Continue with Google</span>
-        </Button>
-    );
+   return (
+      <Button buttonStyle={'light'} className="login-google-button" onClick={() => googleLogin()}>
+         <GoogleIcon />
+         <span>Continue with Google</span>
+      </Button>
+   );
 }

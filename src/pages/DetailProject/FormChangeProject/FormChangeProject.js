@@ -8,19 +8,28 @@ import { AppContext } from '~/hook/context/context';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { LoadingIcon } from '~/component/icon/icon';
+import { useForm } from 'react-hook-form';
+import ControllerForm from '~/component/ControllerForm/ControllerForm';
+import schema from './FormValidation';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const cx = classNames.bind(style);
 function FormChangeProject({ id }) {
    const { accessToken, parseuser, detailProject, setDetailProject, loadingDetailsProject, setLoadingDetailsProject } =
       useContext(AppContext);
-   const [values, setValue] = useState({
-      name: '',
-      key: '',
-      project_lead: {
+   // useForm
+   const form = useForm({
+      mode: 'all',
+      defaultValues: {
          name: '',
-         img: '',
+         key: '',
+         nameAdmin: '',
+         imgAdmin: '',
       },
+      resolver: yupResolver(schema),
    });
+   // useState
+
    const [loadingIconSummit, setLoadingIconSummit] = useState(false);
    // GET detail Project
    useEffect(() => {
@@ -48,36 +57,22 @@ function FormChangeProject({ id }) {
       };
       getDetailProject();
    }, []);
+
    // Set value
    useEffect(() => {
-      setValue((prev) => ({
-         ...prev,
-         name: detailProject?.nameProject,
-         key: detailProject?.codeProject,
-         project_lead: {
-            name: detailProject.adminID?.name,
-            img: detailProject.adminID?.img,
-         },
-      }));
+      form.setValue('name', detailProject?.nameProject);
+      form.setValue('key', detailProject?.codeProject);
+      form.setValue('nameAdmin', detailProject.adminID?.name);
+      form.setValue('imgAdmin', detailProject.adminID?.img);
    }, [detailProject]);
-   const handleChange = (e) => {
-      const { name, value } = e.target;
-      setValue((prevValues) => ({
-         ...prevValues,
-         [name]: value,
-      }));
-   };
 
-   const changeDetailProject = async (event) => {
-      event.preventDefault();
+   const changeDetailProject = async (data) => {
       setLoadingIconSummit(true);
-      console.log(loadingIconSummit);
-
       const changeProject = await patch(
          `/work/edit-project/${id}`,
          {
-            nameProject: values.name,
-            codeProject: values.key,
+            nameProject: data.name,
+            codeProject: data.key,
             _idUser: parseuser?._id,
          },
          {
@@ -91,8 +86,8 @@ function FormChangeProject({ id }) {
          const changeProjectAgain = await patch(
             `/work/edit-project/:_id`,
             {
-               nameProject: values.name,
-               codeProject: values.key,
+               nameProject: data.name,
+               codeProject: data.key,
             },
             {
                headers: {
@@ -108,7 +103,7 @@ function FormChangeProject({ id }) {
 
    return (
       <div>
-         <form action="" className={cx('form')} onSubmit={changeDetailProject}>
+         <form action="" className={cx('form')} onSubmit={form.handleSubmit(changeDetailProject)}>
             <div>
                <div className={cx('change-icon')}>
                   {loadingDetailsProject ? (
@@ -122,30 +117,40 @@ function FormChangeProject({ id }) {
                {loadingDetailsProject ? (
                   <Skeleton width="344px" height="60px" />
                ) : (
-                  <Input
-                     height="40px"
-                     search="search"
-                     label="Name*"
-                     name="name"
-                     value={values.name}
-                     onChange={handleChange}
-                     disableForm
-                  />
+                  <ControllerForm form={form} name="name" label="Name" required id="name" className="search">
+                     <div>
+                        <div className={cx('form')}>
+                           <div className={cx('form-input')}>
+                              <input
+                                 style={{ height: '40px' }}
+                                 className="input"
+                                 id="name"
+                                 defaultValue={form.getValues('name')}
+                              />
+                           </div>
+                        </div>
+                     </div>
+                  </ControllerForm>
                )}
             </div>
             <div className={cx('change-input')}>
                {loadingDetailsProject ? (
                   <Skeleton width="344px" height="60px" />
                ) : (
-                  <Input
-                     height="40px"
-                     search="search"
-                     label="Key*"
-                     name="key"
-                     value={values.key}
-                     onChange={handleChange}
-                     disableForm
-                  />
+                  <ControllerForm form={form} name="key" label="Key" required id="key" className="search">
+                     <div>
+                        <div className={cx('form')}>
+                           <div className={cx('form-input')}>
+                              <input
+                                 style={{ height: '40px' }}
+                                 className="input"
+                                 defaultValue={form.getValues('key')}
+                                 id="key"
+                              />
+                           </div>
+                        </div>
+                     </div>
+                  </ControllerForm>
                )}
             </div>
             <div className={cx('change-input')}>
@@ -158,11 +163,11 @@ function FormChangeProject({ id }) {
                      img
                      label="Project lead"
                      disableForm
-                     value={values.project_lead.name}
+                     defaultValue={form.getValues('nameAdmin')}
                      leftIcon={
                         <img
                            src={
-                              values.project_lead.img ||
+                              form.getValues('imgAdmin') ||
                               'https://secure.gravatar.com/avatar/96bd7f66bb5903b12b40d3696a36bd7a?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Fdefault-avatar-5.png'
                            }
                            alt=""
@@ -177,6 +182,7 @@ function FormChangeProject({ id }) {
                   <Skeleton width="38px" height="32px" />
                ) : (
                   <Button
+                     type="submit"
                      disable={loadingIconSummit ? true : false}
                      blue={loadingIconSummit ? false : true}
                      leftIcon={loadingIconSummit && <LoadingIcon />}

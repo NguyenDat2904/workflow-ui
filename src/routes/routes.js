@@ -27,7 +27,7 @@ const privateRoutes = [
    { path: '/board', component: Board },
    { path: '/profile/security', component: ProfileSecurity, layout: null },
    { path: '/profile', component: Profile, layout: HeaderOnly },
-   { path: '/profile/profile-and-visibility', component: ProfileAndVisibility, layout: null },
+   { path: '/manage-profile/profile-and-visibility', component: ProfileAndVisibility, layout: null },
    { path: '/profile/view-all-list-work', component: ViewAllListWork, layout: HeaderOnly },
    { path: '/forgot/change-password', component: ChangePassword, layout: null },
    { path: '/project', component: Projects, layout: HeaderOnly },

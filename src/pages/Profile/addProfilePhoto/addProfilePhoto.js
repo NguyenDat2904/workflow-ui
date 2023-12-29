@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ModalProfile from '../modalProfile/modalProfile';
+import ModalProfile from '../../../component/modalProfile/modalProfile';
 import Button from '~/component/Buttton/Button';
 import classNames from 'classnames/bind';
 import UserService from '~/services/user/userServices';

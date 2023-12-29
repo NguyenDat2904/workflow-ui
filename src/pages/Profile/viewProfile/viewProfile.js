@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import styles from './viewProfile.module.scss';
 import { Buiding, Location, BagIcon, TreeIcon, Email, Phone, AddIcon } from '~/component/icon/icon';
 import RecentActivityOfUser from '../recentActivityOfUser/recentActivityOf';
-import { UserContext } from '~/contexts/user/userContext';
 
 const cx = classNames.bind(styles);
 const ViewProfile = ({ dataUserProfile }) => {
@@ -12,7 +11,7 @@ const ViewProfile = ({ dataUserProfile }) => {
       <div className={cx('viewProfile')}>
          <div className={cx('viewInfoUser')}>
             <h2>{dataUserProfile.name}</h2>
-            <Link to="/profile/profile-and-visibility">
+            <Link to="/manage-profile/profile-and-visibility">
                <button className={cx('moreInformationUser')}>Edit information</button>
             </Link>
             <div className={cx('viewInfo')}>
@@ -22,22 +21,46 @@ const ViewProfile = ({ dataUserProfile }) => {
                      <div className={cx('fillViewInfo')}>
                         <BagIcon />
 
-                        <span className={cx('showProfile')}>{dataUserProfile.jopTitle?.slice(0, 20)}...</span>
+                        <span className={cx('showProfile')}>
+                           {dataUserProfile.jopTitle ? (
+                              dataUserProfile.jopTitle?.slice(0, 20)
+                           ) : (
+                              <span className={cx('infoDefault')}>Your name of your</span>
+                           )}
+                        </span>
                      </div>
                      <div className={cx('fillViewInfo')}>
                         <TreeIcon />
 
-                        <span className={cx('showProfile')}>{dataUserProfile.department?.slice(0, 20)}...</span>
+                        <span className={cx('showProfile')}>
+                           {dataUserProfile.department ? (
+                              dataUserProfile.department?.slice(0, 20)
+                           ) : (
+                              <span className={cx('infoDefault')}>Your department</span>
+                           )}
+                        </span>
                      </div>
                      <div className={cx('fillViewInfo')}>
                         <Buiding />
 
-                        <span className={cx('showProfile')}>{dataUserProfile.organization?.slice(0, 20)}...</span>
+                        <span className={cx('showProfile')}>
+                           {dataUserProfile.organization ? (
+                              dataUserProfile.organization?.slice(0, 20)
+                           ) : (
+                              <span className={cx('infoDefault')}>Your organization</span>
+                           )}
+                        </span>
                      </div>
                      <div className={cx('fillViewInfo')}>
                         <Location />
 
-                        <span className={cx('showProfile')}>{dataUserProfile.location?.slice(0, 20)}...</span>
+                        <span className={cx('showProfile')}>
+                           {dataUserProfile.location ? (
+                              dataUserProfile.location?.slice(0, 20)
+                           ) : (
+                              <span className={cx('infoDefault')}>Your location</span>
+                           )}
+                        </span>
                      </div>
                   </div>
                </div>

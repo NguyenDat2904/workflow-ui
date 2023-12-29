@@ -37,7 +37,7 @@ function ModalAccount({ handleToggle, position, getUserData, isOpen }) {
                      </div>
                      <div className={cx('name')}>
                         <div>{getUserData?.name}</div>
-                        <small>{getUserData.email}</small>
+                        <small>{getUserData?.email}</small>
                      </div>
                   </div>
                </Button>

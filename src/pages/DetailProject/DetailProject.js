@@ -9,24 +9,20 @@ import { useNavigate, useParams } from 'react-router-dom';
 import NavUrl from '~/component/NavUrl/NavUrl';
 import Skeleton from 'react-loading-skeleton';
 import { UserContext } from '~/contexts/user/userContext';
-import { AuthContext } from '~/contexts/auth/authContext';
 import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(style);
 function DetailProject() {
    const navigate = useNavigate();
    const { detailProject, loadingDetailsProject, parseuser } = useContext(UserContext);
-   const { accessToken } = useContext(AuthContext);
    const [toggle, setToggle] = useState(false);
    const params = useParams();
    const projectService = new WorkService();
 
    // 3. Func
    const handleMoveToTrash = async (id) => {
-      if (accessToken) {
-         const moveToTrash = await projectService.deleteProject(id, parseuser?._id);
-         if (moveToTrash === 200) {
-            navigate('/project');
-         }
+      const moveToTrash = await projectService.deleteProject(id, parseuser?._id);
+      if (moveToTrash === 200) {
+         navigate('/project');
       }
    };
 

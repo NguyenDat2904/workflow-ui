@@ -18,6 +18,7 @@
    object-fit: cover;
 }
 .btn-change {
+   position: relative;
    padding: var(--ds-space-150, 9pt) 0 var(--ds-space-050, 4px);
    justify-content: center;
    display: flex;

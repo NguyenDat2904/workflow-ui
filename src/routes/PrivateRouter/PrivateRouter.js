@@ -4,7 +4,6 @@ import { AuthContext } from '~/contexts/auth/authContext';
 
 const PrivateRouter = () => {
    const location = useLocation();
-   console.log(location);
    const { isAuthenticated } = useContext(AuthContext);
 
    if (isAuthenticated) {
@@ -15,7 +14,6 @@ const PrivateRouter = () => {
    } else {
       return <Navigate to="/login" replace />;
    }
-   // return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 export default PrivateRouter;

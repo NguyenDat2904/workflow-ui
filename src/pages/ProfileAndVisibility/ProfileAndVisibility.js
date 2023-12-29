@@ -94,12 +94,7 @@ const ProfileAndVisibility = () => {
                / Change
             </p>
             <h1 className={cx('titleProfileAndVisibility')}>Profile and change</h1>
-            <p className={cx('usesProfileAndVisibility')}>
-               Manage your personal information, and control which information other people see and apps may access.
-            </p>
-            <p className={cx('SeeDetails')}>
-               Learn more about your profile and visibility <span>or</span> view our privacy policy.
-            </p>
+           
             <h3 className={cx('ProfilePhotoAndHeaderImage')}>Profile photo and header image</h3>
             <ProfileHeaderImg
                dataUserProfile={dataUserProfile}
@@ -118,9 +113,6 @@ const ProfileAndVisibility = () => {
             </div>
             <h3 className={cx('ProfilePhotoAndHeaderImage')}>About you</h3>
             <div className={cx('aboutYou')}>
-               <p style={{ marginLeft: '60%' }} className={cx('seeYourProfile')}>
-                  Who can see this?
-               </p>
                <div className={cx('whoSee')}>
                   <EditField
                      type="text"
@@ -133,7 +125,6 @@ const ProfileAndVisibility = () => {
                      handleSubmit={handleSubmit}
                      handleOnchange={handleOnchange}
                   />
-
                   <div className={cx('gender')}>
                      <div className={cx('selectGenderTitle')}>
                         <span className={cx('titleGender')}>Gender</span>
@@ -147,10 +138,6 @@ const ProfileAndVisibility = () => {
                               <option value="Female">Female</option>
                            </select>
                         </form>
-                     </div>
-
-                     <div className={cx('canSee')}>
-                        <AnyOne />
                      </div>
                   </div>
                   <EditField
@@ -223,9 +210,6 @@ const ProfileAndVisibility = () => {
             </div>
             <h3 className={cx('ProfilePhotoAndHeaderImage')}>Contact</h3>
             <div className={cx('aboutYou')}>
-               <p style={{ marginLeft: '60%' }} className={cx('seeYourProfile')}>
-                  Who can see this?
-               </p>
                <div className={cx('whoSee')}>
                   <div className={cx('childrenAboutYouEmail')}>
                      <span className={cx('emailAddress')}>Email address</span>

@@ -18,7 +18,7 @@ const RecentActivityOfUser = () => {
       const popDataProject = dataListProject?.length - 1;
       const dataWork = await workServices.listWork(`${dataListProject[popDataProject].nameProject}`);
       const positionEnd = dataWork?.data?.listWorkID?.length;
-      const positionStart = dataWork?.data?.listWorkID?.length - 6;
+      const positionStart = dataWork?.data?.listWorkID?.length - 10;
       const dataListWork = dataWork?.data?.listWorkID?.slice(positionStart, positionEnd);
       setDataListWork(dataListWork);
    };

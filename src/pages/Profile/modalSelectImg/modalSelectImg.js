@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import { patch } from '~/ultil/hpptRequest';
 import { Link } from 'react-router-dom';
 import styles from './modalSelectImg.module.scss';
-import ModalProfile from '../modalProfile/modalProfile';
+import ModalProfile from '../../../component/modalProfile/modalProfile';
 import UserService from '~/services/user/userServices';
 import { useFormik } from 'formik';
 import * as yup from 'yup';

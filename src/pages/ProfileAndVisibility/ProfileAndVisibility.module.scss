@@ -4,8 +4,7 @@
    padding-top: 50px;
    margin: 0 auto;
    .headerWorkOn {
-      margin-top: 40px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       font-weight: 400;
       color: #44546f;
       font-size: 16px;
@@ -28,14 +27,6 @@
       margin-top: 0px;
       line-height: var(--ds-font-lineHeight-500, 32px);
       outline: none;
-   }
-   .SeeDetails,
-   .usesProfileAndVisibility {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans', 'Droid Sans',
-         'Helvetica Neue', sans-serif;
-      font-size: 14px;
-      line-height: 1.42857;
-      color: var(--ds-text, #172b4d);
    }
    .SeeDetails {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans', 'Droid Sans',
@@ -74,20 +65,17 @@
       border-radius: 3px;
       box-shadow: var(--ds-shadow-raised, 0px 1px 1px #091e4240, 0px 0px 1px #091e424f);
       .whoSee {
-         display: flex;
-         flex-direction: column;
+         display: grid;
+         grid-template-columns: 1fr 1fr;
          gap: 20px;
          .gender {
-            display: flex;
             .selectGenderTitle {
                padding: 0 8px 6px 8px;
-               width: 60%;
                display: flex;
                flex-direction: column;
                gap: 8px;
                .selectGender {
                   padding: 0 8px;
-                  width: 100%;
                   display: flex;
                   justify-content: space-between;
                   align-items: flex-end;
@@ -96,8 +84,7 @@
                      color: inherit;
                      font-size: 14px;
                      font-weight: 400;
-                     overflow-wrap: break-word;
-                     word-break: break-word;
+
                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans',
                         'Droid Sans', 'Helvetica Neue', sans-serif;
                   }
@@ -130,7 +117,7 @@
             }
          }
          .childrenAboutYouEmail {
-            padding: 8px;
+            padding: 0 8px 8px 8px;
             display: flex;
             flex-direction: column;
             .emailAddress {

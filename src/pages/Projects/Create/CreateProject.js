@@ -17,7 +17,7 @@ export default function CreateProject() {
       e.preventDefault();
       if (projectName && projectKey) {
          const response = await post(
-            `/work/add-new-project/${user._id}`,
+            `/work/add-new-project/${user?._id}`,
             {
                nameProject: projectName,
                codeProject: projectKey,

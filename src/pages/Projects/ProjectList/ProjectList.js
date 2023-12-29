@@ -13,7 +13,7 @@ import { AuthContext } from '~/contexts/auth/authContext';
 import WorkService from '~/services/work/workServices';
 
 const cx = classNames.bind(style);
-function ProjectList({ projectsList, setProjectsList }) {
+function ProjectList({ projectsList, setProjectsList, handleMoveToTrash }) {
    const projectService = new WorkService();
    const { parseuser, loadingGetProject } = useContext(UserContext);
    const { accessToken } = useContext(AuthContext);
@@ -117,7 +117,7 @@ function ProjectList({ projectsList, setProjectsList }) {
             ) : (
                <>
                   {projectsList?.map((project) => {
-                     return <RowProject key={project._id} project={project} />;
+                     return <RowProject key={project?._id} project={project} handleMoveToTrash={handleMoveToTrash} />;
                   })}
                </>
             )}

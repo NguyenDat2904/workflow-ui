@@ -1,10 +1,21 @@
 import { useContext } from 'react';
-import { Navigate, Outlet, Route } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { AuthContext } from '~/contexts/auth/authContext';
 
 const PrivateRouter = () => {
+   const location = useLocation();
+   console.log(location);
    const { isAuthenticated } = useContext(AuthContext);
-   return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+
+   if (isAuthenticated) {
+      if (location.pathname === '/') {
+         return <Navigate to="/project" replace />;
+      }
+      return <Outlet />;
+   } else {
+      return <Navigate to="/login" replace />;
+   }
+   // return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 export default PrivateRouter;

@@ -26,7 +26,7 @@ function ModalProject({ handleToggle, isOpen }) {
 
    const renderListProject = projectLimit?.map((project) => {
       return (
-         <Button viewAll key={project._id} className={cx('custom-button')}>
+         <Button viewAll key={project?._id} className={cx('custom-button')}>
             <div className={cx('block')}>
                <div className={cx('img')}>
                   <span>

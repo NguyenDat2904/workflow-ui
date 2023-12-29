@@ -43,12 +43,11 @@ function Login() {
          passWord: password,
       });
       if (response.status === 200) {
-         console.log(response.data);
          localStorage.setItem('user', JSON.stringify(response.data));
          localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
          setDataUserProfile(response.data);
          setIsAuthenticated(true);
-         navigate('/');
+         navigate('/project');
       } else {
          switch (response.status) {
             case 404:

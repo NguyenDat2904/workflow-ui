@@ -8,5 +8,16 @@ class AuthService extends BaseServices {
    verifyRegister(email, userName, fullName) {
       return this.post(`/auth/verify`, { email, userName, fullName });
    }
+   register(email, fullName, userName, password, token) {
+      return this.post(
+         `/auth/register`,
+         { email, fullName, userName, password },
+         {
+            headers: {
+               'verify-token': `${token}`,
+            },
+         },
+      );
+   }
 }
 export default AuthService;

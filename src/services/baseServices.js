@@ -26,6 +26,8 @@ class BaseServices {
                   case 403:
                      window.location.href = '/error403';
                      return;
+                  case 404:
+                     return response;
                   default:
                      return Promise.reject(error);
                }

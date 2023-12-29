@@ -20,11 +20,12 @@ import TrashProjects from '~/pages/Projects/Trash/TrashProjects';
 import ProjectAccess from '~/pages/Projects/Access/ProjectAccess';
 
 const privateRoutes = [
+   { path: '/', component: BlackLog },
    {
-      path: '/',
+      path: '/project/:id/black-log',
       component: BlackLog,
    },
-   { path: '/board', component: Board },
+   { path: '/project/:id/board', component: Board },
    { path: '/profile/security', component: ProfileSecurity, layout: null },
    { path: '/profile', component: Profile, layout: HeaderOnly },
    { path: '/manage-profile/profile-and-visibility', component: ProfileAndVisibility, layout: null },

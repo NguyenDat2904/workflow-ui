@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import style from './SideBar.module.scss';
 import WrapperSideBar from './WrapperSideBar/WrapperSideBar';
@@ -6,11 +6,15 @@ import Button from '~/component/Buttton/Button';
 import { LeftIcon } from '~/component/icon/icon';
 import Skeleton from 'react-loading-skeleton';
 import { UserContext } from '~/contexts/user/userContext';
+import { useLocation, useParams } from 'react-router-dom';
 
 const cx = classNames.bind(style);
 
 function SideBar() {
    const { detailProject } = useContext(UserContext);
+   const location = useLocation();
+
+   // GET detail Project
 
    return (
       <WrapperSideBar>
@@ -43,14 +47,42 @@ function SideBar() {
                <div className={cx('wrapper-menu')}>
                   <div className={cx('list-menu')}>
                      <div className={cx('button-back')}>
-                        <Button leftIcon={<LeftIcon />} viewAll backgroundNone className={cx('custom-button')}>
+                        <Button
+                           leftIcon={<LeftIcon />}
+                           viewAll
+                           backgroundNone
+                           className={cx('custom-button')}
+                           to="/project"
+                        >
                            Back to project
                         </Button>
                      </div>
                      <div className={cx('list')}>
                         <div className={cx('line')}>
+                           <Button
+                              to={`/project/${detailProject?.codeProject}/settings/details`}
+                              backgroundNone
+                              viewAll
+                              className={cx(
+                                 'custom-button',
+                                 location.pathname === `/project/${detailProject?.codeProject}/settings/details` &&
+                                    'active',
+                              )}
+                              style={{ marginTop: '6px' }}
+                           >
+                              <span className={cx('css-active')}>Details</span>
+                           </Button>
                            <Button backgroundNone viewAll className={cx('custom-button')} style={{ marginTop: '6px' }}>
-                              Details
+                              Access
+                           </Button>
+                           <Button backgroundNone viewAll className={cx('custom-button')} style={{ marginTop: '6px' }}>
+                              Notifications
+                           </Button>
+                           <Button backgroundNone viewAll className={cx('custom-button')} style={{ marginTop: '6px' }}>
+                              Issue types
+                           </Button>
+                           <Button backgroundNone viewAll className={cx('custom-button')} style={{ marginTop: '6px' }}>
+                              Column and status
                            </Button>
                         </div>
                      </div>

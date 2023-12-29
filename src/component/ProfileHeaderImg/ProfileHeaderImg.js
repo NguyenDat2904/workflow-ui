@@ -56,7 +56,7 @@ const ProfileHeaderImg = ({ dataUserProfile, callApi, heightt, widthbagrAvatar, 
    const hendleOnchange = async (e) => {
       const formData = new FormData();
       formData.append('imgCover', e.target.files[0]);
-      const upload = await userServices.uploadImg(`${dataUserProfile._id}`, formData);
+      const upload = await userServices.uploadImg(`${dataUserProfile?._id}`, formData);
       if (upload.status === 200) {
          await callApi();
       }

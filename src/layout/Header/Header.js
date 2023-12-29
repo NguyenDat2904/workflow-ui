@@ -82,12 +82,6 @@ function Header() {
                yourWork: !toggleMenu.yourWork,
             }));
             break;
-         case 'team':
-            setToggleMenu((pre) => ({
-               ...pre,
-               team: !toggleMenu.team,
-            }));
-            break;
          case 'user':
             setToggleMenu((pre) => ({
                ...pre,
@@ -98,7 +92,6 @@ function Header() {
             setToggleMenu({
                yourWork: false,
                project: false,
-               team: false,
             });
       }
    };
@@ -141,11 +134,6 @@ function Header() {
                   }
                   isOpen={toggleMenu.project}
                />
-               <div className={cx('menu')} onClick={() => handleToggle('team')}>
-                  <Button rightIcon={<DownIcon />} backgroundNone>
-                     Teams
-                  </Button>
-               </div>
                <div className={cx('menu')}>
                   <Button blue>Create</Button>
                   {/* <Navigation /> */}
@@ -163,24 +151,6 @@ function Header() {
                   backgroundNone
                   borderRadius
                   leftIcon={<NotificationIcon />}
-               ></Button>
-            </div>
-            <div className={cx('nav-icon')}>
-               <Button
-                  className={cx('button-icon', 'custom-button')}
-                  noChildren
-                  backgroundNone
-                  borderRadius
-                  leftIcon={<HelpIcon />}
-               ></Button>
-            </div>
-            <div className={cx('nav-icon')}>
-               <Button
-                  className={cx('button-icon')}
-                  noChildren
-                  backgroundNone
-                  borderRadius
-                  leftIcon={<SettingIcon />}
                ></Button>
             </div>
             <div

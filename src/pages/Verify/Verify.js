@@ -1,162 +1,132 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './Verify.module.scss';
 import { EyeIconPassword, EyeIconText, LoadingIcon } from '~/component/icon/icon';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import HeaderSuffix from '~/component/HeaderSuffix/HeaderSuffix';
-import { post } from '~/ultil/hpptRequest';
+import { useForm } from 'react-hook-form';
+import ControllerForm from '~/component/ControllerForm/ControllerForm';
+import { yupResolver } from '@hookform/resolvers/yup';
+import schema from './VerifyValidation';
+import AuthService from '~/services/auth/authServices';
 import { UserContext } from '~/contexts/user/userContext';
+import { AuthContext } from '~/contexts/auth/authContext';
+
 const cx = classNames.bind(style);
 
 function Verify() {
-    const { values, handleChange, errors, setErrors, setClassError, classError } = useContext(UserContext);
-    const navigate = useNavigate();
-    const location = useLocation();
-    const Url = new URLSearchParams(location.search);
+   const { setDataUserProfile } = useContext(UserContext);
+   const { setIsAuthenticated } = useContext(AuthContext);
+   const navigate = useNavigate();
+   const location = useLocation();
+   const Url = new URLSearchParams(location.search);
+   const params = Object.fromEntries(Url.entries());
+   const { token, fullName, email, username } = params;
+   const authService = new AuthService();
+   const form = useForm({
+      mode: 'all',
+      defaultValues: {
+         password: '',
+         cfmPassword: '',
+      },
+      resolver: yupResolver(schema),
+   });
 
-    const params = Object.fromEntries(Url.entries());
-    const { token, fullName, email, username } = params;
-    // 1. State
-    const [hashError, setHashError] = useState(null);
-
-    const [eye, setEye] = useState({
-        password: false,
-        cfmPassword: false,
-    });
-
-    // 2. UseEffect
-    useEffect(() => {
-        const newErrors = {};
-        if (values.password.length < 8 && values.password.length > 0) {
-            newErrors.cfmPassword = 'Mật khẩu phải ít nhất 8 ký tự';
-            setHashError(true);
-        } else {
-            newErrors.cfmPassword = '';
-            setHashError(false);
-        }
-        setErrors(newErrors);
-    }, [values]);
-
-    // 3. Func
-    const handleSeePassword = (name) => {
-        setEye((pre) => ({
-            ...pre,
-            [name]: !eye[name],
-        }));
-    };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (classError.loadingRegister) {
-            return;
-        }
-
-        if (values.password !== values.cfmPassword) {
-            setErrors((prev) => ({
-                ...prev,
-                cfmPassword: 'Mật khẩu không trùng khớp',
-            }));
-            setHashError(true);
-            return;
-        }
-        if (!hashError) {
-            setClassError((pre) => ({
-                ...pre,
-                loadingRegister: true,
-            }));
-            const register = await post(
-                '/auth/register',
-                {
-                    email: email,
-                    fullName: fullName,
-                    userName: username,
-                    password: values.password,
-                },
-                {
-                    headers: { 'verify-token': `${token}` },
-                },
-            );
-            setClassError((pre) => ({
-                ...pre,
-                loadingRegister: false,
-            }));
-            switch (register.status) {
-                case 200:
-                    navigate('/profile');
-                    break;
-                case 400:
-                    navigate('/profile');
-                    break;
-                case 404:
-                    if (register.data.message === 'Token is incorrect') {
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-    return (
-        <div className={cx('wrapper')}>
-            <div className={cx('main')}>
-                <HeaderSuffix title="Đã xác minh địa chỉ email" icon />
-                <div>
-                    <form action="" id="form-sign-up" onSubmit={handleSubmit}>
-                        <div className={cx('input-wrapper')}>
-                            <label htmlFor="">Địa chỉ Email</label>
-                            <p>{email}</p>
+   // 1. State
+   const [eye, setEye] = useState({
+      password: false,
+      cfmPassword: false,
+   });
+   const [loading, setLoading] = useState(false);
+   // 3. Func
+   const handleSeePassword = (name) => {
+      setEye((pre) => ({
+         ...pre,
+         [name]: !eye[name],
+      }));
+   };
+   const handleSubmit = async (data) => {
+      setLoading(true);
+      const register = await authService.register(email, fullName, username, data.password, token);
+      if (register.status === 200) {
+         localStorage.setItem('user', JSON.stringify(register.data));
+         localStorage.setItem('accessToken', JSON.stringify(register.data.accessToken));
+         setDataUserProfile(register.data);
+         setIsAuthenticated(true);
+         navigate('/project');
+      }
+      setLoading(false);
+   };
+   return (
+      <div className={cx('wrapper')}>
+         <div className={cx('main')}>
+            <HeaderSuffix title="Đã xác minh địa chỉ email" icon />
+            <div>
+               <form action="" id="form-sign-up" onSubmit={form.handleSubmit(handleSubmit)}>
+                  <div className={cx('input-wrapper')}>
+                     <label htmlFor="">Địa chỉ Email</label>
+                     <p>{email}</p>
+                  </div>
+                  <div className={cx('input-wrapper')}>
+                     <ControllerForm form={form} name="password" label="Mật khẩu" required id="password" labelLarge>
+                        <div>
+                           <div className={cx('input')}>
+                              <div className={cx('presentation')}>
+                                 <input
+                                    type={eye.password ? 'text' : 'password'}
+                                    placeholder="Tạo mật khẩu"
+                                    name="password"
+                                    id="password"
+                                    defaultValue={form.watch('password')}
+                                 />
+                              </div>
+                           </div>
+                           <span className={cx('input-icon')} onClick={() => handleSeePassword('password')}>
+                              {eye.password ? <EyeIconText /> : <EyeIconPassword />}
+                           </span>
                         </div>
-                        <div className={cx('input-wrapper')}>
-                            <div className={cx('input')}>
-                                <label htmlFor="">Mật khẩu</label>
-                                <div className={cx('presentation')}>
-                                    <input
-                                        type={eye.password ? 'text' : 'password'}
-                                        placeholder="Tạo mật khẩu"
-                                        name="password"
-                                        value={values.password}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                            </div>
-                            <span className={cx('input-icon')} onClick={() => handleSeePassword('password')}>
-                                {eye.password ? <EyeIconText /> : <EyeIconPassword />}
-                            </span>
+                     </ControllerForm>
+                  </div>
+                  <div className={cx('input-wrapper')}>
+                     <ControllerForm
+                        form={form}
+                        name="cfmPassword"
+                        label="Nhập lại mật khẩu"
+                        required
+                        id="cfmPassword"
+                        labelLarge
+                     >
+                        <div>
+                           <div className={cx('input')}>
+                              <div className={cx('presentation')}>
+                                 <input
+                                    type={eye.cfmPassword ? 'text' : 'password'}
+                                    placeholder="Nhập lại mật khẩu"
+                                    name="cfmPassword"
+                                    defaultValue={form.watch('cfmPassword')}
+                                 />
+                              </div>
+                           </div>
+                           <span className={cx('input-icon')} onClick={() => handleSeePassword('cfmPassword')}>
+                              {eye.cfmPassword ? <EyeIconText /> : <EyeIconPassword />}
+                           </span>
                         </div>
-                        <div className={cx('input-wrapper')}>
-                            <div className={cx('input')}>
-                                <label htmlFor="">Nhập lại mật khẩu</label>
-                                <div className={cx('presentation')}>
-                                    <input
-                                        type={eye.cfmPassword ? 'text' : 'password'}
-                                        placeholder="Nhập lại mật khẩu"
-                                        name="cfmPassword"
-                                        value={values.cfmPassword}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                            </div>
-                            <span className={cx('input-icon')} onClick={() => handleSeePassword('cfmPassword')}>
-                                {eye.cfmPassword ? <EyeIconText /> : <EyeIconPassword />}
-                            </span>
-                            <p className={cx('error')}>{errors.cfmPassword}</p>
-                        </div>
-                        <div className={cx('legal-message')}>
-                            <p>
-                                Bằng việc đăng ký, tôi chấp nhận <Link>Điều khoản dịch vụ của Atlassian Cloud</Link> và
-                                công nhận <Link>Chính sách quyền riêng tư</Link>
-                            </p>
-                        </div>
-                        <div className={cx('button-submit')}>
-                            <button type="submit">
-                                {!classError.loadingRegister ? <span>Agree</span> : <LoadingIcon />}
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                     </ControllerForm>
+                  </div>
+                  <div className={cx('legal-message')}>
+                     <p>
+                        Bằng việc đăng ký, tôi chấp nhận <Link>Điều khoản dịch vụ của Atlassian Cloud</Link> và công
+                        nhận <Link>Chính sách quyền riêng tư</Link>
+                     </p>
+                  </div>
+                  <div className={cx('button-submit')}>
+                     <button type="submit">{loading ? <LoadingIcon /> : <span>Agree</span>}</button>
+                  </div>
+               </form>
             </div>
-        </div>
-    );
+         </div>
+      </div>
+   );
 }
 
 export default Verify;

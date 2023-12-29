@@ -32,7 +32,6 @@ function Register() {
    // 1. State
    const [toggleForm, setToggleForm] = useState(true);
    const [loading, setLoading] = useState(false);
-
    // 2. UseEffect
    useEffect(() => {
       if (email) {
@@ -42,7 +41,6 @@ function Register() {
    }, [email]);
 
    // 3. Func
-
    const handleSubmit = async (data) => {
       setLoading(true);
       const verify = await authService.verifyRegister(data.email, data.username, data.full_name);

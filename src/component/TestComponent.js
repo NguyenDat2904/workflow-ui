@@ -7,6 +7,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { Table } from './tables/Tables';
 import Dropdown from './dropdown/Dropdown';
 import Select from './Select/Select';
+import DatePicker from './DatePicker/DatePicker';
 
 export default function TestComponent() {
    const login = useGoogleLogin({
@@ -30,8 +31,9 @@ export default function TestComponent() {
          <div>
             <Input inputStyle={'light'} placeholder={'Input'} type={'text'} name={'text'} />
             <Button inputStyle={'light'}>Button</Button>
-            <Input inputStyle={'filled'} placeholder={'Input'} type={'text'} name={'text'} />
+            <Input inputStyle={'filled'} placeholder={'Input'} type={'text'} name={'text'} error={'Error'} />
             <Button buttonStyle="filled">Button</Button>
+            <DatePicker />
             <br />
             <Button buttonStyle="light" onClick={() => handleButtonClick()}>
                <GoogleIcon />

@@ -7,6 +7,18 @@ $primary-color: #0065ff;
    width: 100%;
    padding: 0.5em 1em;
    font-size: 1rem;
+   border: 2px solid $inactive-color;
+   border-radius: 3px;
+   transition: border-color 0.3s ease-in-out;
+
+   &:focus {
+      border-color: $primary-color;
+      outline: none;
+   }
+}
+
+.input-error {
+   border-color: $error;
 }
 
 .button {

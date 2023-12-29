@@ -6,7 +6,7 @@ import Button from '~/component/Buttton/Button';
 import { LeftIcon } from '~/component/icon/icon';
 import Skeleton from 'react-loading-skeleton';
 import { UserContext } from '~/contexts/user/userContext';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(style);
 

@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './FormChangeProject.module.scss';
-import Input from '~/component/Input/Input';
 import Button from '~/component/Buttton/Button';
-import { get, patch } from '~/ultil/hpptRequest';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { LoadingIcon } from '~/component/icon/icon';
@@ -13,14 +11,13 @@ import schema from './FormValidation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { UserContext } from '~/contexts/user/userContext';
 import WorkService from '~/services/work/workServices';
-import { AuthContext } from '~/contexts/auth/authContext';
+import ModalIcon from '../ModalIcon/ModalIcon';
 
 const cx = classNames.bind(style);
 function FormChangeProject({ id }) {
    const { parseuser, detailProject, setDetailProject, loadingDetailsProject, setLoadingDetailsProject } =
       useContext(UserContext);
-   const { accessToken } = useContext(AuthContext);
-
+   const [toggle, setToggle] = useState(false);
    const workService = new WorkService();
    // useForm
    const form = useForm({
@@ -34,18 +31,18 @@ function FormChangeProject({ id }) {
    // useState
    const [loadingIconSummit, setLoadingIconSummit] = useState(false);
    // GET detail Project
+   const getDetailProject = async () => {
+      setLoadingDetailsProject(true);
+      const project = await workService.projectDetail(id);
+      if (project.status === 200) {
+         setDetailProject(project.data);
+         form.setValue('name', detailProject?.nameProject);
+         form.setValue('key', detailProject?.codeProject);
+      }
+      setLoadingDetailsProject(false);
+   };
    useEffect(() => {
-      const getDetailProject = async () => {
-         setLoadingDetailsProject(true);
-         const project = await workService.projectDetail(id);
-         if (project.status === 200) {
-            setDetailProject(project.data);
-            form.setValue('name', detailProject?.nameProject);
-            form.setValue('key', detailProject?.codeProject);
-         }
-         setLoadingDetailsProject(false);
-      };
-      if (accessToken) getDetailProject();
+      getDetailProject();
    }, []);
    // Set value
    useEffect(() => {
@@ -54,15 +51,14 @@ function FormChangeProject({ id }) {
    }, [detailProject]);
 
    const changeDetailProject = async (data) => {
-      if (accessToken) {
-         setLoadingIconSummit(true);
-         await workService.changeProject(detailProject?._id, data.name, data.key, parseuser?.id);
-         setLoadingIconSummit(false);
-      }
+      setLoadingIconSummit(true);
+      await workService.changeProject(detailProject?._id, data.name, data.key, parseuser?._id);
+      setLoadingIconSummit(false);
    };
 
    return (
       <div>
+         {toggle && <ModalIcon isOpen={toggle} isClose={() => setToggle(false)} />}
          <form action="" className={cx('form')} onSubmit={form.handleSubmit(changeDetailProject)}>
             <div>
                <div className={cx('change-icon')}>
@@ -72,8 +68,13 @@ function FormChangeProject({ id }) {
                      <img src={detailProject?.imgProject} alt="icon" />
                   )}
                </div>
-               <div className={cx('btn-change')}>
-                  <Button>Change icon</Button>
+               <div
+                  className={cx('btn-change')}
+                  onClick={(event) => {
+                     event.preventDefault();
+                  }}
+               >
+                  <Button onClick={() => setToggle(true)}>Change icon</Button>
                </div>
             </div>
             <div className={cx('change-input')}>

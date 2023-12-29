@@ -42,6 +42,7 @@ export default function TestComponent() {
                   { label: 'Option 1', value: '1' },
                   { label: 'Option 2', value: '2' },
                ]}
+               prompt="Select an option"
             />
          </div>
          <h3>Dropdown</h3>

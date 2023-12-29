@@ -6,6 +6,7 @@ import { ReactComponent as GoogleIcon } from '../asset/icons/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import { Table } from './tables/Tables';
 import Dropdown from './dropdown/Dropdown';
+import Select from './Select/Select';
 
 export default function TestComponent() {
    const login = useGoogleLogin({
@@ -36,6 +37,12 @@ export default function TestComponent() {
                <GoogleIcon />
                Continue with Google
             </Button>
+            <Select
+               options={[
+                  { label: 'Option 1', value: '1' },
+                  { label: 'Option 2', value: '2' },
+               ]}
+            />
          </div>
          <h3>Dropdown</h3>
          <Dropdown

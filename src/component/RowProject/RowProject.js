@@ -26,7 +26,7 @@ function RowProject({ project, handleMoveToTrash }) {
                   </div>
                   <div className={cx('name')}>
                      <div>
-                        <Link>{project.nameProject}</Link>
+                        <Link to={`/project/${project.codeProject}/board`}>{project.nameProject}</Link>
                      </div>
                   </div>
                </div>

@@ -13,8 +13,6 @@ const PublicRouter = () => {
    } else {
       return <Outlet />;
    }
-
-   // return isAuthenticated ? <Navigate to="/project" /> : <Outlet />;
 };
 
 export default PublicRouter;

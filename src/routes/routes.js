@@ -18,6 +18,7 @@ import CreateProject from '~/pages/Projects/Create/CreateProject';
 import DetailProject from '~/pages/DetailProject/DetailProject';
 import TrashProjects from '~/pages/Projects/Trash/TrashProjects';
 import ProjectAccess from '~/pages/Projects/Access/ProjectAccess';
+import LayoutSideBarChildren from '~/layout/LayoutSideBarChildren/DefaultLayout';
 
 const privateRoutes = [
    { path: '/', component: BlackLog },
@@ -33,7 +34,7 @@ const privateRoutes = [
    { path: '/forgot/change-password', component: ChangePassword, layout: null },
    { path: '/project', component: Projects, layout: HeaderOnly },
    { path: '/project/create', component: CreateProject, layout: null },
-   { path: '/project/:_id/settings/details', component: DetailProject },
+   { path: '/project/:_id/settings/details', component: DetailProject, layout: LayoutSideBarChildren },
    { path: '/project/trash', component: TrashProjects, layout: HeaderOnly },
    { path: '/project/settings/access', component: ProjectAccess, layout: HeaderOnly },
 ];

@@ -6,6 +6,8 @@ import { ReactComponent as GoogleIcon } from '../asset/icons/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import { Table } from './tables/Tables';
 import Dropdown from './dropdown/Dropdown';
+import Select from './Select/Select';
+import DatePicker from './DatePicker/DatePicker';
 
 export default function TestComponent() {
    const login = useGoogleLogin({
@@ -29,13 +31,21 @@ export default function TestComponent() {
          <div>
             <Input inputStyle={'light'} placeholder={'Input'} type={'text'} name={'text'} />
             <Button inputStyle={'light'}>Button</Button>
-            <Input inputStyle={'filled'} placeholder={'Input'} type={'text'} name={'text'} />
+            <Input inputStyle={'filled'} placeholder={'Input'} type={'text'} name={'text'} error={'Error'} />
             <Button buttonStyle="filled">Button</Button>
+            <DatePicker />
             <br />
             <Button buttonStyle="light" onClick={() => handleButtonClick()}>
                <GoogleIcon />
                Continue with Google
             </Button>
+            <Select
+               options={[
+                  { label: 'Option 1', value: '1' },
+                  { label: 'Option 2', value: '2' },
+               ]}
+               prompt="Select an option"
+            />
          </div>
          <h3>Dropdown</h3>
          <Dropdown

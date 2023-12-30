@@ -15,7 +15,7 @@ import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(style);
 function ProjectList({ projectsList, setProjectsList, handleMoveToTrash }) {
    const projectService = new WorkService();
-   const { parseuser, loadingGetProject } = useContext(UserContext);
+   const { loadingGetProject } = useContext(UserContext);
    const { accessToken } = useContext(AuthContext);
 
    const location = useLocation();
@@ -39,7 +39,11 @@ function ProjectList({ projectsList, setProjectsList, handleMoveToTrash }) {
    //    3.Func
    const handleSortName = async () => {
       if (accessToken) {
-         const sortName = await projectService.sortProject(parseuser?._id, sortKey.Key, sortKey.Order);
+         const sortName = await projectService.getListProject({
+            deleteProject: false,
+            sortKey: sortKey.Key,
+            sortOrder: sortKey.Order,
+         });
          if (sortName.status === 200) {
             setProjectsList(sortName.data.workProject);
          }

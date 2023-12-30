@@ -4,22 +4,20 @@ import style from './ModalProject.module.scss';
 import Modal from '~/component/Modal/Modal';
 import { NavLink } from 'react-router-dom';
 import Button from '~/component/Buttton/Button';
-import { UserContext } from '~/contexts/user/userContext';
 import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(style);
 function ModalProject({ handleToggle, isOpen }) {
-   const { parseuser } = useContext(UserContext);
    const projectService = new WorkService();
    // 1. useState
    const [projectLimit, getProjectLimit] = useState([]);
    // 2. useEffect
+   const getProject = async () => {
+      const projects = await projectService.getListProject({ deleteProject: false, limit: 4 });
+      if (projects.status === 200) {
+         getProjectLimit(projects.data.workProject);
+      }
+   };
    useEffect(() => {
-      const getProject = async () => {
-         const projects = await projectService.paginationProject(parseuser?._id, 4);
-         if (projects.status === 200) {
-            getProjectLimit(projects.data.workProject);
-         }
-      };
       getProject();
    }, []);
    // 3. Func
@@ -37,7 +35,6 @@ function ModalProject({ handleToggle, isOpen }) {
                   <div>
                      {project.nameProject} ({project.codeProject})
                   </div>
-                  {/* <small>dathhcc2@gmail.com</small> */}
                </div>
             </div>
          </Button>

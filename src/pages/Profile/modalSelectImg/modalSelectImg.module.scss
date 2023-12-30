@@ -1,180 +1,179 @@
 h3 {
-    margin-bottom: 20px;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 20px;
-    font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
-        'Droid Sans', 'Helvetica Neue', sans-serif;
+   margin-bottom: 20px;
+   font-size: 20px;
+   font-weight: 500;
+   line-height: 20px;
+   font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu, 'Droid Sans',
+      'Helvetica Neue', sans-serif;
 }
 .viewSelectImg {
-    width: 100%;
+   width: 100%;
 
-    display: flex;
-    align-items: center;
+   display: flex;
+   align-items: center;
 
-    .viewImg {
-        width: 96px;
-        border-radius: 50%;
-        height: 96px;
-        position: relative;
-        h2 {
-            font-size: 40px;
-            font-weight: 400;
-            color: #fff;
+   .viewImg {
+      width: 96px;
+      border-radius: 50%;
+      height: 96px;
+      position: relative;
+      h2 {
+         font-size: 40px;
+         font-weight: 400;
+         color: #fff;
 
+         font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
+            'Droid Sans', 'Helvetica Neue', sans-serif;
+         position: absolute;
+         top: 35%;
+         left: 50%;
+         transform: translateX(-50%);
+      }
+   }
+   .selectBackgroundImg {
+      width: calc(100% - 96px);
+      padding-left: 30px;
+      .selectBackground {
+         p {
+            color: #44546f;
             font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
-                'Droid Sans', 'Helvetica Neue', sans-serif;
-            position: absolute;
-            top: 35%;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-    }
-    .selectBackgroundImg {
-        width: calc(100% - 96px);
-        padding-left: 30px;
-        .selectBackground {
-            p {
-                color: #44546f;
-                font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
-                    'Droid Sans', 'Helvetica Neue', sans-serif;
-                font-size: 0.857143em;
-                font-style: inherit;
-                line-height: 1.33333;
-                font-weight: 600;
-                margin-bottom: 4px;
+               'Droid Sans', 'Helvetica Neue', sans-serif;
+            font-size: 0.857143em;
+            font-style: inherit;
+            line-height: 1.33333;
+            font-weight: 600;
+            margin-bottom: 4px;
+         }
+         .select {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 5px;
+            .selectButtonBackground {
+               border: none;
+               width: 26px;
+               height: 26px;
+               border-radius: 3px;
+               .noneIconButton {
+                  display: none;
+               }
+               .button1,
+               .button2,
+               .button3,
+               .button4,
+               .button5,
+               .button6,
+               .button7 {
+                  display: block;
+                  color: #fff;
+                  width: 24px;
+                  height: 24px;
+               }
             }
-            .select {
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-                gap: 5px;
-                .selectButtonBackground {
-                    border: none;
-                    width: 26px;
-                    height: 26px;
-                    border-radius: 3px;
-                    .noneIconButton {
-                        display: none;
-                    }
-                    .button1,
-                    .button2,
-                    .button3,
-                    .button4,
-                    .button5,
-                    .button6,
-                    .button7 {
-                        display: block;
-                        color: #fff;
-                        width: 24px;
-                        height: 24px;
-                    }
-                }
-            }
-        }
-        .fillInitials {
-            p {
-                color: #44546f;
-                font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
-                    'Droid Sans', 'Helvetica Neue', sans-serif;
-                font-size: 0.857143em;
-                font-style: inherit;
-                line-height: 1.33333;
-                font-weight: 600;
-                margin-bottom: 4px;
-                margin-top: 20px;
-            }
-            .input {
-                background-color: transparent;
-                border: 3px solid #02060c0f;
-                box-sizing: border-box;
-                border-radius: 3px;
-                color: inherit;
-                cursor: inherit;
-                font-size: 14px;
-                width: 100%;
-                padding: 8px 6px;
-                outline: none;
-                height: 2.57em;
-                line-height: 1.42857;
-                font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
-                    'Droid Sans', 'Helvetica Neue', sans-serif;
-            }
-        }
-    }
+         }
+      }
+      .fillInitials {
+         p {
+            color: #44546f;
+            font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
+               'Droid Sans', 'Helvetica Neue', sans-serif;
+            font-size: 0.857143em;
+            font-style: inherit;
+            line-height: 1.33333;
+            font-weight: 600;
+            margin-bottom: 4px;
+            margin-top: 20px;
+         }
+         .input {
+            background-color: transparent;
+            border: 3px solid #02060c0f;
+            box-sizing: border-box;
+            border-radius: 3px;
+            color: inherit;
+            cursor: inherit;
+            font-size: 14px;
+            width: 100%;
+            padding: 8px 6px;
+            outline: none;
+            height: 2.57em;
+            line-height: 1.42857;
+            font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
+               'Droid Sans', 'Helvetica Neue', sans-serif;
+         }
+      }
+   }
 }
 .errorView {
-    height: 20px;
-    padding-right: 26%;
-    .errorInitials {
-        font-size: 12px;
-        color: #ae2a19;
-        margin: 0;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
+   height: 20px;
+   padding-right: 26%;
+   .errorInitials {
+      font-size: 12px;
+      color: #ae2a19;
+      margin: 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
 
-        svg {
-            color: #ae2a19;
-            width: 20px;
-            height: 24px;
-        }
-    }
+      svg {
+         color: #ae2a19;
+         width: 20px;
+         height: 24px;
+      }
+   }
 }
 p {
-    margin-top: 20px;
-    color: #44546f;
-    font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
-        'Droid Sans', 'Helvetica Neue', sans-serif;
-    font-size: 15px;
-    font-style: inherit;
-    line-height: 1.33333;
+   color: #44546f;
+   font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu, 'Droid Sans',
+      'Helvetica Neue', sans-serif;
+   font-size: 15px;
+   font-style: inherit;
+   line-height: 1.33333;
 }
 .buttonUploadImg {
-    margin-top: 20px;
+   margin-top: 20px;
 
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    .buttonCancelUpload {
-        border: none;
-        border-radius: 3px;
-        background-color: #fff;
-        padding: 5px 10px;
-        font-size: inherit;
-        font-style: normal;
-        font-weight: 500;
-        font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
-            'Droid Sans', 'Helvetica Neue', sans-serif;
-        color: #172b4d;
-        &:hover {
-            background-color: #091e420f;
-        }
-    }
-    .buttonUpload {
-        border: none;
-        border-radius: 3px;
-        background-color: #0c66e4;
-        color: #fff;
-        padding: 5px 10px;
-        font-size: inherit;
-        font-style: normal;
-        font-weight: 500;
-        font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
-            'Droid Sans', 'Helvetica Neue', sans-serif;
-        &:hover {
-            background-color: #085bd1;
-        }
-    }
+   display: flex;
+   justify-content: flex-end;
+   gap: 10px;
+   .buttonCancelUpload {
+      border: none;
+      border-radius: 3px;
+      background-color: #fff;
+      padding: 5px 10px;
+      font-size: inherit;
+      font-style: normal;
+      font-weight: 500;
+      font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
+         'Droid Sans', 'Helvetica Neue', sans-serif;
+      color: #172b4d;
+      &:hover {
+         background-color: #091e420f;
+      }
+   }
+   .buttonUpload {
+      border: none;
+      border-radius: 3px;
+      background-color: #0c66e4;
+      color: #fff;
+      padding: 5px 10px;
+      font-size: inherit;
+      font-style: normal;
+      font-weight: 500;
+      font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
+         'Droid Sans', 'Helvetica Neue', sans-serif;
+      &:hover {
+         background-color: #085bd1;
+      }
+   }
 }
 
 @media only screen and (max-width: 1024px) {
-    .viewSelectImg {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        .selectBackgroundImg {
-            width: calc(100% - 10px);
-            padding-left: 0;
-        }
-    }
+   .viewSelectImg {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      .selectBackgroundImg {
+         width: calc(100% - 10px);
+         padding-left: 0;
+      }
+   }
 }

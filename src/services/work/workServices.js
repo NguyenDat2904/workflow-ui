@@ -6,15 +6,11 @@ class WorkService extends BaseServices {
       super(URL);
    }
    //    GetAll
-   getListProject(id) {
-      return this.post(`/work/project/${id}`, { deleteProject: false });
+   getListProject(param) {
+      return this.get(`/projects/list`, { params: { ...param } });
    }
    listWork(nameProject) {
       return this.post('/work/listwork', { nameProject });
-   }
-   //    Sort
-   sortProject(id, key, order) {
-      return this.post(`/work/project/${id}?&sortKey=${key}&sortOrder=${order}`, { deleteProject: false });
    }
    //    Pagination
    paginationProject(id, limit = 15, page = 1) {
@@ -22,7 +18,7 @@ class WorkService extends BaseServices {
    }
    // Details
    projectDetail(id) {
-      return this.get(`/work/project-detail/${id}`);
+      return this.get(`/projects/project-detail/${id}`);
    }
    // Delete Project
    deleteProject(id, userID) {

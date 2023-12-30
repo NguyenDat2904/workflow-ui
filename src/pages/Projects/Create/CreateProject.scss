@@ -1,4 +1,12 @@
 .create-project-container {
+   align-items: baseline;
+   .title {
+      font-size: 2rem;
+      font-weight: bold;
+   }
+   .subtitle {
+      font-size: 0.75rem;
+   }
    max-width: 42rem;
    position: fixed;
    top: 50%;

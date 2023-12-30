@@ -15,14 +15,14 @@ function SideBarChildren() {
       <SideBar>
          <div className={cx('sidebar-menu')}>
             <div className={cx('wrapper-menu')}>
-               <div className={cx('list-menu')}>
+               <div className={cx('list-menu')} style={{ '--_6w8gix': '60px' }}>
                   <div className={cx('button-back')}>
                      <Button
                         leftIcon={<LeftIcon />}
                         viewAll
                         backgroundNone
                         className={cx('custom-button')}
-                        to="/project"
+                        to={`/project/${detailProject?.codeProject}/black-log`}
                      >
                         Back to project
                      </Button>

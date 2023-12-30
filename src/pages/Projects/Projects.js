@@ -24,18 +24,16 @@ function Projects() {
    const [page, setPage] = useState(null);
    const [loading, setLoading] = useState(false);
    // 2. useEffect
+   const getProjects = async () => {
+      setLoading(false);
+      const projects = await projectService.getListProject({ deleteProject: false });
+      if (projects.status === 200) {
+         setProjectsList(projects.data.workProject);
+         setPage(projects.data.page);
+      }
+      setLoading(true);
+   };
    useEffect(() => {
-      const getProjects = async () => {
-         if (accessToken) {
-            setLoading(false);
-            const projects = await projectService.getListProject(parseuser?._id);
-            if (projects.status === 200) {
-               setProjectsList(projects.data.workProject);
-               setPage(projects.data.page);
-            }
-            setLoading(true);
-         }
-      };
       getProjects();
    }, []);
 

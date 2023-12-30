@@ -7,6 +7,7 @@ import Skeleton from 'react-loading-skeleton';
 import { UserContext } from '~/contexts/user/userContext';
 import { useParams } from 'react-router-dom';
 import WorkService from '~/services/work/workServices';
+import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(style);
 

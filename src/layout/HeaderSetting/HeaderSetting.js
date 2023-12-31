@@ -50,7 +50,7 @@ function HeaderSetting() {
    useEffect(() => {
       const getUser = async () => {
          if (accessToken) {
-            const users = await userServices.getUserProfile(parseuser?._id);
+            const users = await userServices.getUserProfile();
             if (users.status === 200) {
                setGetUserData(users.data);
             }

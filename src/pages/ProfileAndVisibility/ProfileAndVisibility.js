@@ -38,7 +38,7 @@ const ProfileAndVisibility = () => {
    };
 
    const callApi = async () => {
-      const APIuser = await userServices.getUserProfile(parseuser?._id);
+      const APIuser = await userServices.getUserProfile();
       setDataUserProfile(APIuser.data);
       setValueInput({ ...APIuser.data });
    };
@@ -54,7 +54,7 @@ const ProfileAndVisibility = () => {
          [name]: value,
       }));
       if (e.target.value === 'Male' || e.target.value === 'Female') {
-         const addUserInfo = await userServices.updateUser(`${dataUserProfile?._id}`, e.target.name, e.target.value);
+         const addUserInfo = await userServices.updateUser(e.target.name, e.target.value);
          if (addUserInfo.status === 200) {
             callApi();
          }
@@ -62,7 +62,6 @@ const ProfileAndVisibility = () => {
    };
    const handleSubmit = async (e) => {
       e.preventDefault();
-      console.log('dsf');
       if (
          valueInput.jopTitle !== dataUserProfile.jopTitle ||
          valueInput.department !== dataUserProfile.department ||
@@ -76,7 +75,7 @@ const ProfileAndVisibility = () => {
          valueInput.phone !== dataUserProfile.phone
       ) {
          if (namefillInput !== '') {
-            const addUserInfo = await userServices.updateUser(`${dataUserProfile?._id}`, namefillInput, valueInputAny);
+            const addUserInfo = await userServices.updateUser(namefillInput, valueInputAny);
             if (addUserInfo.status === 200) {
                callApi();
             }
@@ -94,7 +93,7 @@ const ProfileAndVisibility = () => {
                / Change
             </p>
             <h1 className={cx('titleProfileAndVisibility')}>Profile and change</h1>
-           
+
             <h3 className={cx('ProfilePhotoAndHeaderImage')}>Profile photo and header image</h3>
             <ProfileHeaderImg
                dataUserProfile={dataUserProfile}

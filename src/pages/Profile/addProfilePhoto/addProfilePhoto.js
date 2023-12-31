@@ -18,7 +18,7 @@ const AddProfilePhoto = ({ onclickSeeModalSelectImg, dataUserProfile, callApi })
       const formData = new FormData();
       formData.append('img', image);
       if (formData) {
-         const upload = await userServices.uploadImg(`${dataUserProfile?._id}`, formData);
+         const upload = await userServices.uploadImg(formData);
          if (upload.status === 200) {
             await callApi();
             await onclickSeeModalSelectImg(0);

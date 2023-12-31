@@ -82,7 +82,6 @@
       position: absolute;
       flex-direction: column;
       .list-menu {
-         --_6w8gix: 60px;
          --_1qrlsbv: 4px;
          height: calc(100% - var(--_6w8gix));
       }
@@ -143,6 +142,7 @@
       background-color: var(--ds-background-selected, #e6effc);
    }
 }
+
 .sidebar-footer {
    box-sizing: border-box;
    appearance: none;
@@ -169,4 +169,18 @@
          margin: var(--ds-space-075, 6px);
       }
    }
+}
+
+.css-active::before {
+   position: absolute;
+   width: 4px;
+   top: var(--ds-space-150, 12px);
+   bottom: var(--ds-space-150, 12px);
+   left: 0px;
+   background: var(--ds-text-selected, #0052cc);
+   border-radius: 0 var(--ds-border-radius, 4px) var(--ds-border-radius, 4px) 0;
+   content: '';
+}
+.active {
+   background-color: rgb(233, 242, 255) !important;
 }

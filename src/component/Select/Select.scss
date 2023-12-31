@@ -1,0 +1,63 @@
+$primary-color: #0065ff;
+$text-primary-color: white;
+$inactive-color: #f1f2f4;
+
+.custom-select {
+   position: relative;
+   .select {
+      display: block;
+      width: 100%;
+      padding: 0.5em 5em 0.5em 1em;
+      font-size: 1rem;
+      border: 2px solid $inactive-color;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: border-color 0.3s ease-in-out;
+
+      &:focus {
+         border-color: $primary-color;
+         outline: none;
+      }
+      option {
+         padding: 0.5em;
+      }
+   }
+
+   .custom-arrow {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: $primary-color;
+      display: block;
+      height: 100%;
+      width: 3em;
+      pointer-events: none;
+
+      &::before,
+      &::after {
+         content: '';
+         position: absolute;
+         width: 0;
+         height: 0;
+         left: 50%;
+         top: 50%;
+         transform: translate(-50%, -50%);
+      }
+   }
+
+   .is-focused {
+      &::before {
+         border-left: 0.5em solid transparent;
+         border-right: 0.5em solid transparent;
+         border-bottom: 0.5em solid $text-primary-color;
+      }
+   }
+
+   .not-focused {
+      &::after {
+         border-left: 0.5em solid transparent;
+         border-right: 0.5em solid transparent;
+         border-top: 0.5em solid $text-primary-color;
+      }
+   }
+}

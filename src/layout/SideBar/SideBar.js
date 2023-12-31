@@ -1,17 +1,29 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import style from './SideBar.module.scss';
 import WrapperSideBar from './WrapperSideBar/WrapperSideBar';
 import Button from '~/component/Buttton/Button';
-import { LeftIcon } from '~/component/icon/icon';
 import Skeleton from 'react-loading-skeleton';
 import { UserContext } from '~/contexts/user/userContext';
+import { useParams } from 'react-router-dom';
+import WorkService from '~/services/work/workServices';
+import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(style);
 
-function SideBar() {
-   const { detailProject } = useContext(UserContext);
+function SideBar({ children }) {
+   const { detailProject, setDetailProject } = useContext(UserContext);
+   const workProject = new WorkService();
+   const param = useParams();
+   const getDetailProject = async () => {
+      const project = await workProject.projectDetail(param.id);
+      if (project.status === 200) setDetailProject(project.data);
+   };
 
+   useEffect(() => {
+      getDetailProject();
+   }, []);
+   // GET detail Project
    return (
       <WrapperSideBar>
          <nav className={cx('sidebar-nav')}>
@@ -39,24 +51,7 @@ function SideBar() {
                   </Button>
                </div>
             </div>
-            <div className={cx('sidebar-menu')}>
-               <div className={cx('wrapper-menu')}>
-                  <div className={cx('list-menu')}>
-                     <div className={cx('button-back')}>
-                        <Button leftIcon={<LeftIcon />} viewAll backgroundNone className={cx('custom-button')}>
-                           Back to project
-                        </Button>
-                     </div>
-                     <div className={cx('list')}>
-                        <div className={cx('line')}>
-                           <Button backgroundNone viewAll className={cx('custom-button')} style={{ marginTop: '6px' }}>
-                              Details
-                           </Button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
+            {children}
             <div className={cx('sidebar-footer')}>
                <div className={cx('block-footer')}>
                   <span>You're in a team-managed project</span>

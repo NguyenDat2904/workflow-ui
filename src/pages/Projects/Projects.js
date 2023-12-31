@@ -14,7 +14,7 @@ import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(style);
 
 function Projects() {
-   const { loadingGetProject, parseuser } = useContext(UserContext);
+   const { parseuser } = useContext(UserContext);
    const projectService = new WorkService();
    const { accessToken } = useContext(AuthContext);
 
@@ -22,19 +22,33 @@ function Projects() {
    // 1. State
    const [projectsList, setProjectsList] = useState([]);
    const [page, setPage] = useState(null);
+   const [loading, setLoading] = useState(false);
    // 2. useEffect
+   const getProjects = async () => {
+      setLoading(false);
+      const projects = await projectService.getListProject({ deleteProject: false });
+      if (projects.status === 200) {
+         setProjectsList(projects.data.workProject);
+         setPage(projects.data.page);
+      }
+      setLoading(true);
+   };
    useEffect(() => {
-      const getProjects = async () => {
-         if (accessToken) {
-            const projects = await projectService.getListProject(parseuser._id);
-            if (projects.status === 200) {
-               setProjectsList(projects.data.workProject);
-               setPage(projects.data.page);
-            }
-         }
-      };
       getProjects();
    }, []);
+
+   // 3. Func
+   // Move to Trash
+   const handleMoveToTrash = async (id) => {
+      if (accessToken) {
+         const moveToTrash = await projectService.deleteProject(id, parseuser?._id);
+         if (moveToTrash === 200) {
+            const projects = await projectService.getListProject(parseuser?._id);
+            setProjectsList(projects);
+            setPage(projects.data.page);
+         }
+      }
+   };
 
    return (
       <Main>
@@ -60,10 +74,26 @@ function Projects() {
                <Input placeholder="Search Projects" rightIcon={<SearchIcon />} search="search" />
             </div>
          </div>
-         <div className={cx('project-list')}>
-            <ProjectList projectsList={projectsList} setProjectsList={setProjectsList} />
-         </div>
-         {!loadingGetProject && <Pagination page={page} />}
+         {projectsList?.length === 0 && loading && (
+            <div className={cx('project-none')}>
+               <img
+                  src="https://jira-frontend-bifrost.prod-east.frontend.public.atl-paas.net/assets/jira-laptop-done.35194f30.svg"
+                  alt=""
+               />
+               <h4 className={cx('title-none')}>You don't have any software projects</h4>
+               <p className={cx('txt-none')}></p>
+            </div>
+         )}
+         {projectsList?.length !== 0 && (
+            <div className={cx('project-list')}>
+               <ProjectList
+                  projectsList={projectsList}
+                  setProjectsList={setProjectsList}
+                  handleMoveToTrash={handleMoveToTrash}
+               />
+            </div>
+         )}
+         {projectsList?.length !== 0 && <Pagination page={page} />}
       </Main>
    );
 }

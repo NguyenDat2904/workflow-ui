@@ -1,46 +1,32 @@
 import React from 'react';
-import './inputs.scss';
+import classNames from 'classnames/bind';
+import style from './inputs.scss';
 
-export function Input({ error, id, inputStyle, label, ...props }) {
-   let className;
-   switch (inputStyle) {
-      case 'filled':
-         className = 'input-filled';
-         break;
-      case 'light':
-      default:
-         className = 'input-light';
-         break;
-   }
+const cx = classNames.bind(style);
 
-   return (
-      <div className="input-container">
-         {label && <label htmlFor={id}>{label}</label>}
-         <input className={`input ${className} ${error && 'input-error'}`} id={id} {...props} />
-         {error && <p className="input-error-message">{error}</p>}
-      </div>
-   );
+export function Input({ error, ...props }) {
+   return <input className={cx('input', error && 'input-error')} {...props} />;
 }
 
 export function Button({ children, buttonStyle, className, ...props }) {
    let buttonType;
    switch (buttonStyle) {
       case 'light':
-         buttonType = 'button-light';
+         buttonType = cx('button-light');
          break;
       case 'filled':
-         buttonType = 'button-filled';
+         buttonType = cx('button-filled');
          break;
       case 'disabled':
-         buttonType = 'button-disabled';
+         buttonType = cx('button-disabled');
          break;
       default:
-         buttonType = 'button-light';
+         buttonType = cx('button-light');
          break;
    }
 
    return (
-      <button className={`button ${buttonType} ${className}`} {...props}>
+      <button className={cx('button', buttonType, className)} {...props}>
          {children}
       </button>
    );
@@ -48,7 +34,7 @@ export function Button({ children, buttonStyle, className, ...props }) {
 
 export function Form({ children, className, ...props }) {
    return (
-      <form className={`form ${className}`} {...props}>
+      <form className={cx('form', className)} {...props}>
          {children}
       </form>
    );

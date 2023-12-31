@@ -18,22 +18,23 @@ import CreateProject from '~/pages/Projects/Create/CreateProject';
 import DetailProject from '~/pages/DetailProject/DetailProject';
 import TrashProjects from '~/pages/Projects/Trash/TrashProjects';
 import ProjectAccess from '~/pages/Projects/Access/ProjectAccess';
+import LayoutSideBarChildren from '~/layout/LayoutSideBarChildren/DefaultLayout';
 
 const privateRoutes = [
+   { path: '/', component: BlackLog },
    {
-      path: '/',
+      path: '/project/:id/black-log',
       component: BlackLog,
    },
-   { path: '/board', component: Board },
+   { path: '/project/:id/board', component: Board },
    { path: '/profile/security', component: ProfileSecurity, layout: null },
    { path: '/profile', component: Profile, layout: HeaderOnly },
    { path: '/manage-profile/profile-and-visibility', component: ProfileAndVisibility, layout: null },
    { path: '/profile/view-all-list-work', component: ViewAllListWork, layout: HeaderOnly },
-   { path: '/test', component: TestComponent, layout: null },
    { path: '/forgot/change-password', component: ChangePassword, layout: null },
    { path: '/project', component: Projects, layout: HeaderOnly },
    { path: '/project/create', component: CreateProject, layout: null },
-   { path: '/project/:_id/settings/details', component: DetailProject },
+   { path: '/project/:_id/settings/details', component: DetailProject, layout: LayoutSideBarChildren },
    { path: '/project/trash', component: TrashProjects, layout: HeaderOnly },
    { path: '/project/settings/access', component: ProjectAccess, layout: HeaderOnly },
 ];
@@ -45,6 +46,7 @@ const publicRoutes = [
    { path: '/login', component: Login, layout: null },
    { path: '/register', component: Register, layout: null },
    { path: '/register/verify', component: Notification, layout: null },
+   { path: '/test', component: TestComponent, layout: null },
 ];
 
 export { privateRoutes, publicRoutes };

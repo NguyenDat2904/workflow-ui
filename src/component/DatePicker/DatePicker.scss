@@ -1,0 +1,17 @@
+$error: rgb(255, 0, 0);
+$inactive-color: #f1f2f4;
+$primary-color: #0065ff;
+
+input {
+   width: 100%;
+   padding: 0.5em 1em;
+   font-size: 1rem;
+   border: 2px solid $inactive-color;
+   border-radius: 3px;
+   transition: border-color 0.3s ease-in-out;
+
+   &:focus {
+      border-color: $primary-color;
+      outline: none;
+   }
+}

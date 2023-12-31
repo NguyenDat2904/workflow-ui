@@ -5,15 +5,26 @@ import Button from '~/component/Buttton/Button';
 import { MenuIcon } from '~/component/icon/icon';
 import MenuProject from '~/component/RowProject/MenuProject/MenuProject';
 import FormChangeProject from './FormChangeProject/FormChangeProject';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import NavUrl from '~/component/NavUrl/NavUrl';
 import Skeleton from 'react-loading-skeleton';
 import { UserContext } from '~/contexts/user/userContext';
+import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(style);
 function DetailProject() {
-   const { handleMoveToTrash, detailProject, loadingDetailsProject } = useContext(UserContext);
+   const navigate = useNavigate();
+   const { detailProject, loadingDetailsProject, parseuser } = useContext(UserContext);
    const [toggle, setToggle] = useState(false);
    const params = useParams();
+   const projectService = new WorkService();
+
+   // 3. Func
+   const handleMoveToTrash = async (id) => {
+      const moveToTrash = await projectService.deleteProject(id, parseuser?._id);
+      if (moveToTrash === 200) {
+         navigate('/project');
+      }
+   };
 
    return (
       <div className={cx('wrapper')}>
@@ -35,16 +46,20 @@ function DetailProject() {
                            <div className={cx('h1')}>
                               <h1>Details</h1>
                            </div>
-                           <div className={cx('details-button')} onBlur={() => setToggle(false)}>
-                              <div onClick={() => setToggle(!toggle)}>
+                           <div className={cx('details-button')}>
+                              <div onClick={() => setToggle(true)}>
                                  <Button noChildren backgroundNone leftIcon={<MenuIcon />}></Button>
                               </div>
-                              {toggle && <MenuProject onClick={() => handleMoveToTrash(params._id)} />}
+                              <MenuProject
+                                 onClick={() => handleMoveToTrash(params?._id)}
+                                 isOpen={toggle}
+                                 onClose={() => setToggle(false)}
+                              />
                            </div>
                         </div>
                      </div>
                      <div className={cx('details-form')}>
-                        <FormChangeProject id={params._id} />
+                        <FormChangeProject id={params?._id} />
                      </div>
                   </div>
                </div>

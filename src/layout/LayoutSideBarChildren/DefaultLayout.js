@@ -2,19 +2,19 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import style from './DefaultLayout.module.scss';
 import Header from '../Header/Header';
-import SideBarParent from '../SideBar/SideBarParent/SideBarParent';
+import SideBarChildren from '../SideBar/SideBarChildren/SideBarChildren';
 const cx = classNames.bind(style);
 
-function DefaultLayout({ children }) {
+function LayoutSideBarChildren({ children }) {
    return (
       <div>
          <Header />
          <div className={cx('wrapper')}>
-            <SideBarParent />
+            <SideBarChildren />
             <div className={cx('content')}>{children}</div>
          </div>
       </div>
    );
 }
 
-export default DefaultLayout;
+export default LayoutSideBarChildren;

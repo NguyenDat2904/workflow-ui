@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
+import WorkService from '~/services/work/workServices';
 import { post, patch } from '~/ultil/hpptRequest';
 const UserContext = createContext();
 
@@ -36,6 +37,8 @@ const UserProvider = ({ children }) => {
 
    const [detailProject, setDetailProject] = useState({});
    const [loadingDetailsProject, setLoadingDetailsProject] = useState(false);
+
+   const workService = new WorkService();
 
    // Func
    const onclickSeeModalSelectImg = (number) => {
@@ -173,93 +176,6 @@ const UserProvider = ({ children }) => {
       }
    }, [dataProject]);
 
-   const [values, setValue] = useState({
-      email: '',
-      full_name: '',
-      username: '',
-      password: '',
-      cfmPassword: '',
-   });
-   const [errors, setErrors] = useState({
-      email: '',
-      full_name: '',
-      username: '',
-      password: '',
-      cfmPassword: '',
-   });
-   const [classError, setClassError] = useState({
-      email: null,
-      full_name: null,
-      username: null,
-      loading: null,
-      loadingRegister: null,
-   });
-
-   // Func
-
-   // onChangeInput
-   const handleChange = (e) => {
-      const { name, value } = e.target;
-      setValue((prevValues) => ({
-         ...prevValues,
-         [name]: value,
-      }));
-   };
-
-   // Move to Trash
-   const handleMoveToTrash = async (id) => {
-      if (accessToken) {
-         const moveToTrash = await patch(
-            `/work/delete-project/${id}`,
-            { _idUser: parseuser._id },
-            {
-               headers: {
-                  authorization: `${accessToken}`,
-                  refresh_token: `${parseuser?.refreshToken}`,
-               },
-            },
-         );
-         if (moveToTrash.data.accessToken) {
-            const moveToTrashAgain = await patch(
-               `/work/delete-project/${id}`,
-               { _idUser: parseuser._id },
-               {
-                  headers: {
-                     authorization: `${moveToTrash.data.accessToken}`,
-                     refresh_token: `${parseuser?.refreshToken}`,
-                  },
-               },
-            );
-            localStorage.setItem('accessToken', moveToTrash.data.accessToken);
-            if (moveToTrashAgain.status === 200) {
-               const listProject = await post(
-                  `/work/project/${parseuser?._id}`,
-                  { deleteProject: false },
-                  {
-                     headers: {
-                        authorization: `${moveToTrash.data.accessToken}`,
-                        refresh_token: `${parseuser?.refreshToken}`,
-                     },
-                  },
-               );
-               setDataProject(listProject.data.workProject);
-            }
-         } else if (moveToTrash.status === 200) {
-            const listProject = await post(
-               `/work/project/${parseuser?._id}`,
-               { deleteProject: false },
-               {
-                  headers: {
-                     authorization: `${accessToken}`,
-                     refresh_token: `${parseuser?.refreshToken}`,
-                  },
-               },
-            );
-            setDataProject(listProject.data.workProject);
-         }
-      }
-   };
-
    const value = {
       formButton,
       valueInput,
@@ -270,24 +186,15 @@ const UserProvider = ({ children }) => {
       modalSelectImg,
       imgAvatar,
       setImgAvatar,
-      values,
-      setValue,
-      handleChange,
-      errors,
-      setErrors,
-      classError,
-      setClassError,
       setDataUserProfile,
       dataUserProfile,
       dataListWork,
       setDataListWork,
       dataProject,
       setDataProject,
-
       parseuser,
       pageProject,
       setPageProject,
-      handleMoveToTrash,
       loadingGetProject,
       setLoadingGetProject,
       GetListProject,

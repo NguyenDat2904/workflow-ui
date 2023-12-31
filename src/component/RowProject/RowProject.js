@@ -1,22 +1,17 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './RowProject.module.scss';
 import Button from '../Buttton/Button';
 import { MenuIcon } from '../icon/icon';
 import { Link } from 'react-router-dom';
 import MenuProject from './MenuProject/MenuProject';
-import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(style);
 
-function RowProject({ project }) {
-   const { handleMoveToTrash } = useContext(UserContext);
+function RowProject({ project, handleMoveToTrash }) {
    // 1. State
    const [toggle, setToggle] = useState(false);
 
    // 3. Func
-   function handlePopupClick(event) {
-      event.stopPropagation(); // Ngăn chặn sự kiện click từ việc lan truyền lên phần tử cha
-   }
 
    return (
       <tr className={cx('row')}>
@@ -31,7 +26,7 @@ function RowProject({ project }) {
                   </div>
                   <div className={cx('name')}>
                      <div>
-                        <Link>{project.nameProject}</Link>
+                        <Link to={`/project/${project.codeProject}/board`}>{project.nameProject}</Link>
                      </div>
                   </div>
                </div>
@@ -65,15 +60,20 @@ function RowProject({ project }) {
             </Button>
          </td>
          <td></td>
-         <td className={cx('menu-icon')} onClick={() => setToggle(!toggle)} onBlur={() => setToggle(false)}>
-            <div>
+         <td className={cx('menu-icon')}>
+            <div onClick={() => setToggle(true)}>
                <Button noChildren backgroundNone leftIcon={<MenuIcon />} />
             </div>
-            {toggle && (
-               <div onClick={handlePopupClick}>
-                  <MenuProject disable id={project._id} onClick={() => handleMoveToTrash(project._id)} />
-               </div>
-            )}
+            <div>
+               <MenuProject
+                  disable
+                  codeProject={project?.codeProject}
+                  id={project?._id}
+                  onClick={() => handleMoveToTrash(project?._id)}
+                  isOpen={toggle}
+                  onClose={() => setToggle(false)}
+               />
+            </div>
          </td>
       </tr>
    );

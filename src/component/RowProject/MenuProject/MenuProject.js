@@ -1,13 +1,38 @@
 import classNames from 'classnames/bind';
 import style from './MenuProject.module.scss';
 import Button from '~/component/Buttton/Button';
+import { useEffect, useRef } from 'react';
+
 const cx = classNames.bind(style);
-function MenuProject({ onClick, id, disable }) {
+function MenuProject({ onClick, codeProject, disable, isOpen, onClose }) {
+   const popupRef = useRef(null);
+
+   useEffect(() => {
+      const handleOutsideClick = (event) => {
+         if (popupRef.current && !popupRef.current.contains(event.target)) {
+            onClose();
+         }
+      };
+      const handleEscapeKey = (event) => {
+         if (event.key === 'Escape') {
+            onClose();
+         }
+      };
+      if (isOpen) {
+         document.addEventListener('mousedown', handleOutsideClick);
+         document.addEventListener('keydown', handleEscapeKey);
+      }
+      return () => {
+         document.removeEventListener('mousedown', handleOutsideClick);
+         document.removeEventListener('keydown', handleEscapeKey);
+      };
+   }, [isOpen, onClose]);
+
    return (
-      <div className={cx('wrapper')}>
-         <div className={cx('menu')}>
+      <div className={cx('wrapper', 'popup', isOpen ? 'open' : '')}>
+         <div className={cx('menu')} ref={popupRef}>
             {disable && (
-               <Button viewAll backgroundNone to={`/project/${id}/settings/details`}>
+               <Button viewAll backgroundNone to={`/project/${codeProject}/settings/details`}>
                   Project setting
                </Button>
             )}

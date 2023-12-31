@@ -1,21 +1,44 @@
 .create-icon {
-    max-width: 100%;
-    margin-bottom: var(--ds-space-100, 8px);
-    margin-left: auto;
-    padding-left: var(--ds-space-400, 32px);
-    flex: 0 0 auto;
-    white-space: nowrap;
+   max-width: 100%;
+   margin-bottom: var(--ds-space-100, 8px);
+   margin-left: auto;
+   padding-left: var(--ds-space-400, 32px);
+   flex: 0 0 auto;
+   white-space: nowrap;
 }
 .input-filter {
-    display: flex;
-    margin-bottom: var(--ds-space-200, 1pc);
-    gap: var(--ds-space-200, 1pc);
-    .input-wrapper {
-        max-width: 14pc;
-        min-width: 14pc;
-    }
+   display: flex;
+   margin-bottom: var(--ds-space-200, 1pc);
+   gap: var(--ds-space-200, 1pc);
+   .input-wrapper {
+      max-width: 14pc;
+      min-width: 14pc;
+   }
 }
 .project-list {
-    padding-bottom: var(--ds-space-200, 1pc);
-    position: relative;
+   padding-bottom: var(--ds-space-200, 1pc);
+   position: relative;
+}
+.project-none {
+   text-align: center;
+   max-width: 464px;
+   margin: var(--ds-space-600, 48px) auto;
+   img {
+      --max-width: 160px;
+      --max-height: 160px;
+      display: block;
+      max-width: var(--max-width);
+      max-height: var(--max-height);
+      margin: 0 auto var(--ds-space-300, 24px);
+   }
+   h4 {
+      font-size: 20px;
+      font-style: inherit;
+      line-height: 1.2;
+      color: var(--ds-text, var(--ds-text, #172b4d));
+      font-weight: var(--ds-font-weight-medium, 500);
+      letter-spacing: -0.16px;
+      margin-top: var(--ds-space-0, 0px);
+      margin-bottom: var(--ds-space-200, 16px);
+   }
 }

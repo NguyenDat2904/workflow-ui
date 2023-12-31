@@ -13,7 +13,7 @@ export default function TrashProjects() {
 
    const getProjects = async () => {
       const response = await post(
-         `work/project/${user._id}?page=${page}&sortKey=nameProject`,
+         `work/project/${user?._id}?page=${page}&sortKey=nameProject`,
          { deleteProject: true },
          {
             headers: {
@@ -61,7 +61,7 @@ export default function TrashProjects() {
    const handleRestoreProject = async (project) => {
       const response = await patch(
          `/work/restore-project/${project}`,
-         { _idUser: user._id },
+         { _idUser: user?._id },
          { headers: { authorization: `${user.accessToken}`, refresh_token: `${user.refreshToken}` } },
       );
       switch (response.status) {
@@ -79,7 +79,7 @@ export default function TrashProjects() {
    const handleDeleteProject = (project) => {
       const response = patch(
          `/work/delete-project/${project}`,
-         { _idUser: user._id },
+         { _idUser: user?._id },
          { headers: { authorization: `${user.accessToken}`, refresh_token: `${user.refreshToken}` } },
       );
       switch (response.status) {
@@ -106,7 +106,7 @@ export default function TrashProjects() {
             colWidthRatio={[40, 60]}
             colType={['string', 'string']}
             data={renderedTrashProject}
-            idList={trashProject.map((project) => project._id)}
+            idList={trashProject.map((project) => project?._id)}
             labels={['Name', 'Key']}
          />
       </div>

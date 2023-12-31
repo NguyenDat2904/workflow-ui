@@ -4,7 +4,6 @@ import style from './Modal.module.scss';
 const cx = classNames.bind(style);
 
 function Modal({ className, width, locationTransform, children, maxWidth, isOpen, onClose }) {
-   console.log(isOpen);
    const popupRef = useRef(null);
    useEffect(() => {
       const handleOutsideClick = (event) => {

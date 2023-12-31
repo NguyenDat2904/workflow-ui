@@ -9,15 +9,13 @@ const cx = classNames.bind(styles);
 const Profile = () => {
    const userServices = new UserService();
    const [dataUserProfile, setDataUserProfile] = useState({});
-   const user = localStorage.getItem('user');
-   const parseuser = JSON.parse(user);
    const callApi = async () => {
-      const APIuser = await userServices.getUserProfile(parseuser?._id);
+      const APIuser = await userServices.getUserProfile(false);
       setDataUserProfile(APIuser.data);
    };
    useEffect(() => {
       callApi();
-   },[]);
+   }, []);
    return (
       <div className={cx('mainProfile')}>
          <ProfileHeaderImg

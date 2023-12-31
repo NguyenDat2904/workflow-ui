@@ -5,17 +5,17 @@ class UserService extends BaseServices {
    constructor() {
       super(URL);
    }
-   getUserProfile(id) {
-      return this.get(`/users/${id}`);
+   getUserProfile() {
+      return this.get(`/users`);
    }
-   updateUser(id, nameFill, contenEditing) {
-      return this.patch(`/users/updateUser/${id}`, { nameFill, contenEditing });
+   updateUser(nameFill, contenEditing) {
+      return this.patch(`/users/updateUser`, { nameFill, contenEditing });
    }
-   updateBackground(id, backgroundProfile, contentProfile) {
-      return this.patch(`/users/updateUser/background/${id}`, { backgroundProfile, contentProfile });
+   updateBackground(backgroundProfile, contentProfile) {
+      return this.patch(`/users/updateUser/background`, { backgroundProfile, contentProfile });
    }
-   uploadImg(id, formData) {
-      return this.patchUpload(`/users/uploadimg/${id}`, formData);
+   uploadImg(formData) {
+      return this.patchUpload(`/users/uploadimg`, formData);
    }
 }
 export default UserService;

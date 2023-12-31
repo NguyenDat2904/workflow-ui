@@ -6,19 +6,19 @@ class WorkService extends BaseServices {
       super(URL);
    }
    //    GetAll
-   getListProject(id) {
-      return this.post(`/work/project/${id}`, { deleteProject: false });
+   getListProject(bool) {
+      return this.get(`/projects/list?deleteProject=${bool}`);
    }
    listWork(nameProject) {
-      return this.post('/work/listwork', { nameProject });
+      return this.get(`/projects/list-work?nameProject=${nameProject}`);
    }
    //    Sort
-   sortProject(id, key, order) {
-      return this.post(`/work/project/${id}?&sortKey=${key}&sortOrder=${order}`, { deleteProject: false });
+   sortProject(key, order) {
+      return this.get(`/projects/list-work?&sortKey=${key}&sortOrder=${order}&deleteProject=false`);
    }
    //    Sort
-   paginationProject(id, limit = 15, page = 1) {
-      return this.post(`/work/project/${id}?&page=${page}&limit=${limit}`, { deleteProject: false });
+   paginationProject(limit = 15, page = 1) {
+      return this.get(`/projects/list-work?&page=${page}&limit=${limit}&deleteProject=false`);
    }
 }
 export default WorkService;

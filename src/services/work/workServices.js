@@ -9,6 +9,7 @@ class WorkService extends BaseServices {
    getListProject(param) {
       return this.get(`/projects/list`, { params: { ...param } });
    }
+
    listWork(nameProject) {
       return this.get(`/projects/list-work?nameProject=${nameProject}`);
    }

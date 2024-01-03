@@ -57,7 +57,7 @@ const ModalSelectImg = ({ onclickSeeModalSelectImg, callApi, dataUserProfile }) 
          name: yup.string().required('Please enter at least 1 initial'),
       }),
       onSubmit: async (value) => {
-         const addUserInfo = await userServices.updateBackground(`${dataUserProfile?._id}`, viewBackround, value.name);
+         const addUserInfo = await userServices.updateBackground(viewBackround, value.name);
          if (addUserInfo.status === 200) {
             await callApi();
             await onclickSeeModalSelectImg(0);

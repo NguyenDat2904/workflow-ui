@@ -9,12 +9,13 @@ class WorkService extends BaseServices {
    getListProject(param) {
       return this.get(`/projects/list`, { params: { ...param } });
    }
+
    listWork(nameProject) {
-      return this.post('/work/listwork', { nameProject });
+      return this.get(`/projects/list-work?nameProject=${nameProject}`);
    }
    //    Pagination
    paginationProject(id, limit = 15, page = 1) {
-      return this.post(`/work/project/${id}?&page=${page}&limit=${limit}`, { deleteProject: false });
+      return this.get(`/work/project/${id}?&page=${page}&limit=${limit}`, { deleteProject: false });
    }
    // Details
    projectDetail(id) {

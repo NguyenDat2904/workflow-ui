@@ -56,13 +56,13 @@ const ProfileHeaderImg = ({ dataUserProfile, callApi, heightt, widthbagrAvatar, 
    const hendleOnchange = async (e) => {
       const formData = new FormData();
       formData.append('imgCover', e.target.files[0]);
-      const upload = await userServices.uploadImg(`${dataUserProfile?._id}`, formData);
+      const upload = await userServices.uploadImg(formData);
       if (upload.status === 200) {
          await callApi();
       }
    };
    return (
-      <div>
+      <div className={cx('mainProfile')}>
          <div className={cx('profileUser')}>
             <div style={{ height: heightt }} className={cx('backgroundImgUser')}>
                <div className={cx('bgrimg')}>
@@ -144,6 +144,7 @@ const ProfileHeaderImg = ({ dataUserProfile, callApi, heightt, widthbagrAvatar, 
                </div>
             </div>
          </div>
+
          <div className={cx(modalSelectImg === 0 ? 'noneModalSelectImg' : 'modalSelectImg')}>
             {modalSelectImg === 1 ? (
                <ModalSelectImg

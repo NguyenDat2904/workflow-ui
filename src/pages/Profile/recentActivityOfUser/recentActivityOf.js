@@ -8,10 +8,8 @@ const RecentActivityOfUser = () => {
    const workServices = new WorkService();
    const [dataListProject, setDataListProject] = useState([]);
    const [dataListWork, setDataListWork] = useState([]);
-   const user = localStorage.getItem('user');
-   const parseuser = JSON.parse(user);
    const APIListProjetc = async () => {
-      const dataProject = await workServices.getListProject(parseuser?._id);
+      const dataProject = await workServices.getListProject({ sortKey: '', deleteProject: false });
       setDataListProject(dataProject.data.workProject);
    };
    const APIListWork = async () => {
@@ -21,6 +19,7 @@ const RecentActivityOfUser = () => {
       const positionStart = dataWork?.data?.listWorkID?.length - 10;
       const dataListWork = dataWork?.data?.listWorkID?.slice(positionStart, positionEnd);
       setDataListWork(dataListWork);
+      console.log(dataWork);
    };
    useEffect(() => {
       APIListProjetc();

@@ -14,12 +14,9 @@ const RecentActivityOfUser = () => {
    };
    const APIListWork = async () => {
       const popDataProject = dataListProject?.length - 1;
-      const dataWork = await workServices.listWork(`${dataListProject[popDataProject].nameProject}`);
-      const positionEnd = dataWork?.data?.listWorkID?.length;
-      const positionStart = dataWork?.data?.listWorkID?.length - 10;
-      const dataListWork = dataWork?.data?.listWorkID?.slice(positionStart, positionEnd);
+      const dataWork = await workServices.getIssues(`${dataListProject[popDataProject]._id}`);
+      const dataListWork = dataWork?.data?.dataListIssues?.slice(0, 6);
       setDataListWork(dataListWork);
-      console.log(dataWork);
    };
    useEffect(() => {
       APIListProjetc();
@@ -50,8 +47,8 @@ const RecentActivityOfUser = () => {
                      />
 
                      <h4 className={cx('ingredientDetail')}>
-                        {product.nameWork} <br />
-                        <p className={cx('ingredientDetailName')}>creation time: {product.dateCreated?.slice(0, 10)}</p>
+                        {product.summary} <br />
+                        <p className={cx('ingredientDetailName')}>creation time: {product.startDate?.slice(0, 10)}</p>
                      </h4>
                   </div>
                );

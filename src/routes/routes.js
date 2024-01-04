@@ -36,7 +36,8 @@ const privateRoutes = [
    { path: '/project/create', component: CreateProject, layout: null },
    { path: '/project/:_id/settings/details', component: DetailProject, layout: LayoutSideBarChildren },
    { path: '/project/trash', component: TrashProjects, layout: HeaderOnly },
-   { path: '/project/settings/access', component: ProjectAccess, layout: HeaderOnly },
+   { path: '/project/:_id/board', component: Board, layout: LayoutSideBarChildren },
+   { path: '/project/:_id/settings/access', component: ProjectAccess, layout: HeaderOnly },
 ];
 
 const publicRoutes = [

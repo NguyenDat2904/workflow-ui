@@ -1,0 +1,29 @@
+$subtext-color: gray;
+
+.board {
+   padding: 2rem;
+
+   .header {
+      h3 {
+         font-size: 1.75rem;
+      }
+      p {
+         color: $subtext-color;
+      }
+      display: flex;
+      justify-content: space-between;
+
+      .actions {
+         display: flex;
+         justify-content: right;
+         align-items: center;
+         gap: 1rem;
+         img {
+            width: 1rem;
+         }
+         button {
+            font-size: 1rem;
+         }
+      }
+   }
+}

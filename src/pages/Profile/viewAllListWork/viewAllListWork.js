@@ -1,30 +1,33 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import TaskMaster from '../taskMaster/taskMaster';
 import { SearchIcon } from '~/component/icon/icon';
 import WorkService from '~/services/work/workServices';
+import UserService from '~/services/user/userServices';
 import styles from './viewAllListWork.module.scss';
-import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(styles);
 
 const ViewAllListWork = () => {
-   const { dataUserProfile } = useContext(UserContext);
    const workServices = new WorkService();
+   const userServices = new UserService();
    const [dataListProject, setDataListProject] = useState([]);
    const [dataListWork, setDataListWork] = useState([]);
+   const [dataUserProfile, setDataUserProfile] = useState({});
+   const [stylesView, setStylesView] = useState(true);
+   const [valueInput, setVaLueInput] = useState('');
    const user = localStorage.getItem('user');
    const parseuser = JSON.parse(user);
    const APIListProjetc = async () => {
       const dataProject = await workServices.getListProject(parseuser?._id);
       setDataListProject(dataProject.data.workProject);
+      const APIuser = await userServices.getUserProfile({ deleteProject: false });
+      setDataUserProfile(APIuser.data);
    };
    useEffect(() => {
       APIListProjetc();
    }, []);
 
-   const [stylesView, setStylesView] = useState(true);
-   const [valueInput, setVaLueInput] = useState('');
    const hendleStylesView = (bool) => {
       setStylesView(bool);
    };
@@ -33,22 +36,21 @@ const ViewAllListWork = () => {
    };
    const handleSelect = async (e) => {
       if (e.target.value !== '') {
-         const listWork = await workServices.listWork(e.target.value);
-         setDataListWork(listWork.data);
+         const listWork = await workServices.getIssues(e.target.value);
+         setDataListWork(listWork?.data?.dataListIssues);
       } else {
          setDataListWork([]);
       }
    };
    const resultdataListWork =
-      dataListWork.listWorkID === undefined
-         ? dataListWork.listWorkID
-         : dataListWork.listWorkID.filter((item) => {
+      dataListWork === undefined
+         ? dataListWork
+         : dataListWork.filter((item) => {
               if (valueInput !== '') {
-                 return valueInput && item.nameWork && item.nameWork.toLowerCase().includes(valueInput);
+                 return valueInput && item.summary && item.summary.toLowerCase().includes(valueInput);
               }
               return true;
            });
-
    return (
       <div className={cx('ViewAllListWork')}>
          <p className={cx('headerWorkOn')}>
@@ -107,7 +109,6 @@ const ViewAllListWork = () => {
                            alt=""
                         />
                         <div className={cx('nameProjectRight')}>
-                           <h6 className={cx('nameP')}>{dataListWork.nameProject}</h6>
                            <p className={cx('nameUser')}>
                               Name user : <span className={cx('nameUserspan')}>{dataUserProfile.name}</span>
                            </p>
@@ -122,7 +123,7 @@ const ViewAllListWork = () => {
                               </option>
                               {dataListProject?.map((product) => {
                                  return (
-                                    <option key={product?._id} value={product.nameProject}>
+                                    <option key={product?._id} value={product?._id}>
                                        {product.nameProject}
                                     </option>
                                  );
@@ -143,7 +144,7 @@ const ViewAllListWork = () => {
                                  alt=""
                               />
                               <div className={cx('nameProjectRight')}>
-                                 <h6 className={cx('nameP')}>{product.nameWork}</h6>
+                                 <h6 className={cx('nameP')}>{product.summary}</h6>
                                  <p className={cx('nameUser')}>{product.jobCode} go to maker sample</p>
                               </div>
                            </div>

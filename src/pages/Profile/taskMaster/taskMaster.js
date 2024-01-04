@@ -4,7 +4,7 @@ import styles from './taskMaster.module.scss';
 const cx = classNames.bind(styles);
 const TaskMaster = ({ dataListWorkTaskMaster }) => {
    return dataListWorkTaskMaster?.map((product) => {
-      return product?.creatorID?.map((item) => {
+      
          return (
             <div key={product?._id} className={cx('viewWorkSelect')}>
                <div className={cx('nameProject')}>
@@ -14,14 +14,14 @@ const TaskMaster = ({ dataListWorkTaskMaster }) => {
                      alt=""
                   />
                   <div className={cx('nameProjectRight')}>
-                     <h6 className={cx('nameP')}>{item.name}</h6>
-                     <p className={cx('nameUser')}>{item.email} go to maker sample</p>
+                     <h6 className={cx('nameP')}>{product?.assignee?.name}</h6>
+                     <p className={cx('nameUser')}> go to maker sample</p>
                   </div>
                </div>
                <p>Your created: {product.createdAt?.slice(0, 10)}</p>
             </div>
          );
-      });
+      
    });
 };
 export default TaskMaster;

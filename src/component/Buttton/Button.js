@@ -25,6 +25,7 @@ function Button({
    outline = false,
    children,
    onClick,
+
    type,
    ...passProps
 }) {

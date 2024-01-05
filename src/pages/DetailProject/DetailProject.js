@@ -10,10 +10,12 @@ import NavUrl from '~/component/NavUrl/NavUrl';
 import Skeleton from 'react-loading-skeleton';
 import { UserContext } from '~/contexts/user/userContext';
 import WorkService from '~/services/work/workServices';
+import { ProjectContext } from '~/contexts/project/projectContext';
 const cx = classNames.bind(style);
 function DetailProject() {
    const navigate = useNavigate();
-   const { detailProject, loadingDetailsProject, parseuser } = useContext(UserContext);
+   const { loadingDetailsProject, parseuser } = useContext(UserContext);
+   const { detailProject } = useContext(ProjectContext);
    const [toggle, setToggle] = useState(false);
    const params = useParams();
    const projectService = new WorkService();
@@ -36,7 +38,19 @@ function DetailProject() {
                         {loadingDetailsProject ? (
                            <Skeleton width="310px" height="24px" />
                         ) : (
-                           <NavUrl url={['Projects', detailProject.nameProject, 'Project setting']} />
+                           <NavUrl
+                              url={[
+                                 { name: 'Projects', link: '/project' },
+                                 {
+                                    name: detailProject.nameProject,
+                                    link: `/project/${detailProject.codeProject}/black-log`,
+                                 },
+                                 {
+                                    name: 'Project setting',
+                                    link: `/project/${detailProject.codeProject}/settings/details`,
+                                 },
+                              ]}
+                           />
                         )}
                      </div>
                   </div>

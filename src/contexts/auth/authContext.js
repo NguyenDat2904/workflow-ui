@@ -9,9 +9,9 @@ const AuthProvider = ({ children }) => {
    });
 
    useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    setIsAuthenticated(!!accessToken);
- }, []);
+      const accessToken = localStorage.getItem('accessToken');
+      setIsAuthenticated(!!accessToken);
+   }, []);
 
    const value = {
       isAuthenticated,

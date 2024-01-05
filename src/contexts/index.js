@@ -1,10 +1,13 @@
 import { AuthProvider } from './auth/authContext';
+import { ProjectProvider } from './project/projectContext';
 import { UserProvider } from './user/userContext';
 
 const GlobalProvider = ({ children }) => {
    return (
       <AuthProvider>
-         <UserProvider>{children}</UserProvider>
+         <UserProvider>
+            <ProjectProvider>{children}</ProjectProvider>
+         </UserProvider>
       </AuthProvider>
    );
 };

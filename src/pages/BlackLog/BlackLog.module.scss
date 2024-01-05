@@ -1,0 +1,188 @@
+.wrapper {
+   max-height: calc(100vh - (var(--topNavigationHeight, 0px) + var(--bannerHeight, 0px)));
+   height: calc(100vh - (var(--topNavigationHeight, 0px) + var(--bannerHeight, 0px)));
+   overflow: hidden;
+   display: flex;
+   flex-direction: column;
+   outline: none;
+}
+.main {
+   max-width: 100%;
+   display: flex;
+   padding-left: var(--ds-space-500, 40px);
+   flex: 1;
+   overflow: hidden;
+}
+.sprint-dropdown {
+   --_eeotj0: 100;
+   padding: 0 var(--ds-space-400, 2pc) var(--ds-space-600, 3pc) 0;
+   overflow-y: scroll;
+   overflow-x: auto;
+   position: relative;
+   flex-shrink: 1;
+   flex-grow: 1;
+   z-index: var(--_eeotj0);
+   user-select: none;
+   will-change: opacity;
+   .sprint-block {
+      min-width: 626px;
+      margin: 0px 0px 8px;
+      background-color: var(--ds-surface-sunken, #f4f5f7);
+      border-radius: 8px;
+      padding: 8px;
+      .sprint-header {
+         position: relative;
+         display: flex;
+      }
+   }
+}
+.header-left {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   cursor: pointer;
+   flex: 1 1 0%;
+   margin: 0 var(--ds-space-100, 8px) 0 var(--ds-space-025, 2px);
+   padding-left: 10px;
+}
+.name-sprint {
+   font-size: 14px;
+   font-style: inherit;
+   line-height: 16px;
+   color: var(--ds-text, var(--ds-text, #172b4d));
+   font-weight: var(--ds-font-weight-semibold, 600);
+   letter-spacing: -0.042px;
+   margin: 0px;
+}
+.date-sprint {
+   font-style: inherit;
+   line-height: 16px;
+   color: var(--ds-text-subtlest, var(--ds-text-subtlest, #6b778c));
+   font-weight: normal;
+   margin: 0px 0px 0px 7px;
+   font-size: 14px;
+}
+.header-right {
+   align-items: center;
+   display: flex;
+   padding-left: var(--ds-space-100, 8px);
+}
+.number-issue {
+   appearance: none;
+   border: none;
+   padding-inline: var(--ds-space-075, 6px);
+   border-radius: var(--ds-border-radius-200, 8px);
+   display: inline-flex;
+   block-size: min-content;
+   margin-left: var(--ds-space-050, 4px);
+   span {
+      box-sizing: border-box;
+      margin: var(--ds-space-0, 0px);
+      padding: var(--ds-space-0, 0px);
+      font-weight: bold;
+      color: var(--ds-text, #fff);
+      font-size: var(--ds-font-size-075, 12px);
+      line-height: var(--ds-font-lineHeight-100, 16px);
+      text-align: center;
+   }
+}
+.color-issue-todo {
+   background-color: var(--ds-background-neutral, #dfe1e6);
+   span {
+      color: var(--ds-text, #172b4d);
+   }
+}
+.color-issue-process {
+   background-color: var(--ds-background-brand-bold, #0052cc);
+}
+.color-issue-done {
+   background-color: var(--ds-background-success-bold, #00875a);
+}
+.setting-issue {
+   display: flex;
+   padding-left: var(--ds-space-100, 8px);
+   gap: 8px;
+}
+
+// Main
+.sprint-main {
+   margin: var(--ds-space-100, 8px) 0 0 0;
+   position: relative;
+}
+.no-sprint {
+   border: 2px dashed var(--ds-border, #dfe1e6);
+   border-radius: 3px;
+   padding: 10px;
+   text-align: center;
+   font-size: 0.785714em;
+   font-style: inherit;
+   line-height: 1.45455;
+   color: var(--ds-text-subtlest, var(--ds-text-subtlest, #6b778c));
+   font-weight: normal;
+   margin-top: 0px;
+   .no-sprint-content {
+      min-height: 10pc;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      max-width: 600px;
+      margin: 0 auto;
+      .no-sprint-img {
+         height: 128px;
+         width: 128px;
+         background-position: center center;
+         background-size: contain;
+         background-repeat: no-repeat;
+         background-image: url(https://jira-frontend-bifrost.prod-east.frontend.public.atl-paas.net/assets/sprint-planning.32ed1a38.svg);
+      }
+      .no-sprint-text {
+         font-size: 12.5714px;
+         font-style: inherit;
+         letter-spacing: -0.0754286px;
+         font-weight: normal;
+         margin-top: 0px;
+         color: var(--ds-text, #172b4d);
+         padding-left: var(--ds-space-200, 16px);
+         line-height: 1.5;
+         p {
+            font-size: 12.5714px;
+            padding-bottom: var(--ds-space-050, 4px);
+            font-weight: 600;
+            text-align: start;
+         }
+         div {
+            text-align: start;
+         }
+      }
+   }
+}
+.create-issue {
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   -webkit-box-pack: justify;
+   justify-content: space-between;
+   min-height: 0px;
+   width: 100%;
+   .custom-btn {
+      svg {
+         width: 16px;
+         height: 16px;
+      }
+      span {
+         font-weight: 500;
+      }
+   }
+}
+.create-btn {
+   margin-top: 4px;
+   opacity: 1;
+}
+.custom-input {
+   width: 100%;
+   padding-left: 30px !important;
+}
+.custom-dropdown {
+   font-size: 14px;
+   text-align: start !important;
+}

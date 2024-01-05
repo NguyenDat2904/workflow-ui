@@ -1,0 +1,140 @@
+.wrapper {
+   background-color: var(--ds-surface-raised, #ffffff);
+   cursor: pointer;
+   opacity: inherit;
+   display: grid;
+   grid-template-columns:
+      [start checkbox] min-content [issue-type] 16px [issue-key] min-content [summary] 1fr [card-group-key] max-content [optional-fields] max-content [assignee] calc(
+         var(--ds-space-100, 8px) * 3.5
+      )
+      [menu] var(--ds-space-400, 32px) [end];
+   grid-template-rows: [start card-detail] 40px [end];
+   column-gap: var(--ds-space-050, 4px);
+   row-gap: 0px;
+   -webkit-box-align: center;
+   align-items: center;
+   position: relative;
+   height: 40px;
+   padding: 0px 4px 0px 12px;
+   border: 1px solid var(--ds-border, #ebecf0);
+   text-decoration: none;
+   margin-top: -1px;
+   --jsw-card-background-color: var(--ds-surface-raised, #ffff);
+}
+.icon-issue {
+   grid-column: issue-type/span 1;
+   grid-row: card-detail/span 1;
+   line-height: 10px;
+   img {
+      width: 1pc;
+      height: 1pc;
+      vertical-align: text-bottom;
+   }
+}
+.name-issue {
+   grid-column: issue-key/span 1;
+   grid-row: card-detail/span 1;
+   font-size: 14px;
+   outline: none;
+   margin-top: 0px;
+   white-space: nowrap;
+   color: var(--ds-text-subtlest, #5e6c84) !important;
+   text-decoration: none !important;
+}
+.name-work {
+   display: flex;
+   flex: 1 1 0%;
+   box-sizing: border-box;
+   user-select: none;
+   grid-area: card-detail / summary / span 1 / span 1;
+   position: unset;
+   align-items: center;
+   min-width: 0px;
+   font-size: 14px;
+}
+.control-issue {
+   grid-area: card-detail / optional-fields / span 1 / span 1;
+   display: flex;
+   box-sizing: border-box;
+   -webkit-box-align: center;
+   align-items: center;
+   .children-issue {
+      margin: 0 var(--ds-space-050, 4px);
+      display: inline-block;
+      flex-shrink: 0;
+      line-height: 1;
+      width: 16px;
+      height: 16px;
+      line-height: 17px;
+      svg {
+         --icon-primary-color: var(--ds-icon-subtle, #5e6c84);
+         --icon-secondary-color: var(--ds-surface, #ffffff);
+         width: 16px;
+         height: 16px;
+         overflow: hidden;
+         pointer-events: none;
+         max-width: 100%;
+         max-height: 100%;
+         color: var(--icon-primary-color);
+         fill: var(--icon-secondary-color);
+         vertical-align: bottom;
+      }
+   }
+}
+.user-assignee {
+   grid-column: assignee/span 1;
+   grid-row: card-detail/span 1;
+   .img-assignee {
+      width: 24px;
+      height: 24px;
+      display: block;
+      img {
+         width: 100%;
+         height: 100%;
+      }
+   }
+}
+.epic-issue {
+   background-color: var(--ds-background-accent-purple-subtler, #eae6ff);
+   max-width: 100%;
+   box-sizing: border-box;
+   appearance: none;
+   border: none;
+   padding-inline: var(--ds-space-050, 4px);
+   display: inline-flex;
+   border-radius: var(--ds-border-radius, 3px);
+   block-size: min-content;
+   position: static;
+   overflow: hidden;
+}
+.epic-text {
+   color: var(--ds-text-accent-purple, #403294);
+   max-width: calc(200px - var(--ds-space-100, 8px));
+   overflow-x: clip;
+   box-sizing: border-box;
+   margin: var(--ds-space-0, 0px);
+   padding: var(--ds-space-0, 0px);
+   font-size: var(--ds-font-size-050, 11px);
+   font-weight: var(--ds-font-weight-bold, 700);
+   line-height: var(--ds-font-lineHeight-100, 16px);
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   text-transform: uppercase;
+}
+.status-issue {
+   height: 24px;
+   margin: 0 4px;
+   .custom-btn {
+      background-color: var(--ds-background-information, #deebff);
+      span {
+         border-radius: 3px;
+         box-sizing: border-box;
+         font-size: 11px;
+         font-weight: 700;
+         max-width: 100%;
+         padding: var(--ds-space-025, 2px) 0;
+         text-transform: uppercase;
+         color: var(--ds-text-information, #0747a6);
+      }
+   }
+}

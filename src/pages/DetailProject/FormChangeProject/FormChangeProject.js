@@ -12,11 +12,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { UserContext } from '~/contexts/user/userContext';
 import WorkService from '~/services/work/workServices';
 import ModalIcon from '../ModalIcon/ModalIcon';
+import { ProjectContext } from '~/contexts/project/projectContext';
 
 const cx = classNames.bind(style);
 function FormChangeProject({ id }) {
-   const { parseuser, detailProject, setDetailProject, loadingDetailsProject, setLoadingDetailsProject } =
-      useContext(UserContext);
+   const { parseuser, loadingDetailsProject, setLoadingDetailsProject } = useContext(UserContext);
+   const { setDetailProject, detailProject } = useContext(ProjectContext);
    const [toggle, setToggle] = useState(false);
    const workService = new WorkService();
    // useForm

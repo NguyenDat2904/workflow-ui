@@ -1,7 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
-import './Dropdown.scss';
+import classNames from 'classnames/bind';
+import style from './Dropdown.module.scss';
+const cx = classNames.bind(style);
 
-const Dropdown = ({ children, actions, target }) => {
+const Dropdown = ({ children, actions, target, className }) => {
    const [isOpen, setIsOpen] = useState(false);
    const dropdownRef = useRef(null);
 
@@ -25,14 +27,14 @@ const Dropdown = ({ children, actions, target }) => {
    }, [isOpen]); // Only re-run the effect if isOpen changes
 
    return (
-      <div className="dropdown" ref={dropdownRef}>
-         <div className="dropdown-trigger" onClick={() => setIsOpen(!isOpen)}>
+      <div className={cx('dropdown', className)} ref={dropdownRef}>
+         <div className={cx('dropdown-trigger')} onClick={() => setIsOpen(!isOpen)}>
             {children}
          </div>
          {isOpen && (
-            <div className="dropdown-menu">
+            <div className={cx('dropdown-menu')}>
                {actions.map((action, index) => (
-                  <div key={index} className="dropdown-item" onClick={() => action.method(target)}>
+                  <div key={index} className={cx('dropdown-item')} onClick={() => action.method(target)}>
                      {action.label}
                   </div>
                ))}

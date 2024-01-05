@@ -73,12 +73,10 @@
                padding: 0 8px 6px 8px;
                display: flex;
                flex-direction: column;
-               gap: 8px;
+
+               gap: 20px;
                .selectGender {
                   padding: 0 8px;
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: flex-end;
                   .genderUser {
                      line-height: 20px;
                      color: inherit;
@@ -89,13 +87,18 @@
                         'Droid Sans', 'Helvetica Neue', sans-serif;
                   }
                   .select {
-                     height: 60%;
+                     height: 30px;
+                     width: 100%;
                      border-radius: 3px;
                      outline: none;
+                     border: none;
                      padding: 0px 10px;
                      .opacity {
                         color: rgb(218, 217, 217);
                         cursor: not-allowed;
+                     }
+                     &:focus-within {
+                        border: 2px solid #2684ff;
                      }
                   }
                }

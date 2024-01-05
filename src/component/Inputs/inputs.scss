@@ -22,8 +22,9 @@ $primary-color: #0065ff;
 }
 
 .button {
-   padding: 0 1.25rem;
    height: 40px;
+   width: fit-content;
+   padding: 0 1.25rem;
    outline: none;
    border-radius: 3px;
    border: none;
@@ -32,10 +33,7 @@ $primary-color: #0065ff;
    align-items: center;
    justify-content: center;
    gap: 5px;
-}
-
-.button {
-   width: fit-content;
+   font-weight: 540;
    transition: background-color 0.25s;
    svg {
       width: 1rem;

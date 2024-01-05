@@ -1,0 +1,1 @@
+.board{padding:2rem}.board .header{display:flex;justify-content:space-between}.board .header h3{font-size:1.75rem}.board .header p{color:gray}.board .header .actions{display:flex;justify-content:right;align-items:center;gap:1rem}.board .header .actions img{width:1rem}.board .header .actions button{font-size:1rem}

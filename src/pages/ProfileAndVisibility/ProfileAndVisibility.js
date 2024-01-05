@@ -128,10 +128,9 @@ const ProfileAndVisibility = () => {
                      <div className={cx('selectGenderTitle')}>
                         <span className={cx('titleGender')}>Gender</span>
                         <form className={cx('selectGender')}>
-                           <p className={cx('genderUser')}>{valueInput.gender}</p>
                            <select onChange={handleOnchange} className={cx('select')} name="gender" id="">
                               <option className={cx('opacity')} value={valueInput.gender}>
-                                 Gender
+                                 {valueInput.gender}
                               </option>
                               <option value="Male">Male</option>
                               <option value="Female">Female</option>

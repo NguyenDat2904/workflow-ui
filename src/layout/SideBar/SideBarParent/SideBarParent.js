@@ -3,13 +3,13 @@ import Button from '~/component/Buttton/Button';
 import { BlackLogIcon, BoardIcon, SettingIcon } from '~/component/icon/icon';
 import classNames from 'classnames/bind';
 import style from '~/layout/SideBar/SideBar.module.scss';
-import { UserContext } from '~/contexts/user/userContext';
 import { useLocation } from 'react-router-dom';
 import SideBar from '../SideBar';
+import { ProjectContext } from '~/contexts/project/projectContext';
 const cx = classNames.bind(style);
 
 function SideBarParent() {
-   const { detailProject } = useContext(UserContext);
+   const { detailProject } = useContext(ProjectContext);
    const location = useLocation();
 
    return (

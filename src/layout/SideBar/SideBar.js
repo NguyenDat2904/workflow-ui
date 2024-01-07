@@ -4,15 +4,14 @@ import style from './SideBar.module.scss';
 import WrapperSideBar from './WrapperSideBar/WrapperSideBar';
 import Button from '~/component/Buttton/Button';
 import Skeleton from 'react-loading-skeleton';
-import { UserContext } from '~/contexts/user/userContext';
 import { useParams } from 'react-router-dom';
 import WorkService from '~/services/work/workServices';
-import { useLocation } from 'react-router-dom';
+import { ProjectContext } from '~/contexts/project/projectContext';
 
 const cx = classNames.bind(style);
 
 function SideBar({ children }) {
-   const { detailProject, setDetailProject } = useContext(UserContext);
+   const { detailProject, setDetailProject } = useContext(ProjectContext);
    const workProject = new WorkService();
    const param = useParams();
    const getDetailProject = async () => {
@@ -23,7 +22,6 @@ function SideBar({ children }) {
    useEffect(() => {
       getDetailProject();
    }, []);
-   // GET detail Project
    return (
       <WrapperSideBar>
          <nav className={cx('sidebar-nav')}>

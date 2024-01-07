@@ -7,8 +7,8 @@ function NavUrl({ url }) {
    const renderUrl = url.map((item, index) => {
       return (
          <li className={cx('item-url')} key={index}>
-            <Link className={cx(index !== url.length - 1 && 'link-url')}>
-               <span>{item}</span>
+            <Link className={cx(index !== url.length - 1 && 'link-url')} to={item.link}>
+               <span>{item.name}</span>
             </Link>
          </li>
       );

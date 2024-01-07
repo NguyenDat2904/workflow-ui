@@ -35,10 +35,7 @@ const UserProvider = ({ children }) => {
       total: 0,
    });
 
-   const [detailProject, setDetailProject] = useState({});
    const [loadingDetailsProject, setLoadingDetailsProject] = useState(false);
-
-   const workService = new WorkService();
 
    // Func
    const onclickSeeModalSelectImg = (number) => {
@@ -68,54 +65,6 @@ const UserProvider = ({ children }) => {
          setFormButton(true);
       }
    };
-   // GET project
-   const GetListProject = async () => {
-      if (accessToken) {
-         setLoadingGetProject(true);
-         const listProject = await post(
-            `/work/project/${parseuser?._id}`,
-            { deleteProject: false },
-            {
-               headers: {
-                  authorization: `${accessToken}`,
-                  refresh_token: `${parseuser?.refreshToken}`,
-               },
-            },
-         );
-         if (listProject.data.accessToken) {
-            const getListAgain = await post(
-               `/work/project/${parseuser?._id}`,
-               { deleteProject: false },
-               {
-                  headers: {
-                     authorization: `${listProject.data.accessToken}`,
-                     refresh_token: `${parseuser?.refreshToken}`,
-                  },
-               },
-            );
-            localStorage.setItem('accessToken', listProject.data.accessToken);
-            setDataProject(getListAgain.data.workProject);
-            setPageProject(() => {
-               setPageProject({
-                  page: getListAgain.data.page,
-                  total: getListAgain.data.totalPages,
-               });
-            });
-         } else {
-            setDataProject(listProject.data.workProject);
-            setPageProject(() => {
-               setPageProject({
-                  page: listProject.data.page,
-                  total: listProject.data.totalPages,
-               });
-            });
-         }
-         setLoadingGetProject(false);
-      }
-   };
-   useEffect(() => {
-      GetListProject();
-   }, []);
 
    const handleSubmit = async (e) => {
       e.preventDefault();
@@ -197,12 +146,8 @@ const UserProvider = ({ children }) => {
       setPageProject,
       loadingGetProject,
       setLoadingGetProject,
-      GetListProject,
-      detailProject,
-      setDetailProject,
       loadingDetailsProject,
       setLoadingDetailsProject,
-      GetListProject,
    };
    return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

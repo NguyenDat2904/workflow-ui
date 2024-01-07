@@ -21,6 +21,7 @@ import ProjectAccess from '~/pages/Projects/Access/ProjectAccess';
 import LayoutSideBarChildren from '~/layout/LayoutSideBarChildren/DefaultLayout';
 
 const privateRoutes = [
+   { path: '/project/:_id/settings/details', component: DetailProject, layout: LayoutSideBarChildren },
    { path: '/', component: BlackLog },
    {
       path: '/project/:id/black-log',
@@ -34,7 +35,6 @@ const privateRoutes = [
    { path: '/forgot/change-password', component: ChangePassword, layout: null },
    { path: '/project', component: Projects, layout: HeaderOnly },
    { path: '/project/create', component: CreateProject, layout: null },
-   { path: '/project/:_id/settings/details', component: DetailProject, layout: LayoutSideBarChildren },
    { path: '/project/trash', component: TrashProjects, layout: HeaderOnly },
    { path: '/project/:_id/board', component: Board, layout: LayoutSideBarChildren },
    { path: '/project/:_id/settings/access', component: ProjectAccess, layout: HeaderOnly },

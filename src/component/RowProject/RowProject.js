@@ -12,7 +12,7 @@ function RowProject({ project, handleMoveToTrash }) {
    const [toggle, setToggle] = useState(false);
 
    // 3. Func
-
+   console.log(project);
    return (
       <tr className={cx('row')}>
          <td></td>
@@ -43,8 +43,8 @@ function RowProject({ project, handleMoveToTrash }) {
                      <span>
                         <img
                            src={
-                              project.adminID.img !== ''
-                                 ? project.adminID.img
+                              project.infoUserAdmin?.img !== ''
+                                 ? project.infoUserAdmin?.img
                                  : 'https://secure.gravatar.com/avatar/96bd7f66bb5903b12b40d3696a36bd7a?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Fdefault-avatar-5.png'
                            }
                            alt=""
@@ -53,7 +53,7 @@ function RowProject({ project, handleMoveToTrash }) {
                   </div>
                   <div className={cx('name')}>
                      <div>
-                        <Link>{project.adminID.name}</Link>
+                        <Link>{project.infoUserAdmin?.name}</Link>
                      </div>
                   </div>
                </div>

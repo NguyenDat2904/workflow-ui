@@ -142,7 +142,13 @@ function Header() {
          </nav>
          <div className={cx('nav-right')}>
             <div className={cx('nav-icon')}>
-               <Input placeholder="Search" leftIcon={<SearchIcon />} type="text" search="search" />
+               <Input
+                  placeholder="Search"
+                  leftIcon={<SearchIcon />}
+                  type="text"
+                  search="search"
+                  className={cx('custom-input')}
+               />
             </div>
             <div className={cx('nav-icon')}>
                <Button

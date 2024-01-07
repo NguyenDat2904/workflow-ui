@@ -3,6 +3,9 @@
       display: flex;
       justify-content: center;
       padding-bottom: var(--ds-space-050, 4px);
+      img {
+         border-radius: 3px;
+      }
    }
    .change-input {
       margin-top: var(--ds-space-250, 20px);

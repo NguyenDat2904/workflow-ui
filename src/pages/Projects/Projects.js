@@ -14,7 +14,7 @@ import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(style);
 
 function Projects() {
-   const { parseuser } = useContext(UserContext);
+   const { parseuser, setLoadingGetProject } = useContext(UserContext);
    const projectService = new WorkService();
    const { accessToken } = useContext(AuthContext);
 
@@ -25,6 +25,7 @@ function Projects() {
    const [loading, setLoading] = useState(false);
    // 2. useEffect
    const getProjects = async () => {
+      setLoadingGetProject(true);
       setLoading(false);
       const projects = await projectService.getListProject({ deleteProject: false });
       if (projects.status === 200) {
@@ -32,6 +33,7 @@ function Projects() {
          setPage(projects.data.page);
       }
       setLoading(true);
+      setLoadingGetProject(false);
    };
    useEffect(() => {
       getProjects();

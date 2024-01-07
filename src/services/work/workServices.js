@@ -12,10 +12,6 @@ class WorkService extends BaseServices {
    getIssues(idProject) {
       return this.get(`/issues/${idProject}`);
    }
-   //    Pagination
-   paginationProject(id, limit = 15, page = 1) {
-      return this.get(`/work/project/${id}?&page=${page}&limit=${limit}`, { deleteProject: false });
-   }
    // Details
    projectDetail(id) {
       return this.get(`/projects/project-detail/${id}`);

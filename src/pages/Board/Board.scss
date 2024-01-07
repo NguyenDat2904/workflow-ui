@@ -1,4 +1,6 @@
 $subtext-color: gray;
+$task-container-background: #fafbfc;
+$color-border: rgba(9, 30, 66, 0.08);
 
 .board {
    padding: 2rem;
@@ -26,4 +28,23 @@ $subtext-color: gray;
          }
       }
    }
+
+   .task-state {
+      width: 20rem;
+      padding: 1rem;
+      border-radius: 1rem;
+      border: 2px solid $color-border;
+      background-color: $task-container-background;
+      .state-title {
+         font-size: 1.25rem;
+         font-weight: bold;
+         margin-bottom: 1rem;
+      }
+   }
+}
+
+.sortable-task {
+   border: 1px solid $color-border;
+   padding: 0.5rem !important;
+   text-align: left;
 }

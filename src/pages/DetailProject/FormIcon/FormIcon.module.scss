@@ -1,0 +1,43 @@
+.list-icon {
+   display: flex;
+   flex-flow: wrap;
+   max-height: 294px;
+   overflow-y: auto;
+   padding: var(--ds-space-100, 8px) 0 0;
+   margin: 0px;
+}
+.input-icon {
+   width: 1px;
+   height: 1px;
+   padding: 0px;
+   position: fixed;
+   border: 0px;
+   clip: rect(1px, 1px, 1px, 1px);
+   overflow: hidden;
+   white-space: nowrap;
+}
+.item-icon {
+   padding-right: var(--ds-space-050, 4px);
+   padding-left: var(--ds-space-050, 4px);
+   padding-bottom: var(--ds-space-100, 8px);
+   display: inline-flex;
+   img {
+      border-radius: var(--ds-border-radius-100, 3px);
+      cursor: pointer;
+      width: calc(var(--ds-space-100, 8px) * 9);
+      height: calc(var(--ds-space-100, 8px) * 9);
+   }
+}
+.active {
+   box-shadow: 0px 0px 0px 1px var(--ds-border-inverse, white), 0px 0px 0px 3px var(--ds-border-selected, #2684ff);
+}
+.btn-group {
+   display: flex;
+   padding: 24px 0;
+   position: relative;
+   -webkit-box-align: center;
+   align-items: center;
+   -webkit-box-pack: end;
+   justify-content: flex-end;
+   gap: var(--ds-space-100, 8px);
+}

@@ -25,7 +25,7 @@ function Button({
    outline = false,
    children,
    onClick,
-
+   warning,
    type,
    ...passProps
 }) {
@@ -47,6 +47,7 @@ function Button({
       whiteBackGround,
       viewAll,
       blue,
+      warning,
       small,
       large,
       noHover,

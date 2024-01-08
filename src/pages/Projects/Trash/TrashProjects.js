@@ -22,10 +22,9 @@ export default function TrashProjects() {
             },
          },
       );
-      console.log(response);
       switch (response.status) {
          case 200:
-            const workProject = response.data.workProject;
+            const workProject = response.data.Project;
             if (workProject) {
                setTrashProject(workProject);
                const newProjects = [];

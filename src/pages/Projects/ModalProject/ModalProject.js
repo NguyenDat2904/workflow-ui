@@ -14,7 +14,7 @@ function ModalProject({ handleToggle, isOpen }) {
    const getProject = async () => {
       const projects = await projectService.getListProject({ deleteProject: false, limit: 4 });
       if (projects.status === 200) {
-         getProjectLimit(projects.data.workProject);
+         getProjectLimit(projects.data.Project);
       }
    };
    useEffect(() => {

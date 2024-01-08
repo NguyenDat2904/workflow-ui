@@ -1,0 +1,23 @@
+.btn-group {
+   display: flex;
+   padding: 24px 0;
+   position: relative;
+   -webkit-box-align: center;
+   align-items: center;
+   -webkit-box-pack: end;
+   justify-content: flex-end;
+   gap: var(--ds-space-100, 8px);
+}
+.equal-issue {
+   p {
+      font-size: 14px;
+   }
+   .list-issue {
+      padding-left: var(--ds-space-500, 40px);
+      margin: var(--ds-space-150, 12px) 0 0 0;
+      list-style-type: disc;
+      span {
+         font-weight: 500;
+      }
+   }
+}

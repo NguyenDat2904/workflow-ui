@@ -10,7 +10,7 @@ const RecentActivityOfUser = () => {
    const [dataListWork, setDataListWork] = useState([]);
    const APIListProjetc = async () => {
       const dataProject = await workServices.getListProject({ sortKey: '', deleteProject: false });
-      setDataListProject(dataProject.data.workProject);
+      setDataListProject(dataProject.data.data);
    };
    const APIListWork = async () => {
       const popDataProject = dataListProject?.length - 1;

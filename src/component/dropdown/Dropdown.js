@@ -34,7 +34,14 @@ const Dropdown = ({ children, actions, target, className }) => {
          {isOpen && (
             <div className={cx('dropdown-menu')}>
                {actions.map((action, index) => (
-                  <div key={index} className={cx('dropdown-item')} onClick={() => action.method(target)}>
+                  <div
+                     key={index}
+                     className={cx('dropdown-item')}
+                     onClick={() => {
+                        action.method(target);
+                        setIsOpen(false);
+                     }}
+                  >
                      {action.label}
                   </div>
                ))}

@@ -44,7 +44,7 @@ function ProjectList({ projectsList, setProjectsList, handleMoveToTrash }) {
             sortOrder: sortKey.Order,
          });
          if (sortName.status === 200) {
-            setProjectsList(sortName.data.workProject);
+            setProjectsList(sortName.data.data);
          }
       }
    };

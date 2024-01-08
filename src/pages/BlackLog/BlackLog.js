@@ -29,7 +29,9 @@ function BlackLog() {
 
    return (
       <div className={cx('wrapper')}>
-         <HeaderProject />
+         <div style={{ padding: '0 40px' }}>
+            <HeaderProject headerName={'Backlog'} />
+         </div>
          <div className={cx('main')}>
             <div className={cx('sprint-dropdown')}>
                {renderSprint}

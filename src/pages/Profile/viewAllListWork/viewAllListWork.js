@@ -20,7 +20,7 @@ const ViewAllListWork = () => {
    const parseuser = JSON.parse(user);
    const APIListProjetc = async () => {
       const dataProject = await workServices.getListProject(parseuser?._id);
-      setDataListProject(dataProject.data.workProject);
+      setDataListProject(dataProject.data.data);
       const APIuser = await userServices.getUserProfile({ deleteProject: false });
       setDataUserProfile(APIuser.data);
    };

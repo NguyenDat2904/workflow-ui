@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './HeaderProject.module.scss';
 import NavUrl from '~/component/NavUrl/NavUrl';
@@ -7,11 +7,12 @@ import { useForm } from 'react-hook-form';
 import Input from '~/component/Input/Input';
 import { AddPeople, DownIcon, SearchIcon } from '~/component/icon/icon';
 import Button from '~/component/Buttton/Button';
+import Navigation from '~/component/Navigation/Navigation';
 
 const cx = classNames.bind(style);
-function HeaderProject() {
+function HeaderProject({ members }) {
    const form = useForm();
-
+   const [isToggle, setIsToggle] = useState(false);
    return (
       <div className={cx('wrapper')}>
          <header className={cx('header-project')}>
@@ -99,7 +100,9 @@ function HeaderProject() {
                               leftIcon={<AddPeople />}
                               noChildren
                               className={cx('custom-btn')}
+                              onClick={() => setIsToggle(true)}
                            ></Button>
+                           {isToggle && <Navigation isOpen={isToggle} onClose={() => setIsToggle(false)} />}
                         </div>
                      </div>
                   </div>

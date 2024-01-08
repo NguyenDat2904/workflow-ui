@@ -13,7 +13,6 @@ $inactive-color: #f1f2f4;
       border-radius: 3px;
       cursor: pointer;
       transition: border-color 0.3s ease-in-out;
-
       &:focus {
          border-color: $primary-color;
          outline: none;
@@ -22,6 +21,8 @@ $inactive-color: #f1f2f4;
          padding: 0.5em;
       }
    }
+
+   
 
    .custom-arrow {
       position: absolute;

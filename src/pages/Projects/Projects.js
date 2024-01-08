@@ -29,7 +29,7 @@ function Projects() {
       setLoading(false);
       const projects = await projectService.getListProject({ deleteProject: false });
       if (projects.status === 200) {
-         setProjectsList(projects.data.workProject);
+         setProjectsList(projects.data.data);
          setPage(projects.data.page);
       }
       setLoading(true);

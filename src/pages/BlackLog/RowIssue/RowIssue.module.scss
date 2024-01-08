@@ -20,6 +20,10 @@
    text-decoration: none;
    margin-top: -1px;
    --jsw-card-background-color: var(--ds-surface-raised, #ffff);
+   &:hover {
+      background-color: var(--ds-background-selected-hovered, #deebff);
+      --jsw-card-background-color: var(--ds-background-selected-hovered, #deebff);
+   }
 }
 .icon-issue {
    grid-column: issue-type/span 1;
@@ -85,6 +89,7 @@
    grid-column: assignee/span 1;
    grid-row: card-detail/span 1;
    .img-assignee {
+      position: relative;
       width: 24px;
       height: 24px;
       display: block;
@@ -125,7 +130,6 @@
    height: 24px;
    margin: 0 4px;
    .custom-btn {
-      background-color: var(--ds-background-information, #deebff);
       span {
          border-radius: 3px;
          box-sizing: border-box;
@@ -134,7 +138,24 @@
          max-width: 100%;
          padding: var(--ds-space-025, 2px) 0;
          text-transform: uppercase;
+      }
+   }
+   .btn-blue {
+      background-color: var(--ds-background-information, #deebff);
+      span {
          color: var(--ds-text-information, #0747a6);
+      }
+   }
+   .btn-todo {
+      background-color: var(--ds-background-neutral, #dfe1e6);
+      span {
+         color: var(--ds-text, #42526e);
+      }
+   }
+   .btn-done {
+      background-color: var(--ds-background-success, #e3fcef);
+      span {
+         color: var(--ds-text-success, #006644);
       }
    }
 }

@@ -1,0 +1,36 @@
+.btn-group {
+   display: flex;
+   padding: 24px 0;
+   position: relative;
+   -webkit-box-align: center;
+   align-items: center;
+   -webkit-box-pack: end;
+   justify-content: flex-end;
+   gap: var(--ds-space-100, 8px);
+}
+.text-area {
+   height: 117px;
+   padding: 6px;
+   display: block;
+   box-sizing: border-box;
+   width: 100%;
+   min-width: 0px;
+   max-width: 100%;
+   margin: 0px;
+   position: relative;
+   flex: 1 1 100%;
+   border-radius: var(--ds-border-radius, 3px);
+   border-width: 2px;
+   font-size: 14px;
+   outline: none;
+   overflow: auto;
+   transition: background-color 0.2s ease-in-out 0s, border-color 0.2s ease-in-out 0s;
+   overflow-wrap: break-word;
+   resize: none;
+   border-style: solid;
+   max-height: 50vh;
+   color: var(--ds-text, #091e42);
+   &:focus-within {
+      border-color: #2684ff;
+   }
+}

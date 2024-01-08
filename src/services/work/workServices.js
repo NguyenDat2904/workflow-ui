@@ -18,12 +18,17 @@ class WorkService extends BaseServices {
    }
    // Delete Project
    deleteProject(id, userID) {
-      return this.patch(`work/delete-project/${id}`, { _idUser: userID });
+      return this.patch(`projects/delete-project/${id}`, { _idUser: userID });
    }
 
    // ChangeProject
    changeProject(id, name, key, userID) {
-      return this.patch(`/work/edit-project/${id}`, { nameProject: name, codeProject: key, _idUser: userID });
+      return this.patch(`/projects/edit-project/${id}`, { nameProject: name, codeProject: key, _idUser: userID });
+   }
+
+   // Get Member
+   getMember(param) {
+      return this.get(`/projects/list-member`, { params: { ...param } });
    }
 }
 export default WorkService;

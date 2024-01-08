@@ -102,6 +102,7 @@
    display: flex;
    padding-left: var(--ds-space-100, 8px);
    gap: 8px;
+   font-size: 14px;
 }
 
 // Main
@@ -180,9 +181,21 @@
 }
 .custom-input {
    width: 100%;
-   padding-left: 30px !important;
+   padding-left: 65px !important;
 }
 .custom-dropdown {
    font-size: 14px;
    text-align: start !important;
+   color: var(--ds-text, #091e42);
+   font-weight: 400;
+}
+
+.form-issue {
+   position: relative;
+   .custom-button {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      transform: translateY(-50%);
+   }
 }

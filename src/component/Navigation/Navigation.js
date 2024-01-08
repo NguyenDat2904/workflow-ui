@@ -3,52 +3,65 @@ import classNames from 'classnames/bind';
 import style from './Navigation.module.scss';
 import Modal from '../Modal/Modal';
 import Button from '../Buttton/Button';
-import { CloseIcon, DownIcon } from '../icon/icon';
+import { DownIcon } from '../icon/icon';
 import Input from '../Input/Input';
 import { Link } from 'react-router-dom';
-import Role from './Role/Role';
+import ControllerForm from '../ControllerForm/ControllerForm';
+import { useForm } from 'react-hook-form';
+import ModalSelect from '../ModalSelect/ModalSelect';
 const cx = classNames.bind(style);
-function Navigation() {
+function Navigation({ isOpen, onClose }) {
    const [toggle, setToggle] = useState(false);
+   const form = useForm();
    return (
       <div className={cx('wrapper')}>
-         <Modal width="400px" className={cx('modal')} maxWidth="400px">
+         <Modal width="400px" className={cx('modal')} maxWidth="400px" isOpen={isOpen} onClose={onClose}>
             <div className={cx('main')}>
                <div className={cx('nav')}>
                   <header className={cx('header')}>
                      <div className={cx('title')}>
                         <h1>Add People to WorkFlow</h1>
                      </div>
-                     <Button leftIcon={<CloseIcon />} noChildren backgroundNone></Button>
                   </header>
                   <form action="" className={cx('form')}>
                      <div className={cx('mb-16')}>
-                        <Input
-                           disableForm
-                           label="Email"
-                           placeholder="e.g., maria@company.com"
-                           search="search"
-                           className={cx('input')}
-                        />
+                        <ControllerForm form={form} name="email-user" label="Email" required id="email">
+                           <Input
+                              type="text"
+                              id="email"
+                              search="search"
+                              style={{ width: '100%', height: '40px' }}
+                              placeholder="e.g., maria@company.com"
+                           />
+                        </ControllerForm>
                      </div>
-                     <div
-                        className={cx('mb-16', 'pst-rlt')}
-                        onBlur={() => {
-                           setToggle(false);
-                        }}
-                     >
-                        <Input
-                           disableForm
-                           label="Role"
-                           placeholder="Administrator"
-                           search="search"
-                           rightIcon={<DownIcon />}
-                           className={cx('input')}
-                           onFocus={() => {
-                              setToggle(true);
-                           }}
-                        />
-                        {toggle && <Role />}
+                     <div className={cx('mb-16')} onClick={() => setToggle(!toggle)}>
+                        <ControllerForm form={form} name="role" label="Role" required id="role">
+                           <Input
+                              type="select"
+                              rightIcon={<DownIcon />}
+                              id="role"
+                              search="search"
+                              style={{ width: '100%', height: '48px' }}
+                              placeholder="Administrator"
+                           />
+                        </ControllerForm>
+                        {toggle && (
+                           <ModalSelect
+                              width="100%"
+                              data={[
+                                 {
+                                    label: 'Administrator',
+                                 },
+                                 {
+                                    label: 'Manager',
+                                 },
+                                 {
+                                    label: 'Member',
+                                 },
+                              ]}
+                           />
+                        )}
                      </div>
                      <div className={cx('mb-16', 'text-desc')}>
                         You're inviting people as admins. Admins can set up projects, add more people, install apps, and
@@ -59,8 +72,11 @@ function Navigation() {
                         This site is protected by reCAPTCHA and the Google <Link>Privacy Policy</Link> and{' '}
                         <Link className={cx('text-link')}>Terms of Service</Link> apply.
                      </div>
-                     <div className={cx('mb-16', 'text-end')}>
-                        <Button blue>Add</Button>
+                     <div className={cx('btn-group')}>
+                        <Button onClick={onClose}>Cancel</Button>
+                        <Button blue type="submit">
+                           Update
+                        </Button>
                      </div>
                   </form>
                </div>

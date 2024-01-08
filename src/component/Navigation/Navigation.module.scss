@@ -34,9 +34,7 @@
 }
 .form {
    margin: 24px 0;
-   .mb-16 {
-      margin-bottom: 16px;
-   }
+
    .text-desc {
       font-size: 11px;
       color: var(--ds-text-subtlest, #6b778c);
@@ -44,4 +42,18 @@
    .input {
       height: 44px;
    }
+}
+.mb-16 {
+   margin-bottom: 16px;
+   position: relative;
+}
+.btn-group {
+   display: flex;
+   padding-top: 24px;
+   position: relative;
+   -webkit-box-align: center;
+   align-items: center;
+   -webkit-box-pack: end;
+   justify-content: flex-end;
+   gap: var(--ds-space-100, 8px);
 }

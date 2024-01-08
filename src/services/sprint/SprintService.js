@@ -9,8 +9,14 @@ class SprintService extends BaseServices {
       return this.get(`/sprints/list/${id}`, { params: { ...param } });
    }
 
-   createSprint(key, data) {
-      return this.post(`/sprints/${key}/add`, data);
+   createSprint(key) {
+      return this.post(`/sprints/${key}/add`);
+   }
+   updateSprint(key, id, data) {
+      return this.put(`/sprints/${key}/update/${id}`, data);
+   }
+   deleteSprint(key, id) {
+      return this.delete(`/sprints/${key}/${id}`);
    }
 }
 export default SprintService;

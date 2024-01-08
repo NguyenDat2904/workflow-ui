@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import classNames from 'classnames/bind';
-import style from './Select.scss';
+import style from './Select.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -14,12 +14,14 @@ export default function Select({ options, prompt, ...props }) {
    return (
       <div className={cx('custom-select')}>
          <select className={cx('select')} onBlur={handleBlur} onClick={() => setIsFocused(!isFocused)} {...props}>
-            <option className={cx('option')} value="">
-               {prompt}
-            </option>
-            {options.map((option) => (
-               <option key={option.value} className={cx('option')} value={option.value}>
-                  {option.label}
+            {prompt && (
+               <option className={cx('option')} value="">
+                  {prompt}
+               </option>
+            )}
+            {options?.map((option, index) => (
+               <option key={index} className={cx('option')} value={option?.value}>
+                  <span>{option.label}</span>
                </option>
             ))}
          </select>

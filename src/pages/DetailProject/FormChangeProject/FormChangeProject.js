@@ -11,8 +11,8 @@ import schema from './FormValidation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { UserContext } from '~/contexts/user/userContext';
 import WorkService from '~/services/work/workServices';
-import ModalIcon from '../ModalIcon/ModalIcon';
 import { ProjectContext } from '~/contexts/project/projectContext';
+import FormIcon from '../FormIcon/FormIcon';
 
 const cx = classNames.bind(style);
 function FormChangeProject({ id }) {
@@ -59,7 +59,7 @@ function FormChangeProject({ id }) {
 
    return (
       <div>
-         {toggle && <ModalIcon isOpen={toggle} isClose={() => setToggle(false)} />}
+         {toggle && <FormIcon isOpen={toggle} isClose={() => setToggle(false)} />}
          <form action="" className={cx('form')} onSubmit={form.handleSubmit(changeDetailProject)}>
             <div>
                <div className={cx('change-icon')}>

@@ -100,6 +100,22 @@
       color: var(--ds-text-inverse, #ffffff);
    }
 }
+.warning {
+   background: var(--ds-background-danger-bold, #c9372c);
+   border-width: 0px;
+   border-radius: var(--ds-border-radius, 3px);
+   text-decoration: none;
+   transition: background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
+   white-space: nowrap;
+   padding: 0px 10px;
+   color: var(--ds-text-inverse, #ffffff);
+   &:hover {
+      background: var(--ds-background-danger-bold-hovered, #ae2e24);
+      text-decoration: inherit;
+      transition-duration: 0s, 0.15s;
+      color: var(--ds-text-inverse, #ffffff);
+   }
+}
 .viewAll {
    position: relative;
    display: flex;

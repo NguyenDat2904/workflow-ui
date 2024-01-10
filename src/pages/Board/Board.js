@@ -4,16 +4,33 @@ import style from './Board.scss';
 import { Button } from '../../component/Inputs/Inputs';
 import HeaderProject from '../BlackLog/HeaderProject/HeaderProject';
 import { Card } from '~/component/cards/Cards';
+import { ReactComponent as VeryUpArrow } from '../../asset/icons/veryUpArrow.svg';
+import { ReactComponent as UpArrow } from '../../asset/icons/upArrow.svg';
+import { ReactComponent as DownArrow } from '../../asset/icons/downArrow.svg';
+import { ReactComponent as Equal } from '../../asset/icons/equal.svg';
 
 const cx = classNames.bind(style);
 
 function Issue({ issueDetail, ...props }) {
-   console.log(issueDetail);
+   // console.log(issueDetail);
+
+   let priorityIcon;
+   if (issueDetail.priority === 'High') {
+      priorityIcon = <UpArrow />;
+   } else if (issueDetail.priority === 'Medium') {
+      priorityIcon = <Equal />;
+   } else if (issueDetail.priority === 'Low') {
+      priorityIcon = <DownArrow />;
+   } else if (issueDetail.priority === 'Highest') {
+      priorityIcon = <VeryUpArrow />;
+   }
+
    return (
       <Card className={cx('task')} {...props}>
          <p>{issueDetail.summary}</p>
          <div className={cx('metadata')}>
             <img src={`${issueDetail.assignee.img}`} alt="" />
+            {priorityIcon}
          </div>
       </Card>
    );
@@ -26,6 +43,7 @@ export default function Board() {
          name: 'Huy Van Hoang',
          img: 'https://i.pravatar.cc/300',
       },
+      priority: 'High',
    };
 
    const rightSection = (

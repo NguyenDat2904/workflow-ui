@@ -114,12 +114,17 @@ $color-border: rgba(9, 30, 66, 0.08);
 }
 
 .task {
-   background-color: white;
-   padding: 0.5rem;
+   padding: 0.5rem !important;
    border-radius: 3px;
-   align-items: baseline;
+   align-items: baseline !important;
    .metadata {
       display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      svg {
+         width: 1rem;
+         color: orange;
+      }
       img {
          width: 2rem;
          border-radius: 50%;

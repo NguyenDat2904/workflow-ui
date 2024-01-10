@@ -24,7 +24,7 @@ export default function Board() {
                name: 'Huy Van Hoang',
                img: 'https://i.pravatar.cc/300',
             },
-            priority: 'Low',
+            priority: 'Highest',
          },
          {
             summary: 'Sub Issue 77',

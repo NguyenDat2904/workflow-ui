@@ -64,7 +64,10 @@ $color-border: rgba(9, 30, 66, 0.08);
    }
 
    .task-board {
+      position: relative;
       overflow: auto;
+      padding: 1rem 0;
+      height: 75vh;
    }
 
    .task-state {
@@ -77,15 +80,18 @@ $color-border: rgba(9, 30, 66, 0.08);
       .state-title {
          font-size: 1.25rem;
          font-weight: bold;
-         margin-bottom: 1rem;
       }
    }
 
    .task-status {
+      position: absolute;
+      top: 0;
       display: flex;
       gap: 1rem;
       div {
          @extend .flex-1;
+         font-weight: 600;
+         text-transform: uppercase;
          border-radius: 5px 5px 0 0px;
          border-top: 1px solid $color-border;
          background-color: $task-container-background;
@@ -93,10 +99,13 @@ $color-border: rgba(9, 30, 66, 0.08);
    }
 
    .task-display {
+      padding: 1.2rem 0;
       width: 100%;
 
       .main-task {
+         width: 100%;
          padding: 0.5rem 1rem;
+         background-color: white;
       }
 
       .sub-tasks-container {

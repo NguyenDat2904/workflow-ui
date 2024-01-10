@@ -3,47 +3,68 @@ import classNames from 'classnames/bind';
 import style from './Board.scss';
 import { Button } from '../../component/Inputs/Inputs';
 import HeaderProject from '../BlackLog/HeaderProject/HeaderProject';
-import { Card } from '~/component/cards/Cards';
-import { ReactComponent as VeryUpArrow } from '../../asset/icons/veryUpArrow.svg';
-import { ReactComponent as UpArrow } from '../../asset/icons/upArrow.svg';
-import { ReactComponent as DownArrow } from '../../asset/icons/downArrow.svg';
-import { ReactComponent as Equal } from '../../asset/icons/equal.svg';
+import Issue from './Issue';
 
 const cx = classNames.bind(style);
 
-function Issue({ issueDetail, ...props }) {
-   // console.log(issueDetail);
-
-   let priorityIcon;
-   if (issueDetail.priority === 'High') {
-      priorityIcon = <UpArrow />;
-   } else if (issueDetail.priority === 'Medium') {
-      priorityIcon = <Equal />;
-   } else if (issueDetail.priority === 'Low') {
-      priorityIcon = <DownArrow />;
-   } else if (issueDetail.priority === 'Highest') {
-      priorityIcon = <VeryUpArrow />;
-   }
-
-   return (
-      <Card className={cx('task')} {...props}>
-         <p>{issueDetail.summary}</p>
-         <div className={cx('metadata')}>
-            <img src={`${issueDetail.assignee.img}`} alt="" />
-            {priorityIcon}
-         </div>
-      </Card>
-   );
-}
-
 export default function Board() {
-   const sampleIssue = {
-      summary: 'Sub Issue',
-      assignee: {
-         name: 'Huy Van Hoang',
-         img: 'https://i.pravatar.cc/300',
-      },
-      priority: 'High',
+   const allIssues = {
+      todo: [
+         {
+            summary: 'Sub Issue 1',
+            assignee: {
+               name: 'Huy Van Hoang',
+               img: 'https://i.pravatar.cc/300',
+            },
+            priority: 'Low',
+         },
+         {
+            summary: 'Sub Issue [',
+            assignee: {
+               name: 'Huy Van Hoang',
+               img: 'https://i.pravatar.cc/300',
+            },
+            priority: 'Low',
+         },
+         {
+            summary: 'Sub Issue 77',
+            assignee: {
+               name: 'Huy Van Hoang',
+               img: 'https://i.pravatar.cc/300',
+            },
+            priority: 'Low',
+         },
+      ],
+      inProgress: [
+         {
+            summary: 'Sub Issue',
+            assignee: {
+               name: 'Huy Van Hoang',
+               img: 'https://i.pravatar.cc/300',
+            },
+            priority: 'High',
+         },
+      ],
+      review: [
+         {
+            summary: 'Sub Issue',
+            assignee: {
+               name: 'Huy Van Hoang',
+               img: 'https://i.pravatar.cc/300',
+            },
+            priority: 'Lowest',
+         },
+      ],
+      done: [
+         {
+            summary: 'Sub Issue',
+            assignee: {
+               name: 'Huy Van Hoang',
+               img: 'https://i.pravatar.cc/300',
+            },
+            priority: 'Medium',
+         },
+      ],
    };
 
    const rightSection = (
@@ -67,28 +88,24 @@ export default function Board() {
                <div className={cx('main-task')}>Main Issue 1</div>
                <div className={cx('sub-tasks-container')}>
                   <div className={cx('sub-tasks')}>
-                     <Issue issueDetail={sampleIssue} />
-                     <Issue issueDetail={sampleIssue} />
-                     <Issue issueDetail={sampleIssue} />
-                     <Issue issueDetail={sampleIssue} />
+                     {allIssues.todo.map((issue, index) => (
+                        <Issue key={index} issueDetail={issue} />
+                     ))}
                   </div>
                   <div className={cx('sub-tasks')}>
-                     <Issue issueDetail={sampleIssue} />
-                     <Issue issueDetail={sampleIssue} />
-                     <Issue issueDetail={sampleIssue} />
-                     <Issue issueDetail={sampleIssue} />
+                     {allIssues.inProgress.map((issue, index) => (
+                        <Issue key={index} issueDetail={issue} />
+                     ))}
                   </div>
                   <div className={cx('sub-tasks')}>
-                     <Issue issueDetail={sampleIssue} />
-                     <Issue issueDetail={sampleIssue} />
-                     <Issue issueDetail={sampleIssue} />
-                     <Issue issueDetail={sampleIssue} />
+                     {allIssues.review.map((issue, index) => (
+                        <Issue key={index} issueDetail={issue} />
+                     ))}
                   </div>
                   <div className={cx('sub-tasks')}>
-                     <Issue issueDetail={sampleIssue} />
-                     <Issue issueDetail={sampleIssue} />
-                     <Issue issueDetail={sampleIssue} />
-                     <Issue issueDetail={sampleIssue} />
+                     {allIssues.done.map((issue, index) => (
+                        <Issue key={index} issueDetail={issue} />
+                     ))}
                   </div>
                </div>
             </div>

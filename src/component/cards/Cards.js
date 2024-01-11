@@ -1,6 +1,10 @@
 import React from 'react';
 import './cards.scss';
 
-export function Card({ children, className }) {
-    return <div className={`card ${className}`}>{children}</div>;
-}
+const Card = React.forwardRef(({ children, className }, ref) => (
+   <div ref={ref} className={`card ${className}`}>
+      {children}
+   </div>
+));
+
+export { Card };

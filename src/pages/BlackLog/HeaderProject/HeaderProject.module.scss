@@ -1,7 +1,15 @@
 .wrapper {
-   padding: 0px 40px;
    .header-project {
       margin: var(--ds-space-300, 24px) 0 var(--ds-space-200, 16px) 0;
+      .header-title {
+         padding-top: 0.5rem;
+         display: flex;
+         justify-content: space-between;
+         .title-h1 {
+            font-size: 1.4rem;
+            font-weight: 500;
+         }
+      }
    }
 }
 .nav-project {

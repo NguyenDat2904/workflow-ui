@@ -4,8 +4,8 @@ import style from './inputs.scss';
 
 const cx = classNames.bind(style);
 
-export function Input({ error, ...props }) {
-   return <input className={cx('input', error && 'input-error')} {...props} />;
+export function Input({ className, error, ...props }) {
+   return <input className={cx('input', error && 'input-error', className)} {...props} />;
 }
 
 export function Button({ children, buttonStyle, className, ...props }) {

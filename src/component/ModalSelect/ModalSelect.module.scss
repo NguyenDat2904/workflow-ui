@@ -42,10 +42,10 @@
 .flex-option {
    display: flex;
    align-items: center;
+   gap: 8px;
    .img-icon {
-      padding-right: var(--ds-space-100, 8px);
-      width: var(--_zb0g5d);
-      height: var(--_zb0g5d);
+      width: var(--_zb0g5d) !important;
+      height: var(--_zb0g5d) !important;
    }
    span {
       font-size: 14px;

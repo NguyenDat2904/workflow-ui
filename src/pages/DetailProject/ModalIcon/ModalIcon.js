@@ -16,7 +16,7 @@ function ModalIcon({ width, isOpen, isClose, children, header, imgBanner, leftIc
             )}
             <div className={cx('main')}>
                <div className={cx('nav')}>
-                  <div className={cx("header-popup")}>
+                  <div className={cx('header-popup')}>
                      {leftIcon && <span className={cx('left-icon')}>{leftIcon}</span>}
                      <header className={cx('header')}>{header}</header>
                   </div>

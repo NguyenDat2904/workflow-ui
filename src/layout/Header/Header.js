@@ -2,15 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import Button from '~/component/Buttton/Button';
 import classNames from 'classnames/bind';
 import style from './Header.module.scss';
-import {
-   DownIcon,
-   HelpIcon,
-   NotificationIcon,
-   SearchIcon,
-   SettingIcon,
-   ShuttleIcon,
-   UserIcon,
-} from '~/component/icon/icon';
+import { DownIcon, NotificationIcon, SearchIcon, ShuttleIcon, UserIcon } from '~/component/icon/icon';
 import { useLocation } from 'react-router-dom';
 import ModalProject from '~/pages/Projects/ModalProject/ModalProject';
 import ModalAccount from '~/pages/Profile/ModalAccount/ModalAccount';
@@ -96,104 +88,105 @@ function Header() {
       }
    };
    return (
-      <header className={cx('header-layout')}>
-         <nav>
-            <Button leftIcon={<ShuttleIcon />} backgroundNone noChildren to="/"></Button>
-            <div className={cx('list-menu')}>
-               <div
-                  className={cx('menu', location.pathname === '/your-work' && 'active')}
-                  onClick={() => handleToggle('yourWork')}
-               >
-                  <Button rightIcon={<DownIcon />} backgroundNone to="/your-work">
-                     Your work
-                  </Button>
-               </div>
-               <div
-                  className={cx('menu', location.pathname === '/project' && 'active')}
-                  onClick={() =>
-                     setToggleMenu((pre) => ({
-                        ...pre,
-                        project: true,
-                     }))
-                  }
-               >
-                  <Button
-                     rightIcon={<DownIcon />}
-                     backgroundNone
-                     className={cx(toggleMenu.project && 'toggle', 'text-blue')}
+      <div className={cx('header-nav')}>
+         <header className={cx('header-layout')}>
+            <nav>
+               <Button leftIcon={<ShuttleIcon />} backgroundNone noChildren to="/"></Button>
+               <div className={cx('list-menu')}>
+                  <div
+                     className={cx('menu', location.pathname === '/your-work' && 'active')}
+                     onClick={() => handleToggle('yourWork')}
                   >
-                     Projects
-                  </Button>
+                     <Button rightIcon={<DownIcon />} backgroundNone to="/your-work">
+                        Your work
+                     </Button>
+                  </div>
+                  <div
+                     className={cx('menu', location.pathname === '/project' && 'active')}
+                     onClick={() =>
+                        setToggleMenu((pre) => ({
+                           ...pre,
+                           project: true,
+                        }))
+                     }
+                  >
+                     <Button
+                        rightIcon={<DownIcon />}
+                        backgroundNone
+                        className={cx(toggleMenu.project && 'toggle', 'text-blue')}
+                     >
+                        Projects
+                     </Button>
+                  </div>
+                  <ModalProject
+                     handleToggle={() =>
+                        setToggleMenu((pre) => ({
+                           ...pre,
+                           project: !toggleMenu.project,
+                        }))
+                     }
+                     isOpen={toggleMenu.project}
+                  />
+                  <div className={cx('menu')}>
+                     <Button blue>Create</Button>
+                  </div>
                </div>
-               <ModalProject
-                  handleToggle={() =>
-                     setToggleMenu((pre) => ({
-                        ...pre,
-                        project: !toggleMenu.project,
-                     }))
-                  }
-                  isOpen={toggleMenu.project}
-               />
-               <div className={cx('menu')}>
-                  <Button blue>Create</Button>
-                  {/* <Navigation /> */}
+            </nav>
+            <div className={cx('nav-right')}>
+               <div className={cx('nav-icon')}>
+                  <Input
+                     placeholder="Search"
+                     leftIcon={<SearchIcon />}
+                     type="text"
+                     search="search"
+                     className={cx('custom-input')}
+                  />
                </div>
-            </div>
-         </nav>
-         <div className={cx('nav-right')}>
-            <div className={cx('nav-icon')}>
-               <Input
-                  placeholder="Search"
-                  leftIcon={<SearchIcon />}
-                  type="text"
-                  search="search"
-                  className={cx('custom-input')}
-               />
-            </div>
-            <div className={cx('nav-icon')}>
-               <Button
-                  className={cx('button-icon')}
-                  noChildren
-                  backgroundNone
-                  borderRadius
-                  leftIcon={<NotificationIcon />}
-               ></Button>
-            </div>
-            <div
-               className={cx('nav-icon')}
-               onClick={() =>
-                  setToggleMenu((pre) => ({
-                     ...pre,
-                     user: true,
-                  }))
-               }
-               ref={elementRef}
-            >
-               {getUserData?.img === '' || getUserData?.img === undefined ? (
+               <div className={cx('nav-icon')}>
                   <Button
                      className={cx('button-icon')}
                      noChildren
                      backgroundNone
                      borderRadius
-                     leftIcon={<UserIcon />}
+                     leftIcon={<NotificationIcon />}
                   ></Button>
-               ) : (
-                  <img src={getUserData?.img} alt="" />
-               )}
+               </div>
+               <div
+                  className={cx('nav-icon')}
+                  onClick={() =>
+                     setToggleMenu((pre) => ({
+                        ...pre,
+                        user: true,
+                     }))
+                  }
+                  ref={elementRef}
+               >
+                  {getUserData?.img === '' || getUserData?.img === undefined ? (
+                     <Button
+                        className={cx('button-icon')}
+                        noChildren
+                        backgroundNone
+                        borderRadius
+                        leftIcon={<UserIcon />}
+                     ></Button>
+                  ) : (
+                     <img src={getUserData?.img} alt="" />
+                  )}
+               </div>
+               <ModalAccount
+                  getUserData={getUserData}
+                  position={position.left}
+                  handleToggle={() =>
+                     setToggleMenu((pre) => ({
+                        ...pre,
+                        user: false,
+                     }))
+                  }
+                  isOpen={toggleMenu.user}
+               />
             </div>
-            <ModalAccount
-               getUserData={getUserData}
-               position={position.left}
-               handleToggle={() =>
-                  setToggleMenu((pre) => ({
-                     ...pre,
-                     user: false,
-                  }))
-               }
-               isOpen={toggleMenu.user}
-            />
-         </div>
-      </header>
+         </header>
+      </div>
    );
 }
 

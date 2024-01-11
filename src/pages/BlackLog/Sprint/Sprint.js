@@ -4,9 +4,6 @@ import style from '../BlackLog.module.scss';
 import { AddIcon, DownIcon, MenuIcon } from '~/component/icon/icon';
 import RowIssue from '../RowIssue/RowIssue';
 import Button from '~/component/Buttton/Button';
-import ControllerForm from '~/component/ControllerForm/ControllerForm';
-import { useForm } from 'react-hook-form';
-import Input from '~/component/Input/Input';
 import Dropdown from '~/component/dropdown/Dropdown';
 import moment from 'moment';
 import ModalCreateSprint from '../ModalCreateSprint/ModalCreateSprint';
@@ -15,32 +12,20 @@ import { ProjectContext } from '~/contexts/project/projectContext';
 import IssueService from '~/services/issue/issueService';
 import ModalAccept from '~/component/ModalAccept/ModalAccept';
 import SprintService from '~/services/sprint/SprintService';
-import ModalSelect from '~/component/ModalSelect/ModalSelect';
+import CreateIssue from './CreateIssue/CreateIssue';
+import Modal from '~/component/Modal/Modal';
 const cx = classNames.bind(style);
 
 function Sprint({ data, start = false, handleCreateSprint, setPrints, members }) {
    const { detailProject } = useContext(ProjectContext);
 
-   const form = useForm({
-      mode: 'all',
-      defaultValues: {
-         summary: '',
-      },
-   });
    // 1. State
    const [isDropdownOpen, setDropdownOpen] = useState(false);
    const [isFocus, setIsFocus] = useState(true);
    const [isToggle, setIsToggle] = useState(false);
    const [isToggleComplete, setIsToggleComplete] = useState(false);
    const [isToggleAccept, setIsToggleAccept] = useState(false);
-   const [isToggleIssue, setIsToggleIssue] = useState(false);
    const [isToggleStartSprint, setIsToggleStartSprint] = useState(false);
-
-   const [valueTask, setValueTask] = useState({
-      label: 'Story',
-      key: 'USER_STORY',
-      img: 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium',
-   });
 
    const [issues, setIssues] = useState([]);
 
@@ -72,20 +57,7 @@ function Sprint({ data, start = false, handleCreateSprint, setPrints, members })
          if (listPrints.status === 200) setPrints(listPrints.data.sprint);
       }
    };
-   // 3.2. Create issue
-   const handleCreateIssue = async (dataForm) => {
-      const dataIssue = {
-         ...dataForm,
-         issueType: valueTask.key,
-         sprintID: data?._id,
-      };
-      const createIssue = await issueService.createIssue(detailProject?.codeProject, dataIssue);
-      if (createIssue.status === 200) {
-         const listIssue = await issueService.getIssue(detailProject?.codeProject, { sprintID: data._id });
-         if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
-      }
-      form.reset();
-   };
+
    // 4. Render
    const renderIssue = issues
       ?.map((issue) => {
@@ -248,7 +220,7 @@ function Sprint({ data, start = false, handleCreateSprint, setPrints, members })
                   <>{renderIssue}</>
                )}
                <div className={cx('create-issue')}>
-                  <div className={cx('create-btn')} onBlur={() => setIsFocus(false)}>
+                  <div className={cx('create-btn')}>
                      {isFocus ? (
                         <Button
                            leftIcon={<AddIcon />}
@@ -260,59 +232,9 @@ function Sprint({ data, start = false, handleCreateSprint, setPrints, members })
                            Create issue
                         </Button>
                      ) : (
-                        <form action="" className={cx('form-issue')} onSubmit={form.handleSubmit(handleCreateIssue)}>
-                           <ControllerForm form={form} name="summary">
-                              <Input className={cx('custom-input')} autoFocus placeholder="What need to be done?" />
-                           </ControllerForm>
-                           <Button
-                              className={cx('custom-button')}
-                              rightIcon={<DownIcon />}
-                              style={{ cursor: 'pointer', height: '24px', padding: '0 4px' }}
-                              onClick={() => {
-                                 setIsToggleIssue(!isToggleIssue);
-                              }}
-                              type="button"
-                           >
-                              <img
-                                 src={
-                                    valueTask?.img ||
-                                    'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium'
-                                 }
-                                 alt=""
-                              />
-                           </Button>
-                           {isToggleIssue && (
-                              <ModalSelect
-                                 width="160px"
-                                 widthImg="24px"
-                                 setValue={setValueTask}
-                                 onClose={() => setIsToggleIssue(false)}
-                                 data={[
-                                    valueTask?.label !== 'Story'
-                                       ? {
-                                            label: 'Story',
-                                            key: 'USER_STORY',
-                                            img: 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium',
-                                         }
-                                       : null,
-                                    valueTask?.label !== 'Bug'
-                                       ? {
-                                            label: 'Bug',
-                                            key: 'BUG',
-                                            img: 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium',
-                                         }
-                                       : null,
-                                    valueTask?.label !== 'Task'
-                                       ? {
-                                            label: 'Task',
-                                            key: 'TASK',
-                                            img: 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium',
-                                         }
-                                       : null,
-                                 ].filter((item) => item !== null)}
-                              />
-                           )}
-                        </form>
+                        <Modal isOpen={true} relative onClose={() => setIsFocus(true)}>
+                           <CreateIssue setIssues={setIssues} idPrint={data?._id} />
+                        </Modal>
                      )}
                   </div>
                </div>

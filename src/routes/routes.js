@@ -19,6 +19,8 @@ import DetailProject from '~/pages/DetailProject/DetailProject';
 import TrashProjects from '~/pages/Projects/Trash/TrashProjects';
 import ProjectAccess from '~/pages/Projects/Access/ProjectAccess';
 import LayoutSideBarChildren from '~/layout/LayoutSideBarChildren/DefaultLayout';
+import VerifyAddPeople from '~/pages/VerifyAddPeople/VerifyAddPeople';
+import DetailIssue from '~/pages/DretailIssue/DetailIssue';
 
 const privateRoutes = [
    { path: '/project/:_id/settings/details', component: DetailProject, layout: LayoutSideBarChildren },
@@ -38,6 +40,8 @@ const privateRoutes = [
    { path: '/project/trash', component: TrashProjects, layout: HeaderOnly },
    { path: '/project/:_id/board', component: Board, layout: LayoutSideBarChildren },
    { path: '/project/:_id/settings/access', component: ProjectAccess, layout: HeaderOnly },
+   { path: '/add-people', component: VerifyAddPeople, layout: null },
+   { path: '/projects/:id/issues/:id_issue', component: DetailIssue },
 ];
 
 const publicRoutes = [

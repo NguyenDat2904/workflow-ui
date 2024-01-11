@@ -14,7 +14,7 @@ function ModalProject({ handleToggle, isOpen }) {
    const getProject = async () => {
       const projects = await projectService.getListProject({ deleteProject: false, limit: 4 });
       if (projects.status === 200) {
-         getProjectLimit(projects.data.Project);
+         getProjectLimit(projects.data.data);
       }
    };
    useEffect(() => {
@@ -24,7 +24,13 @@ function ModalProject({ handleToggle, isOpen }) {
 
    const renderListProject = projectLimit?.map((project) => {
       return (
-         <Button viewAll key={project?._id} className={cx('custom-button')}>
+         <Button
+            viewAll
+            key={project?._id}
+            className={cx('custom-button')}
+            to={`/project/${project?.codeProject}/black-log`}
+            onClick={handleToggle}
+         >
             <div className={cx('block')}>
                <div className={cx('img')}>
                   <span>

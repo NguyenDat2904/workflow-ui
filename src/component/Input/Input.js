@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import style from './Input.module.scss';
 const cx = classNames.bind(style);
 
-function Input({ className, inputClass, type, search, leftIcon, rightIcon, width, ...passProps }) {
+function Input({ className, inputClass, type, search, leftIcon, rightIcon, width, ref, ...passProps }) {
    const classes = cx('input', leftIcon && 'paddingLeft', rightIcon && 'paddingRight', {
       [className]: className,
       inputClass,

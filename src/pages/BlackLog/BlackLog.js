@@ -31,6 +31,7 @@ function BlackLog() {
          if (listMembers.status === 200) setMembers(listMembers.data);
       }
    };
+
    useEffect(() => {
       getMembers();
       getListSprints();

@@ -42,14 +42,14 @@ function Login() {
          userName: username,
          passWord: password,
       });
-      if (response.status === 200) {
+      if (response?.status === 200) {
          localStorage.setItem('user', JSON.stringify(response.data));
          localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
          setDataUserProfile(response.data);
          setIsAuthenticated(true);
          navigate('/project');
       } else {
-         switch (response.status) {
+         switch (response?.status) {
             case 404:
                toast.error('Invalid username or password.');
                break;

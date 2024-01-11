@@ -1,0 +1,261 @@
+.container-issue {
+   --ds-columns-num: 12;
+   --ds-grid-spacing: 40px;
+   display: flex;
+   position: relative;
+   max-width: 100%;
+   align-items: normal;
+   .section-left {
+      --_5qq0z5: hidden;
+      --_bpn462: auto;
+      --_xhypko: 0px;
+      --_8gjczv: 1680px;
+      padding-left: max(calc((100% - var(--_8gjczv)) / 2), 0px);
+      min-width: 380px;
+      overflow-y: var(--_bpn462);
+      overflow-x: var(--_5qq0z5);
+      flex-basis: 0;
+      flex-shrink: 0;
+      flex-grow: 1;
+   }
+   .section-center {
+      --_1ravlqm: var(--c-);
+      --_1o4cubd: translate3d(-50%, 0, 0);
+      width: 26px;
+   }
+   .section-right {
+      flex: 0 1 calc(35% + 12px);
+      --_5qq0z5: hidden;
+      --_bpn462: auto;
+      --_xhypko: 255px;
+      --_8gjczv: 1680px;
+      transition: min-width 0.15s;
+      min-width: max(calc((100% - var(--_8gjczv)) / 2 + var(--_xhypko)), var(--_xhypko));
+      padding-right: max(calc((100% - var(--_8gjczv)) / 2), 0px);
+      overflow-y: var(--_bpn462);
+      overflow-x: var(--_5qq0z5);
+   }
+}
+.wrapper-left {
+   padding-left: 2pc;
+   padding-right: var(--ds-space-300, 24px);
+   padding-bottom: 2pc;
+   padding-top: 24px;
+}
+.issue-header {
+   margin-top: var(--ds-space-100, 16px);
+   h1 {
+      padding: 6px 0;
+      line-height: 28px;
+      font-weight: 500;
+      font-size: 24px;
+      color: #172b4d;
+   }
+   .custom-input {
+      width: 100%;
+      &:hover {
+         background: var(--ds-background-neutral-subtle-hovered, #ebecf0);
+      }
+   }
+}
+.issue-children {
+   margin-top: 40px;
+   font-size: 14px;
+   height: inherit;
+   letter-spacing: normal;
+   .issue-children-list {
+      margin: 8px 0;
+   }
+}
+.issue-children-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   h2 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.02px;
+   }
+   .custom-btn {
+      width: 24px;
+      height: 24px;
+      svg {
+         width: 16px;
+         height: 16px;
+      }
+   }
+}
+.show {
+   span {
+      font-size: 14px;
+      font-weight: 400;
+   }
+   .comment {
+      margin-left: 8px;
+      span {
+         color: var(--ds-text-selected, #0c66e4);
+         background-color: var(--ds-background-selected, #e9f2ff);
+         padding: 4px;
+         border-radius: 3px;
+         font-weight: 500;
+         cursor: default;
+      }
+   }
+}
+.img-comment {
+   margin-right: var(--ds-space-150, 9pt);
+   margin-top: var(--ds-space-025, 2px);
+   width: 32px;
+   height: 32px;
+   img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+   }
+}
+.form-comment {
+   flex: 1;
+   .custom-input {
+      width: 100%;
+   }
+}
+.list-comment {
+   margin: 24px 0 9pt 0;
+}
+.item-comment {
+   margin-top: var(--ds-space-100, 8px);
+}
+.item-grid {
+   display: grid;
+   box-sizing: border-box;
+   gap: var(--ds-space-100, 8px);
+   position: relative;
+   grid-template-columns: auto 1fr;
+   grid-template-areas: 'avatar-area comment-area';
+}
+.content-comment {
+   min-width: 0px;
+   padding-top: var(--ds-space-025, 2px);
+   grid-area: comment-area;
+   overflow-wrap: break-word;
+   .content-flex {
+      display: flex;
+      box-sizing: border-box;
+      gap: var(--ds-space-075, 6px);
+      flex-direction: column;
+      justify-content: stretch;
+      h3 {
+         margin-bottom: 0;
+         span {
+            font-size: var(--ds-font-size-100, 14px);
+            font-weight: normal;
+            letter-spacing: 0px;
+            text-transform: none;
+            color: var(--ds-text-subtle, #42526e);
+            font-weight: var(--ds-font-weight-medium, 500);
+         }
+         .content-header {
+            display: flex;
+         }
+      }
+   }
+}
+.control-comment {
+   display: flex;
+   gap: var(--ds-space-100, 8px);
+   -webkit-box-align: center;
+   align-items: center;
+   flex-flow: wrap;
+   span {
+      font-weight: 500;
+      font-size: 14px;
+      &:hover {
+         text-decoration: underline;
+         cursor: pointer;
+      }
+   }
+   .content-time {
+      color: var(--ds-text-subtlest, #42526e);
+      font-weight: 400 !important;
+      &:hover {
+         text-decoration: none;
+         cursor: pointer;
+      }
+   }
+}
+
+// Right
+.section-right {
+   box-sizing: border-box;
+   flex: 0 1 calc(35% + 12px);
+   --_5qq0z5: hidden;
+   --_bpn462: auto;
+   --_xhypko: 255px;
+   --_8gjczv: 1680px;
+   transition: min-width 0.15s;
+   min-width: max(calc((100% - var(--_8gjczv)) / 2 + var(--_xhypko)), var(--_xhypko));
+   padding-right: max(calc((100% - var(--_8gjczv)) / 2), 0px);
+   overflow-y: var(--_bpn462);
+   overflow-x: var(--_5qq0z5);
+   .wrapper-right {
+      padding-bottom: 2pc;
+      padding-right: 20px;
+      padding-top: 24px;
+      padding-left: var(--ds-space-100, 8px);
+   }
+}
+.control-header-right {
+   text-align: end;
+}
+.detail-content-right {
+   margin-bottom: var(--ds-space-100, 8px);
+   margin-top: 8px;
+   .detail-content {
+      --_ahoyl5: 1px solid var(--ds-border, #dfe1e6);
+      --_122c6ee: 32px;
+      --_7zohb2: 98;
+      margin-bottom: var(--ds-space-100, 8px);
+      .detail-header {
+         border-radius: 4px;
+         border-bottom-left-radius: 0;
+         border-bottom-right-radius: 0;
+         top: var(--_122c6ee);
+         z-index: var(--_7zohb2);
+         border: var(--_ahoyl5);
+         height: 3pc;
+         padding-bottom: 11px;
+         padding-top: 11px;
+         padding-left: 9pt;
+         padding-right: 9pt;
+         position: sticky;
+         strong {
+            color: var(--ds-text, #172b4d);
+            font-size: 14px;
+            font-weight: 600;
+         }
+      }
+   }
+}
+.main-content {
+   border-bottom-left-radius: 4px;
+   border-bottom-right-radius: 4px;
+   border-left: var(--_ahoyl5);
+   border-bottom: var(--_ahoyl5);
+   border-right: var(--_ahoyl5);
+   padding-left: 9pt;
+   padding-bottom: 8px;
+   padding-right: 9pt;
+   padding-top: 8px;
+   .assignee-select {
+      display: flex;
+      margin-bottom: var(--ds-space-150, 9pt);
+      align-items: center;
+      label {
+         width: 40%;
+      }
+      .custom-input {
+         width: 100%;
+      }
+   }
+}

@@ -26,13 +26,13 @@ export default function LoginGoogleButton() {
                },
             },
          );
-         if (response.status === 200) {
+         if (response?.status === 200) {
             localStorage.setItem('user', JSON.stringify(response.data));
             localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
             setIsAuthenticated(true);
             navigate('/project');
          } else {
-            switch (response.status) {
+            switch (response?.status) {
                case 404:
                   toast.error('Invalid email or password');
                   break;

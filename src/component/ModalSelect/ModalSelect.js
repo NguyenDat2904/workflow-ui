@@ -42,6 +42,7 @@ function ModalSelect({ data, width, widthImg, setValue, onClose, handleSubmit, s
                         style={{ '--_zb0g5d': widthImg }}
                      />
                   )}
+
                   <span
                      className={cx(
                         status && 'text-label',

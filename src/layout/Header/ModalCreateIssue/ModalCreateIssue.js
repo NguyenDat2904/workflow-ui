@@ -9,12 +9,15 @@ import ModalSelect from '~/component/ModalSelect/ModalSelect';
 import UserService from '~/services/user/userServices';
 import SprintService from '~/services/sprint/SprintService';
 import { ProjectContext } from '~/contexts/project/projectContext';
+import TinyText from '~/component/TinyText/TinyText';
+import IssueService from '~/services/issue/issueService';
 const cx = classNames.bind(style);
 function ModalCreateIssue({ data, onClose, isOpen }) {
    const { detailProject } = useContext(ProjectContext);
    const userService = new UserService();
    const workService = new WorkService();
    const sprintService = new SprintService();
+   const issueService = new IssueService();
    const popupRef = useRef(null);
    const [memberData, setMemberData] = useState([]);
    const [userProject, setUserProject] = useState({});
@@ -52,6 +55,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
       reporter: true,
       priority: true,
       sprint: true,
+      summary: true,
    });
    const form = useForm({
       mode: 'all',
@@ -66,6 +70,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
          storyPointEstimate: '',
          startDate: '',
          dueDate: '',
+         description: '',
       },
    });
    const dataTypeIssues = [
@@ -327,17 +332,26 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
       }
       return true;
    });
-   const handleAssignToMe = () => {
+   const handleAssignToMe =() => {
       setAssigneeData(userProject);
    };
-   const handleSubmit = (dataForm) => {
+   const handleSubmit =async (dataForm) => {
       if (form.getValues('summary') === '') {
          form.setError('summary', {
             type: 'manual',
             message: 'Summary is required',
          });
       }
-      console.log(dataForm);
+      if (
+         form.getValues('summary') !== '' ||
+         form.getValues('codeProject') !== '' ||
+         form.getValues('issueType') !== ''
+      ) {
+            const createIssue= await issueService.createIssue(form.getValues('codeProject'),dataForm)
+            if(createIssue.status===200){
+               onClose()
+            }
+      }
    };
    return (
       <div className={cx(isOpen ? 'wrapperTotal' : 'popup')}>
@@ -412,10 +426,22 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
                         <hr />
                         <div className={cx('select-form')}>
                            <ControllerForm required form={form} name="summary" label="Summary">
-                              <Input type="text" search="search" style={{ width: '100%' }} />
+                              <Input
+                                 className={cx(form.formState.dirtyFields?.summary ? '' : 'summaryInput')}
+                                 type="text"
+                                 search="search"
+                                 style={{ width: '100%' }}
+                              />
                            </ControllerForm>
                         </div>
-
+                        <div className={cx('select-form')}>
+                           <ControllerForm required form={form} name="description" label="Description">
+                              <TinyText
+                                 none="none"
+                                 setEditorValue={(value) => form.setValue('description', value, { shouldDirty: true })}
+                              />
+                           </ControllerForm>
+                        </div>
                         <div className={cx('select-form')}>
                            <ControllerForm
                               widthImg="30px"
@@ -554,7 +580,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
                   </div>
                </div>
                <div className={cx('footerModalCreate')}>
-                  <button className={cx('buttonCancel')} type="button">
+                  <button className={cx('buttonCancel')} type="button" onClick={onClose}>
                      Cancel
                   </button>
                   <button className={cx('buttonSubmit')} type="submit">

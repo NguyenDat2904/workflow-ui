@@ -30,5 +30,23 @@ class WorkService extends BaseServices {
    getMember(param) {
       return this.get(`/projects/list-member`, { params: { ...param } });
    }
+
+   // Check add Member
+   addMember(key, data) {
+      return this.post(`/projects/${key}/send-email`, data);
+   }
+
+   // Accept add Member
+   acceptMember(key, token) {
+      return this.patch(
+         `/projects/${key}/member/add`,
+         {},
+         {
+            headers: {
+               'verify-token': `${token}`,
+            },
+         },
+      );
+   }
 }
 export default WorkService;

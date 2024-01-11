@@ -31,6 +31,7 @@ function BlackLog() {
          if (listMembers.status === 200) setMembers(listMembers.data);
       }
    };
+
    useEffect(() => {
       getMembers();
       getListSprints();
@@ -59,7 +60,9 @@ function BlackLog() {
 
    return (
       <div className={cx('wrapper')}>
-         <HeaderProject members={members} />
+         <div style={{ padding: '0 40px' }}>
+            <HeaderProject headerName={'Backlog'} />
+         </div>
          <div className={cx('main')}>
             <div className={cx('sprint-dropdown')}>
                {renderSprint}

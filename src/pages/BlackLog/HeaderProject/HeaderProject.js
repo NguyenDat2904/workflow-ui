@@ -10,7 +10,7 @@ import Button from '~/component/Buttton/Button';
 import Navigation from '~/component/Navigation/Navigation';
 
 const cx = classNames.bind(style);
-function HeaderProject({ members }) {
+function HeaderProject({ headerName, rightSection }) {
    const form = useForm();
    const [isToggle, setIsToggle] = useState(false);
    return (
@@ -23,7 +23,8 @@ function HeaderProject({ members }) {
                ]}
             />
             <div className={cx('header-title')}>
-               <h1 className={cx('title-h1')}>Backlog</h1>
+               <h1 className={cx('title-h1')}>{headerName}</h1>
+               {rightSection}
             </div>
             <nav className={cx('nav-project')}>
                <div className={cx('list-nav')}>

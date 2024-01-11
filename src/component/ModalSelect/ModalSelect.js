@@ -6,7 +6,10 @@ const cx = classNames.bind(style);
 function ModalSelect({ data, width, widthImg, setValue, onClose, handleSubmit, status, right }) {
    const renderOptions = data?.map((option, index) => {
       const handleOptionClick = (option) => {
-         if (setValue) setValue(option);
+         if (setValue) {
+            setValue(option);
+            
+         }
       };
       return (
          <div
@@ -22,8 +25,22 @@ function ModalSelect({ data, width, widthImg, setValue, onClose, handleSubmit, s
          >
             <div className={cx('option')}>
                <div className={cx('flex-option')}>
-                  {option?.img && (
+                  {option?.img ? (
                      <img src={option?.img} alt="" className={cx('img-icon')} style={{ '--_zb0g5d': widthImg }} />
+                  ) : option?.backgroundProfile ? (
+                     <div
+                        className={cx('bgrImg')}
+                        style={{ '--_zb0g5d': widthImg, '--bgr': option?.backgroundProfile }}
+                     >
+                        <p className={cx('textBgr')}>{option?.textInBackgroundProfile}</p>
+                     </div>
+                  ) : (option?.imgNone?"":
+                     <img
+                        src="https://avatar-management.services.atlassian.com/default/48"
+                        alt=""
+                        className={cx('img-icon')}
+                        style={{ '--_zb0g5d': widthImg }}
+                     />
                   )}
                   <span
                      className={cx(

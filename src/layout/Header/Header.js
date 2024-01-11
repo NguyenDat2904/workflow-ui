@@ -15,19 +15,22 @@ import { useLocation } from 'react-router-dom';
 import ModalProject from '~/pages/Projects/ModalProject/ModalProject';
 import ModalAccount from '~/pages/Profile/ModalAccount/ModalAccount';
 import Input from '~/component/Input/Input';
-import { AuthContext } from '~/contexts/auth/authContext';
 import { UserContext } from '~/contexts/user/userContext';
 import UserService from '~/services/user/userServices';
+import { useForm } from 'react-hook-form';
+import WorkService from '~/services/work/workServices';
+import ModalCreateIssue from './ModalCreateIssue/ModalCreateIssue';
 const cx = classNames.bind(style);
 
 function Header() {
    const userServices = new UserService();
    const location = useLocation();
    const elementRef = useRef(null);
-   const { accessToken } = useContext(AuthContext);
+   // 1. useState
    const { parseuser } = useContext(UserContext);
-
-   // 1. State
+   const projectService = new WorkService();
+   const [projects, getProjects] = useState([]);
+   const [isToggleCreateIssue, setToggleCreateIssue] = useState(false);
    const [toggleMenu, setToggleMenu] = useState({
       yourWork: false,
       project: false,
@@ -38,7 +41,19 @@ function Header() {
    const [getUserData, setGetUserData] = useState({});
 
    // 2. useEffect
+   const getProject = async () => {
+      const projects = await projectService.getListProject({ deleteProject: false });
+      if (projects.status === 200) {
+         getProjects(projects.data.data);
+      }
+   };
+   useEffect(() => {
+      getProject();
+   }, []);
 
+   const form = useForm({
+      mode: 'all',
+   });
    useEffect(() => {
       const getElementPosition = () => {
          const element = elementRef.current;
@@ -58,11 +73,9 @@ function Header() {
 
    useEffect(() => {
       const getUser = async () => {
-         if (accessToken) {
-            const users = await userServices.getUserProfile(parseuser?._id);
-            if (users.status === 200) {
-               setGetUserData(users.data);
-            }
+         const users = await userServices.getUserProfile(parseuser?._id);
+         if (users.status === 200) {
+            setGetUserData(users.data);
          }
       };
       getUser();
@@ -95,6 +108,10 @@ function Header() {
             });
       }
    };
+   const listProject = projects?.map((project) => {
+      return { label: `${project.nameProject} - (${project.codeProject})`, img:project.imgProject,codeProject:project.codeProject };
+   });
+   const handleSubmit = async (dataForm) => {};
    return (
       <header className={cx('header-layout')}>
          <nav>
@@ -134,10 +151,17 @@ function Header() {
                   }
                   isOpen={toggleMenu.project}
                />
-               <div className={cx('menu')}>
+               <div className={cx('menu')} onClick={() => setToggleCreateIssue(true)}>
                   <Button blue>Create</Button>
                   {/* <Navigation /> */}
                </div>
+               {isToggleCreateIssue && (
+                  <ModalCreateIssue
+                     isOpen={isToggleCreateIssue}
+                     data={listProject}
+                     onClose={() => setToggleCreateIssue(false)}
+                  />
+               )}
             </div>
          </nav>
          <div className={cx('nav-right')}>

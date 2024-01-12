@@ -9,6 +9,8 @@ import ModalAccount from '~/pages/Profile/ModalAccount/ModalAccount';
 import Input from '~/component/Input/Input';
 import { UserContext } from '~/contexts/user/userContext';
 import UserService from '~/services/user/userServices';
+import NotificationService from '~/services/notification/notification';
+import ModelNotification from '~/component/ModelNotification/ModelNotification';
 import { useForm } from 'react-hook-form';
 import WorkService from '~/services/work/workServices';
 import ModalCreateIssue from './ModalCreateIssue/ModalCreateIssue';
@@ -17,6 +19,7 @@ const cx = classNames.bind(style);
 
 function Header() {
    const userServices = new UserService();
+   const notificationServices = new NotificationService();
    const location = useLocation();
    const elementRef = useRef(null);
    // 1. useState
@@ -30,9 +33,11 @@ function Header() {
       project: false,
       team: false,
       user: false,
+      notification: false,
    });
    const [position, setPosition] = useState({ left: 0 });
    const [getUserData, setGetUserData] = useState({});
+   const [notificationData, setNotificationData] = useState([]);
 
    // 2. useEffect
    const getProject = async () => {
@@ -74,6 +79,17 @@ function Header() {
       };
       getUser();
    }, []);
+
+   useEffect(() => {
+      const getNotification = async () => {
+         const notification = await notificationServices.getNotification();
+         if (notification.status === 200) {
+            setNotificationData(notification.data);
+         }
+      };
+      getNotification();
+   }, []);
+
    // 3. Func
    const handleToggle = (toggle) => {
       switch (toggle) {
@@ -102,6 +118,18 @@ function Header() {
             });
       }
    };
+
+   const handleGetNotification = async (e) => {
+      const isChecked = e.target.checked;
+      if (isChecked) {
+         const notification = await notificationServices.getNotification('false');
+         setNotificationData(notification.data);
+      } else {
+         const notification = await notificationServices.getNotification();
+         setNotificationData(notification.data);
+      }
+   };
+
    const listProject = projects?.map((project) => {
       return {
          label: `${project.nameProject} - (${project.codeProject})`,
@@ -154,7 +182,7 @@ function Header() {
                      <Button blue>Create</Button>
                      {/* <Navigation /> */}
                   </div>
-                  {detailProject.codeProject!==undefined && isToggleCreateIssue && (
+                  {detailProject.codeProject !== undefined && isToggleCreateIssue && (
                      <ModalCreateIssue
                         isOpen={isToggleCreateIssue}
                         detailProject={detailProject}
@@ -164,6 +192,7 @@ function Header() {
                   )}
                </div>
             </nav>
+
             <div className={cx('nav-right')}>
                <div className={cx('nav-icon')}>
                   <Input
@@ -174,7 +203,16 @@ function Header() {
                      className={cx('custom-input')}
                   />
                </div>
-               <div className={cx('nav-icon')}>
+               <div
+                  className={cx('nav-icon')}
+                  onClick={() =>
+                     setToggleMenu((pre) => ({
+                        ...pre,
+                        notification: true,
+                     }))
+                  }
+                  ref={elementRef}
+               >
                   <Button
                      className={cx('button-icon')}
                      noChildren
@@ -183,6 +221,18 @@ function Header() {
                      leftIcon={<NotificationIcon />}
                   ></Button>
                </div>
+               <ModelNotification
+                  onClick={handleGetNotification}
+                  notificationData={notificationData}
+                  position={position.left}
+                  handleToggle={() =>
+                     setToggleMenu((pre) => ({
+                        ...pre,
+                        notification: false,
+                     }))
+                  }
+                  isOpen={toggleMenu.notification}
+               />
                <div
                   className={cx('nav-icon')}
                   onClick={() =>
@@ -202,7 +252,7 @@ function Header() {
                         leftIcon={<UserIcon />}
                      ></Button>
                   ) : (
-                     <img src={getUserData?.img} alt="" />
+                     <img className={cx('button-icon')} src={getUserData?.img} alt="" />
                   )}
                </div>
                <ModalAccount

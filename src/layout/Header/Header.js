@@ -9,7 +9,6 @@ import ModalAccount from '~/pages/Profile/ModalAccount/ModalAccount';
 import Input from '~/component/Input/Input';
 import { UserContext } from '~/contexts/user/userContext';
 import UserService from '~/services/user/userServices';
-import { useForm } from 'react-hook-form';
 import WorkService from '~/services/work/workServices';
 import ModalCreateIssue from './ModalCreateIssue/ModalCreateIssue';
 import { ProjectContext } from '~/contexts/project/projectContext';
@@ -44,10 +43,6 @@ function Header() {
    useEffect(() => {
       getProject();
    }, []);
-
-   const form = useForm({
-      mode: 'all',
-   });
    useEffect(() => {
       const getElementPosition = () => {
          const element = elementRef.current;
@@ -104,7 +99,7 @@ function Header() {
    };
    const listProject = projects?.map((project) => {
       return {
-         label: `${project.nameProject} - (${project.codeProject})`,
+         label: `${project.nameProject} - (${project.codeProject})` || '',
          img: project.imgProject,
          codeProject: project.codeProject,
       };
@@ -154,7 +149,7 @@ function Header() {
                      <Button blue>Create</Button>
                      {/* <Navigation /> */}
                   </div>
-                  {detailProject.codeProject!==undefined && isToggleCreateIssue && (
+                  {isToggleCreateIssue && (
                      <ModalCreateIssue
                         isOpen={isToggleCreateIssue}
                         detailProject={detailProject}

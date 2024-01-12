@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ControllerForm from '~/component/ControllerForm/ControllerForm';
 import Input from '~/component/Input/Input';
 import WorkService from '~/services/work/workServices';
@@ -8,23 +8,27 @@ import { useForm } from 'react-hook-form';
 import ModalSelect from '~/component/ModalSelect/ModalSelect';
 import UserService from '~/services/user/userServices';
 import SprintService from '~/services/sprint/SprintService';
-import { ProjectContext } from '~/contexts/project/projectContext';
 import TinyText from '~/component/TinyText/TinyText';
 import IssueService from '~/services/issue/issueService';
+import { useParams } from 'react-router-dom';
+// import { AiOutlineLoading } from 'react-icons/ai';
 const cx = classNames.bind(style);
 function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
+   const { id } = useParams();
    const userService = new UserService();
    const workService = new WorkService();
    const sprintService = new SprintService();
    const issueService = new IssueService();
    const popupRef = useRef(null);
+   const [loading, setLoading] = useState(true);
    const [memberData, setMemberData] = useState([]);
    const [userProject, setUserProject] = useState({});
    const [sprint, setSprint] = useState([]);
    const [project, setProject] = useState({
-      img: detailProject?.imgProject,
-      label: `${detailProject?.nameProject} (${detailProject?.codeProject})`,
-      codeProject: detailProject?.codeProject,
+      img: '',
+      label: '',
+      codeProject: '',
+      imgNone: id ? '' : 'none',
    });
    const [issueTypeData, setIssuesTypeDate] = useState({
       label: 'USER_STORY',
@@ -112,17 +116,20 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
          label: 'Lowest',
       },
    ];
+
    const listMemberProject = async () => {
       const member = await workService.getMember({ codeProject: project.codeProject });
-      const infoMember = member?.data?.map((product) => {
-         return {
-            backgroundProfile: product?.backgroundProfile,
-            textInBackgroundProfile: product?.textInBackgroundProfile,
-            img: product?.img,
-            label: product.name,
-            id: product?._id,
-         };
-      });
+      const infoMember = member?.data.message
+         ? []
+         : member?.data?.map((product) => {
+              return {
+                 backgroundProfile: product?.backgroundProfile,
+                 textInBackgroundProfile: product?.textInBackgroundProfile,
+                 img: product?.img,
+                 label: product.name,
+                 id: product?._id,
+              };
+           });
 
       setMemberData(infoMember);
       const user = await userService.getUserProfile();
@@ -137,18 +144,23 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
       setReporterData(infoUserProject);
       setUserProject(infoUserProject);
       const listSprint = await sprintService.getSprint(project.codeProject);
-      const infoSprint = listSprint?.data?.sprint.map((product) => {
-         return {
-            imgNone: 'none',
-            label: product?.name,
-            id: product?._id,
-         };
-      });
-      setSprint(infoSprint);
+      if (listSprint.status === 200) {
+         const infoSprint = listSprint?.data?.sprint.map((product) => {
+            return {
+               imgNone: 'none',
+               label: product?.name,
+               id: product?._id,
+            };
+         });
+         setSprint(infoSprint);
+      } else {
+         setSprint([]);
+      }
    };
    useEffect(() => {
       listMemberProject();
    }, [project]);
+
    useEffect(() => {
       const handleOutsideClick = (event) => {
          if (popupRef.current && !popupRef.current.contains(event.target)) {
@@ -163,6 +175,17 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
       };
 
       if (isOpen) {
+         data.forEach((element) => {
+            if (element.codeProject === id) {
+               console.log(element);
+               setProject({
+                  img: element.img,
+                  label: element.label,
+                  codeProject: element.codeProject,
+                  imgNone: '',
+               });
+            }
+         });
          document.addEventListener('mousedown', handleOutsideClick);
          document.addEventListener('keydown', handleEscapeKey);
       }
@@ -310,7 +333,7 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
       }
       return true;
    });
-   const filterDataMemberData = memberData.filter((product) => {
+   const filterDataMemberData = memberData?.filter((product) => {
       if (indexSelect.assignee === false && form.watch('assignee') !== '') {
          return form.watch('assignee') && product.label && product.label.toLowerCase().includes(form.watch('assignee'));
       }
@@ -335,21 +358,34 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
       setAssigneeData(userProject);
    };
    const handleSubmit = async (dataForm) => {
-      if (form.getValues('summary') === '') {
-         form.setError('summary', {
-            type: 'manual',
-            message: 'Summary is required',
-         });
-      }
-      if (
-         form.getValues('summary') !== '' ||
-         form.getValues('codeProject') !== '' ||
-         form.getValues('issueType') !== ''
-      ) {
-         const createIssue = await issueService.createIssue(form.getValues('codeProject'), dataForm);
-         if (createIssue.status === 200) {
-            onClose();
+      try {
+         setLoading(false);
+         if (form.getValues('summary') === '') {
+            form.setError('summary', {
+               type: 'manual',
+               message: 'Summary is required',
+            });
          }
+         if (form.getValues('codeProject') === '') {
+            form.setError('codeProject', {
+               type: 'manual',
+               message: 'CodeProject is required',
+            });
+         }
+         if (
+            form.getValues('summary') !== '' ||
+            form.getValues('codeProject') !== '' ||
+            form.getValues('issueType') !== ''
+         ) {
+            const createIssue = await issueService.createIssue(form.getValues('codeProject'), dataForm);
+            if (createIssue.status === 200) {
+               onClose();
+            }
+         }
+      } catch (error) {
+         console.log('can not create');
+      } finally {
+         setLoading(true);
       }
    };
    return (
@@ -378,7 +414,9 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
                               <Input
                                  name="inputProject"
                                  onBlur={() => handleBooleanSelect('codeProject')}
-                                 className={cx('transparentInput')}
+                                 className={cx(
+                                    form.formState.dirtyFields?.codeProject ? 'transparentInput' : 'summaryInput',
+                                 )}
                                  type="text"
                                  search="search"
                                  style={{ width: '50%' }}
@@ -434,7 +472,7 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
                            </ControllerForm>
                         </div>
                         <div className={cx('select-form')}>
-                           <ControllerForm required form={form} name="description" label="Description">
+                           <ControllerForm form={form} name="description" label="Description">
                               <TinyText
                                  none="none"
                                  setEditorValue={(value) => form.setValue('description', value, { shouldDirty: true })}
@@ -583,7 +621,7 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
                      Cancel
                   </button>
                   <button className={cx('buttonSubmit')} type="submit">
-                     Create
+                     {loading ? 'Create' : 'Creating...'}
                   </button>
                </div>
             </form>

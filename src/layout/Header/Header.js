@@ -11,7 +11,6 @@ import { UserContext } from '~/contexts/user/userContext';
 import UserService from '~/services/user/userServices';
 import NotificationService from '~/services/notification/notification';
 import ModelNotification from '~/component/ModelNotification/ModelNotification';
-import { useForm } from 'react-hook-form';
 import WorkService from '~/services/work/workServices';
 import ModalCreateIssue from './ModalCreateIssue/ModalCreateIssue';
 import { ProjectContext } from '~/contexts/project/projectContext';
@@ -23,7 +22,7 @@ function Header() {
    const location = useLocation();
    const elementRef = useRef(null);
    // 1. useState
-   const { detailProject } = useContext(ProjectContext);
+
    const { parseuser } = useContext(UserContext);
    const projectService = new WorkService();
    const [projects, getProjects] = useState([]);
@@ -49,10 +48,6 @@ function Header() {
    useEffect(() => {
       getProject();
    }, []);
-
-   const form = useForm({
-      mode: 'all',
-   });
    useEffect(() => {
       const getElementPosition = () => {
          const element = elementRef.current;
@@ -132,7 +127,7 @@ function Header() {
 
    const listProject = projects?.map((project) => {
       return {
-         label: `${project.nameProject} - (${project.codeProject})`,
+         label: `${project.nameProject} - (${project.codeProject})` || '',
          img: project.imgProject,
          codeProject: project.codeProject,
       };
@@ -182,10 +177,9 @@ function Header() {
                      <Button blue>Create</Button>
                      {/* <Navigation /> */}
                   </div>
-                  {detailProject.codeProject !== undefined && isToggleCreateIssue && (
+                  {isToggleCreateIssue && (
                      <ModalCreateIssue
                         isOpen={isToggleCreateIssue}
-                        detailProject={detailProject}
                         data={listProject}
                         onClose={() => setToggleCreateIssue(false)}
                      />

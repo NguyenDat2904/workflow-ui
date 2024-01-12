@@ -1,11 +1,13 @@
 import { Editor } from '@tinymce/tinymce-react';
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../Buttton/Button';
 import classNames from 'classnames/bind';
 import style from './TinyText.module.scss';
 const cx = classNames.bind(style);
 function TinyText({ none, setEditorValue, onClose, handleSubmit, value }) {
+   const [editorText, setEditorText] = useState(value);
    const handleEditorChange = (content) => {
+      setEditorText(content);
       setEditorValue(content);
    };
 
@@ -22,7 +24,7 @@ function TinyText({ none, setEditorValue, onClose, handleSubmit, value }) {
                   'alignright alignjustify | bullist numlist outdent indent | ',
                height: '200',
             }}
-            initialValue={value}
+            value={editorText}
          />
          <div>
             <div className={cx(none !== 'none' ? 'btn-group' : 'btn-group-none')}>

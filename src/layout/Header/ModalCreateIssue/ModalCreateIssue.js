@@ -13,7 +13,7 @@ import IssueService from '~/services/issue/issueService';
 import { useParams } from 'react-router-dom';
 // import { AiOutlineLoading } from 'react-icons/ai';
 const cx = classNames.bind(style);
-function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
+function ModalCreateIssue({ data, onClose, isOpen }) {
    const { id } = useParams();
    const userService = new UserService();
    const workService = new WorkService();

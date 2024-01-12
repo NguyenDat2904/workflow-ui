@@ -19,7 +19,7 @@ function Header() {
    const location = useLocation();
    const elementRef = useRef(null);
    // 1. useState
-   const { detailProject } = useContext(ProjectContext);
+
    const { parseuser } = useContext(UserContext);
    const projectService = new WorkService();
    const [projects, getProjects] = useState([]);
@@ -152,7 +152,6 @@ function Header() {
                   {isToggleCreateIssue && (
                      <ModalCreateIssue
                         isOpen={isToggleCreateIssue}
-                        detailProject={detailProject}
                         data={listProject}
                         onClose={() => setToggleCreateIssue(false)}
                      />

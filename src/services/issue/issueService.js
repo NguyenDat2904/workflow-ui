@@ -1,12 +1,15 @@
 const { default: BaseServices } = require('../baseServices');
 
-const URL = 'https://workflow-sever-7c28.onrender.com';
+const URL = 'https://work-flow-n27c.onrender.com';
 class IssueService extends BaseServices {
    constructor() {
       super(URL);
    }
    getIssue(id, param) {
       return this.get(`/issues/${id}`, { params: { ...param } });
+   }
+   getIssueDetail(key, param) {
+      return this.get(`issues/${key}/detail`, { params: { ...param } });
    }
    createIssue(key, data) {
       return this.post(`/issues/${key}/add`, data);

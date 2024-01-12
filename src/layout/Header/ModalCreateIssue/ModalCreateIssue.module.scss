@@ -1,0 +1,97 @@
+.select-form {
+   position: relative;
+   margin-top: 8px;
+   .none {
+      display: none;
+   }
+   .selectProject {
+      display: block;
+   }
+   .AssignToMe {
+      margin-top: 10px;
+      font-weight: 400;
+      color: #0052cc;
+      cursor: pointer;
+   }
+   .summaryInput{
+      border: 1px solid red;
+   }
+}
+.transparentInput {
+   background: transparent;
+}
+.text-title {
+   margin: 8px 0;
+}
+.form {
+   height: unset;
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+}
+
+.wrapperTotal {
+   padding-top: 60px;
+   position: fixed;
+   z-index: 300;
+   inset: 0px;
+   background-color: var(--ds-blanket, rgba(9, 30, 66, 0.54));
+   .wrapper {
+      width: 800px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      background-color: var(--ds-surface-overlay, #ffffff);
+      border-radius: var(--ds-border-radius, 3px);
+      box-shadow: var(--ds-shadow-overlay, 0 4px 8px -2px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31));
+      --ds-elevation-surface-current: var(--ds-surface-overlay, #ffffff);
+
+      .height {
+         max-height: calc(100vh - 200px);
+         height: 475px;
+         padding: 25px;
+         display: flex;
+         position: static;
+         flex-direction: column;
+         overflow: auto;
+      }
+      .titleCreate {
+         padding: 25px;
+         border-bottom: 1px solid rgb(180, 179, 179);
+         .title {
+            color: #172b4d;
+            font-size: 24px;
+            font-weight: 500;
+         }
+      }
+      .footerModalCreate {
+         border-top: 1px solid rgb(180, 179, 179);
+         padding: 15px 20px;
+         display: flex;
+         justify-content: flex-end;
+         gap: 10px;
+         .buttonCancel,
+         .buttonSubmit {
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+         }
+         .buttonCancel {
+            background-color: #fff;
+            color: #8993a4;
+            &:hover {
+               text-decoration: underline;
+            }
+         }
+         .buttonSubmit {
+            background-color: #0052cc;
+            color: #fff;
+            &:hover {
+               background-color: #0065ff;
+            }
+         }
+      }
+   }
+}
+.popup {
+   display: none;
+}

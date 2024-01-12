@@ -12,7 +12,6 @@ function RowProject({ project, handleMoveToTrash }) {
    const [toggle, setToggle] = useState(false);
 
    // 3. Func
-   console.log(project);
    return (
       <tr className={cx('row')}>
          <td></td>

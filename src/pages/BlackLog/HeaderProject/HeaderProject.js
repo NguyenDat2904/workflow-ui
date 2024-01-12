@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './HeaderProject.module.scss';
 import NavUrl from '~/component/NavUrl/NavUrl';
@@ -8,18 +8,21 @@ import Input from '~/component/Input/Input';
 import { AddPeople, DownIcon, SearchIcon } from '~/component/icon/icon';
 import Button from '~/component/Buttton/Button';
 import Navigation from '~/component/Navigation/Navigation';
+import { ProjectContext } from '~/contexts/project/projectContext';
 
 const cx = classNames.bind(style);
 function HeaderProject({ headerName, rightSection }) {
    const form = useForm();
    const [isToggle, setIsToggle] = useState(false);
+   const { detailProject } = useContext(ProjectContext);
+
    return (
       <div className={cx('wrapper')}>
          <header className={cx('header-project')}>
             <NavUrl
                url={[
                   { name: 'Projects', link: '/project' },
-                  { name: 'WF', link: '#' },
+                  { name: detailProject.nameProject, link: '#' },
                ]}
             />
             <div className={cx('header-title')}>

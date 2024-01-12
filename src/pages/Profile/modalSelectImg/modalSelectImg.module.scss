@@ -34,7 +34,7 @@ h3 {
       width: calc(100% - 96px);
       padding-left: 30px;
       .selectBackground {
-         p {
+         .text {
             color: #44546f;
             font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu,
                'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -120,7 +120,7 @@ h3 {
       }
    }
 }
-p {
+.text {
    color: #44546f;
    font-family: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu, 'Droid Sans',
       'Helvetica Neue', sans-serif;

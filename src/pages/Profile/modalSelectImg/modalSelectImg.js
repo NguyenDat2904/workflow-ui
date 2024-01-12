@@ -74,7 +74,7 @@ const ModalSelectImg = ({ onclickSeeModalSelectImg, callApi, dataUserProfile }) 
                </div>
                <div className={cx('selectBackgroundImg')}>
                   <div className={cx('selectBackground')}>
-                     <p>Background color</p>
+                     <p className={cx("text")}>Background color</p>
                      <div className={cx('select')}>
                         <button
                            onClick={() => selectBackgroundImgProfile(1)}
@@ -198,7 +198,7 @@ const ModalSelectImg = ({ onclickSeeModalSelectImg, callApi, dataUserProfile }) 
                      </div>
                   </div>
                   <div className={cx('fillInitials')}>
-                     <p>Initials</p>
+                     <p className={cx("text")}>Initials</p>
                      <input
                         className={cx('input')}
                         onChange={formick.handleChange}

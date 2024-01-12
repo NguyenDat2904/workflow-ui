@@ -1,42 +1,43 @@
 #login {
-    padding: 2rem;
+   width: 33.333333%;
+   margin-left: 8.3333333%;
 }
 
 @media (max-width: 500px) {
-    #login {
-        padding: 2rem 0;
-    }
+   #login {
+      padding: 2rem 0;
+   }
 }
 
 .login-container {
-    margin: 0 auto;
-    width: clamp(30rem, 35%, 40rem);
-    h3 {
-        text-align: center;
-        font-size: 1.2rem;
-        p {
-            margin-top: 0.5rem;
-            font-weight: 500;
-            font-size: 1rem;
-        }
-    }
-    form {
-        input,
-        button {
-            width: 100%;
-        }
-    }
+   margin: 0 auto;
+   width: clamp(30rem, 35%, 40rem);
+   h3 {
+      text-align: center;
+      font-size: 2rem;
+      p {
+         margin-top: 0.5rem;
+         font-weight: 500;
+         font-size: 1rem;
+      }
+   }
+   form {
+      input,
+      button {
+         width: 100%;
+      }
+   }
 
-    input,
-    button {
-        width: 100%;
-    }
+   input,
+   button {
+      width: 100%;
+   }
 
-    .login-error {
-        color: red;
-    }
+   .login-error {
+      color: red;
+   }
 }
 
 .login-google-button {
-    width: 100%;
+   width: 100%;
 }

@@ -5,17 +5,24 @@ class WorkService extends BaseServices {
    constructor() {
       super(URL);
    }
-   //    GetAll
+   // GetAll
    getListProject(param) {
       return this.get(`/projects/list`, { params: { ...param } });
    }
+
    getIssues(idProject) {
       return this.get(`/issues/${idProject}`);
    }
+
    // Details
    projectDetail(id) {
       return this.get(`/projects/project-detail/${id}`);
    }
+
+   getListIssuesOfBoard(codeProject, param) {
+      return this.get(`/issues/broad/${codeProject}`, { params: { ...param } });
+   }
+
    // Delete Project
    deleteProject(id, userID) {
       return this.patch(`projects/delete-project/${id}`, { _idUser: userID });

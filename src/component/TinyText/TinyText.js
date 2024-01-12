@@ -4,7 +4,7 @@ import Button from '../Buttton/Button';
 import classNames from 'classnames/bind';
 import style from './TinyText.module.scss';
 const cx = classNames.bind(style);
-function TinyText({ setEditorValue, onClose, handleSubmit, value }) {
+function TinyText({ none, setEditorValue, onClose, handleSubmit, value }) {
    const handleEditorChange = (content) => {
       setEditorValue(content);
    };
@@ -25,7 +25,7 @@ function TinyText({ setEditorValue, onClose, handleSubmit, value }) {
             initialValue={value}
          />
          <div>
-            <div className={cx('btn-group')}>
+            <div className={cx(none !== 'none' ? 'btn-group' : 'btn-group-none')}>
                <Button
                   blue
                   type="submit"

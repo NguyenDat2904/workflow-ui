@@ -4,10 +4,17 @@ import style from './ModalIcon.module.scss';
 import Modal from '~/component/Modal/Modal';
 
 const cx = classNames.bind(style);
-function ModalIcon({ width, isOpen, isClose, children, header, imgBanner, leftIcon }) {
+function ModalIcon({ width, isOpen, isClose, children, header, imgBanner, leftIcon, height }) {
    return (
       <div className={cx('wrapper')}>
-         <Modal width={width} className={cx('modal')} maxWidth={width} isOpen={isOpen} onClose={isClose}>
+         <Modal
+            width={width}
+            className={cx('modal')}
+            maxWidth={width}
+            isOpen={isOpen}
+            onClose={isClose}
+            height={height}
+         >
             {imgBanner && (
                <img
                   src="https://jira-frontend-bifrost.prod-east.frontend.public.atl-paas.net/assets/badge-banner.af218529.svg"

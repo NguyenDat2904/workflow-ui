@@ -1,6 +1,6 @@
 const { default: BaseServices } = require('../baseServices');
 
-const URL = 'https://work-flow-n27c.onrender.com';
+const URL = 'https://workflow-sever-7c28.onrender.com';
 class WorkService extends BaseServices {
    constructor() {
       super(URL);

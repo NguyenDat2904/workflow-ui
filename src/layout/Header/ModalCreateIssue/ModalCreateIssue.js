@@ -12,8 +12,7 @@ import { ProjectContext } from '~/contexts/project/projectContext';
 import TinyText from '~/component/TinyText/TinyText';
 import IssueService from '~/services/issue/issueService';
 const cx = classNames.bind(style);
-function ModalCreateIssue({ data, onClose, isOpen }) {
-   const { detailProject } = useContext(ProjectContext);
+function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
    const userService = new UserService();
    const workService = new WorkService();
    const sprintService = new SprintService();
@@ -23,9 +22,9 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
    const [userProject, setUserProject] = useState({});
    const [sprint, setSprint] = useState([]);
    const [project, setProject] = useState({
-      img: detailProject.imgProject,
+      img: detailProject?.imgProject,
       label: `${detailProject?.nameProject} (${detailProject?.codeProject})`,
-      codeProject: detailProject.codeProject,
+      codeProject: detailProject?.codeProject,
    });
    const [issueTypeData, setIssuesTypeDate] = useState({
       label: 'USER_STORY',
@@ -332,10 +331,10 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
       }
       return true;
    });
-   const handleAssignToMe =() => {
+   const handleAssignToMe = () => {
       setAssigneeData(userProject);
    };
-   const handleSubmit =async (dataForm) => {
+   const handleSubmit = async (dataForm) => {
       if (form.getValues('summary') === '') {
          form.setError('summary', {
             type: 'manual',
@@ -347,10 +346,10 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
          form.getValues('codeProject') !== '' ||
          form.getValues('issueType') !== ''
       ) {
-            const createIssue= await issueService.createIssue(form.getValues('codeProject'),dataForm)
-            if(createIssue.status===200){
-               onClose()
-            }
+         const createIssue = await issueService.createIssue(form.getValues('codeProject'), dataForm);
+         if (createIssue.status === 200) {
+            onClose();
+         }
       }
    };
    return (

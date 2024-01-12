@@ -12,6 +12,7 @@ import UserService from '~/services/user/userServices';
 import { useForm } from 'react-hook-form';
 import WorkService from '~/services/work/workServices';
 import ModalCreateIssue from './ModalCreateIssue/ModalCreateIssue';
+import { ProjectContext } from '~/contexts/project/projectContext';
 const cx = classNames.bind(style);
 
 function Header() {
@@ -19,6 +20,7 @@ function Header() {
    const location = useLocation();
    const elementRef = useRef(null);
    // 1. useState
+   const { detailProject } = useContext(ProjectContext);
    const { parseuser } = useContext(UserContext);
    const projectService = new WorkService();
    const [projects, getProjects] = useState([]);
@@ -152,9 +154,10 @@ function Header() {
                      <Button blue>Create</Button>
                      {/* <Navigation /> */}
                   </div>
-                  {isToggleCreateIssue && (
+                  {detailProject.codeProject!==undefined && isToggleCreateIssue && (
                      <ModalCreateIssue
                         isOpen={isToggleCreateIssue}
+                        detailProject={detailProject}
                         data={listProject}
                         onClose={() => setToggleCreateIssue(false)}
                      />

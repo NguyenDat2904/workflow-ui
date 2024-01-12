@@ -51,7 +51,7 @@ function ControllerForm({
                                           >
                                              <p className={cx('textBgr')}>{data?.textInBackgroundProfile}</p>
                                           </div>
-                                       ) : data.imgNone === 'none' ? (
+                                       ) : data?.imgNone === 'none' ? (
                                           ''
                                        ) : (
                                           <img

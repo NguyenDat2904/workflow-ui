@@ -18,10 +18,13 @@ import Input from '~/component/Input/Input';
 import { AuthContext } from '~/contexts/auth/authContext';
 import { UserContext } from '~/contexts/user/userContext';
 import UserService from '~/services/user/userServices';
+import NotificationService from '~/services/notification/notification';
+import ModelNotification from '~/component/ModelNotification/ModelNotification';
 const cx = classNames.bind(style);
 
 function Header() {
    const userServices = new UserService();
+   const notificationServices = new NotificationService();
    const location = useLocation();
    const elementRef = useRef(null);
    const { accessToken } = useContext(AuthContext);
@@ -33,9 +36,11 @@ function Header() {
       project: false,
       team: false,
       user: false,
+      notification: false,
    });
    const [position, setPosition] = useState({ left: 0 });
    const [getUserData, setGetUserData] = useState({});
+   const [notificationData, setNotificationData] = useState([]);
 
    // 2. useEffect
 
@@ -67,6 +72,20 @@ function Header() {
       };
       getUser();
    }, []);
+
+   useEffect(() => {
+      const getNotification = async () => {
+         if (accessToken) {
+            const notification = await notificationServices.getNotification();
+            if (notification.status === 200) {
+               setNotificationData(notification.data);
+               console.log('🚀 ~ getNotification ~ notification.data:', notification.data);
+            }
+         }
+      };
+      getNotification();
+   }, []);
+
    // 3. Func
    const handleToggle = (toggle) => {
       switch (toggle) {
@@ -95,6 +114,18 @@ function Header() {
             });
       }
    };
+
+   const handleGetNotification = async (e) => {
+      const isChecked = e.target.checked;
+      if (isChecked) {
+         const notification = await notificationServices.getNotification('false');
+         setNotificationData(notification.data);
+      } else {
+         const notification = await notificationServices.getNotification();
+         setNotificationData(notification.data);
+      }
+   };
+
    return (
       <header className={cx('header-layout')}>
          <nav>
@@ -150,7 +181,16 @@ function Header() {
                   className={cx('custom-input')}
                />
             </div>
-            <div className={cx('nav-icon')}>
+            <div
+               className={cx('nav-icon')}
+               onClick={() =>
+                  setToggleMenu((pre) => ({
+                     ...pre,
+                     notification: true,
+                  }))
+               }
+               ref={elementRef}
+            >
                <Button
                   className={cx('button-icon')}
                   noChildren
@@ -159,6 +199,18 @@ function Header() {
                   leftIcon={<NotificationIcon />}
                ></Button>
             </div>
+            <ModelNotification
+               onClick={handleGetNotification}
+               notificationData={notificationData}
+               position={position.left}
+               handleToggle={() =>
+                  setToggleMenu((pre) => ({
+                     ...pre,
+                     notification: false,
+                  }))
+               }
+               isOpen={toggleMenu.notification}
+            />
             <div
                className={cx('nav-icon')}
                onClick={() =>
@@ -178,7 +230,7 @@ function Header() {
                      leftIcon={<UserIcon />}
                   ></Button>
                ) : (
-                  <img src={getUserData?.img} alt="" />
+                  <img className={cx('button-icon')} src={getUserData?.img} alt="" />
                )}
             </div>
             <ModalAccount

@@ -1,0 +1,106 @@
+
+
+.item {
+   background-color: transparent;
+   transition: background-color 2s ease 0s;
+   margin-left: var(--ds-space-negative-100, -8px);
+   margin-right: var(--ds-space-negative-100, -8px);
+   border-radius: 3px;
+   margin-bottom: 15px;
+   .article {
+      position: relative;
+      padding: var(--ds-space-100, 8px);
+      border-radius: 3px;
+   }
+   .article:hover {
+      background-color: var(--ds-background-neutral-subtle-hovered, #f4f5f7);
+   }
+}
+
+.link-group {
+   display: flex;
+   width: 100%;
+   padding: 0 7px;
+   img {
+      border-radius: 50%;
+   }
+}
+
+.css-rrrufw {
+   margin-right: var(--ds-space-100, 8px);
+   pointer-events: all;
+   z-index: 1;
+   display: inline-block;
+   position: relative;
+   outline: 0px;
+}
+
+.css-ov1ktg {
+   display: flex;
+   justify-content: space-between;
+   width: 100%;
+}
+
+.css-1rfq2pv {
+   display: flex;
+   flex-direction: column;
+   -webkit-box-flex: 1;
+   flex-grow: 1;
+}
+
+.css-18qu88g {
+   display: inline;
+   color: var(--ds-text, #172B4D);
+   font-size: 14px;
+   font-weight: 500;
+   line-height: 20px;
+}
+
+.article:hover .css-4cej1w {
+   text-decoration-line: underline;
+}
+
+.css-v5oldl {
+   font-size: 14px;
+   color: var(--ds-text-subtlest, #6B778C);
+   font-weight: 400;
+   white-space: nowrap;
+   margin-left: var(--ds-space-050, 4px);
+}
+
+.css-1rn87kn {
+   border: 1px solid transparent;
+   padding: 0px;
+   background-color: transparent;
+   pointer-events: all;
+   z-index: 1;
+   height: 24px;
+   width: 24px;
+   border-radius: 50%;
+   position: relative;
+   display: flex;
+   -webkit-box-pack: center;
+   justify-content: center;
+   -webkit-box-align: center;
+   align-items: center;
+   outline: none;
+}
+
+.article:hover .notification-list__unread-indicator-wrapper {
+   border-width: 1px;
+   border-style: solid;
+   border-color: var(--ds-border, rgba(9, 30, 66, 0.08));
+}
+
+.css-e05c0p {
+   position: relative;
+   .css-rrrufw {
+      margin-right: var(--ds-space-100, 8px);
+  }
+  .css-13ep12v {
+   display: flex;
+   width:32px;
+   height:32px;
+   flex: 1 1 100%;
+}
+}

@@ -1,6 +1,6 @@
 const { default: BaseServices } = require('../baseServices');
 
-const URL = 'https://workflow-sever.onrender.com';
+const URL = 'https://workflow-sever-7c28.onrender.com';
 class WorkService extends BaseServices {
    constructor() {
       super(URL);
@@ -29,6 +29,24 @@ class WorkService extends BaseServices {
    // Get Member
    getMember(param) {
       return this.get(`/projects/list-member`, { params: { ...param } });
+   }
+
+   // Check add Member
+   addMember(key, data) {
+      return this.post(`/projects/${key}/send-email`, data);
+   }
+
+   // Accept add Member
+   acceptMember(key, token) {
+      return this.patch(
+         `/projects/${key}/member/add`,
+         {},
+         {
+            headers: {
+               'verify-token': `${token}`,
+            },
+         },
+      );
    }
 }
 export default WorkService;

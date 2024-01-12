@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './Navigation.module.scss';
 import Modal from '../Modal/Modal';
@@ -9,10 +9,32 @@ import { Link } from 'react-router-dom';
 import ControllerForm from '../ControllerForm/ControllerForm';
 import { useForm } from 'react-hook-form';
 import ModalSelect from '../ModalSelect/ModalSelect';
+import WorkService from '~/services/work/workServices';
+import { ProjectContext } from '~/contexts/project/projectContext';
 const cx = classNames.bind(style);
 function Navigation({ isOpen, onClose }) {
+   const { detailProject } = useContext(ProjectContext);
+
+   const projectService = new WorkService();
    const [toggle, setToggle] = useState(false);
-   const form = useForm();
+   const [role, setRole] = useState({
+      label: 'Member',
+   });
+   const form = useForm({
+      mode: 'all',
+      defaultValues: {
+         email: '',
+         role: role.label,
+      },
+   });
+   useEffect(() => {
+      form.setValue('role', role.label);
+   }, [role]);
+   const handleAddPeople = async (dataForm) => {
+      console.log(dataForm);
+      const addPeople = await projectService.addMember(detailProject?.codeProject, dataForm);
+   };
+
    return (
       <div className={cx('wrapper')}>
          <Modal width="400px" className={cx('modal')} maxWidth="400px" isOpen={isOpen} onClose={onClose}>
@@ -23,9 +45,9 @@ function Navigation({ isOpen, onClose }) {
                         <h1>Add People to WorkFlow</h1>
                      </div>
                   </header>
-                  <form action="" className={cx('form')}>
+                  <form action="" className={cx('form')} onSubmit={form.handleSubmit(handleAddPeople)}>
                      <div className={cx('mb-16')}>
-                        <ControllerForm form={form} name="email-user" label="Email" required id="email">
+                        <ControllerForm form={form} name="email" label="Email" required id="email">
                            <Input
                               type="text"
                               id="email"
@@ -49,6 +71,7 @@ function Navigation({ isOpen, onClose }) {
                         {toggle && (
                            <ModalSelect
                               width="100%"
+                              setValue={setRole}
                               data={[
                                  {
                                     label: 'Administrator',

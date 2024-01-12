@@ -55,6 +55,9 @@
    align-items: center;
    min-width: 0px;
    font-size: 14px;
+   &:hover {
+      text-decoration: underline;
+   }
 }
 .control-issue {
    grid-area: card-detail / optional-fields / span 1 / span 1;

@@ -21,7 +21,7 @@ function SideBar({ children }) {
 
    useEffect(() => {
       getDetailProject();
-   }, []);
+   }, [param]);
    return (
       <WrapperSideBar>
          <nav className={cx('sidebar-nav')}>

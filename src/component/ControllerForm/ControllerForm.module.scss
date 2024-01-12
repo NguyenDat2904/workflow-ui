@@ -45,3 +45,54 @@
    background-color: white;
    transition: all 0.1s linear 0s;
 }
+
+.img {
+   border: 2px solid var(--ds-border-input, #dfe1e6);
+
+   background-color: #fff;
+   width: 50%;
+   padding-left: 15px;
+   height: 40px;
+   display: flex;
+   align-items: center;
+   position: absolute;
+
+   .imgProjectAndName {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      .imgProject {
+         border-radius: 3px;
+         width: 28px;
+         height: 28px;
+      }
+      .bgrImg {
+         border-radius: 50%;
+         background-color: var(--bgr);
+         padding-right: var(--ds-space-100, 8px);
+         width: var(--_zb0g5d);
+         height: var(--_zb0g5d);
+         display: flex;
+         justify-content: center;
+         align-items: center;
+
+         .textBgr {
+            color: #fff;
+            font-size: 10px;
+            margin-left: 8px;
+            font-weight: 400;
+         }
+      }
+      .nameProject {
+         color: #172b4d;
+         font-size: 14px;
+         line-height: 20px;
+         font-weight: 400;
+      }
+      .iconDown {
+         position: absolute;
+
+         right: 5px;
+      }
+   }
+}

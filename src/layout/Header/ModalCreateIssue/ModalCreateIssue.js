@@ -623,7 +623,7 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
                   <button className={cx('buttonCancel')} type="button" onClick={onClose}>
                      Cancel
                   </button>
-                  <button className={cx('buttonSubmit')} type="submit">
+                  <button className={cx('buttonSubmit')} style={{cursor:loading?'pointer':'not-allowed'}} type={loading?"submit":'button'}>
                      {loading ? 'Create' : 'Creating...'}
                   </button>
                </div>

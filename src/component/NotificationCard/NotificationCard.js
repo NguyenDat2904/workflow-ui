@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 const cx = classNames.bind(style);
 
 function NotificationCard({ data, index, onClickButton }) {
-   const { link, content, title, read, createdAt, reporter, _id } = data;
-   const { imgCover } = reporter;
+   const { link, content, title, read, createdAt, reporter='', _id } = data;
+   const { imgCover='' } = reporter;
 
    const compareDateTime = (targetDateTime) => {
       const targetDate = new Date(targetDateTime);

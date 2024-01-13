@@ -17,5 +17,11 @@ class UserService extends BaseServices {
    uploadImg(formData) {
       return this.patchUpload(`/users/uploadimg`, formData);
    }
+   changePassword(id, currentPassword, password) {
+      return this.patch(`/users/profile/changePassword/${id}`, {
+         oldPassword: currentPassword,
+         newPassword: password,
+      });
+   }
 }
 export default UserService;

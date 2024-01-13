@@ -11,14 +11,17 @@ import SprintService from '~/services/sprint/SprintService';
 import TinyText from '~/component/TinyText/TinyText';
 import IssueService from '~/services/issue/issueService';
 import { useParams } from 'react-router-dom';
-// import { AiOutlineLoading } from 'react-icons/ai';
+
 const cx = classNames.bind(style);
-function ModalCreateIssue({ data, onClose, isOpen }) {
+const userService = new UserService();
+const workService = new WorkService();
+const sprintService = new SprintService();
+const issueService = new IssueService();
+
+
+function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
    const { id } = useParams();
-   const userService = new UserService();
-   const workService = new WorkService();
-   const sprintService = new SprintService();
-   const issueService = new IssueService();
+
    const popupRef = useRef(null);
    const [loading, setLoading] = useState(true);
    const [memberData, setMemberData] = useState([]);

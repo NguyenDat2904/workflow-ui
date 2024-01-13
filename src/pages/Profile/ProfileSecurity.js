@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { Article } from '~/component/articles/Articles';
 import { Form, Input, Button } from '~/component/Inputs/Inputs';
 import './profileSecurity.scss';
-import { patch } from '../../ultil/hpptRequest';
 import HeaderSetting from '~/layout/HeaderSetting/HeaderSetting';
 import { toast } from 'react-toastify';
+import UserService from '~/services/user/userServices';
+
+const userService = new UserService();
 
 export default function ProfileSecurity() {
    const [currentPassword, setCurrentPassword] = useState('');
@@ -19,19 +21,7 @@ export default function ProfileSecurity() {
       }
 
       const user = JSON.parse(localStorage.getItem('user'));
-      const response = await patch(
-         `/users/profile/changePassword/${user?._id}`,
-         {
-            oldPassword: currentPassword,
-            newPassword: password,
-         },
-         {
-            headers: {
-               authorization: `${user?.accessToken}`,
-               refresh_token: `${user?.refreshToken}`,
-            },
-         },
-      );
+      const response = await userService.changePassword(user?._id, currentPassword, password);
       if (response.status === 200) {
          toast.success('Password changed successfully.');
       } else {

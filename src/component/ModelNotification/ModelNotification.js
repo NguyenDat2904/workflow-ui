@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './ModelNotification.module.scss';
 import classNames from 'classnames/bind';
 import Modal from '../Modal/Modal';
@@ -6,15 +6,32 @@ import NotificationCard from '../NotificationCard/NotificationCard';
 import Notification from '../../services/notification/notification';
 
 const cx = classNames.bind(style);
+const notificationServices = new Notification();
 
-function ModelNotification({ handleToggle, position, notificationData = [], isOpen, onClick }) {
-   const notificationServices = new Notification();
+function ModelNotification({ handleToggle, position, isOpen }) {
 
-   const handleUpdateNotification = (id) => {
-      async function updateNotification() {
-         await notificationServices.updateNotification(id);
+   const [notificationData, setNotificationData] = useState([]);
+   const getNotification = async () => {
+      const notification = await notificationServices.getNotification();
+      if (notification.status === 200) {
+         setNotificationData(notification.data);
       }
-      updateNotification();
+   };
+   useEffect(() => {
+      if (isOpen) {
+         getNotification();
+      }
+   }, [isOpen]);
+
+   const handleGetNotification = async (e) => {
+      const isChecked = e.target.checked;
+      const notification = await notificationServices.getNotification(isChecked ? false : '');
+      setNotificationData(notification.data);
+   };
+
+   const handleUpdateNotification = async (id, link, read) => {
+      if (!read) await notificationServices.updateNotification(id);
+      window.open(link);
    };
 
    return (
@@ -26,7 +43,7 @@ function ModelNotification({ handleToggle, position, notificationData = [], isOp
                   Only show unread
                </label>
                <label className={cx('switch')}>
-                  <input type="checkbox" onClick={onClick} />
+                  <input type="checkbox" onClick={handleGetNotification} />
                   <span className={cx('slider', 'round')}></span>
                </label>
             </div>

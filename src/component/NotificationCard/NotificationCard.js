@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 const cx = classNames.bind(style);
 
 function NotificationCard({ data, index, onClickButton }) {
-   const { link, content, title, read, createdAt, reporter, _id } = data;
-   const { imgCover } = reporter;
+   const { link, content, title, read, createdAt, reporter = '', _id } = data;
+   const { imgCover = '' } = reporter;
 
    const compareDateTime = (targetDateTime) => {
       const targetDate = new Date(targetDateTime);
@@ -33,8 +33,8 @@ function NotificationCard({ data, index, onClickButton }) {
    return (
       <div key={index}>
          <div className={cx('item')}>
-            <article className={cx('article')}>
-               <Link to={link} style={{ display: 'flex' }}>
+            <article className={cx('article')} onClick={() => onClickButton(_id, link, read)}>
+               <div style={{ display: 'flex' }}>
                   <div className={cx('css-e05c0p')}>
                      <div data-testid="avatar-wrapper" className={cx('css-rrrufw')}>
                         <span
@@ -44,7 +44,9 @@ function NotificationCard({ data, index, onClickButton }) {
                            role="dialog"
                            tabIndex={0}
                         >
-                           <div style={{ display: 'inline-block', position: 'relative', outline: 0, margin: '6px 8px' }}>
+                           <div
+                              style={{ display: 'inline-block', position: 'relative', outline: 0, margin: '6px 8px' }}
+                           >
                               <span className="css-11dcpko">
                                  <img
                                     src={imgCover}
@@ -63,7 +65,7 @@ function NotificationCard({ data, index, onClickButton }) {
                            <h3 id="1703649252092-8KR5iC7YwL2BR3Pv_summary" className={cx('css-18qu88g')}>
                               {title} <span className={cx('css-v5oldl')}>{compareDateTime(createdAt)}</span>
                            </h3>
-                           <Link className={cx('css-4cej1w')} to={link} onClick={() => onClickButton(_id)}>
+                           <div className={cx('css-4cej1w')}>
                               <div
                                  style={{
                                     overflow: 'hidden',
@@ -75,7 +77,7 @@ function NotificationCard({ data, index, onClickButton }) {
                               >
                                  <p className={cx('css-r0zsdv')}>{content}</p>
                               </div>
-                           </Link>
+                           </div>
                         </div>
                         <div data-testid="read-state-tooltip--container" role="presentation">
                            <button className={cx('notification-list__unread-indicator-wrapper', 'css-1rn87kn')}>
@@ -93,7 +95,7 @@ function NotificationCard({ data, index, onClickButton }) {
                         </div>
                      </div>
                   </div>
-               </Link>
+               </div>
             </article>
          </div>
       </div>

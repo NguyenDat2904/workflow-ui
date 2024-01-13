@@ -11,12 +11,17 @@ import SprintService from '~/services/sprint/SprintService';
 import { ProjectContext } from '~/contexts/project/projectContext';
 import TinyText from '~/component/TinyText/TinyText';
 import IssueService from '~/services/issue/issueService';
+import { useParams } from 'react-router-dom';
 const cx = classNames.bind(style);
+const userService = new UserService();
+const workService = new WorkService();
+const sprintService = new SprintService();
+const issueService = new IssueService();
+
+
 function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
-   const userService = new UserService();
-   const workService = new WorkService();
-   const sprintService = new SprintService();
-   const issueService = new IssueService();
+   const { id } = useParams();
+
    const popupRef = useRef(null);
    const [memberData, setMemberData] = useState([]);
    const [userProject, setUserProject] = useState({});

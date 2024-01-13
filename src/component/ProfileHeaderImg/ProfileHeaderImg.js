@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { patch } from '~/ultil/hpptRequest';
 import ModalSelectImg from '~/pages/Profile/modalSelectImg/modalSelectImg';
 import AddProfilePhoto from '~/pages/Profile/addProfilePhoto/addProfilePhoto';
 import classNames from 'classnames/bind';

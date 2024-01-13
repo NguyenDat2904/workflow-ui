@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import classNames from 'classnames/bind';
-import { patch } from '~/ultil/hpptRequest';
 import { Link } from 'react-router-dom';
 import styles from './modalSelectImg.module.scss';
 import ModalProfile from '../../../component/modalProfile/modalProfile';
@@ -74,7 +73,7 @@ const ModalSelectImg = ({ onclickSeeModalSelectImg, callApi, dataUserProfile }) 
                </div>
                <div className={cx('selectBackgroundImg')}>
                   <div className={cx('selectBackground')}>
-                     <p className={cx("text")}>Background color</p>
+                     <p className={cx('text')}>Background color</p>
                      <div className={cx('select')}>
                         <button
                            onClick={() => selectBackgroundImgProfile(1)}
@@ -198,7 +197,7 @@ const ModalSelectImg = ({ onclickSeeModalSelectImg, callApi, dataUserProfile }) 
                      </div>
                   </div>
                   <div className={cx('fillInitials')}>
-                     <p className={cx("text")}>Initials</p>
+                     <p className={cx('text')}>Initials</p>
                      <input
                         className={cx('input')}
                         onChange={formick.handleChange}

@@ -14,7 +14,8 @@ const RecentActivityOfUser = () => {
    };
    const APIListWork = async () => {
       const popDataProject = dataListProject?.length - 1;
-      const dataWork = await workServices.getIssues(`${dataListProject[popDataProject]._id}`);
+      const dataWork = await workServices.getIssues(`${dataListProject[popDataProject].codeProject}`);
+      console.log(dataWork)
       const dataListWork = dataWork?.data?.dataListIssues?.slice(0, 6);
       setDataListWork(dataListWork);
    };
@@ -42,7 +43,7 @@ const RecentActivityOfUser = () => {
                return (
                   <div key={product?._id} className={cx('ingredient')}>
                      <img
-                        src="https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=xsmall"
+                        src={product.img}
                         alt=""
                      />
 

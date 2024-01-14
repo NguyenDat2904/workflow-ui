@@ -6,12 +6,14 @@ import { Card } from '~/component/cards/Cards';
 import { ReactComponent as GoogleIcon } from '../../asset/icons/google.svg';
 import { Divider } from '~/component/dividers/Dividers';
 import { NavigationLinks } from '../../component/links/Links';
-import { post } from '../../ultil/hpptRequest';
 import HomeLayout from '~/layout/HomeLayout/HomeLayout';
 import LoginGoogleButton from './LoginGoogleButton';
 import { toast } from 'react-toastify';
 import { UserContext } from '~/contexts/user/userContext';
 import { AuthContext } from '~/contexts/auth/authContext';
+import AuthService from '~/services/auth/authServices';
+
+const authService = new AuthService();
 
 function Login() {
    const { setDataUserProfile } = useContext(UserContext);
@@ -38,10 +40,7 @@ function Login() {
          return;
       }
 
-      const response = await post('/users/login', {
-         userName: username,
-         passWord: password,
-      });
+      const response = await authService.login(username, password);
       if (response?.status === 200) {
          localStorage.setItem('user', JSON.stringify(response.data));
          localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));

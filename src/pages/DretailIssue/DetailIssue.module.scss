@@ -205,6 +205,9 @@
       padding-left: var(--ds-space-100, 8px);
    }
 }
+.control-content-right {
+   position: relative;
+}
 .control-header-right {
    text-align: end;
 }
@@ -248,14 +251,26 @@
    padding-right: 9pt;
    padding-top: 8px;
    .assignee-select {
+      position: relative;
       display: flex;
       margin-bottom: var(--ds-space-150, 9pt);
       align-items: center;
       label {
          width: 40%;
+         font-size: 12px;
+         color: var(--ds-text-subtle, #42526e);
+         font-weight: 600;
       }
       .custom-input {
          width: 100%;
+         transition: background 0.2s ease 0s;
+         &:hover {
+            background: var(--ds-background-neutral-subtle-hovered, #ebecf0);
+         }
+      }
+      .wrapper-input {
+         flex: 1;
+         position: relative;
       }
    }
 }

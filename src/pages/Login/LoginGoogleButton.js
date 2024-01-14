@@ -4,11 +4,13 @@ import { toast } from 'react-toastify';
 import { Button } from '~/component/Inputs/Inputs';
 import { ReactComponent as GoogleIcon } from '../../asset/icons/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
-import { post } from '../../ultil/hpptRequest';
 import 'react-toastify/dist/ReactToastify.css';
 import './Login.scss';
 import { UserContext } from '~/contexts/user/userContext';
 import { AuthContext } from '~/contexts/auth/authContext';
+import AuthService from '~/services/auth/authServices';
+
+const authService = new AuthService();
 
 export default function LoginGoogleButton() {
    const navigate = useNavigate();
@@ -17,15 +19,7 @@ export default function LoginGoogleButton() {
 
    const googleLogin = useGoogleLogin({
       onSuccess: async (codeResponse) => {
-         const response = await post(
-            '/users/loginGoogle',
-            {},
-            {
-               headers: {
-                  tokengoogle: codeResponse.access_token,
-               },
-            },
-         );
+         const response = await authService.loginGoogle(codeResponse.access_token);
          if (response?.status === 200) {
             localStorage.setItem('user', JSON.stringify(response.data));
             localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));

@@ -32,9 +32,9 @@ const ViewAllListWork = () => {
    const handleSelect = async (e) => {
       console.log(e.target.value);
       if (e.target.value !== '') {
-         const listWork = await workServices.getIssues(e.target.value, { limit: 5 });
+         const listWork = await workServices.getIssues(e.target.value);
          setDataListWork(listWork?.data?.dataListIssues);
-         setPage(listWork?.data?.totalPage);
+         setPage(listWork?.data?.page);
       } else {
          setDataListWork([]);
       }
@@ -128,9 +128,7 @@ const ViewAllListWork = () => {
                   );
                })}
             </div>
-            <div className={cx('page')}>
-               {dataListWork?.length > 0 &&<Pagination page={page} />}
-            </div>
+            <div className={cx('page')}>{dataListWork?.length > 0 && <Pagination page={page} />}</div>
          </div>
       </div>
    );

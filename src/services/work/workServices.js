@@ -5,27 +5,36 @@ class WorkService extends BaseServices {
    constructor() {
       super(URL);
    }
-   //    GetAll
+   // Create a new project
    createProject(data) {
       return this.post(`/projects/create`, data);
    }
-   //    GetAll
+
+   // Get all projects
    getListProject(param) {
       return this.get(`/projects/list`, { params: { ...param } });
    }
-   getIssues() {
-      return this.get(`/issues/yourWork`);
+
+   getIssues(idProject) {
+      return this.get(`/issues/${idProject}`);
    }
+
    // Details
    projectDetail(id) {
       return this.get(`/projects/project-detail/${id}`);
    }
+
+   getListIssuesOfBoard(codeProject, param) {
+      return this.get(`/issues/broad/${codeProject}`, { params: { ...param } });
+   }
+
    // Delete Project
    deleteProject(id, userID) {
       return this.patch(`projects/delete-project/${id}`, { _idUser: userID });
    }
 
-   // Restore proejct
+   // Restore project
+
    restoreProject(codeProject) {
       return this.patch(`/projects/${codeProject}/restore-project`);
    }
@@ -40,8 +49,8 @@ class WorkService extends BaseServices {
    }
 
    // Get Member
-   getMember(param) {
-      return this.get(`/projects/list-member`, { params: { ...param } });
+   getMember(codeProject, param) {
+      return this.get(`/projects/list-member?codeProject=${codeProject}`, { params: { ...param } });
    }
 
    // Check add Member

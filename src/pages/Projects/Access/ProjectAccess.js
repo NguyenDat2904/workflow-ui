@@ -27,7 +27,6 @@ export default function ProjectAccess() {
    };
 
    const handleDeleteMember = async () => {
-      const user = JSON.parse(localStorage.getItem('user'));
       // const response = await remove(`work/delete-existing-members/${user._id}`);
    };
 

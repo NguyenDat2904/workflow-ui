@@ -19,7 +19,7 @@ const sprintService = new SprintService();
 const issueService = new IssueService();
 
 
-function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
+function ModalCreateIssue({ data, onClose, isOpen }) {
    const { id } = useParams();
 
    const popupRef = useRef(null);
@@ -62,6 +62,7 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
       priority: true,
       sprint: true,
       summary: true,
+      img:true
    });
    const form = useForm({
       mode: 'all',
@@ -77,6 +78,7 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
          startDate: '',
          dueDate: '',
          description: '',
+         img:''
       },
    });
    const dataTypeIssues = [
@@ -209,6 +211,11 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
             form.setValue('issueType', `${issueTypeData.label}`, { shouldDirty: true });
          } else {
             form.setValue('issueType', '', { shouldDirty: true });
+         }
+         if (indexSelect.img) {
+            form.setValue('img', `${issueTypeData.img}`, { shouldDirty: true });
+         } else {
+            form.setValue('img', '', { shouldDirty: true });
          }
          if (indexSelect.priority) {
             form.setValue('priority', `${priorityData.label}`, { shouldDirty: true });
@@ -380,6 +387,7 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
             form.getValues('codeProject') !== '' ||
             form.getValues('issueType') !== ''
          ) {
+            console.log(dataForm)
             const createIssue = await issueService.createIssue(form.getValues('codeProject'), dataForm);
             if (createIssue.status === 200) {
                onClose();
@@ -623,7 +631,7 @@ function ModalCreateIssue({ data, onClose, detailProject, isOpen }) {
                   <button className={cx('buttonCancel')} type="button" onClick={onClose}>
                      Cancel
                   </button>
-                  <button className={cx('buttonSubmit')} type="submit">
+                  <button className={cx('buttonSubmit')} style={{cursor:loading?'pointer':'not-allowed'}} type={loading?"submit":'button'}>
                      {loading ? 'Create' : 'Creating...'}
                   </button>
                </div>

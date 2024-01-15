@@ -30,20 +30,21 @@
             background: transparent;
          }
       }
-      .paddingLeft {
-         padding: 0px var(--ds-space-150, 12px) 0px 30px;
-      }
    }
 }
-
+.paddingLeft {
+   padding-left: 40px !important;
+}
 .left-icon {
    top: 8px;
    left: 8px;
 }
 .input-icon {
-   width: 16px;
+   // width: 16px;
    height: 16px;
    position: absolute;
+   top: 50%;
+   transform: translateY(-50%);
    color: var(--ds-text-subtlest, #6b778c);
    span {
       width: 16px;

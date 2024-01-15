@@ -6,10 +6,9 @@ import style from './ModalAccept.module.scss';
 import Button from '../Buttton/Button';
 
 const cx = classNames.bind(style);
-function ModalAccept({ isOpen, isClose, name, title, handleAccept }) {
-   console.log(isOpen);
+function ModalAccept({ isOpen, isClose, name, title, handleAccept, headerTitle }) {
    return (
-      <ModalIcon width="400px" isOpen={isOpen} isClose={isClose} header="Delete sprint" leftIcon={<WarningIcon />}>
+      <ModalIcon width="400px" isOpen={isOpen} isClose={isClose} header={headerTitle} leftIcon={<WarningIcon />}>
          <div className={cx('text-desc')}>
             <p>
                {title}

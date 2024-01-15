@@ -3,14 +3,13 @@ import Button from '~/component/Buttton/Button';
 import { LeftIcon } from '~/component/icon/icon';
 import classNames from 'classnames/bind';
 import style from '~/layout/SideBar/SideBar.module.scss';
-import { UserContext } from '~/contexts/user/userContext';
 import { useLocation } from 'react-router-dom';
 import SideBar from '../SideBar';
+import { ProjectContext } from '~/contexts/project/projectContext';
 const cx = classNames.bind(style);
 function SideBarChildren() {
-   const { detailProject } = useContext(UserContext);
+   const { detailProject } = useContext(ProjectContext);
    const location = useLocation();
-
    return (
       <SideBar>
          <div className={cx('sidebar-menu')}>
@@ -40,10 +39,33 @@ function SideBarChildren() {
                            )}
                            style={{ marginTop: '6px' }}
                         >
-                           <span className={cx('css-active')}>Details</span>
+                           <span
+                              className={cx(
+                                 location.pathname === `/project/${detailProject?.codeProject}/settings/details` &&
+                                    'css-active',
+                              )}
+                           >
+                              Details
+                           </span>
                         </Button>
-                        <Button backgroundNone viewAll className={cx('custom-button')} style={{ marginTop: '6px' }}>
-                           Access
+                        <Button
+                           to={`/project/${detailProject?.codeProject}/setting/access`}
+                           backgroundNone
+                           viewAll
+                           className={cx(
+                              'custom-button',
+                              location.pathname === `/project/${detailProject?.codeProject}/setting/access` && 'active',
+                           )}
+                           style={{ marginTop: '6px' }}
+                        >
+                           <span
+                              className={cx(
+                                 location.pathname === `/project/${detailProject?.codeProject}/settings/access` &&
+                                    'css-active',
+                              )}
+                           >
+                              Access
+                           </span>
                         </Button>
                         <Button backgroundNone viewAll className={cx('custom-button')} style={{ marginTop: '6px' }}>
                            Notifications

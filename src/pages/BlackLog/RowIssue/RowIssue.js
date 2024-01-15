@@ -7,9 +7,10 @@ import ModalSelect from '~/component/ModalSelect/ModalSelect';
 import IssueService from '~/services/issue/issueService';
 import { ProjectContext } from '~/contexts/project/projectContext';
 import { Link } from 'react-router-dom';
+import Modal from '~/component/Modal/Modal';
 
 const cx = classNames.bind(style);
-function RowIssue({ data, setIssues, sprintID, members, children = false }) {
+function RowIssue({ data, setIssues, sprintID, members, children = false, setIssueChildren, idParent }) {
    const { detailProject } = useContext(ProjectContext);
 
    const issueService = new IssueService();
@@ -24,6 +25,11 @@ function RowIssue({ data, setIssues, sprintID, members, children = false }) {
       if (updateIssue.status === 200) {
          const listIssue = await issueService.getIssue(detailProject?.codeProject, { sprintID: sprintID });
          if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
+          const issueChildren = await issueService.getIssue(detailProject?.codeProject, {
+             parentIssueID: idParent,
+          });
+          if (issueChildren.status === 200)
+             setIssueChildren(issueChildren.data.dataListIssues.filter((item) => item.parentIssue !== null));
       }
    };
    const handleChangeStatus = async (key, id, option) => {
@@ -32,11 +38,29 @@ function RowIssue({ data, setIssues, sprintID, members, children = false }) {
       if (updateIssue.status === 200) {
          const listIssue = await issueService.getIssue(detailProject?.codeProject, { sprintID: sprintID });
          if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
+         const issueChildren = await issueService.getIssue(detailProject?.codeProject, {
+            parentIssueID: idParent,
+         });
+         if (issueChildren.status === 200)
+            setIssueChildren(issueChildren.data.dataListIssues.filter((item) => item.parentIssue !== null));
       }
    };
-
+   const handleChangeAssignee = async (key, id, option) => {
+      const dataForm = { assignee: option.idUser };
+      const updateIssue = await issueService.updateIssue(key, id, dataForm);
+      if (updateIssue.status === 200) {
+         const listIssue = await issueService.getIssue(detailProject?.codeProject, { sprintID: sprintID });
+         if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
+          const issueChildren = await issueService.getIssue(detailProject?.codeProject, {
+             parentIssueID: idParent,
+          });
+          if (issueChildren.status === 200)
+             setIssueChildren(issueChildren.data.dataListIssues.filter((item) => item.parentIssue !== null));
+      }
+   };
    const listMember = members?.map((member) => {
       return {
+         idUser: member?._id,
          img:
             member?.img === ''
                ? 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
@@ -132,18 +156,22 @@ function RowIssue({ data, setIssues, sprintID, members, children = false }) {
                         </Button>
                      )}
                      {isToggleStatus && (
-                        <ModalSelect
-                           width="200px"
-                           onClose={() => setIsToggleStatus(false)}
-                           handleSubmit={(option) => handleChangeStatus(detailProject?.codeProject, data?._id, option)}
-                           status
-                           data={[
-                              data?.status !== 'TODO' ? { label: 'TO DO', key: 'TODO' } : null,
-                              data?.status !== 'INPROGRESS' ? { label: 'IN PROGRESS', key: 'INPROGRESS' } : null,
-                              data?.status !== 'REVIEW' ? { label: 'IN REVIEW', key: 'REVIEW' } : null,
-                              data?.status !== 'DONE' ? { label: 'DONE', key: 'DONE' } : null,
-                           ].filter((item) => item !== null)}
-                        />
+                        <Modal isOpen={isToggleStatus} onClose={() => setIsToggleStatus(false)} relative>
+                           <ModalSelect
+                              width="200px"
+                              onClose={() => setIsToggleStatus(false)}
+                              handleSubmit={(option) =>
+                                 handleChangeStatus(detailProject?.codeProject, data?._id, option)
+                              }
+                              status
+                              data={[
+                                 data?.status !== 'TODO' ? { label: 'TO DO', key: 'TODO' } : null,
+                                 data?.status !== 'INPROGRESS' ? { label: 'IN PROGRESS', key: 'INPROGRESS' } : null,
+                                 data?.status !== 'REVIEW' ? { label: 'IN REVIEW', key: 'REVIEW' } : null,
+                                 data?.status !== 'DONE' ? { label: 'DONE', key: 'DONE' } : null,
+                              ].filter((item) => item !== null)}
+                           />
+                        </Modal>
                      )}
                   </div>
                </div>
@@ -177,43 +205,49 @@ function RowIssue({ data, setIssues, sprintID, members, children = false }) {
                      </div>
 
                      {isTogglePrior && (
-                        <ModalSelect
-                           widthImg="24px"
-                           width="160px"
-                           handleSubmit={(option) =>
-                              handleChangePriority(detailProject?.codeProject, data?._id, option)
-                           }
-                           onClose={() => setIsTogglePrior(false)}
-                           data={[
-                              data?.priority !== 'Highest'
-                                 ? {
-                                      label: 'Highest',
-                                      img: 'https://tcx19.atlassian.net/images/icons/priorities/highest.svg',
-                                   }
-                                 : null,
-                              data?.priority !== 'High'
-                                 ? {
-                                      label: 'High',
-                                      img: 'https://tcx19.atlassian.net/images/icons/priorities/high.svg',
-                                   }
-                                 : null,
-                              data?.priority !== 'Low'
-                                 ? { label: 'Low', img: 'https://tcx19.atlassian.net/images/icons/priorities/low.svg' }
-                                 : null,
-                              data?.priority !== 'Lowest'
-                                 ? {
-                                      label: 'Lowest',
-                                      img: 'https://tcx19.atlassian.net/images/icons/priorities/lowest.svg',
-                                   }
-                                 : null,
-                              data?.priority !== 'Medium'
-                                 ? {
-                                      label: 'Medium',
-                                      img: 'https://tcx19.atlassian.net/images/icons/priorities/medium.svg',
-                                   }
-                                 : null,
-                           ].filter((item) => item !== null)}
-                        />
+                        <Modal relative isOpen={isTogglePrior} onClose={() => setIsTogglePrior(false)}>
+                           <ModalSelect
+                              widthImg="20px"
+                              width="160px"
+                              right="0"
+                              handleSubmit={(option) =>
+                                 handleChangePriority(detailProject?.codeProject, data?._id, option)
+                              }
+                              onClose={() => setIsTogglePrior(false)}
+                              data={[
+                                 data?.priority !== 'Highest'
+                                    ? {
+                                         label: 'Highest',
+                                         img: 'https://tcx19.atlassian.net/images/icons/priorities/highest.svg',
+                                      }
+                                    : null,
+                                 data?.priority !== 'High'
+                                    ? {
+                                         label: 'High',
+                                         img: 'https://tcx19.atlassian.net/images/icons/priorities/high.svg',
+                                      }
+                                    : null,
+                                 data?.priority !== 'Low'
+                                    ? {
+                                         label: 'Low',
+                                         img: 'https://tcx19.atlassian.net/images/icons/priorities/low.svg',
+                                      }
+                                    : null,
+                                 data?.priority !== 'Lowest'
+                                    ? {
+                                         label: 'Lowest',
+                                         img: 'https://tcx19.atlassian.net/images/icons/priorities/lowest.svg',
+                                      }
+                                    : null,
+                                 data?.priority !== 'Medium'
+                                    ? {
+                                         label: 'Medium',
+                                         img: 'https://tcx19.atlassian.net/images/icons/priorities/medium.svg',
+                                      }
+                                    : null,
+                              ].filter((item) => item !== null)}
+                           />
+                        </Modal>
                      )}
                   </div>
                </div>
@@ -221,7 +255,7 @@ function RowIssue({ data, setIssues, sprintID, members, children = false }) {
 
             <div className={cx('user-assignee')}>
                <span className={cx('img-assignee')}>
-                  <div onClick={() => setIsToggleAssignee(!isToggleAssignee)}>
+                  <div onClick={() => setIsToggleAssignee(!isToggleAssignee)} style={{ width: '100%', height: '100%' }}>
                      <img
                         src={
                            data?.assignee?.img
@@ -234,14 +268,20 @@ function RowIssue({ data, setIssues, sprintID, members, children = false }) {
                      />
                   </div>
                   {isToggleAssignee && (
-                     <ModalSelect
-                        right="0"
-                        widthImg="24px"
-                        width="284px"
-                        // handleSubmit={(option) => handleChangePriority(detailProject?.codeProject, data?._id, option)}
-                        onClose={() => setIsToggleAssignee(false)}
-                        data={listMember}
-                     />
+                     <Modal relative isOpen={isToggleAssignee} onClose={() => setIsToggleAssignee(false)}>
+                        <ModalSelect
+                           right="0"
+                           widthImg="24px"
+                           width="284px"
+                           heightRow="48px"
+                           percent50
+                           handleSubmit={(option) =>
+                              handleChangeAssignee(detailProject?.codeProject, data?._id, option)
+                           }
+                           onClose={() => setIsToggleAssignee(false)}
+                           data={listMember}
+                        />
+                     </Modal>
                   )}
                </span>
             </div>

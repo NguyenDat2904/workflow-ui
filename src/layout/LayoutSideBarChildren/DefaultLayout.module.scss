@@ -4,6 +4,7 @@
    position: relative;
    grid-area: content;
    .content {
+      flex: 1;
       width: calc(
          100vw - var(--leftPanelWidth, 0px) - var(--leftSidebarWidth, 0px) - var(--rightPanelWidth, 0px) -
             var(--rightSidebarWidth, 0px)

@@ -174,6 +174,7 @@ function Sprint({ data, start = false, handleCreateSprint, setPrints, members })
                         )}
                         {isToggleAccept && (
                            <ModalAccept
+                              headerTitle="Delete sprint"
                               isOpen={isToggleAccept}
                               isClose={() => setIsToggleAccept(false)}
                               name={data.name}

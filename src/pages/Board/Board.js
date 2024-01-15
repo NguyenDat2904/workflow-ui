@@ -14,11 +14,13 @@ export default function Board() {
    const BoardWorkService = new WorkService();
    const [listIssues, setListIssues] = useState({});
    const { projectKey } = useParams();
+   console.log(projectKey);
 
    useEffect(() => {
       async function getIssues() {
          const listIssuesData = await BoardWorkService.getListIssuesOfBoard(projectKey, {});
          const listIssues = listIssuesData.data.issuesBroad;
+         console.log(listIssuesData);
          const parentIssues = {};
          for (const issue of listIssues) {
             if (issue.parentIssue) {
@@ -36,7 +38,6 @@ export default function Board() {
       getIssues();
    }, []);
 
-   console.log(listIssues);
    const allIssues = {
       todo: [
          {
@@ -112,6 +113,7 @@ export default function Board() {
    return (
       <div className={cx('board')}>
          <HeaderProject headerName={'Board'} rightSection={rightSection} />
+
          <div className={cx('task-board')}>
             <div className={cx('task-status')}>
                <div>To do</div>

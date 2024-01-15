@@ -52,13 +52,13 @@ function ProjectList({ projectsList, setProjectsList, handleMoveToTrash }) {
       <table className={cx('table-list')}>
          <thead>
             <tr>
-               <td className={cx('star')} style={{ '--_1vcp0mh': '2.85%' }}>
+               {/* <td className={cx('star')} style={{ '--_1vcp0mh': '2.85%' }}>
                   <div className={cx('flex-center')}>
                      <span>
                         <StarIcon />
                      </span>
                   </div>
-               </td>
+               </td> */}
                <td style={{ '--_1vcp0mh': '22%' }}>
                   <Button
                      backgroundNone
@@ -95,9 +95,9 @@ function ProjectList({ projectsList, setProjectsList, handleMoveToTrash }) {
          <tbody>
             {loadingGetProject ? (
                <tr width="100%">
-                  <td style={{ padding: '0 1px' }}>
+                  {/* <td style={{ padding: '0 1px' }}>
                      <Skeleton width="100%" height="48px" />
-                  </td>
+                  </td> */}
                   <td style={{ padding: '0 1px' }}>
                      <Skeleton width="100%" height="48px" />
                   </td>

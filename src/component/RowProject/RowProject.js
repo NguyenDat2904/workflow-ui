@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import classNames from 'classnames/bind';
 import style from './RowProject.module.scss';
 import Button from '../Buttton/Button';
 import { MenuIcon } from '../icon/icon';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MenuProject from './MenuProject/MenuProject';
+import { ProjectContext } from '~/contexts/project/projectContext';
 const cx = classNames.bind(style);
 
 function RowProject({ project, handleMoveToTrash }) {
-   // 1. State
    const [toggle, setToggle] = useState(false);
+   const { setDetailProject } = useContext(ProjectContext);
+   const navigate = useNavigate();
 
-   // 3. Func
+   const handleProjectNavigation = () => {
+      setDetailProject(project);
+      navigate(`/project/${project.codeProject}/board`);
+   };
+
    return (
       <tr className={cx('row')}>
-         <td></td>
+         {/* <td></td> */}
          <td>
             <Button viewAll noHover style={{ padding: '0px' }}>
                <div className={cx('block')}>
@@ -23,10 +29,8 @@ function RowProject({ project, handleMoveToTrash }) {
                         <img src={project.imgProject} alt="" />
                      </span>
                   </div>
-                  <div className={cx('name')}>
-                     <div>
-                        <Link to={`/project/${project.codeProject}/board`}>{project.nameProject}</Link>
-                     </div>
+                  <div className={cx('name')} onClick={handleProjectNavigation}>
+                     {project.nameProject}
                   </div>
                </div>
             </Button>

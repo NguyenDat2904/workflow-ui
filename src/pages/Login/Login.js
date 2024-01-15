@@ -48,13 +48,13 @@ function Login() {
          if (response.data.message === 'Email does not exist') {
             form.setError('userName', {
                type: 'manual',
-               message: 'User name does not exist',
+               message: 'Username does not exist.',
             });
          }
          if (response.data.message === 'Wrong password') {
             form.setError('passWord', {
                type: 'manual',
-               message: 'Password does not exist',
+               message: 'Password does not exist.',
             });
          }
       }

@@ -1,44 +1,75 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import classNames from 'classnames/bind';
+
 import { Table } from '~/component/tables/Tables';
-import './ProjectAccess.scss';
+import style from './ProjectAccess.module.scss';
+import NavUrl from '~/component/NavUrl/NavUrl';
+import { ProjectContext } from '~/contexts/project/projectContext';
+import Button from '~/component/Buttton/Button';
 import WorkService from '~/services/work/workServices';
 
+const cx = classNames.bind(style);
 export default function ProjectAccess() {
-   const { projectKey } = useParams();
-   const workServices = new WorkService();
-   const [memberList, setMemberList] = useState([]);
+   const { detailProject } = useContext(ProjectContext);
+   const [members, setMembers] = useState([]);
+   const projectService = new WorkService();
+
    useEffect(() => {
-      workServices
-         .getMember(projectKey, {})
-         .then((res) => {
-            setMemberList(
-               res.data.dataMember.map((member) => ({
-                  Name: member.name,
-                  Email: member.email,
-                  Role: member.role ? member.role : 'Admin',
-               })),
-            );
-         })
-         .catch((err) => {
-            console.log(err);
-         });
-   }, []);
+      getMembers();
+   }, [detailProject]);
+
+   // Get Member
+   const getMembers = async () => {
+      if (detailProject.codeProject) {
+         const listMembers = await projectService.getMember({ codeProject: detailProject?.codeProject });
+         if (listMembers.status === 200) setMembers(listMembers.data);
+      }
+   };
 
    const handleDeleteMember = async () => {
       // const response = await remove(`work/delete-existing-members/${user._id}`);
    };
 
    return (
-      <div className="project-access">
-         <h1>Access</h1>
-         <Table
-            actions={[{ label: 'Delete', method: handleDeleteMember }]}
-            data={memberList}
-            colWidthRatio={[30, 40, 20]}
-            colType={['string', 'string', 'string']}
-            labels={['Name', 'Email', 'Role']}
-         />
+      <div className={cx('project-access')}>
+         <div className={cx('access-container')}>
+            <div className={cx('access-wrapper')}>
+               <div style={{ marginTop: '24px' }}>
+                  <NavUrl
+                     url={[
+                        { name: 'Projects', link: '/project' },
+                        {
+                           name: detailProject?.nameProject,
+                           link: `/project/${detailProject?.codeProject}/black-log`,
+                        },
+                        {
+                           name: 'Project settings',
+                           link: `/project/${detailProject?.codeProject}/settings/details`,
+                        },
+                     ]}
+                  />
+               </div>
+               <div className={cx('access-main')}>
+                  <div className={cx('access-header')}>
+                     <h1>Access</h1>
+                     <Button blue style={{ height: '32px', fontSize: '14px' }}>
+                        Add people
+                     </Button>
+                  </div>
+                  <div className={cx('container-table')}>
+                     <div style={{ marginBottom: 'var(--ds-space-300, 24px)' }}>
+                        <Table
+                           actions={[{ label: 'Delete', method: handleDeleteMember }]}
+                           data={members}
+                           colWidthRatio={[30, 40, 20]}
+                           colType={['string', 'string', 'string']}
+                           labels={['Name', 'Email', 'Role', 'Action']}
+                        />
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
    );
 }

@@ -5,7 +5,12 @@ class WorkService extends BaseServices {
    constructor() {
       super(URL);
    }
-   // GetAll
+   // Create a new project
+   createProject(data) {
+      return this.post(`/projects/create`, data);
+   }
+
+   // Get all projects
    getListProject(param) {
       return this.get(`/projects/list`, { params: { ...param } });
    }

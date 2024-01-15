@@ -42,7 +42,7 @@ const privateRoutes = [
    { path: '/project/:projectKey/settings/access', component: ProjectAccess, layout: HeaderOnly },
    { path: '/add-people', component: VerifyAddPeople, layout: null },
    { path: '/projects/:id/issues/:id_issue', component: DetailIssue },
-   { path: '/your-Work', component: YourWork },
+   { path: '/your-Work', component: YourWork, layout: HeaderOnly },
 ];
 
 const publicRoutes = [

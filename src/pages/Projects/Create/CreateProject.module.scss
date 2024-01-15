@@ -1,0 +1,129 @@
+.create-project-container {
+   height: 100%;
+   place-content: start center;
+   display: flex;
+   -webkit-box-pack: center;
+   margin: 0px auto;
+   .project-container {
+      width: 900px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center;
+      position: absolute;
+   }
+   .project-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+   }
+   .title {
+      font-size: 29px;
+      font-style: inherit;
+      line-height: 32px;
+      color: var(--ds-text, var(--ds-text, #172b4d));
+      font-weight: var(--ds-font-weight-semibold, 600);
+      letter-spacing: -0.29px;
+      margin-bottom: var(--ds-space-100, 8px);
+   }
+   .subtitle {
+      font-size: 12px;
+   }
+
+   .error {
+      color: red;
+   }
+}
+.project-wrapper-left {
+   width: 25pc;
+   .custom-input {
+      width: 100%;
+   }
+}
+.project-wrapper-right {
+   border-radius: 1pc;
+   width: 25pc;
+   padding: var(--ds-space-250, 20px);
+   .project-wrapper-right-header {
+      h2 {
+         line-height: 29px;
+         font-size: 14px;
+         font-weight: 500;
+         color: var(--ds-text-subtle, #6b778c);
+      }
+   }
+   .project-wrapper-right-card {
+      display: flex;
+      overflow: hidden;
+      margin-top: var(--ds-space-100, 8px);
+      min-height: 96px;
+      background-color: var(--ds-surface, #ffffff);
+      border-radius: 8px;
+      box-shadow: var(--ds-shadow-raised, 0px 1px 1px rgba(9, 30, 66, 0.13), 0px 0px 1px rgba(9, 30, 66, 0.13));
+      .wrapper-right-img {
+         display: flex;
+         // width: 25%;
+         align-items: center;
+         justify-content: center;
+         padding: 0 var(--ds-space-150, 9pt);
+         background-color: var(--ds-background-neutral, #f4f5f7);
+         .right-img {
+            width: 75px;
+            height: 50px;
+            background-image: url(https://dathhcc2.atlassian.net/s/tod1zk/b/9/841615e…/_/download/resources/com.atlassian.jira.project-templates-plugin:project-templates-next-icons/icons/scrum.svg);
+            background-size: cover;
+         }
+      }
+   }
+}
+.hr {
+   border: 1px solid var(--ds-border-disabled, rgba(9, 30, 66, 0.08));
+   width: 100%;
+   margin: var(--ds-space-300, 24px) 0 0;
+}
+.wrapper-right-content {
+   padding: var(--ds-space-100, 8px) var(--ds-space-300, 24px);
+   width: 70%;
+   .wrapper-right-header {
+      font-weight: 500;
+      font-size: 14px;
+      height: 20px;
+      line-height: 19px;
+      letter-spacing: normal;
+   }
+   .wrapper-right-logo {
+      --logo-color: inherit;
+      --logo-fill: currentColor;
+      display: inline-block;
+      position: relative;
+      color: var(--logo-color);
+      fill: var(--logo-fill);
+      line-height: 1;
+      user-select: none;
+      white-space: normal;
+      height: 16px;
+      svg {
+         height: 100%;
+      }
+   }
+   .right-content-desc {
+      margin-top: var(--ds-space-050, 4px);
+      font-size: 11px;
+      text-align: left;
+      color: var(--ds-text-subtle, #6b778c);
+      line-height: 15.7143px;
+   }
+}
+.btn-group {
+   display: flex;
+   padding: 24px 0;
+   position: relative;
+   -webkit-box-align: center;
+   align-items: center;
+   -webkit-box-pack: end;
+   justify-content: flex-end;
+   gap: var(--ds-space-100, 8px);
+   .custom {
+      min-width: 70px;
+   }
+}

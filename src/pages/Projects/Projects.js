@@ -12,10 +12,10 @@ import { UserContext } from '~/contexts/user/userContext';
 import { AuthContext } from '~/contexts/auth/authContext';
 import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(style);
+const projectService = new WorkService();
 
 function Projects() {
    const { parseuser, setLoadingGetProject } = useContext(UserContext);
-   const projectService = new WorkService();
    const { accessToken } = useContext(AuthContext);
 
    const navigate = useNavigate();

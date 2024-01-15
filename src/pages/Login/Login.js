@@ -1,46 +1,43 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Login.scss';
-import { Input, Button, Form } from '../../component/Inputs/Inputs';
-import { Card } from '~/component/cards/Cards';
-import { ReactComponent as GoogleIcon } from '../../asset/icons/google.svg';
-import { Divider } from '~/component/dividers/Dividers';
-import { NavigationLinks } from '../../component/links/Links';
 import HomeLayout from '~/layout/HomeLayout/HomeLayout';
 import LoginGoogleButton from './LoginGoogleButton';
-import { toast } from 'react-toastify';
 import { UserContext } from '~/contexts/user/userContext';
 import { AuthContext } from '~/contexts/auth/authContext';
 import AuthService from '~/services/auth/authServices';
+import { useForm } from 'react-hook-form';
+import ControllerForm from '~/component/ControllerForm/ControllerForm';
+import { LoadingIcon } from '~/component/icon/icon';
+import classNames from 'classnames/bind';
+import style from '../Register/Register.module.scss';
+import schema from './LoginValidation';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-const authService = new AuthService();
+const cx = classNames.bind(style);
 
 function Login() {
+   const authService = new AuthService();
+   const form = useForm({
+      mode: 'all',
+      defaultValues: {
+         userName: '',
+         passWord: '',
+      },
+      resolver: yupResolver(schema),
+   });
    const { setDataUserProfile } = useContext(UserContext);
    const { setIsAuthenticated } = useContext(AuthContext);
 
-   const [username, setUsername] = useState('');
-   const [password, setPassword] = useState('');
-   const [usernameError, setUsernameError] = useState('');
-   const [passwordError, setPasswordError] = useState('');
+   const [loading, setLoading] = useState(false);
+
    const navigate = useNavigate();
 
-   const handleLoginWithUsername = async (e) => {
-      e.preventDefault();
-
-      setUsernameError('');
-      setPasswordError('');
-      if (!username || !password) {
-         if (!username) {
-            setUsernameError('Please enter your username');
-         }
-         if (!password) {
-            setPasswordError('Please enter your password');
-         }
+   const handleLoginWithUsername = async (dataForm) => {
+      if (loading) {
          return;
       }
-
-      const response = await authService.login(username, password);
+      setLoading(true);
+      const response = await authService.login(dataForm);
       if (response?.status === 200) {
          localStorage.setItem('user', JSON.stringify(response.data));
          localStorage.setItem('accessToken', JSON.stringify(response.data.accessToken));
@@ -48,61 +45,104 @@ function Login() {
          setIsAuthenticated(true);
          navigate('/project');
       } else {
-         switch (response?.status) {
-            case 404:
-               toast.error('Invalid username or password.');
-               break;
-            default:
-               toast.error('Something went wrong. Please try again later.');
+         if (response.data.message === 'Email does not exist') {
+            form.setError('userName', {
+               type: 'manual',
+               message: 'User name does not exist',
+            });
+         }
+         if (response.data.message === 'Wrong password') {
+            form.setError('userName', {
+               type: 'manual',
+               message: 'Password does not exist',
+            });
          }
       }
+      setLoading(false);
    };
 
    return (
       <HomeLayout>
-         <div id="login">
-            <Card className="login-container">
-               <h3>
-                  Log in
-                  <p>With your WorkFlow account</p>
-               </h3>
-               <Form
-                  onSubmit={(e) => {
-                     handleLoginWithUsername(e);
-                  }}
-               >
-                  <Input
-                     error={usernameError}
-                     id={'username'}
-                     inputStyle={'light'}
-                     label={'Username:'}
-                     type={'username'}
-                     name={'username'}
-                     placeholder={'Enter username'}
-                     onChange={(e) => setUsername(e.target.value)}
-                  />
-                  <Input
-                     error={passwordError}
-                     id={'password'}
-                     inputStyle={'light'}
-                     label={'Password:'}
-                     type={'password'}
-                     name={'password'}
-                     placeholder={'Enter password'}
-                     onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <Button buttonStyle={username && password ? 'filled' : 'disabled'} type={'submit'}>
-                     Log in
-                  </Button>
-               </Form>
-               <p>OR</p>
-               <LoginGoogleButton />
-               <Divider />
-               <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                  <NavigationLinks navLink="/forgot">Forgot password?</NavigationLinks>|
-                  <NavigationLinks navLink="/register">Sign up for an account</NavigationLinks>
+         <div className={cx('column', 'column-right')}>
+            <div className={cx('layout-standalone')}>
+               <div className={cx('css-form')}>
+                  <div className={cx('css-header')}>
+                     <p className={cx('css-title')}>
+                        <span>Get started</span>
+                     </p>
+                     <p className={cx('css-text')}>
+                        <span>Free for up to 10 users</span>
+                     </p>
+                  </div>
+                  <div className={cx('css-option')}>
+                     <div className={cx('option-button')}>
+                        <form
+                           action=""
+                           className={cx('form-submit')}
+                           onSubmit={form.handleSubmit(handleLoginWithUsername)}
+                        >
+                           <div style={{ marginBottom: '20px' }}>
+                              <ControllerForm
+                                 form={form}
+                                 name="userName"
+                                 label="Username"
+                                 required
+                                 labelLarge
+                                 className="search "
+                                 id="username-field"
+                              >
+                                 <div className={cx('form')}>
+                                    <div className="form-input error success">
+                                       <input
+                                          type="text"
+                                          name="userName"
+                                          id="username-field"
+                                          className="input"
+                                          defaultValue={form.getValues('userName')}
+                                       />
+                                    </div>
+                                 </div>
+                              </ControllerForm>
+                           </div>
+                           <div style={{ marginBottom: '20px' }}>
+                              <ControllerForm
+                                 form={form}
+                                 name="passWord"
+                                 label="Password"
+                                 required
+                                 labelLarge
+                                 className="search"
+                                 id="full-name-field"
+                              >
+                                 <div className={cx('form')}>
+                                    <div className="form-input error success">
+                                       <input
+                                          type="password"
+                                          name="passWord"
+                                          id="full-name-field"
+                                          className="input"
+                                          defaultValue={form.getValues('passWord')}
+                                       />
+                                    </div>
+                                 </div>
+                              </ControllerForm>
+                           </div>
+                           <button className={cx('submit', !form.formState.isValid && 'disable')} type="submit">
+                              {!loading ? <span>Agree</span> : <LoadingIcon />}
+                           </button>
+                        </form>
+                        <div className={cx('or')} style={{ marginTop: '20px' }}>
+                           <div className={cx('left')}></div>
+                           <span>OR</span>
+                           <div className={cx('right')}></div>
+                        </div>
+                        <div className={cx('login-google-button-container')}>
+                           <LoginGoogleButton />
+                        </div>
+                     </div>
+                  </div>
                </div>
-            </Card>
+            </div>
          </div>
       </HomeLayout>
    );

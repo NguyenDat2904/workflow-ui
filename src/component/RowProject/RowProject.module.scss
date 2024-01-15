@@ -49,6 +49,7 @@ tr.row {
       color: var(--ds-link, #0052cc);
       &:hover {
          text-decoration: underline;
+         cursor: pointer;
       }
    }
 }

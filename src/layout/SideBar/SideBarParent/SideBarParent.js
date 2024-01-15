@@ -34,7 +34,7 @@ function SideBarParent() {
                               location.pathname === `/project/${detailProject?.codeProject}/black-log` && 'css-active',
                            )}
                         >
-                           Blacklog
+                           Backlog
                         </span>
                      </Button>
                      <Button

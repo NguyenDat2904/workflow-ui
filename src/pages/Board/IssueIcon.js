@@ -12,21 +12,21 @@ export function IssueIcon({ type, ...props }) {
    let icon = '';
    let iconTypeStyle;
    switch (type) {
-      case 'Bug':
+      case 'BUG':
          icon = <Bug />;
          iconTypeStyle = cx('issue-icon', 'icon-bug');
          break;
-      case 'Epic':
-         icon = <Epic />;
-         iconTypeStyle = cx('issue-icon', 'icon-epic');
+      case 'TASK':
+         icon = <Task />;
+         iconTypeStyle = cx('issue-icon', 'icon-task');
          break;
-      case 'Story':
+      case 'USER_STORY':
          icon = <Story />;
          iconTypeStyle = cx('issue-icon', 'icon-story');
          break;
       default:
-         icon = <Task />;
-         iconTypeStyle = cx('issue-icon', 'icon-task');
+         icon = <Epic />;
+         iconTypeStyle = cx('issue-icon', 'icon-epic');
          break;
    }
 

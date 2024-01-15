@@ -5,11 +5,8 @@ class AuthService extends BaseServices {
    constructor() {
       super(URL);
    }
-   login(username, password) {
-      return this.post('/users/login', {
-         userName: username,
-         passWord: password,
-      });
+   login(data) {
+      return this.post('/users/login', data);
    }
    loginGoogle(token) {
       return this.post(

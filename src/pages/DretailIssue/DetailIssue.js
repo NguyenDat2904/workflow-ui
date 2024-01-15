@@ -17,9 +17,9 @@ import DOMPurify from 'dompurify';
 import ModalSelect from '~/component/ModalSelect/ModalSelect';
 import SprintService from '~/services/sprint/SprintService';
 import WorkService from '~/services/work/workServices';
-import CommentService from '~/services/comment/CommentService';
 import moment from 'moment';
 import ModalAccept from '~/component/ModalAccept/ModalAccept';
+import CommentService from '../../services/comment/CommentService';
 const cx = classNames.bind(style);
 function DetailIssue() {
    const param = useParams();

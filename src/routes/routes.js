@@ -38,12 +38,12 @@ const privateRoutes = [
    { path: '/forgot/change-password', component: ChangePassword, layout: null },
    { path: '/project', component: Projects, layout: HeaderOnly },
    { path: '/project/create', component: CreateProject, layout: null },
-   { path: '/project/trash', component: TrashProjects, layout: HeaderOnly },
+   { path: '/project/trash', component: TrashProjects },
+   { path: '/project/:id/setting/access', component: ProjectAccess, layout: LayoutSideBarChildren },
    { path: '/project/:_id/board', component: Board, layout: LayoutSideBarChildren },
-   { path: '/project/:_id/settings/access', component: ProjectAccess, layout: HeaderOnly },
    { path: '/add-people', component: VerifyAddPeople, layout: null },
    { path: '/projects/:id/issues/:id_issue', component: DetailIssue },
-   { path: '/your-Work', component: YourWork },
+   { path: '/your-Work', component: YourWork, layout: null },
 ];
 
 const publicRoutes = [

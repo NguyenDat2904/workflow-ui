@@ -6,6 +6,10 @@ class WorkService extends BaseServices {
       super(URL);
    }
    //    GetAll
+   createProject(data) {
+      return this.post(`/projects/create`, data);
+   }
+   //    GetAll
    getListProject(param) {
       return this.get(`/projects/list`, { params: { ...param } });
    }
@@ -22,7 +26,6 @@ class WorkService extends BaseServices {
    }
 
    // Restore proejct
-
    restoreProject(codeProject) {
       return this.patch(`/projects/${codeProject}/restore-project`);
    }

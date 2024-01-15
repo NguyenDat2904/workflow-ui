@@ -3,16 +3,16 @@ import classNames from 'classnames/bind';
 import style from './ModalSelect.module.scss';
 const cx = classNames.bind(style);
 
-function ModalSelect({ data, width, widthImg, setValue, onClose, handleSubmit, status, right }) {
+function ModalSelect({ data, width, widthImg, setValue, onClose, handleSubmit, status, right, percent50, heightRow }) {
    const renderOptions = data?.map((option, index) => {
       const handleOptionClick = (option) => {
          if (setValue) {
             setValue(option);
-            
          }
       };
       return (
          <div
+            style={{ height: heightRow }}
             className={cx('item', index === 0 && 'action')}
             key={index}
             onClick={() => {
@@ -26,7 +26,12 @@ function ModalSelect({ data, width, widthImg, setValue, onClose, handleSubmit, s
             <div className={cx('option')}>
                <div className={cx('flex-option')}>
                   {option?.img ? (
-                     <img src={option?.img} alt="" className={cx('img-icon')} style={{ '--_zb0g5d': widthImg }} />
+                     <img
+                        src={option?.img}
+                        alt=""
+                        className={cx('img-icon')}
+                        style={{ '--_zb0g5d': widthImg, borderRadius: percent50 && '50%' }}
+                     />
                   ) : option?.backgroundProfile ? (
                      <div
                         className={cx('bgrImg')}
@@ -34,13 +39,15 @@ function ModalSelect({ data, width, widthImg, setValue, onClose, handleSubmit, s
                      >
                         <p className={cx('textBgr')}>{option?.textInBackgroundProfile}</p>
                      </div>
-                  ) : (option?.imgNone?"":
+                  ) : option?.imgNone ? (
                      <img
                         src="https://avatar-management.services.atlassian.com/default/48"
                         alt=""
                         className={cx('img-icon')}
                         style={{ '--_zb0g5d': widthImg }}
                      />
+                  ) : (
+                     ''
                   )}
 
                   <span

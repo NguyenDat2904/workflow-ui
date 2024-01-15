@@ -154,7 +154,7 @@ function Header() {
                      <Button blue>Create</Button>
                      {/* <Navigation /> */}
                   </div>
-                  {detailProject.codeProject!==undefined && isToggleCreateIssue && (
+                  {detailProject.codeProject !== undefined && isToggleCreateIssue && (
                      <ModalCreateIssue
                         isOpen={isToggleCreateIssue}
                         detailProject={detailProject}
@@ -184,6 +184,7 @@ function Header() {
                   ></Button>
                </div>
                <div
+                  style={{ width: '32px', height: '32px' }}
                   className={cx('nav-icon')}
                   onClick={() =>
                      setToggleMenu((pre) => ({
@@ -195,10 +196,11 @@ function Header() {
                >
                   {getUserData?.img === '' || getUserData?.img === undefined ? (
                      <Button
-                        className={cx('button-icon')}
                         noChildren
                         backgroundNone
                         borderRadius
+                        className={cx('button-icon')}
+                        style={{ width: '32px', height: '32px' }}
                         leftIcon={<UserIcon />}
                      ></Button>
                   ) : (

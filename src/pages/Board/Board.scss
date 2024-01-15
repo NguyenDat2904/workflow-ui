@@ -106,6 +106,12 @@ $color-border: rgba(9, 30, 66, 0.08);
          width: 100%;
          padding: 0.5rem 1rem;
          background-color: white;
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+         span {
+            font-weight: 600;
+         }
       }
 
       .sub-tasks-container {
@@ -129,7 +135,9 @@ $color-border: rgba(9, 30, 66, 0.08);
    .metadata {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 0.25rem;
+      width: 100%;
       svg {
          width: 1rem;
          color: orange;
@@ -137,6 +145,11 @@ $color-border: rgba(9, 30, 66, 0.08);
       img {
          width: 2rem;
          border-radius: 50%;
+      }
+      span {
+         display: flex;
+         gap: 0.25rem;
+         align-items: center;
       }
    }
 }

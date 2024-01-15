@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
+import { useParams } from 'react-router-dom';
 import style from './Board.scss';
 import { Button } from '../../component/Inputs/Inputs';
 import HeaderProject from '../BlackLog/HeaderProject/HeaderProject';
 import Issue from './Issue';
 import WorkService from '~/services/work/workServices';
+import { IssueIcon } from './IssueIcon';
 
 const cx = classNames.bind(style);
 
 export default function Board() {
    const BoardWorkService = new WorkService();
    const [listIssues, setListIssues] = useState({});
+   const { projectKey } = useParams();
 
    useEffect(() => {
       async function getIssues() {
-         const listIssuesData = await BoardWorkService.getListIssuesOfBoard('135', {});
+         const listIssuesData = await BoardWorkService.getListIssuesOfBoard(projectKey, {});
          const listIssues = listIssuesData.data.issuesBroad;
          const parentIssues = {};
          for (const issue of listIssues) {
@@ -28,7 +31,6 @@ export default function Board() {
                parentIssues[issue.parentIssue._id].subIssues.push(issue);
             }
          }
-         console.log(parentIssues);
          setListIssues(parentIssues);
       }
       getIssues();
@@ -118,53 +120,13 @@ export default function Board() {
                <div>Done</div>
             </div>
             <div className={cx('task-display')}>
-               <div className={cx('main-task')}>Main Issue 1</div>
-               <div className={cx('sub-tasks-container')}>
-                  <div className={cx('sub-tasks')}>
-                     {allIssues.todo.map((issue, index) => (
-                        <Issue key={index} issueDetail={issue} />
-                     ))}
-                  </div>
-                  <div className={cx('sub-tasks')}>
-                     {allIssues.inProgress.map((issue, index) => (
-                        <Issue key={index} issueDetail={issue} />
-                     ))}
-                  </div>
-                  <div className={cx('sub-tasks')}>
-                     {allIssues.review.map((issue, index) => (
-                        <Issue key={index} issueDetail={issue} />
-                     ))}
-                  </div>
-                  <div className={cx('sub-tasks')}>
-                     {allIssues.done.map((issue, index) => (
-                        <Issue key={index} issueDetail={issue} />
-                     ))}
-                  </div>
+               {Object.keys(listIssues).map((key) => (
+                  <div className={cx('main-task')}>{listIssues[key].summary}</div>
+               ))}
+               <div className={cx('main-task')}>
+                  <IssueIcon type="task" style={{ width: '1.5rem', height: '1.5rem' }} />
+                  <span>Main Issue 1</span>
                </div>
-               <div className={cx('main-task')}>Main Issue 1</div>
-               <div className={cx('sub-tasks-container')}>
-                  <div className={cx('sub-tasks')}>
-                     {allIssues.todo.map((issue, index) => (
-                        <Issue key={index} issueDetail={issue} />
-                     ))}
-                  </div>
-                  <div className={cx('sub-tasks')}>
-                     {allIssues.inProgress.map((issue, index) => (
-                        <Issue key={index} issueDetail={issue} />
-                     ))}
-                  </div>
-                  <div className={cx('sub-tasks')}>
-                     {allIssues.review.map((issue, index) => (
-                        <Issue key={index} issueDetail={issue} />
-                     ))}
-                  </div>
-                  <div className={cx('sub-tasks')}>
-                     {allIssues.done.map((issue, index) => (
-                        <Issue key={index} issueDetail={issue} />
-                     ))}
-                  </div>
-               </div>
-               <div className={cx('main-task')}>Main Issue 1</div>
                <div className={cx('sub-tasks-container')}>
                   <div className={cx('sub-tasks')}>
                      {allIssues.todo.map((issue, index) => (

@@ -28,7 +28,7 @@ class WorkService extends BaseServices {
       return this.patch(`projects/delete-project/${id}`, { _idUser: userID });
    }
 
-   // Restore proejct
+   // Restore project
 
    restoreProject(codeProject) {
       return this.patch(`/projects/${codeProject}/restore-project`);
@@ -44,8 +44,8 @@ class WorkService extends BaseServices {
    }
 
    // Get Member
-   getMember(param) {
-      return this.get(`/projects/list-member`, { params: { ...param } });
+   getMember(codeProject, param) {
+      return this.get(`/projects/list-member?codeProject=${codeProject}`, { params: { ...param } });
    }
 
    // Check add Member

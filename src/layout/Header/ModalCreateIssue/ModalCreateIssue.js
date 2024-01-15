@@ -30,7 +30,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
    const [project, setProject] = useState({
       img: '',
       label: '',
-      codeProject: '',
+      codeProject: id||'',
       imgNone: id ? '' : 'none',
    });
    const [issueTypeData, setIssuesTypeDate] = useState({
@@ -78,7 +78,8 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
          startDate: '',
          dueDate: '',
          description: '',
-         img:''
+         img:'',
+         parentIssue:null
       },
    });
    const dataTypeIssues = [

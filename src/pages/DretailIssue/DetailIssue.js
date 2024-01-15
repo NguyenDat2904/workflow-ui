@@ -114,7 +114,9 @@ function DetailIssue() {
             if (issueChildren.status === 200)
                setIssueChildren(issueChildren.data.dataListIssues.filter((item) => item.parentIssue !== null));
          } else if (issues.data.parentIssue) {
-            const issueParent = await issueService.getIssueDetail(param?.id, { search: issues.data.parentIssue });
+            const issueParent = await issueService.getIssueDetail(param?.id, {
+               search: issues.data.parentIssue,
+            });
             if (issueParent.status === 200) setDetailIssueParent(issueParent.data);
          }
       }
@@ -182,7 +184,7 @@ function DetailIssue() {
    // 3.7 Get Member
    const getMembers = async () => {
       const listMembers = await projectService.getMember({ codeProject: param?.id });
-      if (listMembers.status === 200) setMembers(listMembers.data);
+      if (listMembers.status === 200) setMembers(listMembers.data.dataMembers);
    };
 
    const listMember = members?.map((member) => {

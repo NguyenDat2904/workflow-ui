@@ -7,7 +7,8 @@ import Button from '../Buttton/Button';
 import { MenuIcon } from '../icon/icon';
 const cx = classNames.bind(style);
 export function Table({ actions, data, colWidthRatio, colType, idList, labels, ...props }) {
-   const renderTdTable = data?.map((data, index) => {
+   const renderTdTable = data.dataMember?.map((member, index) => {
+      console.log(data);
       return (
          <tr key={index} className={cx('tr-table')}>
             <td className={cx('td-table')}>
@@ -16,19 +17,19 @@ export function Table({ actions, data, colWidthRatio, colType, idList, labels, .
                      <div className={cx('td-user-img')}>
                         <img
                            src={
-                              data?.img
-                                 ? data?.img
+                              member?.img
+                                 ? member?.img
                                  : 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
                            }
                            alt=""
                         />
                      </div>
-                     <div className={cx('td-user-name')}>{data?.name}</div>
+                     <div className={cx('td-user-name')}>{member?.name}</div>
                   </span>
                </div>
             </td>
             <td className={cx('td-table')}>
-               <div className={cx('td-table-email')}>{data?.email}</div>
+               <div className={cx('td-table-email')}>{member?.email}</div>
             </td>
             <td className={cx('td-table')}>
                <div className={cx('td-table-email')}>{}</div>

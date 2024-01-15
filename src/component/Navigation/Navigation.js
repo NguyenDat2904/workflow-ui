@@ -29,11 +29,11 @@ function Navigation({ isOpen, onClose }) {
       },
    });
    useEffect(() => {
-      form.setValue('role', role.key);
+      form.setValue('role', role.label);
    }, [role]);
    const handleAddPeople = async (dataForm) => {
-      console.log(dataForm);
-      const addPeople = await projectService.addMember(detailProject?.codeProject, dataForm);
+      const data = { ...dataForm, role: role.key };
+      const addPeople = await projectService.addMember(detailProject?.codeProject, data);
       if (addPeople.status === 200) onClose();
    };
 
@@ -75,10 +75,6 @@ function Navigation({ isOpen, onClose }) {
                               width="100%"
                               setValue={setRole}
                               data={[
-                                 {
-                                    label: 'Administrator',
-                                    key: 'administrator',
-                                 },
                                  {
                                     label: 'Manager',
                                     key: 'manager',

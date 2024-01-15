@@ -28,7 +28,7 @@ function BlackLog() {
    const getMembers = async () => {
       if (detailProject.codeProject) {
          const listMembers = await projectService.getMember({ codeProject: detailProject?.codeProject });
-         if (listMembers.status === 200) setMembers(listMembers.data);
+         if (listMembers.status === 200) setMembers(listMembers.data.dataMembers);
       }
    };
 

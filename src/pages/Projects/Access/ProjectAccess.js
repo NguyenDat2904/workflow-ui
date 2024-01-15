@@ -7,11 +7,14 @@ import NavUrl from '~/component/NavUrl/NavUrl';
 import { ProjectContext } from '~/contexts/project/projectContext';
 import Button from '~/component/Buttton/Button';
 import WorkService from '~/services/work/workServices';
+import Navigation from '~/component/Navigation/Navigation';
 
 const cx = classNames.bind(style);
 export default function ProjectAccess() {
    const { detailProject } = useContext(ProjectContext);
-   const [members, setMembers] = useState([]);
+   const [members, setMembers] = useState({});
+   const [isToggle, setIsToggle] = useState(false);
+
    const projectService = new WorkService();
 
    useEffect(() => {
@@ -53,9 +56,10 @@ export default function ProjectAccess() {
                <div className={cx('access-main')}>
                   <div className={cx('access-header')}>
                      <h1>Access</h1>
-                     <Button blue style={{ height: '32px', fontSize: '14px' }}>
+                     <Button blue style={{ height: '32px', fontSize: '14px' }} onClick={() => setIsToggle(!isToggle)}>
                         Add people
                      </Button>
+                     {isToggle && <Navigation isOpen={isToggle} onClose={() => setIsToggle(false)} />}
                   </div>
                   <div className={cx('container-table')}>
                      <div style={{ marginBottom: 'var(--ds-space-300, 24px)' }}>

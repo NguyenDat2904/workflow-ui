@@ -153,7 +153,6 @@ function Header() {
                   />
                   <div className={cx('menu')} onClick={() => setToggleCreateIssue(true)}>
                      <Button blue>Create</Button>
-                     {/* <Navigation /> */}
                   </div>
                   {detailProject.codeProject !== undefined && isToggleCreateIssue && (
                      <ModalCreateIssue

@@ -43,7 +43,7 @@ const privateRoutes = [
    { path: '/project/:_id/board', component: Board, layout: LayoutSideBarChildren },
    { path: '/add-people', component: VerifyAddPeople, layout: null },
    { path: '/projects/:id/issues/:id_issue', component: DetailIssue },
-   { path: '/your-Work', component: YourWork, layout: null },
+   { path: '/your-Work', component: YourWork, layout: HeaderOnly },
 ];
 
 const publicRoutes = [

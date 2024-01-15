@@ -25,14 +25,16 @@ function Navigation({ isOpen, onClose }) {
       defaultValues: {
          email: '',
          role: role.label,
+         key: role.key,
       },
    });
    useEffect(() => {
-      form.setValue('role', role.label);
+      form.setValue('role', role.key);
    }, [role]);
    const handleAddPeople = async (dataForm) => {
       console.log(dataForm);
       const addPeople = await projectService.addMember(detailProject?.codeProject, dataForm);
+      if (addPeople.status === 200) onClose();
    };
 
    return (
@@ -75,12 +77,15 @@ function Navigation({ isOpen, onClose }) {
                               data={[
                                  {
                                     label: 'Administrator',
+                                    key: 'administrator',
                                  },
                                  {
                                     label: 'Manager',
+                                    key: 'manager',
                                  },
                                  {
                                     label: 'Member',
+                                    key: 'member',
                                  },
                               ]}
                            />

@@ -1,0 +1,93 @@
+$color-border: rgba(9, 30, 66, 0.08);
+$light-background: rgba(9, 30, 66, 0.04);
+
+.table {
+   width: 100%;
+   border-collapse: separate;
+   border-spacing: 0px;
+   border-bottom: 2px solid var(--ds-border, #dfe1e6);
+   margin: var(--ds-space-150, 12px) 0 0 0;
+   .tr-table {
+      &:hover {
+         background-color: var(--ds-background-neutral-subtle-hovered, #f1f2f4);
+      }
+   }
+   .table-th {
+      --local-dynamic-table-width: 35%;
+      --local-dynamic-table-text-color: var(--ds-text-subtlest, #5e6c84);
+      padding: var(--ds-space-050, 4px) var(--ds-space-100, 8px);
+      box-sizing: border-box;
+      position: relative;
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      border-image: initial;
+      border-bottom: 2px solid var(--ds-border, #dfe1e6);
+      color: var(--ds-text-subtlest, var(--local-dynamic-table-text-color));
+      font-size: 12px;
+      font-weight: 600;
+      text-align: left;
+      vertical-align: top;
+      width: var(--local-dynamic-table-width);
+   }
+   .td-table {
+      --local-dynamic-table-width: 35%;
+      width: var(--local-dynamic-table-width);
+      padding: var(--ds-space-050, 4px) var(--ds-space-100, 8px);
+      border: none;
+      text-align: left;
+   }
+   .td-user {
+      cursor: auto;
+      -webkit-box-align: center;
+      align-items: center;
+      background-color: transparent;
+      border-radius: 3px;
+      border: 2px solid transparent;
+      box-sizing: border-box;
+      color: inherit;
+      display: flex;
+      font-size: inherit;
+      font-style: normal;
+      font-weight: normal;
+      line-height: 1;
+      outline: none;
+      margin: var(--ds-space-0, 0px);
+      padding: var(--ds-space-050, 4px);
+      text-align: left;
+      text-decoration: none;
+      width: 100%;
+      .td-user-img {
+         height: 32px;
+         width: 32px;
+         img {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            flex: 1 1 100%;
+            border-radius: 50%;
+         }
+      }
+      .td-user-name {
+         min-width: 0px;
+         max-width: 100%;
+         padding-left: var(--ds-space-100, 8px);
+         flex: 1;
+         line-height: 1.4;
+         font-size: 14px;
+      }
+   }
+   .td-table-email {
+      max-width: 300px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      font-size: 14px;
+   }
+   .number {
+      text-align: right;
+   }
+   .string {
+      text-align: left;
+   }
+}

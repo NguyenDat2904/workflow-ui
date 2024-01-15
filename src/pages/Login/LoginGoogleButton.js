@@ -5,7 +5,7 @@ import { Button } from '~/component/Inputs/Inputs';
 import { ReactComponent as GoogleIcon } from '../../asset/icons/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import 'react-toastify/dist/ReactToastify.css';
-import './Login.scss';
+import './Login.module.scss';
 import { UserContext } from '~/contexts/user/userContext';
 import { AuthContext } from '~/contexts/auth/authContext';
 import AuthService from '~/services/auth/authServices';

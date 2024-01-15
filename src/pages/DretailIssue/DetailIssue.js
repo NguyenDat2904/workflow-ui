@@ -16,24 +16,39 @@ import Modal from '~/component/Modal/Modal';
 import DOMPurify from 'dompurify';
 import ModalSelect from '~/component/ModalSelect/ModalSelect';
 import SprintService from '~/services/sprint/SprintService';
+import WorkService from '~/services/work/workServices';
 import moment from 'moment';
+import ModalAccept from '~/component/ModalAccept/ModalAccept';
+import CommentService from '../../services/comment/CommentService';
 const cx = classNames.bind(style);
 function DetailIssue() {
    const param = useParams();
    const issueService = new IssueService();
    const sprintService = new SprintService();
+   const projectService = new WorkService();
+   const commentService = new CommentService();
 
    // 1. State
    const [detailIssue, setDetailIssue] = useState({});
    const [detailIssueParent, setDetailIssueParent] = useState({});
    const [issueChildren, setIssueChildren] = useState([]);
    const [sprints, setSprints] = useState([]);
+   const [members, setMembers] = useState([]);
+   const [comments, setComments] = useState([]);
+
+   const [isEditComments, setIsEditComments] = useState(null);
+   const [isAcceptDeleteComment, setIsAcceptDeleteComment] = useState(null);
    const [isToggleCreateIssue, setIsToggleCreateIssue] = useState(false);
    const [isToggleDesc, setIsToggleDesc] = useState(false);
-   const [valueDesc, setValueDesc] = useState('');
+   const [isComment, setIsComment] = useState(false);
    const [isToggleStatus, setIsToggleStatus] = useState(false);
    const [isToggleSprint, setIsToggleSprint] = useState(false);
    const [isTogglePrior, setIsTogglePrior] = useState(false);
+   const [isToggleAssignee, setIsToggleAssignee] = useState(false);
+   const [isToggleReporter, setIsToggleReporter] = useState(false);
+
+   const [valueDesc, setValueDesc] = useState('');
+   const [valueComment, setValueComment] = useState('');
 
    const form = useForm({
       mode: 'all',
@@ -50,12 +65,43 @@ function DetailIssue() {
    useEffect(() => {
       getIssueDetail();
       getListSprint();
+      getMembers();
+      getListComment();
    }, [param]);
    useEffect(() => {
       form.setValue('storyPointEstimate', detailIssue?.storyPointEstimate);
-      form.setValue('startDate', detailIssue?.startDate?.slice(0, 16));
-      form.setValue('dueDate', detailIssue?.dueDate?.slice(0, 16));
+      form.setValue('startDate', detailIssue?.startDate?.substring(0, 10));
+      form.setValue('dueDate', detailIssue?.dueDate?.substring(0, 10));
    }, [detailIssue]);
+   // 3.0 get list comment
+   const getListComment = async () => {
+      const commentsList = await commentService.getComment(param?.id_issue);
+      if (commentsList.status === 200) {
+         setComments(commentsList.data);
+      }
+   };
+
+   // 3.0.1 Add Comment
+   const postComment = async (option) => {
+      const comment = await commentService.addComment(option);
+      if (comment.status === 200) {
+         getListComment();
+      }
+   };
+
+   // 3.0.1 Edit Comment
+   const handleSubmitEditComment = async (id, option) => {
+      const editComment = await commentService.editComment(id, option);
+      if (editComment.status === 200) {
+         getListComment();
+      }
+   };
+
+   const handleDeleteComment = async (id) => {
+      const deleteComment = await commentService.deleteComment(id);
+      if (deleteComment.status === 200) getListComment();
+   };
+
    // 3.1 get issue detail
    const getIssueDetail = async () => {
       const issues = await issueService.getIssueDetail(param?.id, { search: param?.id_issue });
@@ -63,7 +109,7 @@ function DetailIssue() {
          setDetailIssue(issues.data);
          if (issues.data.parentIssue === null) {
             const issueChildren = await issueService.getIssue(param?.id, {
-               parentIssueID: issues.data.parentIssue,
+               parentIssueID: issues.data._id,
             });
             if (issueChildren.status === 200)
                setIssueChildren(issueChildren.data.dataListIssues.filter((item) => item.parentIssue !== null));
@@ -84,6 +130,15 @@ function DetailIssue() {
    // 3.3 ChangeStatus
    const handleChangeStatus = async (key, id, option) => {
       const dataForm = { status: option.key };
+      const updateIssue = await issueService.updateIssue(key, id, dataForm);
+      if (updateIssue.status === 200) {
+         const issues = await issueService.getIssueDetail(param?.id, { search: param?.id_issue });
+         if (issues.status === 200) setDetailIssue(issues.data);
+      }
+   };
+   // 3.3 ChangeStatus
+   const handleChangePriority = async (key, id, option) => {
+      const dataForm = { priority: option.label };
       const updateIssue = await issueService.updateIssue(key, id, dataForm);
       if (updateIssue.status === 200) {
          const issues = await issueService.getIssueDetail(param?.id, { search: param?.id_issue });
@@ -124,6 +179,22 @@ function DetailIssue() {
          }
       }
    };
+   // 3.7 Get Member
+   const getMembers = async () => {
+      const listMembers = await projectService.getMember({ codeProject: param?.id });
+      if (listMembers.status === 200) setMembers(listMembers.data);
+   };
+
+   const listMember = members?.map((member) => {
+      return {
+         idUser: member?._id,
+         img:
+            member?.img === ''
+               ? 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
+               : member?.img,
+         label: member?.name,
+      };
+   });
    const handleBlur = () => {
       // Gọi hàm submit khi trường input bị mất trỏ chuột
       form.handleSubmit(handleSubmitStartDate)();
@@ -158,11 +229,131 @@ function DetailIssue() {
       }
    };
 
+   // 3.9 Submit Agr
+   const handleChangeAssignee = async (key, id, option) => {
+      const dataForm = { assignee: option.idUser };
+      const updateIssue = await issueService.updateIssue(key, id, dataForm);
+      if (updateIssue.status === 200) {
+         const issues = await issueService.getIssueDetail(param?.id, { search: param?.id_issue });
+         if (issues.status === 200) {
+            setDetailIssue(issues.data);
+            // form.setValue('dueDate', issues.data.dueDate);
+         }
+      }
+   };
+   // 3.10 Submit Reporter
+   const handleChangeReporter = async (key, id, option) => {
+      const dataForm = { reporter: option.idUser };
+      const updateIssue = await issueService.updateIssue(key, id, dataForm);
+      if (updateIssue.status === 200) {
+         const issues = await issueService.getIssueDetail(param?.id, { search: param?.id_issue });
+         if (issues.status === 200) {
+            setDetailIssue(issues.data);
+         }
+      }
+   };
+
    const renderChildrenIssue = issueChildren
       ?.map((issueChildren) => {
-         return <RowIssue key={issueChildren._id} data={issueChildren} setIssues={setIssueChildren} children />;
+         return (
+            <RowIssue
+               key={issueChildren._id}
+               data={issueChildren}
+               idParent={detailIssue._id}
+               setIssues={setIssueChildren}
+               children
+               members={members}
+               setIssueChildren={setIssueChildren}
+            />
+         );
       })
       .reverse();
+
+   const renderComment = comments?.map((comment) => {
+      const currentTime = moment();
+      const commentMoment = moment(comment?.commentTime);
+      const duration = moment.duration(currentTime.diff(commentMoment));
+      let formattedTime;
+      if (duration.asHours() < 1) {
+         // Thời gian dưới 1 giờ
+         formattedTime = duration.minutes() + ' minutes ago';
+      } else if (duration.asHours() < 24) {
+         // Thời gian từ 1 giờ đến 24 giờ
+         formattedTime = duration.hours() + ' hours ago';
+      } else if (duration.asDays() < 7) {
+         // Thời gian từ 1 ngày đến 6 ngày
+         formattedTime = duration.days() + ' days ago';
+      } else {
+         // Thời gian trên 7 ngày
+         formattedTime = commentMoment.format('MMM D, YYYY');
+      }
+      return (
+         <div className={cx('item-comment')}>
+            <div className={cx('item-grid')}>
+               <div className={cx('img-comment')}>
+                  <img
+                     src={
+                        comment.authorID?.img
+                           ? comment.authorID?.img
+                           : 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
+                     }
+                     alt=""
+                  />
+               </div>
+               <div className={cx('content-comment')}>
+                  <div className={cx('content-flex')}>
+                     <div className={cx('content-flex')}>
+                        <h3>
+                           <span className={cx('control-comment')}>
+                              <div>{comment.authorID?.name}</div>
+                              <span className={cx('content-time')}>{formattedTime}</span>
+                           </span>
+                        </h3>
+                        <div className={cx('content')}>
+                           <span>
+                              {isEditComments === comment._id ? (
+                                 <TinyText
+                                    setEditorValue={setValueComment}
+                                    onClose={() => setIsEditComments(false)}
+                                    handleSubmit={() =>
+                                       handleSubmitEditComment(comment?._id, {
+                                          content: valueComment,
+                                       })
+                                    }
+                                    value={comment?.content}
+                                 />
+                              ) : (
+                                 <div
+                                    style={{ fontSize: '14px' }}
+                                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(comment?.content) }}
+                                 />
+                              )}
+                           </span>
+                        </div>
+                     </div>
+                     <div className={cx('control-comment')}>
+                        <span onClick={() => setIsEditComments(comment._id)}>Edit</span>
+                        <span>·</span>
+                        <span onClick={() => setIsAcceptDeleteComment(comment._id)}>Delete</span>
+                        {isAcceptDeleteComment === comment._id && (
+                           <ModalAccept
+                              headerTitle="Delete this comment?"
+                              title="Once you delete, it's gone for good."
+                              isOpen={isAcceptDeleteComment}
+                              isClose={() => setIsAcceptDeleteComment(false)}
+                              handleAccept={() => {
+                                 handleDeleteComment(comment._id);
+                                 setIsAcceptDeleteComment(false);
+                              }}
+                           />
+                        )}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      );
+   });
 
    return (
       <div className={cx('container-issue')}>
@@ -279,45 +470,25 @@ function DetailIssue() {
                      />
                   </div>
                   <div className={cx('form-comment')}>
-                     <form>
-                        <ControllerForm form={form} name="comment">
-                           <Input placeholder="Add a comment..." search="search" className={cx('custom-input')} />
-                        </ControllerForm>
-                     </form>
-                  </div>
-               </div>
-               <div className={cx('list-comment')}>
-                  <div className={cx('item-comment')}>
-                     <div className={cx('item-grid')}>
-                        <div className={cx('img-comment')}>
-                           <img
-                              src="https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1"
-                              alt=""
+                     {!isComment ? (
+                        <Input
+                           placeholder="Add a comment..."
+                           search="search"
+                           className={cx('custom-input')}
+                           onFocus={() => setIsComment(true)}
+                        />
+                     ) : (
+                        <Modal isOpen={isComment} onClose={() => setIsComment(false)} relative>
+                           <TinyText
+                              setEditorValue={setValueComment}
+                              onClose={() => setIsComment(false)}
+                              handleSubmit={() => postComment({ content: valueComment, issueID: detailIssue?._id })}
                            />
-                        </div>
-                        <div className={cx('content-comment')}>
-                           <div className={cx('content-flex')}>
-                              <div className={cx('content-flex')}>
-                                 <h3>
-                                    <span className={cx('control-comment')}>
-                                       <div>Đạt Thành Nguyễn</div>
-                                       <span className={cx('content-time')}>15 minutes ago</span>
-                                    </span>
-                                 </h3>
-                                 <div className={cx('content')}>
-                                    <span>Test</span>
-                                 </div>
-                              </div>
-                              <div className={cx('control-comment')}>
-                                 <span>Edit</span>
-                                 <span>·</span>
-                                 <span>Delete</span>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                        </Modal>
+                     )}
                   </div>
                </div>
+               <div className={cx('list-comment')}>{renderComment}</div>
             </div>
          </div>
          <div className={cx('section-center')}></div>
@@ -373,17 +544,88 @@ function DetailIssue() {
                            <div className={cx('main-assignee')}>
                               <div className={cx('assignee-select')}>
                                  <label htmlFor="">Assignee</label>
-                                 <Input className={cx('custom-input')} />
+                                 <div className={cx('wrapper-input')}>
+                                    <Input
+                                       heightImg="24px"
+                                       leftIcon={
+                                          <img
+                                             src={
+                                                detailIssue.assignee?.img
+                                                   ? detailIssue.assignee?.img
+                                                   : 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
+                                             }
+                                             alt=""
+                                             style={{ width: '24px', height: '24px', borderRadius: '50%' }}
+                                          />
+                                       }
+                                       value={detailIssue.assignee?.name ? detailIssue.assignee?.name : 'Unassigned'}
+                                       className={cx('custom-input')}
+                                       onFocus={() => setIsToggleAssignee(true)}
+                                       onClick={() => setIsToggleAssignee(true)}
+                                    />
+                                    <Modal
+                                       relative
+                                       isOpen={isToggleAssignee}
+                                       onClose={() => setIsToggleAssignee(false)}
+                                    >
+                                       <ModalSelect
+                                          width="100%"
+                                          heightRow="48px"
+                                          widthImg="32px"
+                                          onClose={() => setIsToggleAssignee(false)}
+                                          data={listMember}
+                                          handleSubmit={(option) =>
+                                             handleChangeAssignee(param?.id, detailIssue?._id, option)
+                                          }
+                                       />
+                                    </Modal>
+                                 </div>
                               </div>
                               <div className={cx('assignee-select')}>
                                  <label htmlFor="">Reporter</label>
-                                 <Input className={cx('custom-input')} />
+                                 <div className={cx('wrapper-input')}>
+                                    <Input
+                                       heightImg="24px"
+                                       leftIcon={
+                                          <img
+                                             src={
+                                                detailIssue.reporter?.img
+                                                   ? detailIssue.reporter?.img
+                                                   : 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
+                                             }
+                                             alt=""
+                                             style={{ width: '24px', height: '24px', borderRadius: '50%' }}
+                                          />
+                                       }
+                                       value={detailIssue.reporter?.name ? detailIssue.reporter?.name : 'Unassigned'}
+                                       className={cx('custom-input')}
+                                       onFocus={() => setIsToggleReporter(true)}
+                                       onClick={() => setIsToggleReporter(true)}
+                                    />
+                                    <Modal
+                                       relative
+                                       isOpen={isToggleReporter}
+                                       onClose={() => setIsToggleReporter(false)}
+                                    >
+                                       <ModalSelect
+                                          width="100%"
+                                          heightRow="48px"
+                                          widthImg="32px"
+                                          onClose={() => setIsToggleReporter(false)}
+                                          data={listMember}
+                                          handleSubmit={(option) =>
+                                             handleChangeReporter(param?.id, detailIssue?._id, option)
+                                          }
+                                       />
+                                    </Modal>
+                                 </div>
                               </div>
                               <div className={cx('assignee-select')}>
                                  <label htmlFor="">Sprint</label>
                                  <div className={cx('wrapper-input')}>
                                     <Input
                                        className={cx('custom-input')}
+                                       style={{ color: 'var(--ds-link, #0052CC)' }}
                                        onFocus={() => setIsToggleSprint(true)}
                                        onClick={() => setIsToggleSprint(true)}
                                        value={detailIssue.sprint?.name ? detailIssue.sprint?.name : 'None'}
@@ -409,6 +651,23 @@ function DetailIssue() {
                                        onFocus={() => setIsTogglePrior(true)}
                                        onClick={() => setIsTogglePrior(true)}
                                        value={detailIssue.priority}
+                                       leftIcon={
+                                          <img
+                                             src={
+                                                detailIssue?.priority === 'Highest'
+                                                   ? 'https://tcx19.atlassian.net/images/icons/priorities/highest.svg'
+                                                   : detailIssue?.priority === 'High'
+                                                   ? 'https://tcx19.atlassian.net/images/icons/priorities/high.svg'
+                                                   : detailIssue?.priority === 'Low'
+                                                   ? 'https://tcx19.atlassian.net/images/icons/priorities/low.svg'
+                                                   : detailIssue?.priority === 'Lowest'
+                                                   ? 'https://tcx19.atlassian.net/images/icons/priorities/lowest.svg'
+                                                   : 'https://tcx19.atlassian.net/images/icons/priorities/medium.svg'
+                                             }
+                                             alt=""
+                                             style={{ width: '16px', height: '16px' }}
+                                          />
+                                       }
                                     />
                                     <Modal isOpen={isTogglePrior} relative onClose={() => setIsTogglePrior(false)}>
                                        <ModalSelect
@@ -416,7 +675,7 @@ function DetailIssue() {
                                           widthImg="24px"
                                           onClose={() => setIsTogglePrior(false)}
                                           handleSubmit={(option) =>
-                                             handleChangeStatus(param?.id, detailIssue?._id, option)
+                                             handleChangePriority(param?.id, detailIssue?._id, option)
                                           }
                                           status
                                           data={[
@@ -474,11 +733,7 @@ function DetailIssue() {
                                  <div className={cx('wrapper-input')}>
                                     <form onSubmit={form.handleSubmit(handleSubmitStartDate)}>
                                        <ControllerForm form={form} name={'startDate'}>
-                                          <Input
-                                             className={cx('custom-input')}
-                                             type="datetime-local"
-                                             onBlur={handleBlur}
-                                          />
+                                          <Input className={cx('custom-input')} type="date" onBlur={handleBlur} />
                                        </ControllerForm>
                                     </form>
                                  </div>
@@ -488,11 +743,7 @@ function DetailIssue() {
                                  <div className={cx('wrapper-input')}>
                                     <form onSubmit={handleSubmitEndDate}>
                                        <ControllerForm form={form} name={'dueDate'}>
-                                          <Input
-                                             className={cx('custom-input')}
-                                             type="datetime-local"
-                                             onBlur={handleBlurEnd}
-                                          />
+                                          <Input className={cx('custom-input')} type="date" onBlur={handleBlurEnd} />
                                        </ControllerForm>
                                     </form>
                                  </div>

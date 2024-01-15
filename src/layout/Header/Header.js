@@ -23,6 +23,8 @@ function Header() {
    // 1. useState
 
    const { parseuser } = useContext(UserContext);
+   const { detailProject } = useContext(ProjectContext);
+
    const [projects, getProjects] = useState([]);
    const [isToggleCreateIssue, setToggleCreateIssue] = useState(false);
    const [toggleMenu, setToggleMenu] = useState({
@@ -72,8 +74,6 @@ function Header() {
       getUser();
    }, []);
 
-  
-
    // 3. Func
    const handleToggle = (toggle) => {
       switch (toggle) {
@@ -102,8 +102,6 @@ function Header() {
             });
       }
    };
-
-   
 
    const listProject = projects?.map((project) => {
       return {
@@ -157,7 +155,7 @@ function Header() {
                      <Button blue>Create</Button>
                      {/* <Navigation /> */}
                   </div>
-                  {isToggleCreateIssue && (
+                  {detailProject.codeProject !== undefined && isToggleCreateIssue && (
                      <ModalCreateIssue
                         isOpen={isToggleCreateIssue}
                         data={listProject}
@@ -189,7 +187,7 @@ function Header() {
                >
                   <Button
                      className={cx('button-icon')}
-                     noChildren
+                     // noChildren
                      backgroundNone
                      borderRadius
                      leftIcon={<NotificationIcon />}
@@ -206,6 +204,7 @@ function Header() {
                   isOpen={toggleMenu.notification}
                />
                <div
+                  style={{ width: '32px', height: '32px' }}
                   className={cx('nav-icon')}
                   onClick={() =>
                      setToggleMenu((pre) => ({
@@ -217,10 +216,11 @@ function Header() {
                >
                   {getUserData?.img === '' || getUserData?.img === undefined ? (
                      <Button
-                        className={cx('button-icon')}
                         noChildren
                         backgroundNone
                         borderRadius
+                        className={cx('button-icon')}
+                        style={{ width: '32px', height: '32px' }}
                         leftIcon={<UserIcon />}
                      ></Button>
                   ) : (

@@ -68,6 +68,14 @@ class BaseServices {
          ...configHeaders,
       });
    }
+   /**
+    * Sends a PUT request to the specified URL with the provided data and headers.
+    *
+    * @param {string} url - The URL to send the request to.
+    * @param {object} data - The data to send with the request (default: {}).
+    * @param {object} configHeaders - Additional headers to include in the request (default: undefined).
+    * @return {Promise} A Promise that resolves with the response from the server.
+    */
    put(url, data = {}, configHeaders) {
       return this.http.put(url, data, {
          ...this.setConfigHeaders(),

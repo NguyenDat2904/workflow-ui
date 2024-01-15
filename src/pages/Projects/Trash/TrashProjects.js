@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TrashProjects.scss';
 import { Table } from '~/component/tables/Tables';
-import { post, patch } from '~/ultil/hpptRequest';
+import WorkService from '~/services/work/workServices';
+
+const workService = new WorkService();
 
 export default function TrashProjects() {
    const [trashProject, setTrashProject] = useState([]);
@@ -12,16 +14,11 @@ export default function TrashProjects() {
    const navigate = useNavigate();
 
    const getProjects = async () => {
-      const response = await post(
-         `work/project/${user?._id}?page=${page}&sortKey=nameProject`,
-         { deleteProject: true },
-         {
-            headers: {
-               authorization: `${user.accessToken}`,
-               refresh_token: `${user.refreshToken}`,
-            },
-         },
-      );
+      const response = await workService.getListProject({
+         page,
+         deleteProject: true,
+      });
+
       switch (response.status) {
          case 200:
             const workProject = response.data.Project;
@@ -57,12 +54,8 @@ export default function TrashProjects() {
       getProjects();
    }, []);
 
-   const handleRestoreProject = async (project) => {
-      const response = await patch(
-         `/work/restore-project/${project}`,
-         { _idUser: user?._id },
-         { headers: { authorization: `${user.accessToken}`, refresh_token: `${user.refreshToken}` } },
-      );
+   const handleRestoreProject = async (codeProject) => {
+      const response = await workService.restoreProject(codeProject);
       switch (response.status) {
          case 200:
             getProjects();
@@ -75,12 +68,8 @@ export default function TrashProjects() {
       }
    };
 
-   const handleDeleteProject = (project) => {
-      const response = patch(
-         `/work/delete-project/${project}`,
-         { _idUser: user?._id },
-         { headers: { authorization: `${user.accessToken}`, refresh_token: `${user.refreshToken}` } },
-      );
+   const handleDeleteProject = async (codeProject) => {
+      const response = await workService.deleteDirectProject(codeProject);
       switch (response.status) {
          case 200:
             console.log('deleted');

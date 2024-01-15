@@ -59,7 +59,7 @@ function ModalSelect({ data, width, widthImg, setValue, onClose, handleSubmit, s
                         option.label === 'DONE' && 'text-done',
                      )}
                   >
-                     {option?.label}
+                     {option?.label !== undefined ? option?.label : ''}
                   </span>
                </div>
             </div>

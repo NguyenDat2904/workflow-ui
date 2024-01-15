@@ -5,7 +5,6 @@ import style from './CreateProject.scss';
 import { Button, Form, Input } from '~/component/Inputs/Inputs';
 import { Card } from '~/component/cards/Cards';
 import { toast } from 'react-toastify';
-import { post } from '~/ultil/hpptRequest';
 import { UserContext } from '~/contexts/user/userContext';
 
 const cx = classNames.bind(style);

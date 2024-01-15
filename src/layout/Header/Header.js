@@ -9,20 +9,22 @@ import ModalAccount from '~/pages/Profile/ModalAccount/ModalAccount';
 import Input from '~/component/Input/Input';
 import { UserContext } from '~/contexts/user/userContext';
 import UserService from '~/services/user/userServices';
-import { useForm } from 'react-hook-form';
+import ModelNotification from '~/component/ModelNotification/ModelNotification';
 import WorkService from '~/services/work/workServices';
 import ModalCreateIssue from './ModalCreateIssue/ModalCreateIssue';
 import { ProjectContext } from '~/contexts/project/projectContext';
 const cx = classNames.bind(style);
+const userServices = new UserService();
+const projectService = new WorkService();
 
 function Header() {
-   const userServices = new UserService();
    const location = useLocation();
    const elementRef = useRef(null);
    // 1. useState
-   const { detailProject } = useContext(ProjectContext);
+
    const { parseuser } = useContext(UserContext);
-   const projectService = new WorkService();
+   const { detailProject } = useContext(ProjectContext);
+
    const [projects, getProjects] = useState([]);
    const [isToggleCreateIssue, setToggleCreateIssue] = useState(false);
    const [toggleMenu, setToggleMenu] = useState({
@@ -30,6 +32,7 @@ function Header() {
       project: false,
       team: false,
       user: false,
+      notification: false,
    });
    const [position, setPosition] = useState({ left: 0 });
    const [getUserData, setGetUserData] = useState({});
@@ -44,10 +47,6 @@ function Header() {
    useEffect(() => {
       getProject();
    }, []);
-
-   const form = useForm({
-      mode: 'all',
-   });
    useEffect(() => {
       const getElementPosition = () => {
          const element = elementRef.current;
@@ -74,6 +73,7 @@ function Header() {
       };
       getUser();
    }, []);
+
    // 3. Func
    const handleToggle = (toggle) => {
       switch (toggle) {
@@ -102,9 +102,10 @@ function Header() {
             });
       }
    };
+
    const listProject = projects?.map((project) => {
       return {
-         label: `${project.nameProject} - (${project.codeProject})`,
+         label: `${project.nameProject} - (${project.codeProject})` || '',
          img: project.imgProject,
          codeProject: project.codeProject,
       };
@@ -157,13 +158,13 @@ function Header() {
                   {detailProject.codeProject !== undefined && isToggleCreateIssue && (
                      <ModalCreateIssue
                         isOpen={isToggleCreateIssue}
-                        detailProject={detailProject}
                         data={listProject}
                         onClose={() => setToggleCreateIssue(false)}
                      />
                   )}
                </div>
             </nav>
+
             <div className={cx('nav-right')}>
                <div className={cx('nav-icon')}>
                   <Input
@@ -174,7 +175,16 @@ function Header() {
                      className={cx('custom-input')}
                   />
                </div>
-               <div className={cx('nav-icon')}>
+               <div
+                  className={cx('nav-icon')}
+                  onClick={() =>
+                     setToggleMenu((pre) => ({
+                        ...pre,
+                        notification: true,
+                     }))
+                  }
+                  ref={elementRef}
+               >
                   <Button
                      className={cx('button-icon')}
                      noChildren
@@ -183,6 +193,16 @@ function Header() {
                      leftIcon={<NotificationIcon />}
                   ></Button>
                </div>
+               <ModelNotification
+                  position={position.left}
+                  handleToggle={() =>
+                     setToggleMenu((pre) => ({
+                        ...pre,
+                        notification: false,
+                     }))
+                  }
+                  isOpen={toggleMenu.notification}
+               />
                <div
                   style={{ width: '32px', height: '32px' }}
                   className={cx('nav-icon')}
@@ -204,7 +224,7 @@ function Header() {
                         leftIcon={<UserIcon />}
                      ></Button>
                   ) : (
-                     <img src={getUserData?.img} alt="" />
+                     <img className={cx('button-icon')} src={getUserData?.img} alt="" />
                   )}
                </div>
                <ModalAccount

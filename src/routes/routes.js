@@ -21,6 +21,7 @@ import ProjectAccess from '~/pages/Projects/Access/ProjectAccess';
 import LayoutSideBarChildren from '~/layout/LayoutSideBarChildren/DefaultLayout';
 import VerifyAddPeople from '~/pages/VerifyAddPeople/VerifyAddPeople';
 import DetailIssue from '~/pages/DretailIssue/DetailIssue';
+import YourWork from '~/pages/YourWork/YourWork';
 
 const privateRoutes = [
    { path: '/project/:_id/settings/details', component: DetailProject, layout: LayoutSideBarChildren },
@@ -42,6 +43,7 @@ const privateRoutes = [
    { path: '/project/:_id/settings/access', component: ProjectAccess, layout: HeaderOnly },
    { path: '/add-people', component: VerifyAddPeople, layout: null },
    { path: '/projects/:id/issues/:id_issue', component: DetailIssue },
+   { path: '/your-Work', component: YourWork },
 ];
 
 const publicRoutes = [

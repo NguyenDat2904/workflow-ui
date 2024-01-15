@@ -9,8 +9,8 @@ class WorkService extends BaseServices {
    getListProject(param) {
       return this.get(`/projects/list`, { params: { ...param } });
    }
-   getIssues(idProject) {
-      return this.get(`/issues/${idProject}`);
+   getIssues(idProject, param) {
+      return this.get(`/issues/${idProject}`, { params: { ...param } });
    }
    // Details
    projectDetail(id) {
@@ -19,6 +19,16 @@ class WorkService extends BaseServices {
    // Delete Project
    deleteProject(id, userID) {
       return this.patch(`projects/delete-project/${id}`, { _idUser: userID });
+   }
+
+   // Restore proejct
+
+   restoreProject(codeProject) {
+      return this.patch(`/projects/${codeProject}/restore-project`);
+   }
+
+   deleteDirectProject(codeProject) {
+      return this.delete(`/projects/${codeProject}/delete`);
    }
 
    // ChangeProject

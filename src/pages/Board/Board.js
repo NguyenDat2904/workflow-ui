@@ -10,12 +10,26 @@ const cx = classNames.bind(style);
 
 export default function Board() {
    const BoardWorkService = new WorkService();
-   const [listIssues, setListIssues] = useState([]);
+   const [listIssues, setListIssues] = useState({});
 
    useEffect(() => {
       async function getIssues() {
-         const listIssues = await BoardWorkService.getListIssuesOfBoard('135', {});
-         setListIssues(listIssues.data.issuesBroad);
+         const listIssuesData = await BoardWorkService.getListIssuesOfBoard('135', {});
+         const listIssues = listIssuesData.data.issuesBroad;
+         const parentIssues = {};
+         for (const issue of listIssues) {
+            if (issue.parentIssue) {
+               if (!parentIssues[issue.parentIssue._id])
+                  parentIssues[issue.parentIssue._id] = {
+                     ...issue.parentIssue,
+                     subIssues: [],
+                  };
+
+               parentIssues[issue.parentIssue._id].subIssues.push(issue);
+            }
+         }
+         console.log(parentIssues);
+         setListIssues(parentIssues);
       }
       getIssues();
    }, []);

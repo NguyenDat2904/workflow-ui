@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import HomeLayout from '~/layout/HomeLayout/HomeLayout';
 import LoginGoogleButton from './LoginGoogleButton';
 import { UserContext } from '~/contexts/user/userContext';
@@ -136,7 +136,15 @@ function Login() {
                            <span>OR</span>
                            <div className={cx('right')}></div>
                         </div>
-                        <LoginGoogleButton />
+                        <div style={{ width: '100%' }}>
+                           <LoginGoogleButton />
+                        </div>
+                        <div style={{ width: '100%', padding: '1rem 0 0 0', textAlign: 'center' }}>
+                           Don't have an account?{' '}
+                           <Link style={{ color: 'blue', textDecoration: 'underline' }} to="/register">
+                              Register
+                           </Link>
+                        </div>
                      </div>
                   </div>
                </div>

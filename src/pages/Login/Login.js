@@ -128,7 +128,7 @@ function Login() {
                               </ControllerForm>
                            </div>
                            <button className={cx('submit', !form.formState.isValid && 'disable')} type="submit">
-                              {!loading ? <span>Agree</span> : <LoadingIcon />}
+                              {!loading ? <span>Login</span> : <LoadingIcon />}
                            </button>
                         </form>
                         <div className={cx('or')} style={{ marginTop: '20px' }}>
@@ -136,9 +136,7 @@ function Login() {
                            <span>OR</span>
                            <div className={cx('right')}></div>
                         </div>
-                        <div className={cx('login-google-button-container')}>
-                           <LoginGoogleButton />
-                        </div>
+                        <LoginGoogleButton />
                      </div>
                   </div>
                </div>

@@ -167,7 +167,7 @@ function DetailIssue() {
       }
    };
 
-   // 3.6 Submit Ponit
+   // 3.6 Submit Point
    const handleSubmitPoint = async (dataPoint) => {
       const dataForm = { storyPointEstimate: +dataPoint?.storyPointEstimate };
       const updateIssue = await issueService.updateIssue(param?.id, detailIssue?._id, dataForm);

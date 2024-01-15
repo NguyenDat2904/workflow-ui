@@ -34,16 +34,16 @@ export function Table({ actions, data, colWidthRatio, colType, idList, labels, .
                <div className={cx('td-table-email')}>{}</div>
             </td>
             <td>
-               <div>
-                  <Button leftIcon={<MenuIcon />} backgroundNone style={{ height: '32px' }}></Button>
-               </div>
+               <Dropdown actions={actions}>
+                  <DotMenu />
+               </Dropdown>
             </td>
          </tr>
       );
    });
 
    return (
-      <table className={cx('table')}>
+      <table className={cx('table')} {...props}>
          {colWidthRatio && (
             <colgroup>
                {colWidthRatio.map((width, index) => (

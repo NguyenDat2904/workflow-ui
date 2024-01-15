@@ -15,16 +15,16 @@ export default function ProjectAccess() {
    const projectService = new WorkService();
 
    useEffect(() => {
+      // Get Member
+      const getMembers = async () => {
+         if (detailProject.codeProject) {
+            const listMembers = await projectService.getMember(detailProject?.codeProject, {});
+            if (listMembers.status === 200) setMembers(listMembers.data);
+         }
+      };
+
       getMembers();
    }, [detailProject]);
-
-   // Get Member
-   const getMembers = async () => {
-      if (detailProject.codeProject) {
-         const listMembers = await projectService.getMember({ codeProject: detailProject?.codeProject });
-         if (listMembers.status === 200) setMembers(listMembers.data);
-      }
-   };
 
    const handleDeleteMember = async () => {
       // const response = await remove(`work/delete-existing-members/${user._id}`);
@@ -56,17 +56,13 @@ export default function ProjectAccess() {
                         Add people
                      </Button>
                   </div>
-                  <div className={cx('container-table')}>
-                     <div style={{ marginBottom: 'var(--ds-space-300, 24px)' }}>
-                        <Table
-                           actions={[{ label: 'Delete', method: handleDeleteMember }]}
-                           data={members}
-                           colWidthRatio={[30, 40, 20]}
-                           colType={['string', 'string', 'string']}
-                           labels={['Name', 'Email', 'Role', 'Action']}
-                        />
-                     </div>
-                  </div>
+                  <Table
+                     actions={[{ label: 'Delete', method: handleDeleteMember }]}
+                     data={members}
+                     colWidthRatio={[30, 40, 20]}
+                     colType={['string', 'string', 'string']}
+                     labels={['Name', 'Email', 'Role', 'Action']}
+                  />
                </div>
             </div>
          </div>

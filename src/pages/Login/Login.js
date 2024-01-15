@@ -52,7 +52,7 @@ function Login() {
             });
          }
          if (response.data.message === 'Wrong password') {
-            form.setError('userName', {
+            form.setError('passWord', {
                type: 'manual',
                message: 'Password does not exist',
             });

@@ -60,7 +60,7 @@ export function Table({ actions, data, colWidthRatio, colType, idList, labels, .
    });
 
    return (
-      <table className={cx('table')}>
+      <table className={cx('table')} {...props}>
          {colWidthRatio && (
             <colgroup>
                {colWidthRatio.map((width, index) => (

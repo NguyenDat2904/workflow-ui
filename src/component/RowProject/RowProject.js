@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import classNames from 'classnames/bind';
 import style from './RowProject.module.scss';
 import Button from '../Buttton/Button';
 import { MenuIcon } from '../icon/icon';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MenuProject from './MenuProject/MenuProject';
 import moment from 'moment';
 import ModalAccept from '../ModalAccept/ModalAccept';
@@ -23,7 +23,6 @@ function RowProject({ project, handleMoveToTrash, trash, handleDeletePer, handle
    const remainingDays = remainingTime.asDays();
    const remainingText = `In ${Math.floor(remainingDays)} days`;
 
-   // 3. Func
    return (
       <>
          {isToggleAcceptRestore && (

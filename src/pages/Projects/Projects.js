@@ -9,7 +9,6 @@ import ProjectList from './ProjectList/ProjectList';
 import Pagination from '~/component/Pagination/Pagination';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '~/contexts/user/userContext';
-import { AuthContext } from '~/contexts/auth/authContext';
 import WorkService from '~/services/work/workServices';
 
 const cx = classNames.bind(style);

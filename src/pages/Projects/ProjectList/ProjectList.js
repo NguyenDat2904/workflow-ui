@@ -119,9 +119,9 @@ function ProjectList({ projectsList, setProjectsList, handleMoveToTrash, trash, 
          <tbody>
             {loadingGetProject ? (
                <tr width="100%">
-                  <td style={{ padding: '0 1px' }}>
+                  {/* <td style={{ padding: '0 1px' }}>
                      <Skeleton width="100%" height="48px" />
-                  </td>
+                  </td> */}
                   <td style={{ padding: '0 1px' }}>
                      <Skeleton width="100%" height="48px" />
                   </td>

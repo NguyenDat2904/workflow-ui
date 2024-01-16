@@ -5,12 +5,15 @@ import { Button } from '~/component/Inputs/Inputs';
 import { ReactComponent as GoogleIcon } from '../../asset/icons/google.svg';
 import { useGoogleLogin } from '@react-oauth/google';
 import 'react-toastify/dist/ReactToastify.css';
-import './Login.module.scss';
+import style from './Login.module.scss';
+import classNames from 'classnames/bind';
 import { UserContext } from '~/contexts/user/userContext';
 import { AuthContext } from '~/contexts/auth/authContext';
 import AuthService from '~/services/auth/authServices';
 
 const authService = new AuthService();
+
+const cx = classNames.bind(style);
 
 export default function LoginGoogleButton() {
    const navigate = useNavigate();
@@ -42,7 +45,7 @@ export default function LoginGoogleButton() {
    });
 
    return (
-      <Button buttonStyle={'light'} className="login-google-button" onClick={() => googleLogin()}>
+      <Button buttonStyle={'light'} className={cx('login-google-button')} onClick={() => googleLogin()}>
          <GoogleIcon />
          <span>Continue with Google</span>
       </Button>

@@ -67,7 +67,7 @@ function BlackLog() {
             <div className={cx('sprint-dropdown')}>
                {renderSprint}
                <Sprint
-                  data={{ name: 'Blacklog' }}
+                  data={{ name: 'Backlog' }}
                   handleCreateSprint={handleCreateSprint}
                   setPrints={setPrints}
                   members={members}

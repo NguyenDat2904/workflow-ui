@@ -2,6 +2,14 @@ $subtext-color: gray;
 $task-container-background: #f4f5f7;
 $color-border: rgba(9, 30, 66, 0.08);
 
+.flex-1 {
+   flex: 1;
+   min-width: 25vw;
+   padding: 0.5rem;
+   border-right: 1px solid $color-border;
+   border-left: 1px solid $color-border;
+}
+
 .sprint-buttons {
    display: flex;
    gap: 0.2rem;
@@ -55,9 +63,29 @@ $color-border: rgba(9, 30, 66, 0.08);
       }
    }
 
+   .task-board {
+      position: relative;
+      height: 75vh;
+      overflow: auto;
+   }
+
+   .task-status {
+      position: sticky;
+      top: 0;
+      display: flex;
+      gap: 1rem;
+      div {
+         @extend .flex-1;
+         font-weight: 600;
+         text-transform: uppercase;
+         border-radius: 5px 5px 0 0px;
+         border-top: 1px solid $color-border;
+         background-color: $task-container-background;
+      }
+   }
+
    .task-state {
-      width: 20rem;
-      min-height: 50vh;
+      width: 16rem;
       padding: 1rem;
       border-radius: 1rem;
       border: 2px solid $color-border;
@@ -65,26 +93,89 @@ $color-border: rgba(9, 30, 66, 0.08);
       .state-title {
          font-size: 1.25rem;
          font-weight: bold;
-         margin-bottom: 1rem;
       }
    }
 
-   .task-status {
-      display: flex;
-      gap: 1rem;
-      div {
-         flex: 1;
-         padding: 0.5rem;
-         border-radius: 5px 5px 0 0px;
-         border: 1px solid $color-border;
-         border-bottom: none;
-         background-color: $task-container-background;
+   .task-display {
+      min-height: 50vh;
+      width: 100%;
+
+      .main-task {
+         width: 100%;
+         padding: 0.5rem 1rem;
+         background-color: white;
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+         span {
+            font-weight: 600;
+         }
+      }
+
+      .sub-tasks-container {
+         display: flex;
+         gap: 1rem;
+         .sub-tasks {
+            @extend .flex-1;
+            background-color: $task-container-background;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+         }
       }
    }
 }
 
-.sortable-task {
-   border: 1px solid $color-border;
+.task {
    padding: 0.5rem !important;
-   text-align: left;
+   border-radius: 3px;
+   align-items: baseline !important;
+   .metadata {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.25rem;
+      width: 100%;
+      svg {
+         width: 1rem;
+         color: orange;
+      }
+      img {
+         width: 2rem;
+         border-radius: 50%;
+      }
+      span {
+         display: flex;
+         gap: 0.25rem;
+         align-items: center;
+      }
+   }
+}
+
+// Issue Icon
+
+.issue-icon {
+   width: 1rem;
+   height: 1rem;
+   padding: 0.2rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 2px;
+}
+
+.icon-bug {
+   background-color: #e5493a;
+}
+
+.icon-epic {
+   background-color: #904ee2;
+}
+
+.icon-story {
+   background-color: #63ba3c;
+}
+
+.icon-task {
+   background-color: #4bade8;
 }

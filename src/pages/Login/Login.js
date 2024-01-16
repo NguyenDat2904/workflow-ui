@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import HomeLayout from '~/layout/HomeLayout/HomeLayout';
 import LoginGoogleButton from './LoginGoogleButton';
 import { UserContext } from '~/contexts/user/userContext';
@@ -48,13 +48,13 @@ function Login() {
          if (response.data.message === 'Email does not exist') {
             form.setError('userName', {
                type: 'manual',
-               message: 'User name does not exist',
+               message: 'Username does not exist.',
             });
          }
          if (response.data.message === 'Wrong password') {
-            form.setError('userName', {
+            form.setError('passWord', {
                type: 'manual',
-               message: 'Password does not exist',
+               message: 'Password does not exist.',
             });
          }
       }
@@ -128,7 +128,7 @@ function Login() {
                               </ControllerForm>
                            </div>
                            <button className={cx('submit', !form.formState.isValid && 'disable')} type="submit">
-                              {!loading ? <span>Agree</span> : <LoadingIcon />}
+                              {!loading ? <span>Login</span> : <LoadingIcon />}
                            </button>
                         </form>
                         <div className={cx('or')} style={{ marginTop: '20px' }}>
@@ -136,8 +136,14 @@ function Login() {
                            <span>OR</span>
                            <div className={cx('right')}></div>
                         </div>
-                        <div className={cx('login-google-button-container')}>
+                        <div style={{ width: '100%' }}>
                            <LoginGoogleButton />
+                        </div>
+                        <div style={{ width: '100%', padding: '1rem 0 0 0', textAlign: 'center' }}>
+                           Don't have an account?{' '}
+                           <Link style={{ color: 'blue', textDecoration: 'underline' }} to="/register">
+                              Register
+                           </Link>
                         </div>
                      </div>
                   </div>

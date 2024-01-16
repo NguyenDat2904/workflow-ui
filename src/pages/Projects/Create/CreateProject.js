@@ -5,7 +5,7 @@ import style from './CreateProject.module.scss';
 import ControllerForm from '~/component/ControllerForm/ControllerForm';
 import { useForm } from 'react-hook-form';
 import Input from '~/component/Input/Input';
-import { LoadingIcon, LogoIcon } from '~/component/icon/icon';
+import { LoadingIcon } from '~/component/icon/icon';
 import Button from '~/component/Buttton/Button';
 import WorkService from '~/services/work/workServices';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -73,7 +73,12 @@ export default function CreateProject() {
                      </div>
                      <div style={{ marginTop: '16px' }}>
                         <ControllerForm form={form} name="codeProject" required label="Key" id="project-key">
-                           <Input id="project-key" search="search" />
+                           <Input
+                              className={cx('custom-input')}
+                              id="project-key"
+                              search="search"
+                              placeholder="Enter the unique key for your project"
+                           />
                         </ControllerForm>
                      </div>
                   </div>
@@ -87,9 +92,6 @@ export default function CreateProject() {
                         </div>
                         <div className={cx('wrapper-right-content')}>
                            <h4 className={cx('wrapper-right-header')}>Scrum</h4>
-                           <span className={cx('wrapper-right-logo')}>
-                              <LogoIcon />
-                           </span>
                            <p className={cx('right-content-desc')}>
                               Sprint toward your project goals with a board, backlog, and timeline.
                            </p>

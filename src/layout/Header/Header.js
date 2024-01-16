@@ -206,7 +206,7 @@ function Header() {
                >
                   <Button
                      className={cx('button-icon')}
-                     noChildren
+                     // noChildren
                      backgroundNone
                      borderRadius
                      leftIcon={<NotificationIcon />}

@@ -29,7 +29,6 @@ export default function ProjectAccess() {
       }
    };
    const handleDeleteMember = async () => {
-      const user = JSON.parse(localStorage.getItem('user'));
       // const response = await remove(`work/delete-existing-members/${user._id}`);
    };
 
@@ -60,17 +59,13 @@ export default function ProjectAccess() {
                      </Button>
                      {isToggle && <Navigation isOpen={isToggle} onClose={() => setIsToggle(false)} />}
                   </div>
-                  <div className={cx('container-table')}>
-                     <div style={{ marginBottom: 'var(--ds-space-300, 24px)' }}>
-                        <Table
-                           actions={[{ label: 'Delete', method: handleDeleteMember }]}
-                           data={members}
-                           colWidthRatio={[30, 40, 20]}
-                           colType={['string', 'string', 'string']}
-                           labels={['Name', 'Email', 'Role', 'Action']}
-                        />
-                     </div>
-                  </div>
+                  <Table
+                     actions={[{ label: 'Delete', method: handleDeleteMember }]}
+                     data={members}
+                     colWidthRatio={[30, 40, 20]}
+                     colType={['string', 'string', 'string']}
+                     labels={['Name', 'Email', 'Role', 'Action']}
+                  />
                </div>
             </div>
          </div>

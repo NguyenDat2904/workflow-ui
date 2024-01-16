@@ -8,6 +8,9 @@ class IssueService extends BaseServices {
    getIssue(id, param) {
       return this.get(`/issues/${id}`, { params: { ...param } });
    }
+   searchIssue(param) {
+      return this.get(`/issues/search`, { params: { ...param } });
+   }
    getIssueDetail(key, param) {
       return this.get(`issues/${key}/detail`, { params: { ...param } });
    }

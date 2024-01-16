@@ -18,44 +18,48 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
    const [isToggleStatus, setIsToggleStatus] = useState(false);
    const [isTogglePrior, setIsTogglePrior] = useState(false);
    const [isToggleAssignee, setIsToggleAssignee] = useState(false);
+   const getListIssueSprint = async () => {
+      // Get listIssue
+      if (sprintID) {
+         const listIssue = await issueService.getIssue(detailProject?.codeProject, { sprintID: sprintID });
+         if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
+      }
+   };
+
+   const getListIssueChildren = async () => {
+      // Get children
+      if (idParent) {
+         const issueChildren = await issueService.getIssue(detailProject?.codeProject, {
+            parentIssueID: idParent,
+         });
+         if (issueChildren.status === 200)
+            setIssueChildren(issueChildren.data?.dataListIssues.filter((item) => item.parentIssue !== null));
+      }
+   };
 
    const handleChangePriority = async (key, id, option) => {
       const dataForm = { priority: option.label };
       const updateIssue = await issueService.updateIssue(key, id, dataForm);
       if (updateIssue.status === 200) {
-         const listIssue = await issueService.getIssue(detailProject?.codeProject, { sprintID: sprintID });
-         if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
-          const issueChildren = await issueService.getIssue(detailProject?.codeProject, {
-             parentIssueID: idParent,
-          });
-          if (issueChildren.status === 200)
-             setIssueChildren(issueChildren.data.dataListIssues.filter((item) => item.parentIssue !== null));
+         getListIssueSprint();
+         getListIssueChildren();
       }
    };
+
    const handleChangeStatus = async (key, id, option) => {
       const dataForm = { status: option.key };
       const updateIssue = await issueService.updateIssue(key, id, dataForm);
       if (updateIssue.status === 200) {
-         const listIssue = await issueService.getIssue(detailProject?.codeProject, { sprintID: sprintID });
-         if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
-         const issueChildren = await issueService.getIssue(detailProject?.codeProject, {
-            parentIssueID: idParent,
-         });
-         if (issueChildren.status === 200)
-            setIssueChildren(issueChildren.data.dataListIssues.filter((item) => item.parentIssue !== null));
+         getListIssueSprint();
+         getListIssueChildren();
       }
    };
    const handleChangeAssignee = async (key, id, option) => {
       const dataForm = { assignee: option.idUser };
       const updateIssue = await issueService.updateIssue(key, id, dataForm);
       if (updateIssue.status === 200) {
-         const listIssue = await issueService.getIssue(detailProject?.codeProject, { sprintID: sprintID });
-         if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
-          const issueChildren = await issueService.getIssue(detailProject?.codeProject, {
-             parentIssueID: idParent,
-          });
-          if (issueChildren.status === 200)
-             setIssueChildren(issueChildren.data.dataListIssues.filter((item) => item.parentIssue !== null));
+         getListIssueSprint();
+         getListIssueChildren();
       }
    };
    const listMember = members?.map((member) => {
@@ -258,10 +262,10 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
                   <div onClick={() => setIsToggleAssignee(!isToggleAssignee)} style={{ width: '100%', height: '100%' }}>
                      <img
                         src={
-                           data?.assignee?.img
-                              ? data?.assignee?.img === ''
+                           data?.infoAssignee?.img
+                              ? data?.infoAssignee?.img === ''
                                  ? 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
-                                 : data?.assignee?.img
+                                 : data?.infoAssignee?.img
                               : 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
                         }
                         alt=""

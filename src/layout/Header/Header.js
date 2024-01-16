@@ -13,6 +13,8 @@ import ModelNotification from '~/component/ModelNotification/ModelNotification';
 import WorkService from '~/services/work/workServices';
 import ModalCreateIssue from './ModalCreateIssue/ModalCreateIssue';
 import { ProjectContext } from '~/contexts/project/projectContext';
+import ModalSearch from './ModalSearch/ModalSearch';
+import IssueService from '~/services/issue/issueService';
 const cx = classNames.bind(style);
 const userServices = new UserService();
 const projectService = new WorkService();
@@ -21,12 +23,14 @@ function Header() {
    const location = useLocation();
    const elementRef = useRef(null);
    // 1. useState
+   const issueService = new IssueService();
 
    const { parseuser } = useContext(UserContext);
    const { detailProject } = useContext(ProjectContext);
 
    const [projects, getProjects] = useState([]);
    const [isToggleCreateIssue, setToggleCreateIssue] = useState(false);
+   const [isModalSearch, setIsModalSearch] = useState(false);
    const [toggleMenu, setToggleMenu] = useState({
       yourWork: false,
       project: false,
@@ -36,7 +40,9 @@ function Header() {
    });
    const [position, setPosition] = useState({ left: 0 });
    const [getUserData, setGetUserData] = useState({});
+   const [getIssueSearch, setGetIssueSearch] = useState([]);
 
+   const [search, setSearch] = useState('');
    // 2. useEffect
    const getProject = async () => {
       const projects = await projectService.getListProject({ deleteProject: false });
@@ -46,6 +52,7 @@ function Header() {
    };
    useEffect(() => {
       getProject();
+      getUser();
    }, []);
    useEffect(() => {
       const getElementPosition = () => {
@@ -64,16 +71,21 @@ function Header() {
       };
    }, []);
 
-   useEffect(() => {
-      const getUser = async () => {
-         const users = await userServices.getUserProfile(parseuser?._id);
-         if (users.status === 200) {
-            setGetUserData(users.data);
-         }
-      };
-      getUser();
-   }, []);
+   const getUser = async () => {
+      const users = await userServices.getUserProfile(parseuser?._id);
+      if (users.status === 200) {
+         setGetUserData(users.data);
+      }
+   };
 
+   useEffect(() => {
+      getListIssueSearch();
+   }, [search]);
+
+   const getListIssueSearch = async () => {
+      const issue = await issueService.searchIssue({ search: search });
+      if (issue.status === 200) setGetIssueSearch(issue.data.data);
+   };
    // 3. Func
    const handleToggle = (toggle) => {
       switch (toggle) {
@@ -172,6 +184,14 @@ function Header() {
                      type="text"
                      search="search"
                      className={cx('custom-input')}
+                     style={{ width: isModalSearch ? '350px' : '230px' }}
+                     onFocus={() => setIsModalSearch(true)}
+                     onChange={(e) => setSearch(e.target.value)}
+                  />
+                  <ModalSearch
+                     isOpen={isModalSearch}
+                     onClose={() => setIsModalSearch(false)}
+                     getIssueSearch={getIssueSearch}
                   />
                </div>
                <div

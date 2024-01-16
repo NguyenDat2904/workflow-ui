@@ -38,7 +38,7 @@ const privateRoutes = [
    { path: '/forgot/change-password', component: ChangePassword, layout: null },
    { path: '/project', component: Projects, layout: HeaderOnly },
    { path: '/project/create', component: CreateProject, layout: null },
-   { path: '/project/trash', component: TrashProjects },
+   { path: '/project/trash', component: TrashProjects, layout: HeaderOnly },
    { path: '/project/:id/setting/access', component: ProjectAccess, layout: LayoutSideBarChildren },
    { path: '/project/:_id/board', component: Board, layout: LayoutSideBarChildren },
    { path: '/add-people', component: VerifyAddPeople, layout: null },

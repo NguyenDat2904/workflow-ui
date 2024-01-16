@@ -7,8 +7,7 @@ import Button from '../Buttton/Button';
 import { MenuIcon } from '../icon/icon';
 const cx = classNames.bind(style);
 export function Table({ actions, data, colWidthRatio, colType, idList, labels, ...props }) {
-   const renderTdTable = data.dataMember?.map((member, index) => {
-      console.log(data);
+   const renderTdTable = data?.map((member, index) => {
       return (
          <tr key={index} className={cx('tr-table')}>
             <td className={cx('td-table')}>
@@ -32,11 +31,28 @@ export function Table({ actions, data, colWidthRatio, colType, idList, labels, .
                <div className={cx('td-table-email')}>{member?.email}</div>
             </td>
             <td className={cx('td-table')}>
-               <div className={cx('td-table-email')}>{}</div>
+               <div className={cx('td-table-email')}>
+                  {member?.role === 'admin'
+                     ? 'Adminitrator'
+                     : member?.role === 'member'
+                     ? 'Member'
+                     : member?.role === 'manager'
+                     ? 'Manager'
+                     : ''}
+               </div>
             </td>
             <td>
-               <div>
-                  <Button leftIcon={<MenuIcon />} backgroundNone style={{ height: '32px' }}></Button>
+               <div style={{ textAlign: 'end' }}>
+                  <Dropdown
+                     className={cx('custom-dropdown')}
+                     actions={[{ label: 'Change role' }, { label: 'Delete member' }]}
+                  >
+                     <Button
+                        leftIcon={<MenuIcon />}
+                        backgroundNone
+                        style={{ height: '32px', margin: 'var(--ds-space-050, 4px) var(--ds-space-100, 8px)' }}
+                     ></Button>
+                  </Dropdown>
                </div>
             </td>
          </tr>

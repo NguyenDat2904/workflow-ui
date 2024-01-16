@@ -20,6 +20,7 @@ import WorkService from '~/services/work/workServices';
 import moment from 'moment';
 import ModalAccept from '~/component/ModalAccept/ModalAccept';
 import CommentService from '../../services/comment/CommentService';
+import Dropdown from '~/component/dropdown/Dropdown';
 const cx = classNames.bind(style);
 function DetailIssue() {
    const param = useParams();
@@ -184,7 +185,7 @@ function DetailIssue() {
    // 3.7 Get Member
    const getMembers = async () => {
       const listMembers = await projectService.getMember({ codeProject: param?.id });
-      if (listMembers.status === 200) setMembers(listMembers.data.dataMembers);
+      if (listMembers.status === 200) setMembers(listMembers.data);
    };
 
    const listMember = members?.map((member) => {
@@ -254,6 +255,8 @@ function DetailIssue() {
          }
       }
    };
+   // 3.11 Submit Delete Submit
+   const handleDeleteIssue = async () => {};
 
    const renderChildrenIssue = issueChildren
       ?.map((issueChildren) => {
@@ -497,7 +500,12 @@ function DetailIssue() {
          <div className={cx('section-right')}>
             <div className={cx('wrapper-right')}>
                <div className={cx('control-header-right')}>
-                  <Button noChildren backgroundNone leftIcon={<MenuIcon />}></Button>
+                  <Dropdown
+                     className={cx('custom-dropdown')}
+                     actions={[{ label: 'Delete sprint', method: () => handleDeleteIssue() }]}
+                  >
+                     <Button noChildren backgroundNone leftIcon={<MenuIcon />} style={{ height: '32px' }}></Button>
+                  </Dropdown>
                </div>
                <div className={cx('content-right')}>
                   <div className={cx('control-content-right')}>

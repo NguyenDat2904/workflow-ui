@@ -12,7 +12,7 @@ import Navigation from '~/component/Navigation/Navigation';
 const cx = classNames.bind(style);
 export default function ProjectAccess() {
    const { detailProject } = useContext(ProjectContext);
-   const [members, setMembers] = useState({});
+   const [members, setMembers] = useState([]);
    const [isToggle, setIsToggle] = useState(false);
 
    const projectService = new WorkService();
@@ -28,7 +28,6 @@ export default function ProjectAccess() {
          if (listMembers.status === 200) setMembers(listMembers.data);
       }
    };
-
    const handleDeleteMember = async () => {
       const user = JSON.parse(localStorage.getItem('user'));
       // const response = await remove(`work/delete-existing-members/${user._id}`);

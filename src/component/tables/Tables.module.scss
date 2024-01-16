@@ -91,3 +91,9 @@ $light-background: rgba(9, 30, 66, 0.04);
       text-align: left;
    }
 }
+.custom-dropdown {
+   font-size: 14px;
+   text-align: start !important;
+   color: var(--ds-text, #091e42);
+   font-weight: 400;
+}

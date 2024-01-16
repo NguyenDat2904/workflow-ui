@@ -42,3 +42,33 @@
       margin-bottom: var(--ds-space-200, 16px);
    }
 }
+.project-trash-none {
+   width: 50%;
+   margin: auto;
+   padding: 10px;
+   text-align: center;
+   .trash-none {
+      margin: var(--ds-space-600, 48px) auto;
+      text-align: center;
+      max-width: 464px;
+      img {
+         --max-width: 160px;
+         --max-height: 160px;
+
+         display: block;
+         max-width: var(--max-width);
+         max-height: var(--max-height);
+         margin: 0 auto var(--ds-space-300, 24px);
+      }
+      h4 {
+         font-size: 20px;
+         font-style: inherit;
+         line-height: 24px;
+         color: var(--ds-text, var(--ds-text, #172b4d));
+         font-weight: var(--ds-font-weight-medium, 500);
+         letter-spacing: -0.16px;
+         margin-top: var(--ds-space-0, 0px);
+         margin-bottom: var(--ds-space-200, 16px);
+      }
+   }
+}

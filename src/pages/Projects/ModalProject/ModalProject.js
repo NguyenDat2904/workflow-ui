@@ -75,7 +75,12 @@ function ModalProject({ handleToggle, isOpen }) {
                <Button viewAll to="/project" onClick={handleToggle}>
                   View all projects
                </Button>
-               <Button viewAll>Create project</Button>
+               <Button viewAll to="/project/trash" onClick={handleToggle}>
+                  View all projects in the trash
+               </Button>
+               <Button viewAll to="/project/create">
+                  Create project
+               </Button>
             </span>
          </div>
       </Modal>

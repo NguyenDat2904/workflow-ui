@@ -12,7 +12,7 @@ import { AuthContext } from '~/contexts/auth/authContext';
 import WorkService from '~/services/work/workServices';
 
 const cx = classNames.bind(style);
-function ProjectList({ projectsList, setProjectsList, handleMoveToTrash }) {
+function ProjectList({ projectsList, setProjectsList, handleMoveToTrash, trash, handleRestore, handleDeletePer }) {
    const projectService = new WorkService();
    const { loadingGetProject } = useContext(UserContext);
    const { accessToken } = useContext(AuthContext);
@@ -39,7 +39,7 @@ function ProjectList({ projectsList, setProjectsList, handleMoveToTrash }) {
    const handleSortName = async () => {
       if (accessToken) {
          const sortName = await projectService.getListProject({
-            deleteProject: false,
+            deleteProject: trash ? true : false,
             sortKey: sortKey.Key,
             sortOrder: sortKey.Order,
          });
@@ -52,17 +52,23 @@ function ProjectList({ projectsList, setProjectsList, handleMoveToTrash }) {
       <table className={cx('table-list')}>
          <thead>
             <tr>
-               {/* <td className={cx('star')} style={{ '--_1vcp0mh': '2.85%' }}>
-                  <div className={cx('flex-center')}>
-                     <span>
-                        <StarIcon />
-                     </span>
-                  </div>
-               </td> */}
-               <td style={{ '--_1vcp0mh': '22%' }}>
+               {!trash && (
+                  <td className={cx('star')} style={{ '--_1vcp0mh': '2.85%' }}>
+                     <div className={cx('flex-center')}>
+                        <span>
+                           <StarIcon />
+                        </span>
+                     </div>
+                  </td>
+               )}
+               <td style={{ '--_1vcp0mh': '22%', fontSize: trash && '12px', color: trash && '#626f86' }}>
                   <Button
                      backgroundNone
-                     to="/project?sortKey=nameProject&sortOrder=ASC"
+                     to={
+                        trash
+                           ? '/project/trash?sortKey=nameProject&sortOrder=ASC'
+                           : ' /project?sortKey=nameProject&sortOrder=ASC'
+                     }
                      rightIcon={<FilterIcon />}
                      tdIcon
                      onClick={handleSortName}
@@ -70,9 +76,13 @@ function ProjectList({ projectsList, setProjectsList, handleMoveToTrash }) {
                      Name
                   </Button>
                </td>
-               <td style={{ '--_1vcp0mh': '12%' }}>
+               <td style={{ '--_1vcp0mh': '12%', fontSize: trash && '12px', color: trash && '#626f86' }}>
                   <Button
-                     to="/project?sortKey=codeProject&sortOrder=ASC"
+                     to={
+                        trash
+                           ? '/project/trash?sortKey=codeProject&sortOrder=ASC'
+                           : '/project?sortKey=codeProject&sortOrder=ASC'
+                     }
                      backgroundNone
                      rightIcon={<FilterIcon />}
                      tdIcon
@@ -81,17 +91,31 @@ function ProjectList({ projectsList, setProjectsList, handleMoveToTrash }) {
                      Key
                   </Button>
                </td>
-               <td style={{ '--_1vcp0mh': '20%' }}>Type</td>
-               <td style={{ '--_1vcp0mh': '36%' }}>
+               {!trash && (
+                  <td style={{ '--_1vcp0mh': '20%', fontSize: trash && '12px', color: trash && '#626f86' }}>Type</td>
+               )}
+               <td
+                  style={{ '--_1vcp0mh': trash ? '25%' : '30%', fontSize: trash && '12px', color: trash && '#626f86' }}
+               >
                   <Button backgroundNone rightIcon={<FilterIcon />} tdIcon>
                      Lead
                   </Button>
                </td>
-               <td style={{ '--_1vcp0mh': '3%' }}></td>
-               <td style={{ '--_1vcp0mh': '4.15%' }}></td>
+               <td style={{ '--_1vcp0mh': trash ? '25%' : '3%', fontSize: trash && '12px', color: trash && '#626f86' }}>
+                  {trash && 'Moved to trash on'}
+               </td>
+               <td
+                  style={{
+                     '--_1vcp0mh': trash ? '14.15%' : '4.15%',
+                     fontSize: trash && '12px',
+                     color: trash && '#626f86',
+                  }}
+               >
+                  {trash && 'Permanently deleting'}
+               </td>
+               {trash && <td></td>}
             </tr>
          </thead>
-
          <tbody>
             {loadingGetProject ? (
                <tr width="100%">
@@ -120,7 +144,16 @@ function ProjectList({ projectsList, setProjectsList, handleMoveToTrash }) {
             ) : (
                <>
                   {projectsList?.map((project) => {
-                     return <RowProject key={project?._id} project={project} handleMoveToTrash={handleMoveToTrash} />;
+                     return (
+                        <RowProject
+                           key={project?._id}
+                           project={project}
+                           handleMoveToTrash={handleMoveToTrash}
+                           handleRestore={handleRestore}
+                           handleDeletePer={handleDeletePer}
+                           trash={trash}
+                        />
+                     );
                   })}
                </>
             )}

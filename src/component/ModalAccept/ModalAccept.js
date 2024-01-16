@@ -6,9 +6,15 @@ import style from './ModalAccept.module.scss';
 import Button from '../Buttton/Button';
 
 const cx = classNames.bind(style);
-function ModalAccept({ isOpen, isClose, name, title, handleAccept, headerTitle }) {
+function ModalAccept({ isOpen, isClose, name, title, handleAccept, headerTitle, blue }) {
    return (
-      <ModalIcon width="400px" isOpen={isOpen} isClose={isClose} header={headerTitle} leftIcon={<WarningIcon />}>
+      <ModalIcon
+         width="400px"
+         isOpen={isOpen}
+         isClose={isClose}
+         header={headerTitle}
+         leftIcon={blue ? null : <WarningIcon />}
+      >
          <div className={cx('text-desc')}>
             <p>
                {title}
@@ -17,8 +23,8 @@ function ModalAccept({ isOpen, isClose, name, title, handleAccept, headerTitle }
          </div>
          <div className={cx('btn-group')}>
             <Button onClick={isClose}>Cancel</Button>
-            <Button warning type="submit" onClick={handleAccept}>
-               Delete
+            <Button blue={blue ? true : false} warning={blue ? false : true} type="submit" onClick={handleAccept}>
+               {blue ? 'Restore' : 'Delete'}
             </Button>
          </div>
       </ModalIcon>

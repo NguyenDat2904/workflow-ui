@@ -8,6 +8,8 @@ import Input from '~/component/Input/Input';
 import { LoadingIcon } from '~/component/icon/icon';
 import Button from '~/component/Buttton/Button';
 import WorkService from '~/services/work/workServices';
+import { yupResolver } from '@hookform/resolvers/yup';
+import schema from './CreateProject.Validation';
 
 const cx = classNames.bind(style);
 
@@ -22,6 +24,7 @@ export default function CreateProject() {
          nameProject: '',
          codeProject: '',
       },
+      resolver: yupResolver(schema),
    });
 
    const handleCreateProject = async (data) => {
@@ -98,7 +101,7 @@ export default function CreateProject() {
                </div>
                <hr className={cx('hr')} />
                <div className={cx('btn-group')}>
-                  <Button onClick={() => navigate(-1)}>Cancel</Button>
+                  <Button to="/project">Cancel</Button>
                   <Button blue type="submit" className={cx('custom')}>
                      {!loading ? <span>Create</span> : <LoadingIcon />}
                   </Button>

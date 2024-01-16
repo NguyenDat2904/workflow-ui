@@ -4,7 +4,7 @@ import Button from '~/component/Buttton/Button';
 import { useEffect, useRef } from 'react';
 
 const cx = classNames.bind(style);
-function MenuProject({ onClick, codeProject, disable, isOpen, onClose }) {
+function MenuProject({ onClick, codeProject, disable, isOpen, onClose, trash, handleDeletePer, handleRestore }) {
    const popupRef = useRef(null);
 
    useEffect(() => {
@@ -31,14 +31,27 @@ function MenuProject({ onClick, codeProject, disable, isOpen, onClose }) {
    return (
       <div className={cx('wrapper', 'popup', isOpen ? 'open' : '')}>
          <div className={cx('menu')} ref={popupRef}>
-            {disable && (
-               <Button viewAll backgroundNone to={`/project/${codeProject}/settings/details`}>
-                  Project setting
-               </Button>
+            {trash ? (
+               <>
+                  <Button viewAll onClick={handleDeletePer}>
+                     Delete permanently
+                  </Button>
+                  <Button viewAll backgroundNone onClick={handleRestore}>
+                     Restore
+                  </Button>
+               </>
+            ) : (
+               <>
+                  {disable && (
+                     <Button viewAll backgroundNone to={`/project/${codeProject}/settings/details`}>
+                        Project setting
+                     </Button>
+                  )}
+                  <Button viewAll backgroundNone onClick={onClick}>
+                     Move to trash
+                  </Button>
+               </>
             )}
-            <Button viewAll backgroundNone onClick={onClick}>
-               Move to trash
-            </Button>
          </div>
       </div>
    );

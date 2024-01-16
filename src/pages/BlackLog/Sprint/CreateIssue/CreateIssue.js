@@ -16,7 +16,7 @@ const cx = classNames.bind(style);
 function CreateIssue({ setIssues, idPrint, idParent }) {
    const { detailProject } = useContext(ProjectContext);
    const issueService = new IssueService();
-
+   const [loading, setLoading] = useState(false);
    const [isToggleIssue, setIsToggleIssue] = useState(false);
    const [valueTask, setValueTask] = useState({
       label: 'Story',
@@ -32,12 +32,16 @@ function CreateIssue({ setIssues, idPrint, idParent }) {
    });
    // 3.2. Create issue
    const handleCreateIssue = async (dataForm) => {
+      if (loading) {
+         return;
+      }
       const dataIssue = {
          ...dataForm,
          issueType: valueTask.key,
          sprint: idPrint,
          parentIssue: idParent ? idParent : null,
       };
+      setLoading(true);
       const createIssue = await issueService.createIssue(detailProject?.codeProject, dataIssue);
       if (createIssue.status === 200) {
          const listIssue = await issueService.getIssue(detailProject?.codeProject, {
@@ -47,6 +51,7 @@ function CreateIssue({ setIssues, idPrint, idParent }) {
          if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
       }
       form.reset();
+      setLoading(false);
    };
 
    return (

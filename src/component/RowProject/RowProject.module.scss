@@ -47,12 +47,40 @@ tr.row {
    }
    .name {
       color: var(--ds-link, #0052cc);
-      &:hover {
-         text-decoration: underline;
-         cursor: pointer;
+      a {
+         &:hover {
+            text-decoration: underline;
+         }
       }
    }
 }
 .menu-icon {
    position: relative;
+   text-align: end;
+}
+.user-delete {
+   display: flex;
+   text-align: left;
+   font-size: 14px;
+   color: #172b3d;
+   font-weight: 400;
+   span {
+      margin: 0 var(--ds-space-050, 4px);
+      white-space: nowrap;
+   }
+   div {
+      white-space: nowrap;
+      opacity: 1;
+      transition: opacity 0.3s ease 0s;
+      margin: 0px;
+      -webkit-box-flex: 1;
+      flex-grow: 1;
+      flex-shrink: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 500;
+      &:hover {
+         cursor: pointer;
+      }
+   }
 }

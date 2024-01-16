@@ -6,15 +6,23 @@ import { imgProject } from '~/component/icon/icon';
 import classNames from 'classnames/bind';
 import style from './FormIcon.module.scss';
 import Button from '~/component/Buttton/Button';
+import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(style);
-function FormIcon({ isOpen, isClose }) {
+
+function FormIcon({ isOpen, isClose, id, getDetailProject }) {
    const form = useForm({
       mode: 'all',
    });
+   const projectService = new WorkService();
    const watchImageSrc = form.watch('imageSrc', '');
 
-   const handleSubmit = (data) => {
-      console.log(data.imageSrc);
+   const handleSubmit = async (data) => {
+      const dataForm = { imgProject: data.imageSrc };
+      const changeIcon = await projectService.changeProject(id, dataForm);
+      if (changeIcon.status === 200) {
+         getDetailProject();
+         isClose();
+      }
    };
    const handleImageClick = (index, src) => {
       form.setValue('activeButton', index);
@@ -49,7 +57,7 @@ function FormIcon({ isOpen, isClose }) {
    });
 
    return (
-      <ModalIcon width="300px" isOpen={isOpen} isClose={isClose} header="Choose an icon">
+      <ModalIcon width="383px" isOpen={isOpen} isClose={isClose} header="Choose an icon">
          <form action="" onSubmit={form.handleSubmit(handleSubmit)}>
             <div className={cx('list-icon')}>{renderImg}</div>
             <div className={cx('btn-group')}>

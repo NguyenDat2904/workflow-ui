@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom';
 import YourWorkCard from '~/component/YourWorkCard/YourWorkCard';
 import WorkService from '~/services/work/workServices';
 import ItemIssue from '~/component/ItemIssue/ItemIssue';
+import Skeleton from 'react-loading-skeleton';
 
 const cx = classNames.bind(styles);
 const projectService = new WorkService();
 
 const YourWork = () => {
    const [projects, setProjects] = useState([]);
+   const [loading, setLoading] = useState();
    const [issuesTodo, setIssuesTodo] = useState([]);
    const [issuesInProgress, setIssuesInProgress] = useState([]);
    const [issuesReview, setIssuesReview] = useState([]);
@@ -38,8 +40,13 @@ const YourWork = () => {
    };
 
    useEffect(() => {
-      getProject();
-      getIssues();
+      const get = async () => {
+         setLoading(true);
+         await getProject();
+         await getIssues();
+         setLoading(false);
+      };
+      get();
    }, []);
    return (
       <div className={cx('wrapper')}>
@@ -54,15 +61,21 @@ const YourWork = () => {
                </Link>
             </div>
             <div className={cx('group-card')}>
-               {projects?.length <= 0 ? (
-                  <div className={cx('no-more-notifications')}>
-                     <img width={172} height={202} src="./imgs/Screenshot 2024-01-15 162545.png" alt="" />
-                     <div className={cx('text')}>
-                        <p className={cx('p')}>You have no projects for 30 days</p>
-                     </div>
-                  </div>
+               {loading ? (
+                  <Skeleton width="220px" height="75px" style={{ margin: '15px 20px 0 0' }} />
                ) : (
-                  projects?.map((data) => <YourWorkCard data={data} />)
+                  <>
+                     {projects?.length <= 0 ? (
+                        <div className={cx('no-more-notifications')}>
+                           <img width={172} height={202} src="./imgs/Screenshot 2024-01-15 162545.png" alt="" />
+                           <div className={cx('text')}>
+                              <p className={cx('p')}>You have no projects for 30 days</p>
+                           </div>
+                        </div>
+                     ) : (
+                        projects?.map((data) => <YourWorkCard data={data} />)
+                     )}
+                  </>
                )}
             </div>
          </section>
@@ -79,54 +92,60 @@ const YourWork = () => {
                   </span>
                </div>
             </div>
-            {issuesCount === 0 ? (
-               <div className={cx('no-more-notifications')}>
-                  <img width={172} height={202} src="./imgs/Screenshot 2024-01-15 162545.png" alt="" />
-                  <div className={cx('text')}>
-                     <p className={cx('p')}>You have no issues for 30 days.</p>
-                  </div>
-               </div>
+            {loading ? (
+               <Skeleton width="100%" height="50px" style={{ marginTop: '20px' }} />
             ) : (
                <>
-                  {issuesTodo?.length > 0 ? (
-                     <div className={cx('todo')}>
-                        <h3 className={cx('boGiHC')}>To do</h3>
-                        {issuesTodo?.map((data) => (
-                           <ItemIssue data={data} />
-                        ))}
+                  {issuesCount === 0 ? (
+                     <div className={cx('no-more-notifications')}>
+                        <img width={172} height={202} src="./imgs/Screenshot 2024-01-15 162545.png" alt="" />
+                        <div className={cx('text')}>
+                           <p className={cx('p')}>You have no issues for 30 days.</p>
+                        </div>
                      </div>
                   ) : (
-                     ''
-                  )}
-                  {issuesInProgress?.length > 0 ? (
-                     <div className={cx('in-progress')}>
-                        <h3 className={cx('boGiHC')}>In progress</h3>
-                        {issuesInProgress?.map((data) => (
-                           <ItemIssue data={data} />
-                        ))}
-                     </div>
-                  ) : (
-                     ''
-                  )}
-                  {issuesReview?.length > 0 ? (
-                     <div className={cx('review')}>
-                        <h3 className={cx('boGiHC')}>Review</h3>
-                        {issuesReview?.map((data) => (
-                           <ItemIssue data={data} />
-                        ))}
-                     </div>
-                  ) : (
-                     ''
-                  )}
-                  {issuesDone?.length > 0 ? (
-                     <div className={cx('done')}>
-                        <h3 className={cx('boGiHC')}>Done</h3>
-                        {issuesDone?.map((data) => (
-                           <ItemIssue data={data} />
-                        ))}
-                     </div>
-                  ) : (
-                     ''
+                     <>
+                        {issuesTodo?.length > 0 ? (
+                           <div className={cx('todo')}>
+                              <h3 className={cx('boGiHC')}>To do</h3>
+                              {issuesTodo?.map((data) => (
+                                 <ItemIssue data={data} />
+                              ))}
+                           </div>
+                        ) : (
+                           ''
+                        )}
+                        {issuesInProgress?.length > 0 ? (
+                           <div className={cx('in-progress')}>
+                              <h3 className={cx('boGiHC')}>In progress</h3>
+                              {issuesInProgress?.map((data) => (
+                                 <ItemIssue data={data} />
+                              ))}
+                           </div>
+                        ) : (
+                           ''
+                        )}
+                        {issuesReview?.length > 0 ? (
+                           <div className={cx('review')}>
+                              <h3 className={cx('boGiHC')}>Review</h3>
+                              {issuesReview?.map((data) => (
+                                 <ItemIssue data={data} />
+                              ))}
+                           </div>
+                        ) : (
+                           ''
+                        )}
+                        {issuesDone?.length > 0 ? (
+                           <div className={cx('done')}>
+                              <h3 className={cx('boGiHC')}>Done</h3>
+                              {issuesDone?.map((data) => (
+                                 <ItemIssue data={data} />
+                              ))}
+                           </div>
+                        ) : (
+                           ''
+                        )}
+                     </>
                   )}
                </>
             )}

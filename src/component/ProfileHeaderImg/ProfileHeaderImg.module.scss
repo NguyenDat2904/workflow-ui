@@ -101,6 +101,7 @@
                .avatar {
                   .avatarBackground,
                   .avatarImg {
+                     object-fit: cover;
                      width: 95%;
                      height: 95%;
                      border-radius: 50%;

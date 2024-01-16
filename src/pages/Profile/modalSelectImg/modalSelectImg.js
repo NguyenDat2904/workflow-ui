@@ -11,6 +11,7 @@ const cx = classNames.bind(styles);
 
 const ModalSelectImg = ({ onclickSeeModalSelectImg, callApi, dataUserProfile }) => {
    const userServices = new UserService();
+   const [loading, setLoading] = useState(true);
    const [viewBackround, setViewBackground] = useState('rgb(0, 82, 204)');
    const [classNameButton, setClassNameButton] = useState('button1');
    const selectBackgroundImgProfile = (number) => {
@@ -56,10 +57,17 @@ const ModalSelectImg = ({ onclickSeeModalSelectImg, callApi, dataUserProfile }) 
          name: yup.string().required('Please enter at least 1 initial'),
       }),
       onSubmit: async (value) => {
-         const addUserInfo = await userServices.updateBackground(viewBackround, value.name);
+         try {
+            setLoading(false)
+             const addUserInfo = await userServices.updateBackground(viewBackround, value.name);
          if (addUserInfo.status === 200) {
             await callApi();
             await onclickSeeModalSelectImg(0);
+         }
+         } catch (error) {
+            console.log('can not upload bgr')
+         }finally{
+            setLoading(true)
          }
       },
    });
@@ -233,8 +241,8 @@ const ModalSelectImg = ({ onclickSeeModalSelectImg, callApi, dataUserProfile }) 
                <button className={cx('buttonCancelUpload')} type="button" onClick={() => onclickSeeModalSelectImg(0)}>
                   Cancel
                </button>
-               <button className={cx('buttonUpload')} type="submit">
-                  Update
+               <button className={cx('buttonUpload')} style={{cursor:loading?'pointer':'not-allowed'}} type={loading?"submit":'button'}>
+               {loading ? 'Update' : 'Update...'}
                </button>
             </div>
          </form>

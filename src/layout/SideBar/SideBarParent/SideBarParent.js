@@ -1,15 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Button from '~/component/Buttton/Button';
 import { BlackLogIcon, BoardIcon, SettingIcon } from '~/component/icon/icon';
 import classNames from 'classnames/bind';
 import style from '~/layout/SideBar/SideBar.module.scss';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import SideBar from '../SideBar';
-import { ProjectContext } from '~/contexts/project/projectContext';
 const cx = classNames.bind(style);
 
 function SideBarParent() {
-   const { detailProject } = useContext(ProjectContext);
+   const { id } = useParams();
    const location = useLocation();
 
    return (
@@ -19,48 +18,32 @@ function SideBarParent() {
                <div className={cx('list-menu')} style={{ '--_6w8gix': '100px' }}>
                   <div style={{ marginBottom: '4px' }}>
                      <Button
-                        to={`/project/${detailProject?.codeProject}/black-log`}
+                        to={`/project/${id}/black-log`}
                         backgroundNone
                         viewAll
                         leftIcon={<BlackLogIcon />}
-                        className={cx(
-                           'custom-button',
-                           location.pathname === `/project/${detailProject?.codeProject}/black-log` && 'active',
-                        )}
+                        className={cx('custom-button', location.pathname === `/project/${id}/black-log` && 'active')}
                         style={{ marginTop: '6px', gap: '12px' }}
                      >
-                        <span
-                           className={cx(
-                              location.pathname === `/project/${detailProject?.codeProject}/black-log` && 'css-active',
-                           )}
-                        >
+                        <span className={cx(location.pathname === `/project/${id}/black-log` && 'css-active')}>
                            Blacklog
                         </span>
                      </Button>
                      <Button
-                        to={`/project/${detailProject?.codeProject}/board`}
+                        to={`/project/${id}/board`}
                         leftIcon={<BoardIcon />}
                         backgroundNone
                         viewAll
-                        className={cx(
-                           'custom-button',
-                           location.pathname === `/project/${detailProject?.codeProject}/board` && 'active',
-                        )}
+                        className={cx('custom-button', location.pathname === `/project/${id}/board` && 'active')}
                         style={{ marginTop: '6px', gap: '12px' }}
                      >
-                        <span
-                           className={cx(
-                              location.pathname === `/project/${detailProject?.codeProject}/board` && 'css-active',
-                           )}
-                        >
-                           Board
-                        </span>
+                        <span className={cx(location.pathname === `/project/${id}/board` && 'css-active')}>Board</span>
                      </Button>
                   </div>
                   <div className={cx('list')}>
                      <div className={cx('line')}>
                         <Button
-                           to={`/project/${detailProject?.codeProject}/settings/details`}
+                           to={`/project/${id}/settings/details`}
                            backgroundNone
                            viewAll
                            leftIcon={<SettingIcon />}

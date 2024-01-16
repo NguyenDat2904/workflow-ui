@@ -15,7 +15,7 @@ function SideBar({ children }) {
    const workProject = new WorkService();
    const param = useParams();
    const getDetailProject = async () => {
-      const project = await workProject.projectDetail(param.id);
+      const project = await workProject.projectDetail(param.projectKey);
       if (project.status === 200) setDetailProject(project.data);
    };
 

@@ -14,13 +14,12 @@ export default function Board() {
    const BoardWorkService = new WorkService();
    const [listIssues, setListIssues] = useState({});
    const [listSingleIssues, setListSingleIssues] = useState([]);
-   const { projectKey } = useParams();
-
+   const { _id } = useParams();
    useEffect(() => {
       async function getIssues() {
-         const listIssuesData = await BoardWorkService.getListIssuesOfBoard(projectKey, {});
+         const listIssuesData = await BoardWorkService.getListIssuesOfBoard(_id, {});
          const listIssues = listIssuesData.data.issuesBroad;
-         console.log(listIssues);
+
          const parentIssues = {};
          const categorizedIssues = new Set();
          for (const issue of listIssues) {

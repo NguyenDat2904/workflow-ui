@@ -52,14 +52,23 @@ function FormChangeProject({ id }) {
    }, [detailProject]);
 
    const changeDetailProject = async (data) => {
+      const dataForm = { name: data.name, userID: parseuser?._id };
       setLoadingIconSummit(true);
-      await workService.changeProject(detailProject?._id, data.name, data.key, parseuser?._id);
+      const changeProject = await workService.changeProject(detailProject?.codeProject, dataForm);
+      if (changeProject.status === 200) getDetailProject();
       setLoadingIconSummit(false);
    };
 
    return (
       <div>
-         {toggle && <FormIcon isOpen={toggle} isClose={() => setToggle(false)} />}
+         {toggle && (
+            <FormIcon
+               isOpen={toggle}
+               isClose={() => setToggle(false)}
+               id={detailProject?.codeProject}
+               getDetailProject={getDetailProject}
+            />
+         )}
          <form action="" className={cx('form')} onSubmit={form.handleSubmit(changeDetailProject)}>
             <div>
                <div className={cx('change-icon')}>
@@ -107,10 +116,11 @@ function FormChangeProject({ id }) {
                         <div className={cx('form')}>
                            <div className={cx('form-input')}>
                               <input
-                                 style={{ height: '40px' }}
+                                 style={{ height: '40px', cursor: 'not-allowed' }}
                                  className="input"
                                  defaultValue={form.watch('key')}
                                  id="key"
+                                 disabled
                               />
                            </div>
                         </div>

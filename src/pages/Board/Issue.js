@@ -29,10 +29,10 @@ export default function Issue({ issueDetail, ...props }) {
       <Card className={cx('task')} {...props}>
          <p>{issueDetail.summary}</p>
          <div className={cx('metadata')}>
-            <IssueIcon type={issueDetail.type} />
+            <IssueIcon type={issueDetail.issueType} />
             <span>
                {priorityIcon}
-               <img src={`${issueDetail.assignee.img}`} alt="" />
+               {/* <img src={`${issueDetail.assignee.img}`} alt="" /> */}
             </span>
          </div>
       </Card>

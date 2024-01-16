@@ -13,13 +13,15 @@ const cx = classNames.bind(style);
 export default function Board() {
    const BoardWorkService = new WorkService();
    const [listIssues, setListIssues] = useState({});
-   const { projectKey } = useParams();
-
+   const [listSingleIssues, setListSingleIssues] = useState([]);
+   const { _id } = useParams();
    useEffect(() => {
       async function getIssues() {
-         const listIssuesData = await BoardWorkService.getListIssuesOfBoard(projectKey, {});
+         const listIssuesData = await BoardWorkService.getListIssuesOfBoard(_id, {});
          const listIssues = listIssuesData.data.issuesBroad;
+
          const parentIssues = {};
+         const categorizedIssues = new Set();
          for (const issue of listIssues) {
             if (issue.parentIssue) {
                if (!parentIssues[issue.parentIssue._id])
@@ -27,16 +29,18 @@ export default function Board() {
                      ...issue.parentIssue,
                      subIssues: [],
                   };
-
                parentIssues[issue.parentIssue._id].subIssues.push(issue);
+               categorizedIssues.add(issue.parentIssue);
+               categorizedIssues.add(issue);
             }
          }
+         console.log(parentIssues);
+         // setListSingleIssues(singleIssues);
          setListIssues(parentIssues);
       }
       getIssues();
    }, []);
 
-   console.log(listIssues);
    const allIssues = {
       todo: [
          {
@@ -112,6 +116,7 @@ export default function Board() {
    return (
       <div className={cx('board')}>
          <HeaderProject headerName={'Board'} rightSection={rightSection} />
+
          <div className={cx('task-board')}>
             <div className={cx('task-status')}>
                <div>To do</div>
@@ -121,13 +126,37 @@ export default function Board() {
             </div>
             <div className={cx('task-display')}>
                {Object.keys(listIssues).map((key) => (
-                  <div className={cx('main-task')}>{listIssues[key].summary}</div>
+                  <>
+                     <div className={cx('main-task')}>
+                        <IssueIcon type={listIssues[key].issueType} style={{ width: '1.5rem', height: '1.5rem' }} />
+                        <span>{listIssues[key].summary}</span>
+                     </div>
+                     <div className={cx('sub-tasks-container')}>
+                        <div className={cx('sub-tasks')}>
+                           {listIssues[key].subIssues.map(
+                              (issue, index) => issue.status === 'TODO' && <Issue key={index} issueDetail={issue} />,
+                           )}
+                        </div>
+                        <div className={cx('sub-tasks')}>
+                           {listIssues[key].subIssues.map(
+                              (issue, index) =>
+                                 issue.status === 'INPROGRESS' && <Issue key={index} issueDetail={issue} />,
+                           )}
+                        </div>
+                        <div className={cx('sub-tasks')}>
+                           {listIssues[key].subIssues.map(
+                              (issue, index) => issue.status === 'REVIEW' && <Issue key={index} issueDetail={issue} />,
+                           )}
+                        </div>
+                        <div className={cx('sub-tasks')}>
+                           {listIssues[key].subIssues.map(
+                              (issue, index) => issue.status === 'DONE' && <Issue key={index} issueDetail={issue} />,
+                           )}
+                        </div>
+                     </div>
+                  </>
                ))}
-               <div className={cx('main-task')}>
-                  <IssueIcon type="task" style={{ width: '1.5rem', height: '1.5rem' }} />
-                  <span>Main Issue 1</span>
-               </div>
-               <div className={cx('sub-tasks-container')}>
+               {/* <div className={cx('sub-tasks-container')}>
                   <div className={cx('sub-tasks')}>
                      {allIssues.todo.map((issue, index) => (
                         <Issue key={index} issueDetail={issue} />
@@ -148,7 +177,7 @@ export default function Board() {
                         <Issue key={index} issueDetail={issue} />
                      ))}
                   </div>
-               </div>
+               </div> */}
             </div>
          </div>
       </div>

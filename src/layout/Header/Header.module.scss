@@ -80,6 +80,7 @@
    align-items: center;
    flex-shrink: 0;
    .nav-icon {
+      position: relative;
       margin-right: var(--ds-space-050, 4px);
       flex-shrink: 0;
       img {
@@ -90,6 +91,7 @@
       .custom-input {
          padding: 8px 12px 8px 30px;
          height: 32px;
+         transition: all 0.5s ease;
       }
       .custom-button {
          svg {

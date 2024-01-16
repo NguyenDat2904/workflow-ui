@@ -7,7 +7,7 @@ import Button from '../Buttton/Button';
 import { MenuIcon } from '../icon/icon';
 const cx = classNames.bind(style);
 export function Table({ actions, data, colWidthRatio, colType, idList, labels, ...props }) {
-   const renderTdTable = data?.map((data, index) => {
+   const renderTdTable = data?.map((member, index) => {
       return (
          <tr key={index} className={cx('tr-table')}>
             <td className={cx('td-table')}>
@@ -16,26 +16,43 @@ export function Table({ actions, data, colWidthRatio, colType, idList, labels, .
                      <div className={cx('td-user-img')}>
                         <img
                            src={
-                              data?.img
-                                 ? data?.img
+                              member?.img
+                                 ? member?.img
                                  : 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
                            }
                            alt=""
                         />
                      </div>
-                     <div className={cx('td-user-name')}>{data?.name}</div>
+                     <div className={cx('td-user-name')}>{member?.name}</div>
                   </span>
                </div>
             </td>
             <td className={cx('td-table')}>
-               <div className={cx('td-table-email')}>{data?.email}</div>
+               <div className={cx('td-table-email')}>{member?.email}</div>
             </td>
             <td className={cx('td-table')}>
-               <div className={cx('td-table-email')}>{}</div>
+               <div className={cx('td-table-email')}>
+                  {member?.role === 'admin'
+                     ? 'Adminitrator'
+                     : member?.role === 'member'
+                     ? 'Member'
+                     : member?.role === 'manager'
+                     ? 'Manager'
+                     : ''}
+               </div>
             </td>
             <td>
-               <div>
-                  <Button leftIcon={<MenuIcon />} backgroundNone style={{ height: '32px' }}></Button>
+               <div style={{ textAlign: 'end' }}>
+                  <Dropdown
+                     className={cx('custom-dropdown')}
+                     actions={[{ label: 'Change role' }, { label: 'Delete member' }]}
+                  >
+                     <Button
+                        leftIcon={<MenuIcon />}
+                        backgroundNone
+                        style={{ height: '32px', margin: 'var(--ds-space-050, 4px) var(--ds-space-100, 8px)' }}
+                     ></Button>
+                  </Dropdown>
                </div>
             </td>
          </tr>
@@ -43,7 +60,7 @@ export function Table({ actions, data, colWidthRatio, colType, idList, labels, .
    });
 
    return (
-      <table className={cx('table')}>
+      <table className={cx('table')} {...props}>
          {colWidthRatio && (
             <colgroup>
                {colWidthRatio.map((width, index) => (

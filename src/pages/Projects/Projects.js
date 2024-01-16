@@ -9,46 +9,42 @@ import ProjectList from './ProjectList/ProjectList';
 import Pagination from '~/component/Pagination/Pagination';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '~/contexts/user/userContext';
-import { AuthContext } from '~/contexts/auth/authContext';
 import WorkService from '~/services/work/workServices';
+
 const cx = classNames.bind(style);
-const projectService = new WorkService();
 
 function Projects() {
-   const { parseuser, setLoadingGetProject } = useContext(UserContext);
-   const { accessToken } = useContext(AuthContext);
+   const { setLoadingGetProject } = useContext(UserContext);
+   const projectService = new WorkService();
+   const [search, setSearch] = useState('');
 
    const navigate = useNavigate();
+
    // 1. State
    const [projectsList, setProjectsList] = useState([]);
    const [page, setPage] = useState(null);
-   const [loading, setLoading] = useState(false);
+   const [loading, setLoading] = useState(true);
    // 2. useEffect
    const getProjects = async () => {
+      setLoading(true);
       setLoadingGetProject(true);
-      setLoading(false);
-      const projects = await projectService.getListProject({ deleteProject: false });
+      const projects = await projectService.getListProject({ deleteProject: false, search: search, page: page });
       if (projects.status === 200) {
          setProjectsList(projects.data.data);
          setPage(projects.data.page);
       }
-      setLoading(true);
       setLoadingGetProject(false);
+      setLoading(false);
    };
    useEffect(() => {
       getProjects();
-   }, []);
-
+   }, [search, page]);
    // 3. Func
    // Move to Trash
    const handleMoveToTrash = async (id) => {
-      if (accessToken) {
-         const moveToTrash = await projectService.deleteProject(id, parseuser?._id);
-         if (moveToTrash === 200) {
-            const projects = await projectService.getListProject(parseuser?._id);
-            setProjectsList(projects);
-            setPage(projects.data.page);
-         }
+      const moveToTrash = await projectService.sortDeleteProject(id);
+      if (moveToTrash.status === 200) {
+         getProjects();
       }
    };
 
@@ -73,10 +69,20 @@ function Projects() {
          </div>
          <div className={cx('input-filter')}>
             <div className={cx('input-wrapper')}>
-               <Input placeholder="Search Projects" rightIcon={<SearchIcon />} search="search" />
+               <Input
+                  placeholder="Search Projects"
+                  rightIcon={<SearchIcon />}
+                  search="search"
+                  style={{ width: '100%' }}
+                  onKeyDown={(event) => {
+                     if (event.keyCode === 13) {
+                        setSearch(event.target.value);
+                     }
+                  }}
+               />
             </div>
          </div>
-         {projectsList?.length === 0 && loading && (
+         {projectsList?.length === 0 && !loading && (
             <div className={cx('project-none')}>
                <img
                   src="https://jira-frontend-bifrost.prod-east.frontend.public.atl-paas.net/assets/jira-laptop-done.35194f30.svg"
@@ -86,16 +92,17 @@ function Projects() {
                <p className={cx('txt-none')}></p>
             </div>
          )}
-         {projectsList?.length !== 0 && (
-            <div className={cx('project-list')}>
-               <ProjectList
-                  projectsList={projectsList}
-                  setProjectsList={setProjectsList}
-                  handleMoveToTrash={handleMoveToTrash}
-               />
-            </div>
-         )}
-         {projectsList?.length !== 0 && <Pagination page={page} />}
+
+         <div className={cx('project-list')}>
+            <ProjectList
+               projectsList={projectsList}
+               setProjectsList={setProjectsList}
+               handleMoveToTrash={handleMoveToTrash}
+               trash={false}
+            />
+         </div>
+
+         {projectsList?.length !== 0 && !loading && <Pagination page={page} />}
       </Main>
    );
 }

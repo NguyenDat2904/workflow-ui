@@ -234,8 +234,8 @@ const ModalSelectImg = ({ onclickSeeModalSelectImg, callApi, dataUserProfile }) 
                This replaces your current profile picture. Only users who have permission to view your profile picture
                will see this.
             </p>
-            <Link to="">
-               <p style={{ color: '#0052CC', marginTop: 5 }}>Manage your profile visibility</p>
+            <Link to="/manage-profile/profile-and-visibility">
+               <p className={cx('linkVisibility')} style={{ color: '#0052CC', marginTop: 5 }}>Manage your profile visibility</p>
             </Link>
             <div className={cx('buttonUploadImg')}>
                <button className={cx('buttonCancelUpload')} type="button" onClick={() => onclickSeeModalSelectImg(0)}>

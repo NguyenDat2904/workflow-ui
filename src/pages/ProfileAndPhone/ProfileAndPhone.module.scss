@@ -1,0 +1,43 @@
+.profileAndPhone {
+   padding: 40px;
+   width: 800px;
+   margin: 0 auto;
+   .titlePhone {
+      margin-top: 80px;
+      color: #182a4e;
+      font-size: 24px;
+      font-weight: 700;
+   }
+   .currentPhoneNumber {
+      margin-top: 50px;
+      color: #182a4e;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 18.15px;
+   }
+   .summaryInput {
+      border: 1px solid red;
+   }
+   .currentPhone {
+      margin-top: 10px;
+      margin-bottom: 30px;
+      color: #182a4e;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 15.73px;
+      .phoneNumber {
+         color: #182a4e;
+         font-size: 16px;
+         font-weight: 700;
+         line-height: 15.73px;
+      }
+   }
+   .buttonSubmit {
+      margin-top: 20px;
+   }
+}
+@media only screen and (max-width: 640px) {
+   .profileAndPhone {
+      width: 600px;
+   }
+}

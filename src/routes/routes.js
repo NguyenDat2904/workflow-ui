@@ -22,6 +22,7 @@ import LayoutSideBarChildren from '~/layout/LayoutSideBarChildren/DefaultLayout'
 import VerifyAddPeople from '~/pages/VerifyAddPeople/VerifyAddPeople';
 import DetailIssue from '~/pages/DretailIssue/DetailIssue';
 import YourWork from '~/pages/YourWork/YourWork';
+import ProfileAndPhone from '~/pages/ProfileAndPhone/ProfileAndPhone';
 
 const privateRoutes = [
    { path: '/project/:_id/settings/details', component: DetailProject, layout: LayoutSideBarChildren },
@@ -31,6 +32,7 @@ const privateRoutes = [
    },
    { path: '/profile/security', component: ProfileSecurity, layout: null },
    { path: '/profile', component: Profile, layout: HeaderOnly },
+   { path: '/manage-profile/phone', component: ProfileAndPhone, layout: null },
    { path: '/manage-profile/profile-and-visibility', component: ProfileAndVisibility, layout: null },
    { path: '/profile/view-all-list-work', component: ViewAllListWork, layout: HeaderOnly },
    { path: '/forgot/change-password', component: ChangePassword, layout: null },

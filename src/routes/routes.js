@@ -25,6 +25,7 @@ import YourWork from '~/pages/YourWork/YourWork';
 import ProfileAndPhone from '~/pages/ProfileAndPhone/ProfileAndPhone';
 
 const privateRoutes = [
+   { path: '/', component: Projects, layout: HeaderOnly },
    { path: '/project/:_id/settings/details', component: DetailProject, layout: LayoutSideBarChildren },
    {
       path: '/project/:_id/black-log',

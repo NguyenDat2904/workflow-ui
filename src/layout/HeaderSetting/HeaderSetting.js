@@ -4,9 +4,8 @@ import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import style from './HeaderSetting.module.scss';
 import { AuthContext } from '~/contexts/auth/authContext';
-import { UserContext } from '~/contexts/user/userContext';
 import UserService from '~/services/user/userServices';
-import { HelpIcon, NotificationIcon, SettingIcon, UserIcon } from '~/component/icon/icon';
+import {  UserIcon } from '~/component/icon/icon';
 import { useLocation } from 'react-router-dom';
 import ModalAccount from '~/pages/Profile/ModalAccount/ModalAccount';
 const cx = classNames.bind(style);
@@ -26,7 +25,6 @@ function HeaderSetting() {
    const [getUserData, setGetUserData] = useState({});
    const elementRef = useRef(null);
    const { accessToken } = useContext(AuthContext);
-   const { parseuser } = useContext(UserContext);
    useEffect(() => {
       const getElementPosition = () => {
          const element = elementRef.current;
@@ -117,9 +115,9 @@ function HeaderSetting() {
                      </Button>
                   </div>
                </Link>
-               <Link to={'/manage-profile/profile-and-visibility'}>
+               <Link to={'/manage-profile/phone'}>
                   <div
-                     className={cx('menu', location.pathname === '/manage-profile/profile-and-visibility' && 'active')}
+                     className={cx('menu', location.pathname === '/manage-profile/phone' && 'active')}
                      onClick={() => handleToggle('phone')}
                   >
                      <Button backgroundNone className={cx(toggleMenu.team && 'toggle', 'text-blue')}>

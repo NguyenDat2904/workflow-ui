@@ -52,13 +52,13 @@ function ControllerForm({
                                              <p className={cx('textBgr')}>{data?.textInBackgroundProfile}</p>
                                           </div>
                                        ) : data?.imgNone === 'none' ? (
-                                          ''
-                                       ) : (
                                           <img
                                              src="https://avatar-management.services.atlassian.com/default/48"
                                              alt=""
                                              className={cx('imgProject')}
                                           />
+                                       ) : (
+                                         ""
                                        )}
                                        <span className={cx('nameProject')}>{data?.label}</span>
                                        <span className={cx('iconDown')}>

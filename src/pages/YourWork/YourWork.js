@@ -25,7 +25,7 @@ const YourWork = () => {
       }
    };
    const getIssues = async () => {
-      const getIssue = await projectService.getIssues();
+      const getIssue = await projectService.getIssuesYourWork();
       if (getIssue.status === 200) {
          const filterIssueTodo = getIssue.data?.filter((issue) => issue.status === 'TODO');
          const filterIssueInProgress = getIssue.data?.filter((issue) => issue.status === 'INPROGRESS');

@@ -18,6 +18,9 @@ class WorkService extends BaseServices {
    getIssues(idProject) {
       return this.get(`/issues/${idProject}`);
    }
+   getIssuesYourWork() {
+      return this.get(`/issues/yourWork`);
+   }
 
    // Details
    projectDetail(id) {

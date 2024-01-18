@@ -30,8 +30,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
    const [project, setProject] = useState({
       img: '',
       label: '',
-      codeProject: id||'',
-      imgNone: id ? '' : 'none',
+      codeProject: id||''
    });
    const [issueTypeData, setIssuesTypeDate] = useState({
       label: 'USER_STORY',
@@ -43,6 +42,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
       backgroundProfile: '',
       textInBackgroundProfile: '',
       id: '',
+      imgNone:""
    });
    const [reporterData, setReporterData] = useState({});
    const [sprintData, setSprintData] = useState({
@@ -124,7 +124,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
    ];
 
    const listMemberProject = async () => {
-      const member = await workService.getMember({ codeProject: project.codeProject });
+      const member = await workService.getMember(project.codeProject,{});
       const infoMember = member?.data.message
          ? []
          : member?.data?.map((product) => {
@@ -134,6 +134,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
                  img: product?.img,
                  label: product.name,
                  id: product?._id,
+                 imgNone:'none'
               };
            });
 

@@ -228,7 +228,7 @@ function DetailIssue() {
    };
    // 3.7 Get Member
    const getMembers = async () => {
-      const listMembers = await projectService.getMember({ codeProject: param?.id });
+      const listMembers = await projectService.getMember(param?.id, {});
       if (listMembers.status === 200) setMembers(listMembers.data);
    };
 

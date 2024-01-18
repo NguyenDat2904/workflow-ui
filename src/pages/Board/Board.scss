@@ -121,6 +121,12 @@ $color-border: rgba(9, 30, 66, 0.08);
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+            min-height: 10rem;
+         }
+
+         .final {
+            border-bottom: 1px solid $color-border;
+            border-radius: 0 0 5px 5px;
          }
       }
    }

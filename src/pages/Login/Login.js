@@ -127,7 +127,11 @@ function Login() {
                                  </div>
                               </ControllerForm>
                            </div>
-                           <button className={cx('submit', !form.formState.isValid && 'disable')} type="submit">
+                           <button
+                              className={cx('submit', !form.formState.isValid && 'disable')}
+                              disabled={!form.formState.isValid}
+                              type="submit"
+                           >
                               {!loading ? <span>Login</span> : <LoadingIcon />}
                            </button>
                         </form>

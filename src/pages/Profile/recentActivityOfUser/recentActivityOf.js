@@ -2,31 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './recentActivityOf.module.scss';
+import IssueService from '~/services/issue/issueService';
 import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(styles);
 const RecentActivityOfUser = () => {
-   const workServices = new WorkService();
-   const [dataListProject, setDataListProject] = useState([]);
+   const issueService = new IssueService();
    const [dataListWork, setDataListWork] = useState([]);
    const APIListProjetc = async () => {
-      const dataProject = await workServices.getListProject({ sortKey: '', deleteProject: false });
-      setDataListProject(dataProject.data.data);
-   };
-   const APIListWork = async () => {
-      const popDataProject = dataListProject?.length - 1;
-      const dataWork = await workServices.getIssues(`${dataListProject[popDataProject].codeProject}`);
-      console.log(dataWork)
-      const dataListWork = dataWork?.data?.dataListIssues?.slice(0, 6);
-      setDataListWork(dataListWork);
+      const dataProject = await issueService.getIssueSearch();
+      const limitIssue = dataProject?.data?.data.slice(0, 10);
+      setDataListWork(limitIssue);
    };
    useEffect(() => {
       APIListProjetc();
    }, []);
-   useEffect(() => {
-      if (dataListProject?.length > 0) {
-         APIListWork();
-      }
-   }, [dataListProject]);
+
    return (
       <div className={cx('recentActivityOf')}>
          <div className={cx('titleRecentActivityOf')}>
@@ -42,10 +32,7 @@ const RecentActivityOfUser = () => {
             {dataListWork?.map((product) => {
                return (
                   <div key={product?._id} className={cx('ingredient')}>
-                     <img
-                        src={product.img}
-                        alt=""
-                     />
+                     <img src={product.img} alt="" />
 
                      <h4 className={cx('ingredientDetail')}>
                         {product.summary} <br />

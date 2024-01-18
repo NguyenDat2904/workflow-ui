@@ -14,97 +14,33 @@ export default function Board() {
    const BoardWorkService = new WorkService();
    const [listIssues, setListIssues] = useState({});
    const [listSingleIssues, setListSingleIssues] = useState([]);
-   const { projectKey } = useParams();
-
-   async function getIssues() {
-      const listIssuesData = await BoardWorkService.getListIssuesOfBoard(projectKey, {});
-      const listIssues = listIssuesData.data.issuesBroad;
-      console.log(listIssuesData);
-      const parentIssues = {};
-      const categorizedIssues = new Set();
-      for (const issue of listIssues) {
-         if (issue.parentIssue) {
-            if (!parentIssues[issue.parentIssue._id])
-               parentIssues[issue.parentIssue._id] = {
-                  ...issue.parentIssue,
-                  subIssues: [],
-               };
-            parentIssues[issue.parentIssue._id].subIssues.push(issue);
-            categorizedIssues.add(issue.parentIssue);
-            categorizedIssues.add(issue);
-         }
-      }
-      // setListSingleIssues(singleIssues);
-      setListIssues(parentIssues);
-   }
+   const { id } = useParams();
    useEffect(() => {
+      async function getIssues() {
+         const listIssuesData = await BoardWorkService.getListIssuesOfBoard(id, {});
+         const listIssues = listIssuesData.data.issuesBroad;
+         const parentIssues = {};
+         const categorizedIssues = new Set();
+         for (const issue of listIssues) {
+            if (issue.parentIssue) {
+               if (!parentIssues[issue.parentIssue]) {
+                  const parent = listIssues.filter((item) => item.id === issue.parentIssue)[0];
+                  parentIssues[issue.parentIssue] = {
+                     ...parent,
+                     subIssues: [],
+                  };
+                  categorizedIssues.add(parent);
+               }
+               parentIssues[issue.parentIssue].subIssues.push(issue);
+               categorizedIssues.add(issue);
+            }
+         }
+         const uncategorizedIssues = listIssues.filter((issue) => !categorizedIssues.has(issue));
+         setListIssues(parentIssues);
+         setListSingleIssues(uncategorizedIssues);
+      }
       // getIssues();
    }, []);
-
-   const allIssues = {
-      todo: [
-         {
-            summary: 'Sub Issue 1',
-            assignee: {
-               name: 'Huy Van Hoang',
-               img: 'https://i.pravatar.cc/300',
-            },
-            priority: 'Low',
-            type: 'Task',
-         },
-         {
-            summary: 'Sub Issue [',
-            assignee: {
-               name: 'Huy Van Hoang',
-               img: 'https://i.pravatar.cc/300',
-            },
-            priority: 'Highest',
-            type: 'Bug',
-         },
-         {
-            summary: 'Sub Issue 77',
-            assignee: {
-               name: 'Huy Van Hoang',
-               img: 'https://i.pravatar.cc/300',
-            },
-            priority: 'Low',
-            type: 'Epic',
-         },
-      ],
-      inProgress: [
-         {
-            summary: 'Sub Issue',
-            assignee: {
-               name: 'Huy Van Hoang',
-               img: 'https://i.pravatar.cc/300',
-            },
-            priority: 'High',
-            type: 'Story',
-         },
-      ],
-      review: [
-         {
-            summary: 'Sub Issue',
-            assignee: {
-               name: 'Huy Van Hoang',
-               img: 'https://i.pravatar.cc/300',
-            },
-            priority: 'Lowest',
-            type: 'Task',
-         },
-      ],
-      done: [
-         {
-            summary: 'Sub Issue',
-            assignee: {
-               name: 'Huy Van Hoang',
-               img: 'https://i.pravatar.cc/300',
-            },
-            priority: 'Medium',
-            type: 'Task',
-         },
-      ],
-   };
 
    const rightSection = (
       <div className={cx('sprint-buttons')}>
@@ -125,7 +61,7 @@ export default function Board() {
             </div>
             <div className={cx('task-display')}>
                {Object.keys(listIssues).map((key) => (
-                  <>
+                  <div key={key}>
                      <div className={cx('main-task')}>
                         <IssueIcon type={listIssues[key].issueType} style={{ width: '1.5rem', height: '1.5rem' }} />
                         <span>{listIssues[key].summary}</span>
@@ -153,30 +89,36 @@ export default function Board() {
                            )}
                         </div>
                      </div>
-                  </>
+                  </div>
                ))}
-               {/* <div className={cx('sub-tasks-container')}>
-                  <div className={cx('sub-tasks')}>
-                     {allIssues.todo.map((issue, index) => (
-                        <Issue key={index} issueDetail={issue} />
-                     ))}
+               <div>
+                  <div className={cx('main-task')}>
+                     <IssueIcon type="EPIC" style={{ width: '1.5rem', height: '1.5rem' }} />
+                     <span>Everything else</span>
                   </div>
-                  <div className={cx('sub-tasks')}>
-                     {allIssues.inProgress.map((issue, index) => (
-                        <Issue key={index} issueDetail={issue} />
-                     ))}
+                  <div className={cx('sub-tasks-container')}>
+                     <div className={cx('sub-tasks', 'final')}>
+                        {listSingleIssues.map(
+                           (issue, index) => issue.status === 'TODO' && <Issue key={index} issueDetail={issue} />,
+                        )}
+                     </div>
+                     <div className={cx('sub-tasks', 'final')}>
+                        {listSingleIssues.map(
+                           (issue, index) => issue.status === 'INPROGRESS' && <Issue key={index} issueDetail={issue} />,
+                        )}
+                     </div>
+                     <div className={cx('sub-tasks', 'final')}>
+                        {listSingleIssues.map(
+                           (issue, index) => issue.status === 'REVIEW' && <Issue key={index} issueDetail={issue} />,
+                        )}
+                     </div>
+                     <div className={cx('sub-tasks', 'final')}>
+                        {listSingleIssues.map(
+                           (issue, index) => issue.status === 'DONE' && <Issue key={index} issueDetail={issue} />,
+                        )}
+                     </div>
                   </div>
-                  <div className={cx('sub-tasks')}>
-                     {allIssues.review.map((issue, index) => (
-                        <Issue key={index} issueDetail={issue} />
-                     ))}
-                  </div>
-                  <div className={cx('sub-tasks')}>
-                     {allIssues.done.map((issue, index) => (
-                        <Issue key={index} issueDetail={issue} />
-                     ))}
-                  </div>
-               </div> */}
+               </div>
             </div>
          </div>
       </div>

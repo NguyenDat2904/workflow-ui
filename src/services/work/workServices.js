@@ -21,29 +21,37 @@ class WorkService extends BaseServices {
    getIssues(idProject) {
       return this.get(`/issues/${idProject}`);
    }
+   getIssuesYourWork() {
+      return this.get(`/issues/yourWork`);
+   }
 
    // Details
    projectDetail(id) {
       return this.get(`/projects/project-detail/${id}`);
    }
-   // Delete Sort Project
-   sortDeleteProject(id) {
-      return this.patch(`/projects/${id}/delete`);
+
+   getListIssuesOfBoard(codeProject, param) {
+      return this.get(`/issues/broad/${codeProject}`, { params: { ...param } });
+   }
+
+   // Delete Project
+   deleteProject(id, userID) {
+      return this.patch(`projects/delete-project/${id}`, { _idUser: userID });
    }
 
    // Restore project
 
    restoreProject(codeProject) {
-      return this.patch(`/projects/${codeProject}/restore`);
+      return this.patch(`/projects/${codeProject}/restore-project`);
    }
-   // Delete  Project Per
+
    deleteDirectProject(codeProject) {
-      return this.delete(`/projects/${codeProject}/deleteDirectly`);
+      return this.delete(`/projects/${codeProject}/delete`);
    }
 
    // ChangeProject
-   changeProject(id, data) {
-      return this.patch(`/projects/${id}`, data);
+   changeProject(id, name, key, userID) {
+      return this.patch(`/projects/edit-project/${id}`, { nameProject: name, codeProject: key, _idUser: userID });
    }
 
    // Get Member

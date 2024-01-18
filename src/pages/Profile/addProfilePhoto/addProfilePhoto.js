@@ -10,19 +10,27 @@ const cx = classNames.bind(styles);
 const AddProfilePhoto = ({ onclickSeeModalSelectImg, dataUserProfile, callApi }) => {
    const userServices = new UserService();
    const [image, setImage] = useState(null);
+   const [loading, setLoading] = useState(true);
    const handalUploadImg = (e) => {
       setImage(e.target.files[0]);
    };
    const handleSubmitUploadImg = async (e) => {
       e.preventDefault();
-      const formData = new FormData();
-      formData.append('img', image);
-      if (formData) {
-         const upload = await userServices.uploadImg(formData);
-         if (upload.status === 200) {
-            await callApi();
-            await onclickSeeModalSelectImg(0);
+      try {
+         const formData = new FormData();
+         formData.append('img', image);
+         if (formData) {
+            setLoading(false);
+            const upload = await userServices.uploadImg(formData);
+            if (upload.status === 200) {
+               await callApi();
+               await onclickSeeModalSelectImg(0);
+            }
          }
+      } catch (error) {
+         console.log('can not upload');
+      } finally {
+         setLoading(true);
       }
    };
    return (
@@ -55,7 +63,7 @@ const AddProfilePhoto = ({ onclickSeeModalSelectImg, dataUserProfile, callApi })
             </div>
             <div className={cx('buttonSubmit')}>
                <Button children="Cancel" type="button" onClick={() => onclickSeeModalSelectImg(0)} />
-               <Button children="Upload" type="submit" />
+               <Button children={loading ? 'Update' : 'Update...'} type={loading ? 'submit' : 'button'} style={{cursor:loading?'pointer':'not-allowed'}}/>
             </div>
          </form>
       </ModalProfile>

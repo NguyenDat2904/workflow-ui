@@ -20,5 +20,8 @@ class IssueService extends BaseServices {
    updateIssue(key, id, fillName) {
       return this.patch(`/issues/${key}/edit-information/${id}`, fillName);
    }
+   deleteIssue(codeProject, id_issue) {
+      return this.delete(`/issues/${codeProject}/${id_issue}`);
+   }
 }
 export default IssueService;

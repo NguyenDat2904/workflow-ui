@@ -44,6 +44,7 @@ function DetailProject() {
                                  {
                                     name: detailProject.nameProject,
                                     link: `/project/${detailProject.codeProject}/black-log`,
+                                    img: detailProject.imgProject,
                                  },
                                  {
                                     name: 'Project setting',

@@ -24,6 +24,7 @@ import DetailIssue from '~/pages/DretailIssue/DetailIssue';
 import YourWork from '~/pages/YourWork/YourWork';
 
 const privateRoutes = [
+   { path: '/', component: YourWork },
    { path: '/project/:_id/settings/details', component: DetailProject, layout: LayoutSideBarChildren },
    {
       path: '/project/:id/black-log',
@@ -38,7 +39,7 @@ const privateRoutes = [
    { path: '/project/create', component: CreateProject, layout: null },
    { path: '/project/trash', component: TrashProjects, layout: HeaderOnly },
    { path: '/project/:id/setting/access', component: ProjectAccess, layout: LayoutSideBarChildren },
-   { path: '/project/:_id/board', component: Board, layout: LayoutSideBarChildren },
+   { path: '/project/:id/board', component: Board },
    { path: '/add-people', component: VerifyAddPeople, layout: null },
    { path: '/projects/:id/issues/:id_issue', component: DetailIssue },
    { path: '/your-Work', component: YourWork, layout: HeaderOnly },

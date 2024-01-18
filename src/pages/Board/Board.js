@@ -16,30 +16,29 @@ export default function Board() {
    const [listSingleIssues, setListSingleIssues] = useState([]);
    const { projectKey } = useParams();
 
-   useEffect(() => {
-      async function getIssues() {
-         const listIssuesData = await BoardWorkService.getListIssuesOfBoard(projectKey, {});
-         const listIssues = listIssuesData.data.issuesBroad;
-         console.log(listIssues);
-         const parentIssues = {};
-         const categorizedIssues = new Set();
-         for (const issue of listIssues) {
-            if (issue.parentIssue) {
-               if (!parentIssues[issue.parentIssue._id])
-                  parentIssues[issue.parentIssue._id] = {
-                     ...issue.parentIssue,
-                     subIssues: [],
-                  };
-               parentIssues[issue.parentIssue._id].subIssues.push(issue);
-               categorizedIssues.add(issue.parentIssue);
-               categorizedIssues.add(issue);
-            }
+   async function getIssues() {
+      const listIssuesData = await BoardWorkService.getListIssuesOfBoard(projectKey, {});
+      const listIssues = listIssuesData.data.issuesBroad;
+      console.log(listIssuesData);
+      const parentIssues = {};
+      const categorizedIssues = new Set();
+      for (const issue of listIssues) {
+         if (issue.parentIssue) {
+            if (!parentIssues[issue.parentIssue._id])
+               parentIssues[issue.parentIssue._id] = {
+                  ...issue.parentIssue,
+                  subIssues: [],
+               };
+            parentIssues[issue.parentIssue._id].subIssues.push(issue);
+            categorizedIssues.add(issue.parentIssue);
+            categorizedIssues.add(issue);
          }
-         console.log(parentIssues);
-         // setListSingleIssues(singleIssues);
-         setListIssues(parentIssues);
       }
-      getIssues();
+      // setListSingleIssues(singleIssues);
+      setListIssues(parentIssues);
+   }
+   useEffect(() => {
+      // getIssues();
    }, []);
 
    const allIssues = {
@@ -117,7 +116,6 @@ export default function Board() {
    return (
       <div className={cx('board')}>
          <HeaderProject headerName={'Board'} rightSection={rightSection} />
-
          <div className={cx('task-board')}>
             <div className={cx('task-status')}>
                <div>To do</div>

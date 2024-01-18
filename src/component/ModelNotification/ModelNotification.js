@@ -9,7 +9,6 @@ const cx = classNames.bind(style);
 const notificationServices = new Notification();
 
 function ModelNotification({ handleToggle, position, isOpen }) {
-
    const [notificationData, setNotificationData] = useState([]);
    const getNotification = async () => {
       const notification = await notificationServices.getNotification();

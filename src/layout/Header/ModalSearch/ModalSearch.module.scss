@@ -1,7 +1,9 @@
 .wrapper {
    position: absolute;
-   z-index: 10;
+   top: 120%;
+   z-index: 30;
    width: 100%;
+   box-shadow: var(--ds-shadow-overlay, 0 4px 8px rgba(9, 30, 66, 0.25), 0 0 1px rgba(9, 30, 66, 0.31));
    .main {
       padding: var(--ds-space-100, 8px) 0;
       .title {
@@ -19,6 +21,9 @@
       height: 32px;
       padding: 0px 16px;
       background-color: transparent;
+      &:hover {
+         background-color: var(--ds-background-neutral-subtle-hovered, #f4f5f7);
+      }
       .item-search-img {
          width: 16px;
          margin-right: 16px;

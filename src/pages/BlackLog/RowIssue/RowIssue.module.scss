@@ -45,6 +45,16 @@
    color: var(--ds-text-subtlest, #5e6c84) !important;
    text-decoration: none !important;
 }
+.name-sub-task {
+   margin-right: 8px;
+   color: #0c66e4 !important;
+   font-weight: 500;
+   font-size: 12px;
+   line-height: 16px;
+   &:hover {
+      text-decoration: underline !important;
+   }
+}
 .name-work {
    display: flex;
    flex: 1 1 0%;
@@ -55,6 +65,7 @@
    align-items: center;
    min-width: 0px;
    font-size: 14px;
+   line-height: 16px;
    &:hover {
       text-decoration: underline;
    }
@@ -91,6 +102,10 @@
 .user-assignee {
    grid-column: assignee/span 1;
    grid-row: card-detail/span 1;
+   height: 28px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
    .img-assignee {
       position: relative;
       width: 24px;
@@ -166,4 +181,22 @@
 }
 .priority {
    position: relative;
+}
+.wrapper:hover .menu-issue {
+   opacity: 1;
+}
+.menu-issue {
+   min-width: 32px;
+   visibility: visible;
+   grid-area: card-detail / menu / span 1 / span 1;
+   position: relative;
+   opacity: 0;
+   &:hover {
+      opacity: 1;
+   }
+}
+.custom-dropdown {
+   font-size: 14px;
+   color: var(--ds-text, #091e42);
+   font-weight: 400;
 }

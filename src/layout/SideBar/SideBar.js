@@ -18,7 +18,6 @@ function SideBar({ children }) {
       const project = await workProject.projectDetail(param.id);
       if (project.status === 200) setDetailProject(project.data);
    };
-
    useEffect(() => {
       getDetailProject();
    }, [param]);

@@ -26,7 +26,6 @@ function Header() {
    const issueService = new IssueService();
 
    const { parseuser } = useContext(UserContext);
-   const { detailProject } = useContext(ProjectContext);
 
    const [projects, getProjects] = useState([]);
    const [isToggleCreateIssue, setToggleCreateIssue] = useState(false);
@@ -166,7 +165,7 @@ function Header() {
                   <div className={cx('menu')} onClick={() => setToggleCreateIssue(true)}>
                      <Button blue>Create</Button>
                   </div>
-                  { isToggleCreateIssue && (
+                  {isToggleCreateIssue && (
                      <ModalCreateIssue
                         isOpen={isToggleCreateIssue}
                         data={listProject}
@@ -232,7 +231,9 @@ function Header() {
                   }
                   ref={elementRef}
                >
-                  {getUserData?.img === '' || getUserData?.img === undefined ? (
+                  {getUserData?.img ? (
+                     <img className={cx('button-icon')} src={getUserData.img} alt="" />
+                  ) : (
                      <Button
                         noChildren
                         backgroundNone
@@ -241,8 +242,6 @@ function Header() {
                         style={{ width: '32px', height: '32px' }}
                         leftIcon={<UserIcon />}
                      ></Button>
-                  ) : (
-                     <img className={cx('button-icon')} src={getUserData?.img} alt="" />
                   )}
                </div>
                <ModalAccount

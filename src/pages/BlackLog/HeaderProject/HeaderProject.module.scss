@@ -69,10 +69,17 @@
       box-shadow: 0px 0px 0px 1px var(--ds-border-inverse, white), 0px 0px 0px 3px var(--ds-border-selected, #fff);
    }
    .active {
-      //   box-shadow: 0px 0px 0px 1px var(--ds-border-inverse, white), 0px 0px 0px 3px var(--ds-border-selected, #2684ff);
+      border-radius: 50%;
+      border-width: 4px;
+      border-style: solid;
+      border-image: initial;
+      border-color: #0c66e4;
    }
 }
 .filter-sprint {
    display: flex;
    margin-left: 8px;
+}
+.filter-sprint-type {
+   position: relative;
 }

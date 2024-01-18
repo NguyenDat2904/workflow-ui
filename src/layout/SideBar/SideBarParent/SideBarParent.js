@@ -8,7 +8,7 @@ import SideBar from '../SideBar';
 const cx = classNames.bind(style);
 
 function SideBarParent() {
-   const { _id } = useParams();
+   const { id } = useParams();
    const location = useLocation();
 
    return (
@@ -18,32 +18,32 @@ function SideBarParent() {
                <div className={cx('list-menu')} style={{ '--_6w8gix': '100px' }}>
                   <div style={{ marginBottom: '4px' }}>
                      <Button
-                        to={`/project/${_id}/black-log`}
+                        to={`/project/${id}/black-log`}
                         backgroundNone
                         viewAll
                         leftIcon={<BlackLogIcon />}
-                        className={cx('custom-button', location.pathname === `/project/${_id}/black-log` && 'active')}
+                        className={cx('custom-button', location.pathname === `/project/${id}/black-log` && 'active')}
                         style={{ marginTop: '6px', gap: '12px' }}
                      >
-                        <span className={cx(location.pathname === `/project/${_id}/black-log` && 'css-active')}>
+                        <span className={cx(location.pathname === `/project/${id}/black-log` && 'css-active')}>
                            Blacklog
                         </span>
                      </Button>
                      <Button
-                        to={`/project/${_id}/board`}
+                        to={`/project/${id}/board`}
                         leftIcon={<BoardIcon />}
                         backgroundNone
                         viewAll
-                        className={cx('custom-button', location.pathname === `/project/${_id}/board` && 'active')}
+                        className={cx('custom-button', location.pathname === `/project/${id}/board` && 'active')}
                         style={{ marginTop: '6px', gap: '12px' }}
                      >
-                        <span className={cx(location.pathname === `/project/${_id}/board` && 'css-active')}>Board</span>
+                        <span className={cx(location.pathname === `/project/${id}/board` && 'css-active')}>Board</span>
                      </Button>
                   </div>
                   <div className={cx('list')}>
                      <div className={cx('line')}>
                         <Button
-                           to={`/project/${_id}/settings/details`}
+                           to={`/project/${id}/settings/details`}
                            backgroundNone
                            viewAll
                            leftIcon={<SettingIcon />}

@@ -13,7 +13,7 @@ import style from '../../BlackLog.module.scss';
 
 const cx = classNames.bind(style);
 
-function CreateIssue({ setIssues, idPrint, idParent }) {
+function CreateIssue({ setIssues, idPrint, idParent, paramsFunc = () => {}, children = false }) {
    const { detailProject } = useContext(ProjectContext);
    const issueService = new IssueService();
    const [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ function CreateIssue({ setIssues, idPrint, idParent }) {
       }
       const dataIssue = {
          ...dataForm,
-         issueType: valueTask.key,
+         issueType: children ? 'SUB_TASK' : valueTask.key,
          sprint: idPrint,
          parentIssue: idParent ? idParent : null,
       };
@@ -47,6 +47,7 @@ function CreateIssue({ setIssues, idPrint, idParent }) {
          const listIssue = await issueService.getIssue(detailProject?.codeProject, {
             sprintID: idPrint,
             parentIssueID: idParent,
+            ...paramsFunc(),
          });
          if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
       }
@@ -57,26 +58,33 @@ function CreateIssue({ setIssues, idPrint, idParent }) {
    return (
       <form action="" className={cx('form-issue')} onSubmit={form.handleSubmit(handleCreateIssue)}>
          <ControllerForm form={form} name="summary">
-            <Input className={cx('custom-input')} autoFocus placeholder="What need to be done?" search="search" />
-         </ControllerForm>
-         <Button
-            className={cx('custom-button')}
-            rightIcon={<DownIcon />}
-            style={{ cursor: 'pointer', height: '24px', padding: '0 4px' }}
-            onClick={() => {
-               setIsToggleIssue(!isToggleIssue);
-            }}
-            type="button"
-         >
-            <img
-               src={
-                  valueTask?.img ||
-                  'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium'
-               }
-               alt=""
+            <Input
+               className={cx(!children && 'custom-input', 'with100')}
+               autoFocus
+               placeholder="What need to be done?"
+               search="search"
             />
-         </Button>
-         {isToggleIssue && (
+         </ControllerForm>
+         {!children && (
+            <Button
+               className={cx('custom-button')}
+               rightIcon={<DownIcon />}
+               style={{ cursor: 'pointer', height: '24px', padding: '0 4px' }}
+               onClick={() => {
+                  setIsToggleIssue(!isToggleIssue);
+               }}
+               type="button"
+            >
+               <img
+                  src={
+                     valueTask?.img ||
+                     'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium'
+                  }
+                  alt=""
+               />
+            </Button>
+         )}
+         {isToggleIssue && !children && (
             <ModalSelect
                width="160px"
                widthImg="16px"

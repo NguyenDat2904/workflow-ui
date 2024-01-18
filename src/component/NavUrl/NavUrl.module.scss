@@ -1,5 +1,7 @@
 .list-url {
-   color: var(--ds-text-subtlest, #6b778c);
+   color: var(--ds-text-subtlest, #44546f);
+   font-size: 14px;
+
    display: flex;
    margin: var(--ds-space-0, 0px);
    padding: var(--ds-space-0, 0px);
@@ -14,15 +16,21 @@
    padding: var(--ds-space-0, 0px);
    flex-direction: row;
    line-height: 24px;
+   align-items: center;
    span {
       &:hover {
          text-decoration: underline;
       }
    }
+   img {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+      border-radius: 3px;
+   }
 }
 .link-url {
    position: relative;
-
    &::after {
       width: 8px;
       padding: var(--ds-space-0, 0px) var(--ds-space-100, 8px);

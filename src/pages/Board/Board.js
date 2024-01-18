@@ -14,18 +14,17 @@ export default function Board() {
    const BoardWorkService = new WorkService();
    const [listIssues, setListIssues] = useState({});
    const [listSingleIssues, setListSingleIssues] = useState([]);
-   const { _id } = useParams();
+   const { id } = useParams();
    useEffect(() => {
       async function getIssues() {
-         const listIssuesData = await BoardWorkService.getListIssuesOfBoard(_id, {});
+         const listIssuesData = await BoardWorkService.getListIssuesOfBoard(id, {});
          const listIssues = listIssuesData.data.issuesBroad;
          const parentIssues = {};
          const categorizedIssues = new Set();
          for (const issue of listIssues) {
             if (issue.parentIssue) {
-               console.log(issue.parentIssue);
                if (!parentIssues[issue.parentIssue]) {
-                  const parent = listIssues.filter((item) => item._id === issue.parentIssue)[0];
+                  const parent = listIssues.filter((item) => item.id === issue.parentIssue)[0];
                   parentIssues[issue.parentIssue] = {
                      ...parent,
                      subIssues: [],
@@ -38,10 +37,9 @@ export default function Board() {
          }
          const uncategorizedIssues = listIssues.filter((issue) => !categorizedIssues.has(issue));
          setListIssues(parentIssues);
-         console.log(uncategorizedIssues);
          setListSingleIssues(uncategorizedIssues);
       }
-      getIssues();
+      // getIssues();
    }, []);
 
    const rightSection = (
@@ -54,7 +52,6 @@ export default function Board() {
    return (
       <div className={cx('board')}>
          <HeaderProject headerName={'Board'} rightSection={rightSection} />
-
          <div className={cx('task-board')}>
             <div className={cx('task-status')}>
                <div>To do</div>

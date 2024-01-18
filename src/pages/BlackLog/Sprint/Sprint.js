@@ -16,9 +16,8 @@ import CreateIssue from './CreateIssue/CreateIssue';
 import Modal from '~/component/Modal/Modal';
 const cx = classNames.bind(style);
 
-function Sprint({ data, start = false, handleCreateSprint, setPrints, members }) {
+function Sprint({ data, start = false, handleCreateSprint, setPrints, members, checkedTypes, selectedMembers, title }) {
    const { detailProject } = useContext(ProjectContext);
-
    // 1. State
    const [isDropdownOpen, setDropdownOpen] = useState(false);
    const [isFocus, setIsFocus] = useState(true);
@@ -26,15 +25,13 @@ function Sprint({ data, start = false, handleCreateSprint, setPrints, members })
    const [isToggleComplete, setIsToggleComplete] = useState(false);
    const [isToggleAccept, setIsToggleAccept] = useState(false);
    const [isToggleStartSprint, setIsToggleStartSprint] = useState(false);
-
    const [issues, setIssues] = useState([]);
-
    const issueService = new IssueService();
    const sprintService = new SprintService();
    // 2. UseEffect
    useEffect(() => {
       getListIssue();
-   }, []);
+   }, [checkedTypes, selectedMembers]);
    // 3. Handle
    const handleDropDown = () => {
       setDropdownOpen(!isDropdownOpen);
@@ -42,13 +39,33 @@ function Sprint({ data, start = false, handleCreateSprint, setPrints, members })
       dropdown.setAttribute('data-drop-target-for-element', !isDropdownOpen);
    };
 
+   const params = () => {
+      const queryParams = {};
+      checkedTypes?.forEach((element) => {
+         if (element === 'BUG') {
+            queryParams['typeBug'] = 'BUG';
+         } else if (element === 'USER_STORY') {
+            queryParams['typeUserStory'] = 'USER_STORY';
+         } else if (element === 'TASK') {
+            queryParams['typeTask'] = 'TASK';
+         }
+      });
+      return queryParams;
+   };
    // 3.1. GetIssue
    const getListIssue = async () => {
+      const assignee = selectedMembers?.map((item) => encodeURIComponent(item)).join('-');
+      console.log(assignee);
       if (detailProject.codeProject) {
-         const listIssue = await issueService.getIssue(detailProject?.codeProject, { sprintID: data._id });
+         const listIssue = await issueService.getIssue(detailProject?.codeProject, {
+            sprintID: data._id,
+            assignee: assignee ? assignee : null,
+            ...params(),
+         });
          if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
       }
    };
+   console.log(issues);
    // 3.2. DeleSprint
    const handleDeleteSprint = async (key, id) => {
       const deleteSprint = await sprintService.deleteSprint(key, id);
@@ -85,7 +102,7 @@ function Sprint({ data, start = false, handleCreateSprint, setPrints, members })
                   noHover
                   style={{ cursor: 'pointer', height: '32px' }}
                ></Button>
-               <div className={cx('name-sprint')}>{data.name}</div>
+               <div className={cx('name-sprint')}>{title === 'Blacklog' ? 'Blacklog' : data.name}</div>
                <div className={cx('date-sprint')}>
                   {formattedDateStart} - {formattedDateEnd}
                </div>
@@ -104,7 +121,13 @@ function Sprint({ data, start = false, handleCreateSprint, setPrints, members })
                   <span>{issues.filter((item) => item.status === 'DONE')?.length || 0}</span>
                </span>
                <div className={cx('setting-issue')}>
-                  {data.name !== 'Blacklog' ? (
+                  {title === 'Blacklog' ? (
+                     <>
+                        <Button style={{ cursor: 'pointer', height: '32px' }} onClick={handleCreateSprint}>
+                           Create sprint
+                        </Button>
+                     </>
+                  ) : (
                      <>
                         {data.status === 'RUNNING' && (
                            <>
@@ -183,12 +206,6 @@ function Sprint({ data, start = false, handleCreateSprint, setPrints, members })
                            />
                         )}
                      </>
-                  ) : (
-                     <>
-                        <Button style={{ cursor: 'pointer', height: '32px' }} onClick={handleCreateSprint}>
-                           Create sprint
-                        </Button>
-                     </>
                   )}
                </div>
             </div>
@@ -234,7 +251,7 @@ function Sprint({ data, start = false, handleCreateSprint, setPrints, members })
                         </Button>
                      ) : (
                         <Modal isOpen={true} relative onClose={() => setIsFocus(true)}>
-                           <CreateIssue setIssues={setIssues} idPrint={data?._id} />
+                           <CreateIssue setIssues={setIssues} idPrint={data?._id} paramsFunc={params} />
                         </Modal>
                      )}
                   </div>

@@ -44,7 +44,7 @@
    align-items: center;
    gap: 10px;
    .img-icon {
-      border-radius: 50%;
+      border-radius: var(--percent);
       width: var(--_zb0g5d) !important;
       height: var(--_zb0g5d) !important;
    }
@@ -86,4 +86,9 @@
       color: var(--ds-text-success, #006644);
       background-color: var(--ds-background-success, #e3fcef);
    }
+}
+.custom-input-checkbox {
+   width: 14px;
+   height: 14px;
+   position: relative;
 }

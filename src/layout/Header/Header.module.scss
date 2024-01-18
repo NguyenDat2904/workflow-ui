@@ -1,11 +1,10 @@
 .header-nav {
    height: var(--topNavigationHeight, 0px);
-   position: fixed;
-   z-index: 2;
+   // position: fixed;
    top: var(--bannerHeight, 0px);
    right: var(--rightPanelWidth, 0px);
    left: var(--leftPanelWidth, 0px);
-   z-index: 100;
+   // z-index: 30;
 }
 .header-layout {
    display: flex;

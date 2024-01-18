@@ -9,9 +9,8 @@ import { ProjectContext } from '~/contexts/project/projectContext';
 const cx = classNames.bind(style);
 function SideBarChildren() {
    const { detailProject } = useContext(ProjectContext);
-   const { _id } = useParams();
+   const { id } = useParams();
    const location = useLocation();
-   console.log(_id);
    return (
       <SideBar>
          <div className={cx('sidebar-menu')}>
@@ -23,7 +22,7 @@ function SideBarChildren() {
                         viewAll
                         backgroundNone
                         className={cx('custom-button')}
-                        to={`/project/${_id}/black-log`}
+                        to={`/project/${id}/black-log`}
                      >
                         Back to project
                      </Button>
@@ -31,34 +30,32 @@ function SideBarChildren() {
                   <div className={cx('list')}>
                      <div className={cx('line')}>
                         <Button
-                           to={`/project/${_id}/settings/details`}
+                           to={`/project/${id}/settings/details`}
                            backgroundNone
                            viewAll
                            className={cx(
                               'custom-button',
-                              location.pathname === `/project/${_id}/settings/details` && 'active',
+                              location.pathname === `/project/${id}/settings/details` && 'active',
                            )}
                            style={{ marginTop: '6px' }}
                         >
                            <span
-                              className={cx(location.pathname === `/project/${_id}/settings/details` && 'css-active')}
+                              className={cx(location.pathname === `/project/${id}/settings/details` && 'css-active')}
                            >
                               Details
                            </span>
                         </Button>
                         <Button
-                           to={`/project/${_id}/setting/access`}
+                           to={`/project/${id}/setting/access`}
                            backgroundNone
                            viewAll
                            className={cx(
                               'custom-button',
-                              location.pathname === `/project/${_id}/setting/access` && 'active',
+                              location.pathname === `/project/${id}/setting/access` && 'active',
                            )}
                            style={{ marginTop: '6px' }}
                         >
-                           <span
-                              className={cx(location.pathname === `/project/${_id}/settings/access` && 'css-active')}
-                           >
+                           <span className={cx(location.pathname === `/project/${id}/settings/access` && 'css-active')}>
                               Access
                            </span>
                         </Button>

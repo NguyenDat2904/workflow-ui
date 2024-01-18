@@ -9,6 +9,9 @@ class WorkService extends BaseServices {
    createProject(data) {
       return this.post(`/projects/create`, data);
    }
+   getListIssuesOfBoard(codeProject, param) {
+      return this.get(`/issues/broad/${codeProject}`, { params: { ...param } });
+   }
 
    // Get all projects
    getListProject(param) {
@@ -52,8 +55,8 @@ class WorkService extends BaseServices {
    }
 
    // Get Member
-   getMember(codeProject, param) {
-      return this.get(`/projects/list-member?codeProject=${codeProject}`, { params: { ...param } });
+   getMember(param) {
+      return this.get(`/projects/list-member`, { params: { ...param } });
    }
 
    // Check add Member

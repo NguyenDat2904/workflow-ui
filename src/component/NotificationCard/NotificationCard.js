@@ -1,7 +1,5 @@
-import { useContext } from 'react';
 import style from './NotificationCard.module.scss';
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(style);
 
@@ -36,21 +34,25 @@ function NotificationCard({ data, index, onClickButton }) {
             <article className={cx('article')} onClick={() => onClickButton(_id, link, read)}>
                <div style={{ display: 'flex' }}>
                   <div className={cx('css-e05c0p')}>
-                     <div data-testid="avatar-wrapper" className={cx('css-rrrufw')}>
+                     <div dataTestid="avatar-wrapper" className={cx('css-rrrufw')}>
                         <span
-                           aria-expanded="false"
-                           aria-haspopup="true"
-                           data-testid="profile-card-trigger"
+                           ariaExpanded="false"
+                           ariaHaspopup="true"
+                           dataTestid="profile-card-trigger"
                            role="dialog"
-                           tabIndex={0}
+                           tabIndex="{0}"
                         >
                            <div
                               style={{ display: 'inline-block', position: 'relative', outline: 0, margin: '6px 8px' }}
                            >
                               <span className="css-11dcpko">
                                  <img
-                                    src={imgCover}
-                                    alt="image reporter"
+                                    src={
+                                       imgCover
+                                          ? imgCover
+                                          : 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
+                                    }
+                                    alt="reporter"
                                     className={cx('css-13ep12v')}
                                     style={{ borderRadius: '50%' }}
                                  />
@@ -62,9 +64,9 @@ function NotificationCard({ data, index, onClickButton }) {
                   <div className={cx('link-group')}>
                      <div className={cx('css-ov1ktg')}>
                         <div className={cx('css-1rfq2pv')}>
-                           <h3 id="1703649252092-8KR5iC7YwL2BR3Pv_summary" className={cx('css-18qu88g')}>
+                           <h4 id="1703649252092-8KR5iC7YwL2BR3Pv_summary" className={cx('css-18qu88g')}>
                               {title} <span className={cx('css-v5oldl')}>{compareDateTime(createdAt)}</span>
-                           </h3>
+                           </h4>
                            <div className={cx('css-4cej1w')}>
                               <div
                                  style={{

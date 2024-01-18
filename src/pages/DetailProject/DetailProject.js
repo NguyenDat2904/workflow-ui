@@ -44,6 +44,7 @@ function DetailProject() {
                                  {
                                     name: detailProject.nameProject,
                                     link: `/project/${detailProject.codeProject}/black-log`,
+                                    img: detailProject.imgProject,
                                  },
                                  {
                                     name: 'Project setting',
@@ -65,7 +66,7 @@ function DetailProject() {
                                  <Button noChildren backgroundNone leftIcon={<MenuIcon />}></Button>
                               </div>
                               <MenuProject
-                                 onClick={() => handleMoveToTrash(params?._id)}
+                                 onClick={() => handleMoveToTrash(params?.id)}
                                  isOpen={toggle}
                                  onClose={() => setToggle(false)}
                               />
@@ -73,7 +74,7 @@ function DetailProject() {
                         </div>
                      </div>
                      <div className={cx('details-form')}>
-                        <FormChangeProject id={params?._id} />
+                        <FormChangeProject id={params?.id} />
                      </div>
                   </div>
                </div>

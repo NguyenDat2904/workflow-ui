@@ -1,13 +1,16 @@
 import React, { useContext, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './RowIssue.module.scss';
-import { DownIcon, TreeIcon } from '~/component/icon/icon';
+import { DownIcon, MenuIcon, TreeIcon } from '~/component/icon/icon';
 import Button from '~/component/Buttton/Button';
 import ModalSelect from '~/component/ModalSelect/ModalSelect';
 import IssueService from '~/services/issue/issueService';
 import { ProjectContext } from '~/contexts/project/projectContext';
 import { Link } from 'react-router-dom';
 import Modal from '~/component/Modal/Modal';
+import Dropdown from '~/component/dropdown/Dropdown';
+import ModalAccept from '~/component/ModalAccept/ModalAccept';
+import { Tooltip } from 'react-tooltip';
 
 const cx = classNames.bind(style);
 function RowIssue({ data, setIssues, sprintID, members, children = false, setIssueChildren, idParent }) {
@@ -18,6 +21,9 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
    const [isToggleStatus, setIsToggleStatus] = useState(false);
    const [isTogglePrior, setIsTogglePrior] = useState(false);
    const [isToggleAssignee, setIsToggleAssignee] = useState(false);
+   const [isDropDownMenu, setIsDropDownMenu] = useState(false);
+   const [isPending, setIsPending] = useState(false);
+
    const getListIssueSprint = async () => {
       // Get listIssue
       if (sprintID) {
@@ -38,29 +44,44 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
    };
 
    const handleChangePriority = async (key, id, option) => {
+      if (isPending) {
+         return;
+      }
+      setIsPending(true);
       const dataForm = { priority: option.label };
       const updateIssue = await issueService.updateIssue(key, id, dataForm);
       if (updateIssue.status === 200) {
          getListIssueSprint();
          getListIssueChildren();
       }
+      setIsPending(false);
    };
 
    const handleChangeStatus = async (key, id, option) => {
+      if (isPending) {
+         return;
+      }
+      setIsPending(true);
       const dataForm = { status: option.key };
       const updateIssue = await issueService.updateIssue(key, id, dataForm);
       if (updateIssue.status === 200) {
          getListIssueSprint();
          getListIssueChildren();
       }
+      setIsPending(false);
    };
    const handleChangeAssignee = async (key, id, option) => {
+      if (isPending) {
+         return;
+      }
+      setIsPending(true);
       const dataForm = { assignee: option.idUser };
       const updateIssue = await issueService.updateIssue(key, id, dataForm);
       if (updateIssue.status === 200) {
          getListIssueSprint();
          getListIssueChildren();
       }
+      setIsPending(false);
    };
    const listMember = members?.map((member) => {
       return {
@@ -73,10 +94,38 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
       };
    });
 
+   const handleDeleteIssue = async (codeProject, id_issue) => {
+      if (isPending) {
+         return;
+      }
+      setIsPending(true);
+      const deleteIssue = await issueService.deleteIssue(codeProject, id_issue);
+      if (deleteIssue.status === 200) {
+         getListIssueSprint();
+         getListIssueChildren();
+      }
+      setIsPending(false);
+   };
+
    return (
       <div>
          <div className={cx('wrapper')}>
-            <div className={cx('icon-issue')}>
+            <div
+               className={cx('icon-issue')}
+               data-tooltip-id="issueType-tooltip"
+               data-tooltip-content={
+                  data?.issueType === 'SUB_TASK'
+                     ? 'Subtask'
+                     : data?.issueType === 'TASK'
+                     ? 'Task'
+                     : data?.issueType === 'BUG'
+                     ? 'Bug'
+                     : data?.issueType === 'USER_STORY'
+                     ? 'Story'
+                     : ''
+               }
+               data-tooltip-place="top"
+            >
                <img
                   src={
                      data?.issueType === 'USER_STORY'
@@ -85,12 +134,24 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
                         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium'
                         : data?.issueType === 'TASK'
                         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium'
+                        : data?.issueType === 'SUB_TASK'
+                        ? 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium'
                         : ''
                   }
                   alt=""
                />
             </div>
-            <div className={cx('name-issue')}>
+            <Tooltip
+               id="issueType-tooltip"
+               style={{
+                  backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                  color: 'var(--ds-text-inverse, #FFFFFF)',
+                  padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                  fontSize: 'var(--ds-font-size-075, 12px)',
+                  maxWidth: '240px',
+               }}
+            />
+            <div className={cx('name-issue', data?.issueType === 'SUB_TASK' && 'name-sub-task')}>
                <Link to={`/projects/${detailProject?.codeProject}/issues/${data?.name}`}>{data?.name}</Link>
             </div>
             <div className={cx('name-work')}>
@@ -183,13 +244,17 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
                   style={{ display: 'grid' }}
                   className={cx('status-issue')}
                   onClick={() => setIsTogglePrior(!isTogglePrior)}
+                  id="assignee-tooltip"
+                  data-tooltip-id="priority-tooltip"
+                  data-tooltip-content={data?.priority ? data?.priority : ''}
+                  data-tooltip-place="bottom"
                >
                   <div className="flex-center">
                      <div
                         className={cx('priority')}
                         style={{
                            display: 'grid',
-                           gridTemplateColumns: '20px',
+                           gridTemplateColumns: '18px',
                         }}
                      >
                         <img
@@ -207,7 +272,6 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
                            alt=""
                         />
                      </div>
-
                      {isTogglePrior && (
                         <Modal relative isOpen={isTogglePrior} onClose={() => setIsTogglePrior(false)}>
                            <ModalSelect
@@ -255,9 +319,24 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
                      )}
                   </div>
                </div>
+               <Tooltip
+                  id="priority-tooltip"
+                  style={{
+                     backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                     color: 'var(--ds-text-inverse, #FFFFFF)',
+                     padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                     fontSize: 'var(--ds-font-size-075, 12px)',
+                     maxWidth: '240px',
+                  }}
+               />
             </div>
-
-            <div className={cx('user-assignee')}>
+            <div
+               className={cx('user-assignee')}
+               id="assignee-tooltip"
+               data-tooltip-id="assignee-tooltip"
+               data-tooltip-content={data?.infoAssignee?.name ? `Assignee: ${data?.infoAssignee?.name}` : 'Unassigned'}
+               data-tooltip-place="bottom"
+            >
                <span className={cx('img-assignee')}>
                   <div onClick={() => setIsToggleAssignee(!isToggleAssignee)} style={{ width: '100%', height: '100%' }}>
                      <img
@@ -289,6 +368,33 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
                   )}
                </span>
             </div>
+            <Tooltip
+               id="assignee-tooltip"
+               style={{
+                  backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                  color: 'var(--ds-text-inverse, #FFFFFF)',
+                  padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                  fontSize: 'var(--ds-font-size-075, 12px)',
+                  maxWidth: '240px',
+               }}
+            />
+            <div className={cx('menu-issue')}>
+               <Dropdown
+                  className={cx('custom-dropdown')}
+                  actions={[{ label: 'Delete issue', method: () => setIsDropDownMenu(true) }]}
+               >
+                  <Button backgroundNone leftIcon={<MenuIcon />} style={{ height: '32px' }}></Button>
+               </Dropdown>
+            </div>
+            {isDropDownMenu && (
+               <ModalAccept
+                  headerTitle={`Delete ${data?.name}?`}
+                  isOpen={isDropDownMenu}
+                  isClose={() => setIsDropDownMenu(false)}
+                  title="You're about to permanently delete this issue, its comments and attachments, and all of its data."
+                  handleAccept={() => handleDeleteIssue(detailProject?.codeProject, data?._id)}
+               />
+            )}
          </div>
       </div>
    );

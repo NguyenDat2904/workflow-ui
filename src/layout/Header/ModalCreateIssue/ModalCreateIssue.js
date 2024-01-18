@@ -20,7 +20,7 @@ const issueService = new IssueService();
 
 
 function ModalCreateIssue({ data, onClose, isOpen }) {
-   const { _id } = useParams();
+   const { id } = useParams();
 
    const popupRef = useRef(null);
    const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
    const [project, setProject] = useState({
       img: '',
       label: '',
-      codeProject: _id||''
+      codeProject: id||''
    });
    const [issueTypeData, setIssuesTypeDate] = useState({
       label: 'USER_STORY',
@@ -183,7 +183,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
 
       if (isOpen) {
          data.forEach((element) => {
-            if (element.codeProject === _id) {
+            if (element.codeProject === id) {
                console.log(element);
                setProject({
                   img: element.img,

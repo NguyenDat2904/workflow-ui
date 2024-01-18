@@ -25,10 +25,10 @@ import YourWork from '~/pages/YourWork/YourWork';
 import ProfileAndPhone from '~/pages/ProfileAndPhone/ProfileAndPhone';
 
 const privateRoutes = [
-   { path: '/', component: Projects, layout: HeaderOnly },
-   { path: '/project/:_id/settings/details', component: DetailProject, layout: LayoutSideBarChildren },
+   { path: '/', component: YourWork },
+   { path: '/project/:id/settings/details', component: DetailProject, layout: LayoutSideBarChildren },
    {
-      path: '/project/:_id/black-log',
+      path: '/project/:id/black-log',
       component: BlackLog,
    },
    { path: '/profile/security', component: ProfileSecurity, layout: null },
@@ -41,7 +41,7 @@ const privateRoutes = [
    { path: '/project/create', component: CreateProject, layout: null },
    { path: '/project/trash', component: TrashProjects, layout: HeaderOnly },
    { path: '/project/:id/setting/access', component: ProjectAccess, layout: LayoutSideBarChildren },
-   { path: '/project/:_id/board', component: Board, layout: LayoutSideBarChildren },
+   { path: '/project/:id/board', component: Board },
    { path: '/add-people', component: VerifyAddPeople, layout: null },
    { path: '/projects/:id/issues/:id_issue', component: DetailIssue },
    { path: '/your-Work', component: YourWork, layout: HeaderOnly },

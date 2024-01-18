@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import Input from '~/component/Input/Input';
 import TinyText from '~/component/TinyText/TinyText';
 import RowIssue from '../BlackLog/RowIssue/RowIssue';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import IssueService from '~/services/issue/issueService';
 import CreateIssue from '../BlackLog/Sprint/CreateIssue/CreateIssue';
 import Modal from '~/component/Modal/Modal';
@@ -24,6 +24,9 @@ import Dropdown from '~/component/dropdown/Dropdown';
 const cx = classNames.bind(style);
 function DetailIssue() {
    const param = useParams();
+
+   const navigate = useNavigate();
+
    const issueService = new IssueService();
    const sprintService = new SprintService();
    const projectService = new WorkService();
@@ -40,6 +43,7 @@ function DetailIssue() {
    const [isEditComments, setIsEditComments] = useState(null);
    const [isAcceptDeleteComment, setIsAcceptDeleteComment] = useState(null);
    const [isToggleCreateIssue, setIsToggleCreateIssue] = useState(false);
+   const [isToggleAcceptDeleteIssue, setIsToggleAcceptDeleteIssue] = useState(false);
    const [isToggleDesc, setIsToggleDesc] = useState(false);
    const [isComment, setIsComment] = useState(false);
    const [isToggleStatus, setIsToggleStatus] = useState(false);
@@ -47,9 +51,9 @@ function DetailIssue() {
    const [isTogglePrior, setIsTogglePrior] = useState(false);
    const [isToggleAssignee, setIsToggleAssignee] = useState(false);
    const [isToggleReporter, setIsToggleReporter] = useState(false);
-
    const [valueDesc, setValueDesc] = useState('');
    const [valueComment, setValueComment] = useState('');
+   const [isPendingSubmit, setIsPendingSubmit] = useState(false);
 
    const form = useForm({
       mode: 'all',
@@ -84,23 +88,38 @@ function DetailIssue() {
 
    // 3.0.1 Add Comment
    const postComment = async (option) => {
+      if (isPendingSubmit) {
+         return;
+      }
+      setIsPendingSubmit(true);
       const comment = await commentService.addComment(option);
       if (comment.status === 200) {
          getListComment();
       }
+      setIsPendingSubmit(false);
    };
 
    // 3.0.1 Edit Comment
    const handleSubmitEditComment = async (id, option) => {
+      if (isPendingSubmit) {
+         return;
+      }
+      setIsPendingSubmit(true);
       const editComment = await commentService.editComment(id, option);
       if (editComment.status === 200) {
          getListComment();
       }
+      setIsPendingSubmit(false);
    };
 
    const handleDeleteComment = async (id) => {
+      if (isPendingSubmit) {
+         return;
+      }
+      setIsPendingSubmit(true);
       const deleteComment = await commentService.deleteComment(id);
       if (deleteComment.status === 200) getListComment();
+      setIsPendingSubmit(false);
    };
 
    // 3.1 get issue detail
@@ -116,7 +135,7 @@ function DetailIssue() {
                setIssueChildren(issueChildren.data.dataListIssues.filter((item) => item.parentIssue !== null));
          } else if (issues.data.parentIssue) {
             const issueParent = await issueService.getIssueDetail(param?.id, {
-               search: issues.data.parentIssue,
+               idParen: issues.data.parentIssue,
             });
             if (issueParent.status === 200) setDetailIssueParent(issueParent.data);
          }
@@ -124,29 +143,44 @@ function DetailIssue() {
    };
    // 3.2 Submit desc
    const handleSubmitDesc = async (key, id, option) => {
+      if (isPendingSubmit) {
+         return;
+      }
+      setIsPendingSubmit(true);
       const updateIssue = await issueService.updateIssue(key, id, option);
       if (updateIssue.status === 200) {
          const issues = await issueService.getIssueDetail(param?.id, { search: param?.id_issue });
          if (issues.status === 200) setDetailIssue(issues.data);
       }
+      setIsPendingSubmit(false);
    };
    // 3.3 ChangeStatus
    const handleChangeStatus = async (key, id, option) => {
+      if (isPendingSubmit) {
+         return;
+      }
+      setIsPendingSubmit(true);
       const dataForm = { status: option.key };
       const updateIssue = await issueService.updateIssue(key, id, dataForm);
       if (updateIssue.status === 200) {
          const issues = await issueService.getIssueDetail(param?.id, { search: param?.id_issue });
          if (issues.status === 200) setDetailIssue(issues.data);
       }
+      setIsPendingSubmit(false);
    };
    // 3.3 ChangeStatus
    const handleChangePriority = async (key, id, option) => {
+      if (isPendingSubmit) {
+         return;
+      }
+      setIsPendingSubmit(true);
       const dataForm = { priority: option.label };
       const updateIssue = await issueService.updateIssue(key, id, dataForm);
       if (updateIssue.status === 200) {
          const issues = await issueService.getIssueDetail(param?.id, { search: param?.id_issue });
          if (issues.status === 200) setDetailIssue(issues.data);
       }
+      setIsPendingSubmit(false);
    };
 
    // 3.4 Get List Sprint
@@ -162,16 +196,25 @@ function DetailIssue() {
 
    // 3.5 Change Issue to Sprint
    const handleChangeSprint = async (keyProject, id, option) => {
+      if (isPendingSubmit) {
+         return;
+      }
+      setIsPendingSubmit(true);
       const dataForm = { sprint: option.key };
       const updateIssue = await issueService.updateIssue(keyProject, id, dataForm);
       if (updateIssue.status === 200) {
          const issues = await issueService.getIssueDetail(param?.id, { search: param?.id_issue });
          if (issues.status === 200) setDetailIssue(issues.data);
       }
+      setIsPendingSubmit(false);
    };
 
    // 3.6 Submit Point
    const handleSubmitPoint = async (dataPoint) => {
+      if (isPendingSubmit) {
+         return;
+      }
+      setIsPendingSubmit(true);
       const dataForm = { storyPointEstimate: +dataPoint?.storyPointEstimate };
       const updateIssue = await issueService.updateIssue(param?.id, detailIssue?._id, dataForm);
       if (updateIssue.status === 200) {
@@ -181,6 +224,7 @@ function DetailIssue() {
             form.setValue('storyPointEstimate', issues.data.storyPointEstimate);
          }
       }
+      setIsPendingSubmit(false);
    };
    // 3.7 Get Member
    const getMembers = async () => {
@@ -209,6 +253,10 @@ function DetailIssue() {
 
    // 3.7 Submit Start
    const handleSubmitStartDate = async (dataDate) => {
+      if (isPendingSubmit) {
+         return;
+      }
+      setIsPendingSubmit(true);
       const dataForm = { startDate: dataDate?.startDate };
       const updateIssue = await issueService.updateIssue(param?.id, detailIssue?._id, dataForm);
       if (updateIssue.status === 200) {
@@ -218,9 +266,14 @@ function DetailIssue() {
             form.setValue('startDate', issues.data.startDate);
          }
       }
+      setIsPendingSubmit(false);
    };
    // 3.7 Submit End
    const handleSubmitEndDate = async (dataDate) => {
+      if (isPendingSubmit) {
+         return;
+      }
+      setIsPendingSubmit(true);
       const dataForm = { dueDate: dataDate?.dueDate };
       const updateIssue = await issueService.updateIssue(param?.id, detailIssue?._id, dataForm);
       if (updateIssue.status === 200) {
@@ -230,10 +283,15 @@ function DetailIssue() {
             form.setValue('dueDate', issues.data.dueDate);
          }
       }
+      setIsPendingSubmit(false);
    };
 
    // 3.9 Submit Agr
    const handleChangeAssignee = async (key, id, option) => {
+      if (isPendingSubmit) {
+         return;
+      }
+      setIsPendingSubmit(true);
       const dataForm = { assignee: option.idUser };
       const updateIssue = await issueService.updateIssue(key, id, dataForm);
       if (updateIssue.status === 200) {
@@ -243,9 +301,14 @@ function DetailIssue() {
             // form.setValue('dueDate', issues.data.dueDate);
          }
       }
+      setIsPendingSubmit(false);
    };
    // 3.10 Submit Reporter
    const handleChangeReporter = async (key, id, option) => {
+      if (isPendingSubmit) {
+         return;
+      }
+      setIsPendingSubmit(true);
       const dataForm = { reporter: option.idUser };
       const updateIssue = await issueService.updateIssue(key, id, dataForm);
       if (updateIssue.status === 200) {
@@ -254,9 +317,18 @@ function DetailIssue() {
             setDetailIssue(issues.data);
          }
       }
+      setIsPendingSubmit(false);
    };
    // 3.11 Submit Delete Submit
-   const handleDeleteIssue = async () => {};
+   const handleDeleteIssue = async (codeProject, id_issue) => {
+      if (isPendingSubmit) {
+         return;
+      }
+      setIsPendingSubmit(true);
+      const deleteIssue = await issueService.deleteIssue(codeProject, id_issue);
+      if (deleteIssue.status === 200) navigate(`/project/${codeProject}/black-log`);
+      setIsPendingSubmit(false);
+   };
 
    const renderChildrenIssue = issueChildren
       ?.map((issueChildren) => {
@@ -274,6 +346,26 @@ function DetailIssue() {
       })
       .reverse();
 
+   const imgIssue =
+      detailIssue?.issueType === 'USER_STORY'
+         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium'
+         : detailIssue?.issueType === 'BUG'
+         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium'
+         : detailIssue?.issueType === 'TASK'
+         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium'
+         : detailIssue?.issueType === 'SUB_TASK'
+         ? 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium'
+         : '';
+   const imgIssueParent =
+      detailIssueParent?.issueType === 'USER_STORY'
+         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium'
+         : detailIssueParent?.issueType === 'BUG'
+         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium'
+         : detailIssueParent?.issueType === 'TASK'
+         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium'
+         : detailIssueParent?.issueType === 'SUB_TASK'
+         ? 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium'
+         : '';
    const renderComment = comments?.map((comment) => {
       const currentTime = moment();
       const commentMoment = moment(comment?.commentTime);
@@ -370,16 +462,19 @@ function DetailIssue() {
                      {
                         name: detailIssue.projectID?.nameProject,
                         link: `/project/${detailIssue.projectID?.codeProject}/black-log`,
+                        img: detailIssue.projectID?.imgProject,
                      },
                      detailIssue.parentIssue !== null
                         ? {
                              name: detailIssueParent?.name,
                              link: `/projects/${detailIssueParent.projectID?.codeProject}/issues/${detailIssueParent?.name}`,
+                             img: imgIssueParent,
                           }
                         : null,
                      {
                         name: detailIssue?.name,
                         link: `/projects/${detailIssue.projectID?.codeProject}/issues/${detailIssue?.name}`,
+                        img: imgIssue,
                      },
                   ].filter((item) => item !== null)}
                />
@@ -400,18 +495,16 @@ function DetailIssue() {
                   )}
                   <div className={cx('issue-header')}>
                      {isToggleDesc ? (
-                        <Modal isOpen={isToggleDesc} onClose={() => setIsToggleDesc(false)} relative>
-                           <ControllerForm form={form} name="description" label="Description">
-                              <TinyText
-                                 setEditorValue={setValueDesc}
-                                 onClose={() => setIsToggleDesc(false)}
-                                 handleSubmit={() =>
-                                    handleSubmitDesc(param?.id, detailIssue?._id, { description: valueDesc })
-                                 }
-                                 value={detailIssue?.description}
-                              />
-                           </ControllerForm>
-                        </Modal>
+                        <ControllerForm form={form} name="description" label="Description">
+                           <TinyText
+                              setEditorValue={setValueDesc}
+                              onClose={() => setIsToggleDesc(false)}
+                              handleSubmit={() =>
+                                 handleSubmitDesc(param?.id, detailIssue?._id, { description: valueDesc })
+                              }
+                              value={detailIssue?.description}
+                           />
+                        </ControllerForm>
                      ) : (
                         <ControllerForm form={form} label="Description" name="button-desc">
                            <Input
@@ -434,7 +527,6 @@ function DetailIssue() {
                            <h2>Children issues</h2>
                            <Button
                               leftIcon={<AddIcon />}
-                              noChildren
                               backgroundNone
                               className={cx('custom-btn')}
                               onClick={() => {
@@ -445,7 +537,7 @@ function DetailIssue() {
                         <div className={cx('issue-children-list')}>{renderChildrenIssue}</div>
                         {isToggleCreateIssue && (
                            <Modal isOpen={true} onClose={() => setIsToggleCreateIssue(false)} relative>
-                              <CreateIssue setIssues={setIssueChildren} idParent={detailIssue?._id} />
+                              <CreateIssue setIssues={setIssueChildren} idParent={detailIssue?._id} children />
                            </Modal>
                         )}
                      </div>
@@ -483,13 +575,11 @@ function DetailIssue() {
                            onFocus={() => setIsComment(true)}
                         />
                      ) : (
-                        <Modal isOpen={isComment} onClose={() => setIsComment(false)} relative>
-                           <TinyText
-                              setEditorValue={setValueComment}
-                              onClose={() => setIsComment(false)}
-                              handleSubmit={() => postComment({ content: valueComment, issueID: detailIssue?._id })}
-                           />
-                        </Modal>
+                        <TinyText
+                           setEditorValue={setValueComment}
+                           onClose={() => setIsComment(false)}
+                           handleSubmit={() => postComment({ content: valueComment, issueID: detailIssue?._id })}
+                        />
                      )}
                   </div>
                </div>
@@ -502,11 +592,20 @@ function DetailIssue() {
                <div className={cx('control-header-right')}>
                   <Dropdown
                      className={cx('custom-dropdown')}
-                     actions={[{ label: 'Delete sprint', method: () => handleDeleteIssue() }]}
+                     actions={[{ label: 'Delete issue', method: () => setIsToggleAcceptDeleteIssue(true) }]}
                   >
                      <Button noChildren backgroundNone leftIcon={<MenuIcon />} style={{ height: '32px' }}></Button>
                   </Dropdown>
                </div>
+               {isToggleAcceptDeleteIssue && (
+                  <ModalAccept
+                     headerTitle={`Delete ${detailIssue?.name}?`}
+                     isOpen={isToggleAcceptDeleteIssue}
+                     isClose={() => setIsToggleAcceptDeleteIssue(false)}
+                     title="You're about to permanently delete this issue, its comments and attachments, and all of its data."
+                     handleAccept={() => handleDeleteIssue(param?.id, detailIssue?._id)}
+                  />
+               )}
                <div className={cx('content-right')}>
                   <div className={cx('control-content-right')}>
                      <Button

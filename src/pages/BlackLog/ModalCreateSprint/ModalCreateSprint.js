@@ -9,7 +9,7 @@ import Button from '~/component/Buttton/Button';
 import SprintService from '~/services/sprint/SprintService';
 
 const cx = classNames.bind(style);
-function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_acpt }) {
+function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_acpt, checkedTypes }) {
    const sprintService = new SprintService();
 
    const form = useForm({
@@ -21,13 +21,11 @@ function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_a
          sprintGoal: data?.sprintGoal || '',
       },
    });
-   console.log(btn_acpt === 'Start');
    const handleSubmit = async (dataForm) => {
       const dataFormSprint = { ...dataForm, status: btn_acpt === 'Start' ? 'RUNNING' : 'PENDING' };
-
       const updateSprint = await sprintService.updateSprint(keyProject, data._id, dataFormSprint);
       if (updateSprint.status === 200) {
-         const listPrints = await sprintService.getSprint(keyProject);
+         const listPrints = await sprintService.getSprint(keyProject, {});
          if (listPrints.status === 200) setPrints(listPrints.data.sprint);
       }
       isClose();

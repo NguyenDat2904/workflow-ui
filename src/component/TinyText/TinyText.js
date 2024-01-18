@@ -17,12 +17,30 @@ function TinyText({ none, setEditorValue, onClose, handleSubmit, value }) {
             onEditorChange={handleEditorChange}
             apiKey="p6wojfsgyrzmjmc3q4c94pr257dhh5i8yn2v0osay8kqtq7g"
             init={{
-               menubar: '',
+               plugins: [
+                  'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+               ],
+               menubar: 'file edit view insert format tools table tc help',
+               quickbars_insert_toolbar: 'gallery quicktable | hr pagebreak',
                toolbar:
-                  ' styles  | ' +
-                  'bold italic text  | alignleft aligncenter ' +
-                  'alignright alignjustify | bullist numlist outdent indent | ',
-               height: '200',
+                  ' bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | insertfile image gallery media template link anchor codesample | ltr rtl | fullscreen  preview save print',
+               toolbar_sticky: true,
+               autosave_ask_before_unload: true,
+               autosave_interval: '20s',
+               autosave_prefix: '{path}{query}-{id}-',
+               autosave_restore_when_empty: false,
+               autosave_retention: '20m',
+               image_advtab: true,
+               height: 250,
+               image_caption: true,
+               fontsize_formats: '8px 10px 12px 14px 16px 18px 24px 36px 48px',
+               quickbars_selection_toolbar: 'bold italic underline strikethrough | quicklink h1 h2 h3 blockquote',
+               imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions gallery',
+               toolbar_mode: 'sliding',
+               contextmenu: 'link image imagetools table',
+               save_onsavecallback: () => {},
+               paste_data_images: true,
+               content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
             }}
             value={editorText}
          />

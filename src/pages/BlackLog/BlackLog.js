@@ -15,6 +15,8 @@ function BlackLog() {
    const projectService = new WorkService();
    const [sprints, setPrints] = useState([]);
    const [members, setMembers] = useState([]);
+   const [checkedTypes, setCheckedTypes] = useState([]);
+   const [selectedMembers, setSelectedMembers] = useState([]);
 
    // GetSprint
    const getListSprints = async () => {
@@ -31,7 +33,6 @@ function BlackLog() {
          if (listMembers.status === 200) setMembers(listMembers.data);
       }
    };
-
    useEffect(() => {
       getMembers();
       getListSprints();
@@ -45,6 +46,8 @@ function BlackLog() {
                start={index === sprints.length - 1 && true}
                setPrints={setPrints}
                members={members}
+               checkedTypes={checkedTypes}
+               selectedMembers={selectedMembers}
             />
          );
       })
@@ -61,17 +64,27 @@ function BlackLog() {
    return (
       <div className={cx('wrapper')}>
          <div style={{ padding: '0 40px' }}>
-            <HeaderProject headerName={'Backlog'} />
+            <HeaderProject
+               headerName={'Backlog'}
+               checkedTypes={checkedTypes}
+               setSelectedMembers={setSelectedMembers}
+               selectedMembers={selectedMembers}
+               setCheckedTypes={setCheckedTypes}
+               members={members}
+            />
          </div>
-         <div className={cx('main')}>
-            <div className={cx('sprint-dropdown')}>
-               {renderSprint}
-               <Sprint
-                  data={{ name: 'Backlog' }}
-                  handleCreateSprint={handleCreateSprint}
-                  setPrints={setPrints}
-                  members={members}
-               />
+         <div className={cx('main-section')}>
+            <div className={cx('main')}>
+               <div className={cx('sprint-dropdown')}>
+                  {renderSprint}
+                  <Sprint
+                     title="Blacklog"
+                     handleCreateSprint={handleCreateSprint}
+                     setPrints={setPrints}
+                     members={members}
+                     data={[]}
+                  />
+               </div>
             </div>
          </div>
       </div>

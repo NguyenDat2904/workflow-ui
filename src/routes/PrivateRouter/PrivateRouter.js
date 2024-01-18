@@ -5,7 +5,6 @@ import { AuthContext } from '~/contexts/auth/authContext';
 const PrivateRouter = () => {
    const location = useLocation();
    const { isAuthenticated } = useContext(AuthContext);
-
    if (isAuthenticated) {
       if (location.pathname === '/') {
          return <Navigate to="/project" replace />;

@@ -16,7 +16,17 @@ import CreateIssue from './CreateIssue/CreateIssue';
 import Modal from '~/component/Modal/Modal';
 const cx = classNames.bind(style);
 
-function Sprint({ data, start = false, handleCreateSprint, setPrints, members, checkedTypes, selectedMembers, title }) {
+function Sprint({
+   data,
+   start = false,
+   handleCreateSprint,
+   setPrints,
+   members,
+   checkedTypes,
+   selectedMembers,
+   title,
+   sprints,
+}) {
    const { detailProject } = useContext(ProjectContext);
    // 1. State
    const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -31,7 +41,7 @@ function Sprint({ data, start = false, handleCreateSprint, setPrints, members, c
    // 2. UseEffect
    useEffect(() => {
       getListIssue();
-   }, [checkedTypes, selectedMembers]);
+   }, [checkedTypes, selectedMembers, sprints]);
    // 3. Handle
    const handleDropDown = () => {
       setDropdownOpen(!isDropdownOpen);
@@ -55,17 +65,13 @@ function Sprint({ data, start = false, handleCreateSprint, setPrints, members, c
    // 3.1. GetIssue
    const getListIssue = async () => {
       const assignee = selectedMembers?.map((item) => encodeURIComponent(item)).join('-');
-      console.log(assignee);
-      if (detailProject.codeProject) {
-         const listIssue = await issueService.getIssue(detailProject?.codeProject, {
-            sprintID: data._id,
-            assignee: assignee ? assignee : null,
-            ...params(),
-         });
-         if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
-      }
+      const listIssue = await issueService.getIssue(detailProject?.codeProject, {
+         sprintID: data._id,
+         assignee: assignee ? assignee : null,
+         ...params(),
+      });
+      if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
    };
-   console.log(issues);
    // 3.2. DeleSprint
    const handleDeleteSprint = async (key, id) => {
       const deleteSprint = await sprintService.deleteSprint(key, id);
@@ -86,7 +92,16 @@ function Sprint({ data, start = false, handleCreateSprint, setPrints, members, c
    return (
       <div className={cx('sprint-block')}>
          {isToggleComplete && (
-            <ModalCompleteSprint isOpen={isToggleComplete} isClose={() => setIsToggleComplete(false)} />
+            <ModalCompleteSprint
+               data={data}
+               issues={issues}
+               isOpen={isToggleComplete}
+               isClose={() => setIsToggleComplete(false)}
+               sprints={sprints}
+               detailProject={detailProject}
+               getListIssue={getListIssue}
+               setPrints={setPrints}
+            />
          )}
          <div className={cx('sprint-header')}>
             <div

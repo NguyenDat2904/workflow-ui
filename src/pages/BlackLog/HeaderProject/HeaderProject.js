@@ -89,7 +89,7 @@ function HeaderProject({
                <label
                   htmlFor={`member-icon-${index}`}
                   className={cx(selectedMembers.includes(member?._id) && 'active')}
-                  style={{ marginLeft: index !== 0 ? `${-4 * index}px` : '-0px' }}
+                  style={{ marginLeft: index !== 0 ? `${-4 * index}px` : '-0px', width: '100%' }}
                >
                   <input
                      type="checkbox"

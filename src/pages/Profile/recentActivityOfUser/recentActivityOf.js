@@ -3,18 +3,17 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './recentActivityOf.module.scss';
 import IssueService from '~/services/issue/issueService';
-import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(styles);
 const RecentActivityOfUser = () => {
    const issueService = new IssueService();
    const [dataListWork, setDataListWork] = useState([]);
-   const APIListProjetc = async () => {
+   const APIListProject = async () => {
       const dataProject = await issueService.getIssueSearch();
       const limitIssue = dataProject?.data?.data.slice(0, 10);
       setDataListWork(limitIssue);
    };
    useEffect(() => {
-      APIListProjetc();
+      APIListProject();
    }, []);
 
    return (

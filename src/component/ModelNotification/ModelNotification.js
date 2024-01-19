@@ -45,7 +45,7 @@ function ModelNotification({ handleToggle, position, isOpen }) {
    };
 
    return (
-      <Modal width="540px" locationTransform={`${position - 580}px`} isOpen={isOpen} onClose={handleToggle}>
+      <Modal width="540px" locationTransform={`${position - 549}px`} isOpen={isOpen} onClose={handleToggle}>
          <div className={cx('top', 'notification-top')}>
             <div className={cx('notification-title')}>Notification</div>
             <div className={cx('show group')}>

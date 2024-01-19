@@ -1,13 +1,15 @@
 .mainProfile {
-    width: 100%;
-    position: relative;
+   width: 100%;
+   position: relative;
+   overflow: auto;
+   max-height: 700px;
 }
 
 .button {
-    position: absolute;
-    right: 10px;
-    top: 6px;
-    border: 0;
-    background: fixed;
-    cursor: pointer;
+   position: absolute;
+   right: 10px;
+   top: 6px;
+   border: 0;
+   background: fixed;
+   cursor: pointer;
 }

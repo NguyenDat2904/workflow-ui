@@ -10,7 +10,7 @@ const Profile = () => {
    const userServices = new UserService();
    const [dataUserProfile, setDataUserProfile] = useState({});
    const callApi = async () => {
-      const APIuser = await userServices.getUserProfile({deleteProject: false});
+      const APIuser = await userServices.getUserProfile({ deleteProject: false });
       setDataUserProfile(APIuser.data);
    };
    useEffect(() => {

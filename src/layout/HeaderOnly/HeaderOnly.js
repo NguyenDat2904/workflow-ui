@@ -6,9 +6,7 @@ function HeaderOnly({ children }) {
       <div>
          <Header />
          <div className="container">
-            <div className="content" style={{ paddingTop: '56px' }}>
-               {children}
-            </div>
+            <div className="content">{children}</div>
          </div>
       </div>
    );

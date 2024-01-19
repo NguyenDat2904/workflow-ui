@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import style from './Board.scss';
 import { Button } from '../../component/Inputs/Inputs';
 import HeaderProject from '../BlackLog/HeaderProject/HeaderProject';
 import Issue from './Issue';
 import WorkService from '~/services/work/workServices';
 import { IssueIcon } from './IssueIcon';
+import ModalCompleteSprint from '../BlackLog/ModalCompleteSprint/ModalCompleteSprint';
 
 const cx = classNames.bind(style);
 
@@ -14,7 +15,10 @@ export default function Board() {
    const BoardWorkService = new WorkService();
    const [listIssues, setListIssues] = useState({});
    const [listSingleIssues, setListSingleIssues] = useState([]);
+   const [isToggleComplete, setIsToggleComplete] = useState(false);
    const { id } = useParams();
+   const navigate = useNavigate();
+
    useEffect(() => {
       async function getIssues() {
          const listIssuesData = await BoardWorkService.getListIssuesOfBoard(id, {});
@@ -52,6 +56,12 @@ export default function Board() {
 
    return (
       <div className={cx('board')}>
+         {/* <ModalCompleteSprint
+            isOpen={isToggleComplete}
+            isClose={() => setIsToggleComplete(false)}
+            issues={listIssues}
+            sprints={listSingleIssues}
+         /> */}
          <HeaderProject headerName={'Board'} rightSection={rightSection} />
          <div className={cx('task-board')}>
             <div className={cx('task-status')}>

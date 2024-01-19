@@ -213,17 +213,10 @@ const ProfileAndVisibility = () => {
                      <span className={cx('emailAddress')}>Email address</span>
                      <p className={cx('infoEmailAddress')}>{valueInput.email}</p>
                   </div>
-                  <EditField
-                     type="text"
-                     placeholder="Your phone"
-                     label="Phone address"
-                     name="phone"
-                     valueInput={valueInput.phone}
-                     formButton={formButton}
-                     handleFormButton={handleFormButton}
-                     handleSubmit={handleSubmit}
-                     handleOnchange={handleOnchange}
-                  />
+                  <div className={cx('childrenAboutYouEmail')}>
+                     <span className={cx('emailAddress')}>Phone address</span>
+                     <p className={cx('infoEmailAddress')}>{valueInput.phone}</p>
+                  </div>
                </div>
             </div>
          </div>

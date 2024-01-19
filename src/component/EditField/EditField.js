@@ -19,6 +19,7 @@ const EditField = ({
 }) => {
    return (
       <div className={cx('childrenAboutYou')}>
+          <span className={cx('emailAddress')}>{label}</span>
          <Input
             type={type}
             name={name}
@@ -28,7 +29,6 @@ const EditField = ({
             onSubmit={handleSubmit}
             onBlur={handleSubmit}
             onChange={handleOnchange}
-            label={label}
             placeholder={placeholder}
          />
       </div>

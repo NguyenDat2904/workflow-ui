@@ -13,6 +13,7 @@ import ModalCreateIssue from './ModalCreateIssue/ModalCreateIssue';
 import ModalSearch from './ModalSearch/ModalSearch';
 import IssueService from '~/services/issue/issueService';
 import { UserContext } from '~/contexts/user/userContext';
+import { Tooltip } from 'react-tooltip';
 const cx = classNames.bind(style);
 const projectService = new WorkService();
 
@@ -165,6 +166,9 @@ function Header() {
             <div className={cx('nav-right')}>
                <div className={cx('nav-icon')}>
                   <Input
+                     data-tooltip-id="notification-tooltip"
+                     data-tooltip-content="Search"
+                     data-tooltip-place="bottom"
                      placeholder="Search"
                      leftIcon={<SearchIcon />}
                      type="text"
@@ -174,6 +178,16 @@ function Header() {
                      onFocus={() => setIsModalSearch(true)}
                      onChange={(e) => setSearch(e.target.value)}
                   />
+                  <Tooltip
+                     id="search-tooltip"
+                     style={{
+                        backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                        color: 'var(--ds-text-inverse, #FFFFFF)',
+                        padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                        fontSize: 'var(--ds-font-size-075, 12px)',
+                        maxWidth: '240px',
+                     }}
+                  />
                   <ModalSearch
                      isOpen={isModalSearch}
                      onClose={() => setIsModalSearch(false)}
@@ -181,6 +195,9 @@ function Header() {
                   />
                </div>
                <div
+                  data-tooltip-id="notification-tooltip"
+                  data-tooltip-content="Notifications"
+                  data-tooltip-place="bottom"
                   className={cx('nav-icon')}
                   onClick={() =>
                      setToggleMenu((pre) => ({
@@ -197,6 +214,16 @@ function Header() {
                      leftIcon={<NotificationIcon />}
                   ></Button>
                </div>
+               <Tooltip
+                  id="notification-tooltip"
+                  style={{
+                     backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                     color: 'var(--ds-text-inverse, #FFFFFF)',
+                     padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                     fontSize: 'var(--ds-font-size-075, 12px)',
+                     maxWidth: '240px',
+                  }}
+               />
                <ModelNotification
                   position={position.left}
                   handleToggle={() =>
@@ -208,6 +235,9 @@ function Header() {
                   isOpen={toggleMenu.notification}
                />
                <div
+                  data-tooltip-id="user-tooltip"
+                  data-tooltip-content="Your profile"
+                  data-tooltip-place="bottom"
                   style={{ width: '32px', height: '32px' }}
                   className={cx('nav-icon')}
                   onClick={() =>
@@ -231,6 +261,16 @@ function Header() {
                      ></Button>
                   )}
                </div>
+               <Tooltip
+                  id="user-tooltip"
+                  style={{
+                     backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                     color: 'var(--ds-text-inverse, #FFFFFF)',
+                     padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                     fontSize: 'var(--ds-font-size-075, 12px)',
+                     maxWidth: '240px',
+                  }}
+               />
                <ModalAccount
                   getUserData={dataUserProfile}
                   position={position.left}

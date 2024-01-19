@@ -8,7 +8,7 @@ function ModalSearch({ isOpen, onClose, getIssueSearch }) {
    const renderSearch = getIssueSearch?.map((issue) => {
       return (
          <div key={issue._id}>
-            <Link to={`/projects/${issue?.projectID?.codeProject}/issues/${issue?.name}`}>
+            <Link to={`/projects/${issue?.projectID?.codeProject}/issues/${issue?.name}`} onClick={onClose}>
                <div className={cx('list-search')}>
                   <div className={cx('item-search-img')}>
                      <img

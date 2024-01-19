@@ -36,13 +36,13 @@ class WorkService extends BaseServices {
    }
 
    // Restore project
-
    restoreProject(codeProject) {
       return this.patch(`/projects/${codeProject}/restore`);
    }
 
+   // DeleteProject
    deleteDirectProject(codeProject) {
-      return this.delete(`/projects/${codeProject}/delete`);
+      return this.delete(`/projects/${codeProject}/deleteDirectly`);
    }
 
    // ChangeProject

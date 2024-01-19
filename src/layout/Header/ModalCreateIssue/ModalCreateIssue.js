@@ -18,7 +18,6 @@ const workService = new WorkService();
 const sprintService = new SprintService();
 const issueService = new IssueService();
 
-
 function ModalCreateIssue({ data, onClose, isOpen }) {
    const { id } = useParams();
 
@@ -30,7 +29,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
    const [project, setProject] = useState({
       img: '',
       label: '',
-      codeProject: id||''
+      codeProject: id || '',
    });
    const [issueTypeData, setIssuesTypeDate] = useState({
       label: 'USER_STORY',
@@ -42,7 +41,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
       backgroundProfile: '',
       textInBackgroundProfile: '',
       id: '',
-      imgNone:""
+      imgNone: '',
    });
    const [reporterData, setReporterData] = useState({});
    const [sprintData, setSprintData] = useState({
@@ -62,7 +61,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
       priority: true,
       sprint: true,
       summary: true,
-      img:true
+      img: true,
    });
    const form = useForm({
       mode: 'all',
@@ -78,8 +77,8 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
          startDate: '',
          dueDate: '',
          description: '',
-         img:'',
-         parentIssue:null
+         img: '',
+         parentIssue: null,
       },
    });
    const dataTypeIssues = [
@@ -124,7 +123,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
    ];
 
    const listMemberProject = async () => {
-      const member = await workService.getMember(project.codeProject,{});
+      const member = await workService.getMember({codeProject:project.codeProject});
       const infoMember = member?.data.message
          ? []
          : member?.data?.map((product) => {
@@ -134,7 +133,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
                  img: product?.img,
                  label: product.name,
                  id: product?._id,
-                 imgNone:'none'
+                 imgNone: 'none',
               };
            });
 
@@ -389,7 +388,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
             form.getValues('codeProject') !== '' ||
             form.getValues('issueType') !== ''
          ) {
-            console.log(dataForm)
+            console.log(dataForm);
             const createIssue = await issueService.createIssue(form.getValues('codeProject'), dataForm);
             if (createIssue.status === 200) {
                onClose();
@@ -633,7 +632,11 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
                   <button className={cx('buttonCancel')} type="button" onClick={onClose}>
                      Cancel
                   </button>
-                  <button className={cx('buttonSubmit')} style={{cursor:loading?'pointer':'not-allowed'}} type={loading?"submit":'button'}>
+                  <button
+                     className={cx('buttonSubmit')}
+                     style={{ cursor: loading ? 'pointer' : 'not-allowed' }}
+                     type={loading ? 'submit' : 'button'}
+                  >
                      {loading ? 'Create' : 'Creating...'}
                   </button>
                </div>

@@ -67,7 +67,7 @@ function ProjectList({ projectsList, setProjectsList, handleMoveToTrash, trash, 
                      to={
                         trash
                            ? '/project/trash?sortKey=nameProject&sortOrder=ASC'
-                           : ' /project?sortKey=nameProject&sortOrder=ASC'
+                           : '/project?sortKey=nameProject&sortOrder=ASC'
                      }
                      rightIcon={<FilterIcon />}
                      tdIcon

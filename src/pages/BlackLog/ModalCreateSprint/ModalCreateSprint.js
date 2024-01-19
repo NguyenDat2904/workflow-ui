@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './ModalCreateSprint.module.scss';
 import ModalIcon from '~/pages/DetailProject/ModalIcon/ModalIcon';
@@ -7,10 +7,12 @@ import Input from '~/component/Input/Input';
 import { useForm } from 'react-hook-form';
 import Button from '~/component/Buttton/Button';
 import SprintService from '~/services/sprint/SprintService';
+import { LoadingIcon } from '~/component/icon/icon';
 
 const cx = classNames.bind(style);
 function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_acpt, checkedTypes }) {
    const sprintService = new SprintService();
+   const [isLoading, setIsLoading] = useState(false);
 
    const form = useForm({
       mode: 'all',
@@ -22,6 +24,8 @@ function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_a
       },
    });
    const handleSubmit = async (dataForm) => {
+      if (isLoading) return;
+      setIsLoading(true);
       const dataFormSprint = { ...dataForm, status: btn_acpt === 'Start' ? 'RUNNING' : 'PENDING' };
       const updateSprint = await sprintService.updateSprint(keyProject, data._id, dataFormSprint);
       if (updateSprint.status === 200) {
@@ -29,6 +33,7 @@ function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_a
          if (listPrints.status === 200) setPrints(listPrints.data.sprint);
       }
       isClose();
+      setIsLoading(false);
    };
 
    return (
@@ -48,12 +53,12 @@ function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_a
             </div>
             <div style={{ marginTop: 'var(--ds-space-100, 8px)' }}>
                <ControllerForm form={form} name="startDate" label="Start date" required id="sprint_start">
-                  <Input type="datetime-local" id="sprint_start" search="search" style={{ width: '250px' }} />
+                  <Input type="date" id="sprint_start" search="search" style={{ width: '250px' }} />
                </ControllerForm>
             </div>
             <div style={{ marginTop: 'var(--ds-space-100, 8px)' }}>
                <ControllerForm form={form} name="endDate" label="End date" required id="sprint_end">
-                  <Input type="datetime-local" id="sprint_end" search="search" style={{ width: '250px' }} />
+                  <Input type="date" id="sprint_end" search="search" style={{ width: '250px' }} />
                </ControllerForm>
             </div>
             <div style={{ marginTop: 'var(--ds-space-100, 8px)' }}>
@@ -70,8 +75,8 @@ function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_a
             </div>
             <div className={cx('btn-group')}>
                <Button onClick={isClose}>Cancel</Button>
-               <Button blue type="submit">
-                  {btn_acpt}
+               <Button blue type="submit" style={{ minWidth: '56px' }}>
+                  {isLoading ? <LoadingIcon /> : <>{btn_acpt}</>}
                </Button>
             </div>
          </form>

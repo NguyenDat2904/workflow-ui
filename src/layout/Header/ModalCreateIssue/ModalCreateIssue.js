@@ -594,7 +594,6 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
                                  style={{ width: '50%' }}
                               />
                            </ControllerForm>
-
                            <div className={cx(indexSelect.sprint ? 'none' : 'selectProject')}>
                               <ModalSelect
                                  setValue={setSprintData}

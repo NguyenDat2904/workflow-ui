@@ -1,26 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import ProfileHeaderImg from '~/component/ProfileHeaderImg/ProfileHeaderImg';
 import styles from './profile.module.scss';
 import ViewProfile from './viewProfile/viewProfile';
 import UserService from '~/services/user/userServices';
+import { UserContext } from '~/contexts/user/userContext';
 
 const cx = classNames.bind(styles);
 const Profile = () => {
-   const userServices = new UserService();
-   const [dataUserProfile, setDataUserProfile] = useState({});
-   const callApi = async () => {
-      const APIuser = await userServices.getUserProfile({ deleteProject: false });
-      setDataUserProfile(APIuser.data);
-   };
+   const { dataUserProfile, getUser } = useContext(UserContext);
+
    useEffect(() => {
-      callApi();
+      getUser();
    }, []);
    return (
       <div className={cx('mainProfile')}>
          <ProfileHeaderImg
             dataUserProfile={dataUserProfile}
-            callApi={callApi}
+            callApi={getUser}
             heightt="192px"
             widthbagrAvatar="128px"
             heightbagrAvatar={'128px'}

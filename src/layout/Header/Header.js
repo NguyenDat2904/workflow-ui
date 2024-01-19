@@ -7,25 +7,21 @@ import { useLocation } from 'react-router-dom';
 import ModalProject from '~/pages/Projects/ModalProject/ModalProject';
 import ModalAccount from '~/pages/Profile/ModalAccount/ModalAccount';
 import Input from '~/component/Input/Input';
-import { UserContext } from '~/contexts/user/userContext';
-import UserService from '~/services/user/userServices';
 import ModelNotification from '~/component/ModelNotification/ModelNotification';
 import WorkService from '~/services/work/workServices';
 import ModalCreateIssue from './ModalCreateIssue/ModalCreateIssue';
 import ModalSearch from './ModalSearch/ModalSearch';
 import IssueService from '~/services/issue/issueService';
+import { UserContext } from '~/contexts/user/userContext';
 const cx = classNames.bind(style);
-const userServices = new UserService();
 const projectService = new WorkService();
 
 function Header() {
    const location = useLocation();
    const elementRef = useRef(null);
+   const { dataUserProfile, getUser } = useContext(UserContext);
    // 1. useState
    const issueService = new IssueService();
-
-   const { parseuser } = useContext(UserContext);
-
    const [projects, getProjects] = useState([]);
    const [isToggleCreateIssue, setToggleCreateIssue] = useState(false);
    const [isModalSearch, setIsModalSearch] = useState(false);
@@ -37,7 +33,6 @@ function Header() {
       notification: false,
    });
    const [position, setPosition] = useState({ left: 0 });
-   const [getUserData, setGetUserData] = useState({});
    const [getIssueSearch, setGetIssueSearch] = useState([]);
 
    const [search, setSearch] = useState('');
@@ -68,13 +63,6 @@ function Header() {
          window.removeEventListener('resize', getElementPosition);
       };
    }, []);
-
-   const getUser = async () => {
-      const users = await userServices.getUserProfile(parseuser?._id);
-      if (users.status === 200) {
-         setGetUserData(users.data);
-      }
-   };
 
    useEffect(() => {
       getListIssueSearch();
@@ -230,8 +218,8 @@ function Header() {
                   }
                   ref={elementRef}
                >
-                  {getUserData?.img ? (
-                     <img className={cx('button-icon')} src={getUserData.img} alt="" />
+                  {dataUserProfile?.img ? (
+                     <img className={cx('button-icon')} src={dataUserProfile.img} alt="" />
                   ) : (
                      <Button
                         noChildren
@@ -244,7 +232,7 @@ function Header() {
                   )}
                </div>
                <ModalAccount
-                  getUserData={getUserData}
+                  getUserData={dataUserProfile}
                   position={position.left}
                   handleToggle={() =>
                      setToggleMenu((pre) => ({

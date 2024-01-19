@@ -1,14 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Button from '~/component/Buttton/Button';
 import { LeftIcon } from '~/component/icon/icon';
 import classNames from 'classnames/bind';
 import style from '~/layout/SideBar/SideBar.module.scss';
 import { useLocation, useParams } from 'react-router-dom';
 import SideBar from '../SideBar';
-import { ProjectContext } from '~/contexts/project/projectContext';
 const cx = classNames.bind(style);
 function SideBarChildren() {
-   const { detailProject } = useContext(ProjectContext);
    const { id } = useParams();
    const location = useLocation();
    return (

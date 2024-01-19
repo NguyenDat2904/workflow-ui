@@ -15,9 +15,8 @@ function ModalAccount({ handleToggle, position, getUserData, isOpen }) {
       setIsAuthenticated(false);
       localStorage.clear();
    };
-
    return (
-      <Modal width="234px" locationTransform={`${position - 324}px`} isOpen={isOpen} onClose={handleToggle}>
+      <Modal width="234px" locationTransform={`${position - 290}px`} isOpen={isOpen} onClose={handleToggle}>
          <div className={cx('top', 'modal-top')}>
             <div className={cx('modal-title')}>Account</div>
             <div>

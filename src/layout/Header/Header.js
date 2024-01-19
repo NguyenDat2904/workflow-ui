@@ -12,7 +12,6 @@ import UserService from '~/services/user/userServices';
 import ModelNotification from '~/component/ModelNotification/ModelNotification';
 import WorkService from '~/services/work/workServices';
 import ModalCreateIssue from './ModalCreateIssue/ModalCreateIssue';
-import { ProjectContext } from '~/contexts/project/projectContext';
 import ModalSearch from './ModalSearch/ModalSearch';
 import IssueService from '~/services/issue/issueService';
 const cx = classNames.bind(style);

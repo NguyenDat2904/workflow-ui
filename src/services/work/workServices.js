@@ -31,14 +31,14 @@ class WorkService extends BaseServices {
    }
 
    // Delete Project
-   deleteProject(id, userID) {
-      return this.patch(`projects/delete-project/${id}`, { _idUser: userID });
+   deleteProject(codeProject) {
+      return this.patch(`projects/${codeProject}/delete`);
    }
 
    // Restore project
 
    restoreProject(codeProject) {
-      return this.patch(`/projects/${codeProject}/restore-project`);
+      return this.patch(`/projects/${codeProject}/restore`);
    }
 
    deleteDirectProject(codeProject) {

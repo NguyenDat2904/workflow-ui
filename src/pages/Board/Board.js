@@ -24,7 +24,7 @@ export default function Board() {
          for (const issue of listIssues) {
             if (issue.parentIssue) {
                if (!parentIssues[issue.parentIssue]) {
-                  const parent = listIssues.filter((item) => item.id === issue.parentIssue)[0];
+                  const parent = listIssues.filter((item) => item._id === issue.parentIssue)[0];
                   parentIssues[issue.parentIssue] = {
                      ...parent,
                      subIssues: [],
@@ -36,10 +36,11 @@ export default function Board() {
             }
          }
          const uncategorizedIssues = listIssues.filter((issue) => !categorizedIssues.has(issue));
+         console.log(parentIssues);
          setListIssues(parentIssues);
          setListSingleIssues(uncategorizedIssues);
       }
-      // getIssues();
+      getIssues();
    }, []);
 
    const rightSection = (

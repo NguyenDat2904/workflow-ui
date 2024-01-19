@@ -12,7 +12,7 @@ const ViewProfile = ({ dataUserProfile }) => {
          <div className={cx('viewInfoUser')}>
             <h2>{dataUserProfile.name}</h2>
             <Link to="/manage-profile/profile-and-visibility">
-               <button className={cx('moreInformationUser')}>Edit information</button>
+               <button className={cx('moreInformationUser')}>Manage your account</button>
             </Link>
             <div className={cx('viewInfo')}>
                <div className={cx('info')}>
@@ -20,7 +20,6 @@ const ViewProfile = ({ dataUserProfile }) => {
                   <div className={cx('fillView')}>
                      <div className={cx('fillViewInfo')}>
                         <BagIcon />
-
                         <span className={cx('showProfile')}>
                            {dataUserProfile.jopTitle ? (
                               dataUserProfile.jopTitle?.slice(0, 20)
@@ -31,7 +30,6 @@ const ViewProfile = ({ dataUserProfile }) => {
                      </div>
                      <div className={cx('fillViewInfo')}>
                         <TreeIcon />
-
                         <span className={cx('showProfile')}>
                            {dataUserProfile.department ? (
                               dataUserProfile.department?.slice(0, 20)
@@ -42,7 +40,6 @@ const ViewProfile = ({ dataUserProfile }) => {
                      </div>
                      <div className={cx('fillViewInfo')}>
                         <Buiding />
-
                         <span className={cx('showProfile')}>
                            {dataUserProfile.organization ? (
                               dataUserProfile.organization?.slice(0, 20)
@@ -68,17 +65,16 @@ const ViewProfile = ({ dataUserProfile }) => {
                   <h3 className={cx('titleViewInfo')}>CONTACT</h3>
                   <div className={cx('contact')}>
                      <div className={cx('methotContact')}>
-                        <span>
+                        <span className={cx('methotContact-icon')}>
                            <Email />
                         </span>
-
                         <p className={cx('addressContact')}>{dataUserProfile.email}</p>
                      </div>
                      <div className={cx('methotContact')}>
-                        <span>
-                           <Phone className="svgPhone" />
+                        <span className={cx('methotContact-icon-phone')}>
+                           <Phone />
                         </span>
-                        <p className={cx('addressContact')}>{dataUserProfile.phone}</p>
+                        <p className={cx('addressContact')}>{dataUserProfile.phone || 'Your phone number'}</p>
                      </div>
                   </div>
                </div>

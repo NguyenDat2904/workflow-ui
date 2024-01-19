@@ -19,13 +19,15 @@
             'Droid Sans', 'Helvetica Neue', sans-serif;
       }
       .moreInformationUser {
-         padding: 5px;
+         color: #172b4d;
+         height: 32px;
+         padding: 0 12px;
          width: 100%;
          border-radius: 3px;
          margin-top: 40px;
          cursor: pointer;
          border: none;
-         font-size: inherit;
+         font-size: 14px;
          font-style: normal;
          font-family: inherit;
          font-weight: 500;
@@ -41,7 +43,7 @@
                padding: 20px 0px 20px 10px;
                display: flex;
                flex-direction: column;
-               gap: 25px;
+               gap: 20px;
                .fillViewInfo {
                   display: flex;
                   align-items: center;
@@ -63,6 +65,7 @@
                      line-height: 20px;
                      font-size: 16px;
                      .infoDefault {
+                        font-size: 14px;
                         color: #626f86;
                      }
                   }
@@ -72,12 +75,10 @@
          .viewContact {
             padding: 20px;
             .contact {
-               padding: 0px 0px 20px 20px;
                .methotContact {
                   cursor: not-allowed;
                   display: flex;
                   align-items: center;
-                  gap: 20px;
                   .addressContact {
                      overflow-wrap: break-word;
                      word-break: break-word;
@@ -85,11 +86,15 @@
                      padding: var(--ds-space-100, 8px) var(--ds-space-075, 6px) var(--ds-space-100, 8px)
                         var(--ds-space-100, 8px);
                      line-height: 20px;
-                     font-size: 16px;
+                     font-size: 14px;
                   }
-                  span {
+                  .methotContact-icon {
                      position: relative;
-                     .svgPhone,
+                     width: 28px;
+                     height: 28px;
+                     display: flex;
+                     align-items: center;
+                     justify-content: start;
                      svg {
                         margin-top: 3px;
                         width: 24px;
@@ -99,6 +104,18 @@
                         top: 50%;
                         left: 50%;
                         transform: translate(-50%, -45%);
+                     }
+                  }
+                  .methotContact-icon-phone {
+                     position: relative;
+                     width: 28px;
+                     height: 28px;
+                     display: flex;
+                     align-items: center;
+                     justify-content: start;
+                     svg {
+                        flex: 1;
+                        color: #626f86;
                      }
                   }
                }
@@ -150,7 +167,7 @@
 }
 .titleViewInfo {
    margin: 0;
-   font-size: 0.857143em;
+   font-size: 12px;
    font-style: inherit;
    line-height: 1.33333;
    color: #626f86;

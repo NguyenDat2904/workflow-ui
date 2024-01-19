@@ -30,10 +30,6 @@ class WorkService extends BaseServices {
       return this.get(`/projects/project-detail/${id}`);
    }
 
-   getListIssuesOfBoard(codeProject, param) {
-      return this.get(`/issues/broad/${codeProject}`, { params: { ...param } });
-   }
-
    // Delete Project
    deleteProject(id, userID) {
       return this.patch(`projects/delete-project/${id}`, { _idUser: userID });

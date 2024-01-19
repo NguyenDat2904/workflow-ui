@@ -30,9 +30,9 @@ class WorkService extends BaseServices {
       return this.get(`/projects/project-detail/${id}`);
    }
 
-   // Delete Sort Project
-   sortDeleteProject(id) {
-      return this.patch(`/projects/${id}/delete`);
+   // Delete Project
+   deleteProject(codeProject) {
+      return this.patch(`projects/${codeProject}/delete`);
    }
 
    // Restore project

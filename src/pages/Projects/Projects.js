@@ -42,7 +42,7 @@ function Projects() {
    // 3. Func
    // Move to Trash
    const handleMoveToTrash = async (id) => {
-      const moveToTrash = await projectService.sortDeleteProject(id);
+      const moveToTrash = await projectService.deleteProject(id);
       if (moveToTrash.status === 200) {
          getProjects();
       }

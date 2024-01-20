@@ -372,16 +372,12 @@ function DetailIssue() {
       const duration = moment.duration(currentTime.diff(commentMoment));
       let formattedTime;
       if (duration.asHours() < 1) {
-         // Thời gian dưới 1 giờ
          formattedTime = duration.minutes() + ' minutes ago';
       } else if (duration.asHours() < 24) {
-         // Thời gian từ 1 giờ đến 24 giờ
          formattedTime = duration.hours() + ' hours ago';
       } else if (duration.asDays() < 7) {
-         // Thời gian từ 1 ngày đến 6 ngày
          formattedTime = duration.days() + ' days ago';
       } else {
-         // Thời gian trên 7 ngày
          formattedTime = commentMoment.format('MMM D, YYYY');
       }
       return (
@@ -586,7 +582,6 @@ function DetailIssue() {
                <div className={cx('list-comment')}>{renderComment}</div>
             </div>
          </div>
-         <div className={cx('section-center')}></div>
          <div className={cx('section-right')}>
             <div className={cx('wrapper-right')}>
                <div className={cx('control-header-right')}>

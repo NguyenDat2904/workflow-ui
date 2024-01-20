@@ -11,6 +11,7 @@ import Modal from '~/component/Modal/Modal';
 import Dropdown from '~/component/dropdown/Dropdown';
 import ModalAccept from '~/component/ModalAccept/ModalAccept';
 import { Tooltip } from 'react-tooltip';
+import ModalAcceptChangeParent from '~/component/ModalAcceptChangeParent/ModalAcceptChangeParent';
 
 const cx = classNames.bind(style);
 function RowIssue({ data, setIssues, sprintID, members, children = false, setIssueChildren, idParent }) {
@@ -22,6 +23,7 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
    const [isTogglePrior, setIsTogglePrior] = useState(false);
    const [isToggleAssignee, setIsToggleAssignee] = useState(false);
    const [isDropDownMenu, setIsDropDownMenu] = useState(false);
+   const [isChangeParent, setIsChangeParent] = useState(false);
    const [isPending, setIsPending] = useState(false);
 
    const getListIssueSprint = async () => {
@@ -381,11 +383,22 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
             <div className={cx('menu-issue')}>
                <Dropdown
                   className={cx('custom-dropdown')}
-                  actions={[{ label: 'Delete issue', method: () => setIsDropDownMenu(true) }]}
+                  actions={[
+                     { label: 'Change parent', method: () => setIsChangeParent(true) },
+                     { label: 'Delete issue', method: () => setIsDropDownMenu(true) },
+                  ]}
                >
                   <Button backgroundNone leftIcon={<MenuIcon />} style={{ height: '32px' }}></Button>
                </Dropdown>
             </div>
+            {isChangeParent && (
+               <ModalAcceptChangeParent
+                  isOpen={isChangeParent}
+                  isClose={() => setIsChangeParent(false)}
+                  headerTitle={`Change parent`}
+                  blue
+               />
+            )}
             {isDropDownMenu && (
                <ModalAccept
                   headerTitle={`Delete ${data?.name}?`}

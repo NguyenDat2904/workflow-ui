@@ -13,7 +13,17 @@ import ModalAccept from '~/component/ModalAccept/ModalAccept';
 import { Tooltip } from 'react-tooltip';
 
 const cx = classNames.bind(style);
-function RowIssue({ data, setIssues, sprintID, members, children = false, setIssueChildren, idParent }) {
+function RowIssue({
+   data,
+   setIssues,
+   sprintID,
+   members,
+   children = false,
+   setIssueChildren,
+   idParent,
+   title,
+   getListIssue,
+}) {
    const { detailProject } = useContext(ProjectContext);
 
    const issueService = new IssueService();
@@ -27,7 +37,9 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
    const getListIssueSprint = async () => {
       // Get listIssue
       if (sprintID) {
-         const listIssue = await issueService.getIssue(detailProject?.codeProject, { sprintID: sprintID });
+         const listIssue = await issueService.getIssue(detailProject?.codeProject, {
+            sprintID: title === 'Blacklog' ? null : sprintID,
+         });
          if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
       }
    };
@@ -53,6 +65,7 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
       if (updateIssue.status === 200) {
          getListIssueSprint();
          getListIssueChildren();
+         if (title === 'Blacklog') getListIssue();
       }
       setIsPending(false);
    };
@@ -67,6 +80,7 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
       if (updateIssue.status === 200) {
          getListIssueSprint();
          getListIssueChildren();
+         if (title === 'Blacklog') getListIssue();
       }
       setIsPending(false);
    };
@@ -80,6 +94,7 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
       if (updateIssue.status === 200) {
          getListIssueSprint();
          getListIssueChildren();
+         if (title === 'Blacklog') getListIssue();
       }
       setIsPending(false);
    };
@@ -103,6 +118,7 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
       if (deleteIssue.status === 200) {
          getListIssueSprint();
          getListIssueChildren();
+         if (title === 'Blacklog') getListIssue();
       }
       setIsPending(false);
    };
@@ -126,20 +142,7 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
                }
                data-tooltip-place="top"
             >
-               <img
-                  src={
-                     data?.issueType === 'USER_STORY'
-                        ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium'
-                        : data?.issueType === 'BUG'
-                        ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium'
-                        : data?.issueType === 'TASK'
-                        ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium'
-                        : data?.issueType === 'SUB_TASK'
-                        ? 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium'
-                        : ''
-                  }
-                  alt=""
-               />
+               <img src={data?.img} alt="" />
             </div>
             <Tooltip
                id="issueType-tooltip"
@@ -158,18 +161,14 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
                <Link to={`/projects/${detailProject?.codeProject}/issues/${data?.name}`}>{data?.summary}</Link>
             </div>
             <div className={cx('control-issue')}>
-               {!children && (
-                  <div className={cx('children-issue')}>
-                     <TreeIcon />
-                  </div>
-               )}
+               {!children && <div className={cx('children-issue')}>{/* <TreeIcon /> */}</div>}
                {!children && (
                   <div
                      style={{ minWidth: '100px', padding: '0px 12px', display: 'grid', gridTemplateColumns: '150px' }}
                   >
                      <div>
                         <div className={cx('epic-issue')}>
-                           <span className={cx('epic-text')}>TC-X19</span>
+                           <span className={cx('epic-text')}></span>
                         </div>
                      </div>
                   </div>
@@ -227,6 +226,17 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
                               onClose={() => setIsToggleStatus(false)}
                               handleSubmit={(option) =>
                                  handleChangeStatus(detailProject?.codeProject, data?._id, option)
+                              }
+                              active={
+                                 data?.status === 'TODO'
+                                    ? 'TO DO'
+                                    : data?.status === 'INPROGRESS'
+                                    ? 'IN PROGRESS'
+                                    : data?.status === 'REVIEW'
+                                    ? 'IN REVIEW'
+                                    : data?.status === 'DONE'
+                                    ? 'DONE'
+                                    : ''
                               }
                               status
                               data={[
@@ -388,6 +398,7 @@ function RowIssue({ data, setIssues, sprintID, members, children = false, setIss
             </div>
             {isDropDownMenu && (
                <ModalAccept
+                  btn="Delete"
                   headerTitle={`Delete ${data?.name}?`}
                   isOpen={isDropDownMenu}
                   isClose={() => setIsDropDownMenu(false)}

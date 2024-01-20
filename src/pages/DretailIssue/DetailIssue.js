@@ -434,6 +434,7 @@ function DetailIssue() {
                         <span onClick={() => setIsAcceptDeleteComment(comment._id)}>Delete</span>
                         {isAcceptDeleteComment === comment._id && (
                            <ModalAccept
+                              btn="Delete"
                               headerTitle="Delete this comment?"
                               title="Once you delete, it's gone for good."
                               isOpen={isAcceptDeleteComment}
@@ -599,6 +600,7 @@ function DetailIssue() {
                </div>
                {isToggleAcceptDeleteIssue && (
                   <ModalAccept
+                     btn="Delete"
                      headerTitle={`Delete ${detailIssue?.name}?`}
                      isOpen={isToggleAcceptDeleteIssue}
                      isClose={() => setIsToggleAcceptDeleteIssue(false)}
@@ -747,6 +749,7 @@ function DetailIssue() {
                                              handleChangeSprint(param?.id, detailIssue?._id, option)
                                           }
                                           status
+                                          active={detailIssue.sprint?.name}
                                           data={dataLabelSprint.reverse()}
                                        />
                                     </Modal>

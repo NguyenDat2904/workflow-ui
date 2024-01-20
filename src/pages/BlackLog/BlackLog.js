@@ -84,7 +84,10 @@ function BlackLog() {
                      handleCreateSprint={handleCreateSprint}
                      setPrints={setPrints}
                      members={members}
-                     data={[]}
+                     sprints={sprints}
+                     checkedTypes={checkedTypes}
+                     selectedMembers={selectedMembers}
+                     getListSprints={getListSprints}
                   />
                </div>
             </div>

@@ -6,7 +6,7 @@ import style from './ModalAccept.module.scss';
 import Button from '../Buttton/Button';
 
 const cx = classNames.bind(style);
-function ModalAccept({ isOpen, isClose, name, title, handleAccept, headerTitle, blue }) {
+function ModalAccept({ isOpen, isClose, name, title, handleAccept, headerTitle, blue, btn }) {
    const [isLoading, setIsLoading] = useState(false);
    console.log(isLoading);
    return (
@@ -26,6 +26,7 @@ function ModalAccept({ isOpen, isClose, name, title, handleAccept, headerTitle, 
          <div className={cx('btn-group')}>
             <Button onClick={isClose}>Cancel</Button>
             <Button
+               center
                style={{ minWidth: '71px' }}
                blue={blue ? true : false}
                warning={blue ? false : true}
@@ -36,7 +37,7 @@ function ModalAccept({ isOpen, isClose, name, title, handleAccept, headerTitle, 
                   setIsLoading(false);
                }}
             >
-               {isLoading ? <LoadingIcon /> : <span>{blue ? 'Restore' : 'Delete'}</span>}
+               {isLoading ? <LoadingIcon /> : <span>{blue ? 'Restore' : btn}</span>}
             </Button>
          </div>
       </ModalIcon>

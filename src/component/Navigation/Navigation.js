@@ -74,6 +74,7 @@ function Navigation({ isOpen, onClose }) {
                            <ModalSelect
                               width="100%"
                               setValue={setRole}
+                              value={role}
                               data={[
                                  {
                                     label: 'Manager',

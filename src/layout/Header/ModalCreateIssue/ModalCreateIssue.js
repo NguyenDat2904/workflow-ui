@@ -438,6 +438,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
                               <ModalSelect
                                  onClose={() => handleBooleanSelect('codeProject')}
                                  setValue={setProject}
+                                 value={project}
                                  data={filterDataproject}
                                  width="50%"
                                  widthImg="24px"

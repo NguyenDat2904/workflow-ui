@@ -1,40 +1,23 @@
 .container-issue {
-   --ds-columns-num: 12;
-   --ds-grid-spacing: 40px;
    display: flex;
    position: relative;
-   max-width: 100%;
    align-items: normal;
+
    .section-left {
-      --_5qq0z5: hidden;
-      --_bpn462: auto;
-      --_xhypko: 0px;
-      --_8gjczv: 1680px;
-      padding-left: max(calc((100% - var(--_8gjczv)) / 2), 0px);
-      min-width: 380px;
-      overflow-y: var(--_bpn462);
-      overflow-x: var(--_5qq0z5);
+      min-height: 90vh;
       flex-basis: 0;
       flex-shrink: 0;
       flex-grow: 1;
       max-height: 600px;
-   }
-   .section-center {
-      --_1ravlqm: var(--c-);
-      --_1o4cubd: translate3d(-50%, 0, 0);
-      width: 26px;
+      overflow-y: scroll;
    }
    .section-right {
       flex: 0 1 calc(35% + 12px);
-      --_5qq0z5: hidden;
-      --_bpn462: auto;
       --_xhypko: 255px;
       --_8gjczv: 1680px;
       transition: min-width 0.15s;
       min-width: max(calc((100% - var(--_8gjczv)) / 2 + var(--_xhypko)), var(--_xhypko));
       padding-right: max(calc((100% - var(--_8gjczv)) / 2), 0px);
-      overflow-y: var(--_bpn462);
-      overflow-x: var(--_5qq0z5);
    }
 }
 .wrapper-left {

@@ -372,16 +372,12 @@ function DetailIssue() {
       const duration = moment.duration(currentTime.diff(commentMoment));
       let formattedTime;
       if (duration.asHours() < 1) {
-         // Thời gian dưới 1 giờ
          formattedTime = duration.minutes() + ' minutes ago';
       } else if (duration.asHours() < 24) {
-         // Thời gian từ 1 giờ đến 24 giờ
          formattedTime = duration.hours() + ' hours ago';
       } else if (duration.asDays() < 7) {
-         // Thời gian từ 1 ngày đến 6 ngày
          formattedTime = duration.days() + ' days ago';
       } else {
-         // Thời gian trên 7 ngày
          formattedTime = commentMoment.format('MMM D, YYYY');
       }
       return (
@@ -544,22 +540,7 @@ function DetailIssue() {
                      </div>
                   )}
                </div>
-               <div className={cx('issue-children-header', 'issue-children')}>
-                  <h2>Active</h2>
-               </div>
-               <div className={cx('issue-children-header')}>
-                  <div className={cx('flex-start', 'show')}>
-                     <span>Show: </span>
-                     <div className={cx('comment')}>
-                        <span> Comment</span>
-                     </div>
-                  </div>
-                  <div className={cx('sort-comment')}>
-                     <Button backgroundNone rightIcon={<DownIcon />} style={{ height: '24px' }}>
-                        Newest first
-                     </Button>
-                  </div>
-               </div>
+               <h2 className={cx('issue-children-header', 'issue-children')}>Comment</h2>
                <div className={cx('flex-start', 'issue-children')}>
                   <div className={cx('img-comment')}>
                      <img
@@ -587,7 +568,6 @@ function DetailIssue() {
                <div className={cx('list-comment')}>{renderComment}</div>
             </div>
          </div>
-         <div className={cx('section-center')}></div>
          <div className={cx('section-right')}>
             <div className={cx('wrapper-right')}>
                <div className={cx('control-header-right')}>

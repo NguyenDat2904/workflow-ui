@@ -26,7 +26,7 @@ function SideBarParent() {
                         style={{ marginTop: '6px', gap: '12px' }}
                      >
                         <span className={cx(location.pathname === `/project/${id}/black-log` && 'css-active')}>
-                           Blacklog
+                           Backlog
                         </span>
                      </Button>
                      <Button

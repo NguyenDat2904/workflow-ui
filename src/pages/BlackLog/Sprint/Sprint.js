@@ -117,7 +117,7 @@ function Sprint({
                   noHover
                   style={{ cursor: 'pointer', height: '32px' }}
                ></Button>
-               <div className={cx('name-sprint')}>{title === 'Blacklog' ? 'Blacklog' : data.name}</div>
+               <div className={cx('name-sprint')}>{title === 'Backlog' ? 'Backlog' : data.name}</div>
                <div className={cx('date-sprint')}>
                   {formattedDateStart} - {formattedDateEnd}
                </div>
@@ -136,7 +136,7 @@ function Sprint({
                   <span>{issues.filter((item) => item.status === 'DONE')?.length || 0}</span>
                </span>
                <div className={cx('setting-issue')}>
-                  {title === 'Blacklog' ? (
+                  {title === 'Backlog' ? (
                      <>
                         <Button style={{ cursor: 'pointer', height: '32px' }} onClick={handleCreateSprint}>
                            Create sprint
@@ -231,11 +231,11 @@ function Sprint({
                   <div className={cx('no-sprint')}>
                      <div
                         className={cx('no-sprint-content')}
-                        style={{ minHeight: (data.name === 'Blacklog' || !start) && '1pc' }}
+                        style={{ minHeight: (data.name === 'Backlog' || !start) && '1pc' }}
                      >
-                        {data.name !== 'Blacklog' && start && <div className={cx('no-sprint-img')}></div>}
+                        {data.name !== 'Backlog' && start && <div className={cx('no-sprint-img')}></div>}
                         <div className={cx('no-sprint-text')}>
-                           {data.name !== 'Blacklog' && start ? (
+                           {data.name !== 'Backlog' && start ? (
                               <>
                                  <p>Plan your sprint</p>
                                  <div>

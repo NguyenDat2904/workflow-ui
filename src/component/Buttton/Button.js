@@ -28,6 +28,7 @@ function Button({
    onClick,
    warning,
    type,
+   center,
    ...passProps
 }) {
    let Comp = 'button';
@@ -59,7 +60,11 @@ function Button({
    return (
       <Comp className={classes} {..._props}>
          {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
-         {children && <span className={cx('title')}>{children}</span>}
+         {children && (
+            <span className={cx('title')} style={{ justifyContent: center && 'center' }}>
+               {children}
+            </span>
+         )}
          {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
       </Comp>
    );

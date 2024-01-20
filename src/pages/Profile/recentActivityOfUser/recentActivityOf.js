@@ -15,7 +15,6 @@ const RecentActivityOfUser = () => {
    useEffect(() => {
       APIListProject();
    }, []);
-
    return (
       <div className={cx('recentActivityOf')}>
          <div className={cx('titleRecentActivityOf')}>

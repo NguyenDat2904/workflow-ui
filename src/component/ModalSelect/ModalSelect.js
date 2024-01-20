@@ -8,6 +8,7 @@ function ModalSelect({
    width,
    widthImg,
    setValue,
+   active,
    onClose,
    handleSubmit,
    status,
@@ -29,7 +30,7 @@ function ModalSelect({
          <label htmlFor={option?.label} key={index}>
             <div
                style={{ height: heightRow }}
-               className={cx('item', index === 0 && 'action')}
+               className={cx('item')}
                onClick={() => {
                   handleOptionClick(option);
                   if (handleSubmit) handleSubmit(option);

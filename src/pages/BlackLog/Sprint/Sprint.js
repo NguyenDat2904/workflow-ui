@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from '../BlackLog.module.scss';
-import { AddIcon, DownIcon, MenuIcon } from '~/component/icon/icon';
+import { AddIcon, DownIcon, MenuIcon, RightArrowIcon } from '~/component/icon/icon';
 import RowIssue from '../RowIssue/RowIssue';
 import Button from '~/component/Buttton/Button';
 import Dropdown from '~/component/dropdown/Dropdown';
@@ -17,7 +17,7 @@ import Modal from '~/component/Modal/Modal';
 const cx = classNames.bind(style);
 
 function Sprint({
-   data,
+   data = [],
    start = false,
    handleCreateSprint,
    setPrints,
@@ -41,7 +41,7 @@ function Sprint({
    // 2. UseEffect
    useEffect(() => {
       getListIssue();
-   }, [checkedTypes, selectedMembers, sprints]);
+   }, [checkedTypes, selectedMembers, sprints, title]);
    // 3. Handle
    const handleDropDown = () => {
       setDropdownOpen(!isDropdownOpen);
@@ -66,7 +66,7 @@ function Sprint({
    const getListIssue = async () => {
       const assignee = selectedMembers?.map((item) => encodeURIComponent(item)).join('-');
       const listIssue = await issueService.getIssue(detailProject?.codeProject, {
-         sprintID: data._id,
+         sprintID: title === 'Blacklog' ? 'null' : data._id,
          assignee: assignee ? assignee : null,
          ...params(),
       });
@@ -81,10 +81,25 @@ function Sprint({
       }
    };
 
+   useEffect(() => {
+      if (title === 'Blacklog') setDropdownOpen(true);
+      if (start) setDropdownOpen(true);
+   }, []);
+
    // 4. Render
    const renderIssue = issues
       ?.map((issue) => {
-         return <RowIssue key={issue._id} data={issue} setIssues={setIssues} sprintID={data._id} members={members} />;
+         return (
+            <RowIssue
+               title={title}
+               key={issue._id}
+               data={issue}
+               setIssues={setIssues}
+               sprintID={data._id}
+               members={members}
+               getListIssue={getListIssue}
+            />
+         );
       })
       .reverse();
    const formattedDateStart = moment(data.startDate).format('D MMM');
@@ -111,16 +126,18 @@ function Sprint({
                data-drop-target-for-element={isDropdownOpen}
             >
                <Button
-                  leftIcon={<DownIcon />}
+                  leftIcon={isDropdownOpen ? <DownIcon /> : <RightArrowIcon />}
                   backgroundNone
                   noChildren
                   noHover
                   style={{ cursor: 'pointer', height: '32px' }}
                ></Button>
                <div className={cx('name-sprint')}>{title === 'Blacklog' ? 'Blacklog' : data.name}</div>
-               <div className={cx('date-sprint')}>
-                  {formattedDateStart} - {formattedDateEnd}
-               </div>
+               {title !== 'Blacklog' && (
+                  <div className={cx('date-sprint')}>
+                     {formattedDateStart} - {formattedDateEnd}
+                  </div>
+               )}
                <div className={cx('date-sprint')}>({issues?.length ? issues?.length : '0'} issues)</div>
             </div>
             <div className={cx('header-right')}>
@@ -136,7 +153,7 @@ function Sprint({
                   <span>{issues.filter((item) => item.status === 'DONE')?.length || 0}</span>
                </span>
                <div className={cx('setting-issue')}>
-                  {title === 'Blacklog' ? (
+                  {title === 'Backlog' ? (
                      <>
                         <Button style={{ cursor: 'pointer', height: '32px' }} onClick={handleCreateSprint}>
                            Create sprint
@@ -212,6 +229,7 @@ function Sprint({
                         )}
                         {isToggleAccept && (
                            <ModalAccept
+                              btn="Delete"
                               headerTitle="Delete sprint"
                               isOpen={isToggleAccept}
                               isClose={() => setIsToggleAccept(false)}
@@ -231,11 +249,11 @@ function Sprint({
                   <div className={cx('no-sprint')}>
                      <div
                         className={cx('no-sprint-content')}
-                        style={{ minHeight: (data.name === 'Blacklog' || !start) && '1pc' }}
+                        style={{ minHeight: (data.name === 'Backlog' || !start) && '1pc' }}
                      >
-                        {data.name !== 'Blacklog' && start && <div className={cx('no-sprint-img')}></div>}
+                        {data.name !== 'Backlog' && start && <div className={cx('no-sprint-img')}></div>}
                         <div className={cx('no-sprint-text')}>
-                           {data.name !== 'Blacklog' && start ? (
+                           {data.name !== 'Backlog' && start ? (
                               <>
                                  <p>Plan your sprint</p>
                                  <div>
@@ -266,7 +284,7 @@ function Sprint({
                         </Button>
                      ) : (
                         <Modal isOpen={true} relative onClose={() => setIsFocus(true)}>
-                           <CreateIssue setIssues={setIssues} idPrint={data?._id} paramsFunc={params} />
+                           <CreateIssue title={title} setIssues={setIssues} idPrint={data?._id} paramsFunc={params} />
                         </Modal>
                      )}
                   </div>

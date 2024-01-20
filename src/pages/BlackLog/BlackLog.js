@@ -80,11 +80,14 @@ function BlackLog() {
                <div className={cx('sprint-dropdown')}>
                   {renderSprint}
                   <Sprint
-                     title="Blacklog"
+                     title="Backlog"
                      handleCreateSprint={handleCreateSprint}
                      setPrints={setPrints}
                      members={members}
-                     data={[]}
+                     sprints={sprints}
+                     checkedTypes={checkedTypes}
+                     selectedMembers={selectedMembers}
+                     getListSprints={getListSprints}
                   />
                </div>
             </div>

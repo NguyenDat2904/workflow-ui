@@ -69,13 +69,13 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
          codeProject: '',
          issueType: '',
          summary: '',
-         assignee: '',
-         reporter: '',
+         assignee: null,
+         reporter: null,
          priority: '',
-         sprint: '',
+         sprint: null,
          storyPointEstimate: '',
-         startDate: '',
-         dueDate: '',
+         startDate: null,
+         dueDate:null,
          description: '',
          img: '',
          parentIssue: null,
@@ -438,6 +438,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
                               <ModalSelect
                                  onClose={() => handleBooleanSelect('codeProject')}
                                  setValue={setProject}
+                                 value={project}
                                  data={filterDataproject}
                                  width="50%"
                                  widthImg="24px"

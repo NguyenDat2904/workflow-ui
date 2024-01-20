@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import classNames from 'classnames/bind';
 import { useParams } from 'react-router-dom';
 import style from './Board.scss';
@@ -7,14 +7,22 @@ import HeaderProject from '../BlackLog/HeaderProject/HeaderProject';
 import Issue from './Issue';
 import WorkService from '~/services/work/workServices';
 import { IssueIcon } from './IssueIcon';
+import ModalCompleteSprint from '../BlackLog/ModalCompleteSprint/ModalCompleteSprint';
+import { ProjectContext } from '~/contexts/project/projectContext';
 
 const cx = classNames.bind(style);
 
 export default function Board() {
+   const { detailProject } = useContext(ProjectContext);
    const BoardWorkService = new WorkService();
    const [listIssues, setListIssues] = useState({});
    const [listSingleIssues, setListSingleIssues] = useState([]);
+   const [isToggleComplete, setIsToggleComplete] = useState(false);
+   const [checkedTypes, setCheckedTypes] = useState([]);
+   const [members, setMembers] = useState([]);
+   const [selectedMembers, setSelectedMembers] = useState([]);
    const { id } = useParams();
+
    useEffect(() => {
       async function getIssues() {
          const listIssuesData = await BoardWorkService.getListIssuesOfBoard(id, {});
@@ -36,23 +44,42 @@ export default function Board() {
             }
          }
          const uncategorizedIssues = listIssues.filter((issue) => !categorizedIssues.has(issue));
-         console.log(parentIssues);
          setListIssues(parentIssues);
          setListSingleIssues(uncategorizedIssues);
       }
+
+      async function getMembers() {
+         const listMembers = await BoardWorkService.getMember({ codeProject: detailProject?.codeProject });
+         if (listMembers.status === 200) setMembers(listMembers.data);
+      }
+
       getIssues();
+      getMembers();
    }, []);
 
    const rightSection = (
       <div className={cx('sprint-buttons')}>
-         <Button buttonStyle="filled">Complete Sprint</Button>
+         <Button buttonStyle="filled" onClick={() => setIsToggleComplete(true)}>
+            Complete Sprint
+         </Button>
          <Button>Edit Sprint</Button>
       </div>
    );
 
    return (
       <div className={cx('board')}>
-         <HeaderProject headerName={'Board'} rightSection={rightSection} />
+         {isToggleComplete && (
+            <ModalCompleteSprint isOpen={isToggleComplete} isClose={() => setIsToggleComplete(false)} />
+         )}
+         <HeaderProject
+            headerName={'Board'}
+            checkedTypes={checkedTypes}
+            setCheckedTypes={setCheckedTypes}
+            rightSection={rightSection}
+            members={members}
+            selectedMembers={selectedMembers}
+            setSelectedMembers={setSelectedMembers}
+         />
          <div className={cx('task-board')}>
             <div className={cx('task-status')}>
                <div>To do</div>
@@ -70,23 +97,28 @@ export default function Board() {
                      <div className={cx('sub-tasks-container')}>
                         <div className={cx('sub-tasks')}>
                            {listIssues[key].subIssues.map(
-                              (issue, index) => issue.status === 'TODO' && <Issue key={index} issueDetail={issue} />,
+                              (issue, index) =>
+                                 issue.status === 'TODO' && <Issue key={index} projectId={id} issueDetail={issue} />,
                            )}
                         </div>
                         <div className={cx('sub-tasks')}>
                            {listIssues[key].subIssues.map(
                               (issue, index) =>
-                                 issue.status === 'INPROGRESS' && <Issue key={index} issueDetail={issue} />,
+                                 issue.status === 'INPROGRESS' && (
+                                    <Issue key={index} projectId={id} issueDetail={issue} />
+                                 ),
                            )}
                         </div>
                         <div className={cx('sub-tasks')}>
                            {listIssues[key].subIssues.map(
-                              (issue, index) => issue.status === 'REVIEW' && <Issue key={index} issueDetail={issue} />,
+                              (issue, index) =>
+                                 issue.status === 'REVIEW' && <Issue key={index} projectId={id} issueDetail={issue} />,
                            )}
                         </div>
                         <div className={cx('sub-tasks')}>
                            {listIssues[key].subIssues.map(
-                              (issue, index) => issue.status === 'DONE' && <Issue key={index} issueDetail={issue} />,
+                              (issue, index) =>
+                                 issue.status === 'DONE' && <Issue key={index} projectId={id} issueDetail={issue} />,
                            )}
                         </div>
                      </div>
@@ -100,22 +132,26 @@ export default function Board() {
                   <div className={cx('sub-tasks-container')}>
                      <div className={cx('sub-tasks', 'final')}>
                         {listSingleIssues.map(
-                           (issue, index) => issue.status === 'TODO' && <Issue key={index} issueDetail={issue} />,
+                           (issue, index) =>
+                              issue.status === 'TODO' && <Issue key={index} projectId={id} issueDetail={issue} />,
                         )}
                      </div>
                      <div className={cx('sub-tasks', 'final')}>
                         {listSingleIssues.map(
-                           (issue, index) => issue.status === 'INPROGRESS' && <Issue key={index} issueDetail={issue} />,
+                           (issue, index) =>
+                              issue.status === 'INPROGRESS' && <Issue key={index} projectId={id} issueDetail={issue} />,
                         )}
                      </div>
                      <div className={cx('sub-tasks', 'final')}>
                         {listSingleIssues.map(
-                           (issue, index) => issue.status === 'REVIEW' && <Issue key={index} issueDetail={issue} />,
+                           (issue, index) =>
+                              issue.status === 'REVIEW' && <Issue key={index} projectId={id} issueDetail={issue} />,
                         )}
                      </div>
                      <div className={cx('sub-tasks', 'final')}>
                         {listSingleIssues.map(
-                           (issue, index) => issue.status === 'DONE' && <Issue key={index} issueDetail={issue} />,
+                           (issue, index) =>
+                              issue.status === 'DONE' && <Issue key={index} projectId={id} issueDetail={issue} />,
                         )}
                      </div>
                   </div>

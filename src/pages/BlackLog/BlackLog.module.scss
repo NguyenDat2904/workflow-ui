@@ -16,7 +16,6 @@
    max-width: 100%;
    height: auto !important;
    padding-left: var(--ds-space-500, 40px);
-   overflow-y: hidden;
    overflow-x: hidden;
    flex-basis: 0%;
    flex-shrink: 1;
@@ -25,7 +24,6 @@
 .sprint-dropdown {
    --_eeotj0: 29;
    padding: 0 var(--ds-space-400, 2pc) var(--ds-space-600, 3pc) 0;
-   overflow-y: scroll;
    position: relative;
    flex-shrink: 1;
    flex-grow: 1;
@@ -35,7 +33,6 @@
    flex-basis: 0%;
    flex-shrink: 1;
    flex-grow: 1;
-   max-height: 473px;
    .sprint-block {
       min-width: 626px;
       margin: 0px 0px 8px;

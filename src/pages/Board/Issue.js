@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import style from './Board.scss';
 import classNames from 'classnames/bind';
 import { Card } from '~/component/cards/Cards';
@@ -11,7 +12,13 @@ import { IssueIcon } from './IssueIcon';
 
 const cx = classNames.bind(style);
 
-export default function Issue({ issueDetail, ...props }) {
+export default function Issue({ issueDetail, projectId, ...props }) {
+   const navigate = useNavigate();
+
+   function handleChangingPage() {
+      navigate(`/projects/${projectId}/issues/${issueDetail.name}`);
+   }
+
    let priorityIcon;
    if (issueDetail.priority === 'High') {
       priorityIcon = <UpArrow />;
@@ -27,7 +34,7 @@ export default function Issue({ issueDetail, ...props }) {
 
    return (
       <Card className={cx('task')} {...props}>
-         <p>{issueDetail.summary}</p>
+         <p onClick={handleChangingPage}>{issueDetail.summary}</p>
          <div className={cx('metadata')}>
             <IssueIcon type={issueDetail.issueType} />
             <span>

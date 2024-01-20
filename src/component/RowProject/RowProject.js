@@ -14,6 +14,7 @@ function RowProject({ project, handleMoveToTrash, trash, handleDeletePer, handle
    const [toggle, setToggle] = useState(false);
    const [isToggleAcceptRestore, setIsToggleAcceptRestore] = useState(false);
    const [isToggleAcceptDelete, setIsToggleAcceptDelete] = useState(false);
+   const [isToggleAcceptMoveToTrash, setIsToggleAcceptMoveToTrash] = useState(false);
 
    const formattedDate = moment(project?.deleteAt).format('MMM D, YYYY');
    const futureDate = moment(project?.deleteAt).add(60, 'days');
@@ -37,11 +38,23 @@ function RowProject({ project, handleMoveToTrash, trash, handleDeletePer, handle
          )}
          {isToggleAcceptDelete && (
             <ModalAccept
+               btn="Delete"
                headerTitle={`Delete  “${project?.nameProject}“`}
                isOpen={isToggleAcceptDelete}
                isClose={() => setIsToggleAcceptDelete(false)}
                title="The project along with its issues, components, attachments, and versions will be deleted forever. "
                handleAccept={() => handleDeletePer(project?.codeProject)}
+            />
+         )}
+         {isToggleAcceptMoveToTrash && (
+            <ModalAccept
+               waring
+               btn="Move"
+               headerTitle={`Move to trash?“`}
+               isOpen={isToggleAcceptMoveToTrash}
+               isClose={() => setIsToggleAcceptMoveToTrash(false)}
+               title="The project along with its issues, components, attachments, and versions will be available in the trash for 60 days after which it will be permanently deleted."
+               handleAccept={() => handleMoveToTrash(project?.codeProject)}
             />
          )}
          <tr className={cx('row')}>
@@ -56,7 +69,7 @@ function RowProject({ project, handleMoveToTrash, trash, handleDeletePer, handle
                      </div>
                      <div className={cx('name')}>
                         <div>
-                           <Link to={`/project/${project.codeProject}/board`}>{project.nameProject}</Link>
+                           <Link to={!trash && `/project/${project.codeProject}/board`}>{project.nameProject}</Link>
                         </div>
                      </div>
                   </div>
@@ -115,8 +128,8 @@ function RowProject({ project, handleMoveToTrash, trash, handleDeletePer, handle
                      codeProject={project?.codeProject}
                      id={project?._id}
                      onClick={() => {
-                        handleMoveToTrash(project?.codeProject);
                         setToggle(false);
+                        setIsToggleAcceptMoveToTrash(true);
                      }}
                      handleDeletePer={() => {
                         setIsToggleAcceptDelete(true);

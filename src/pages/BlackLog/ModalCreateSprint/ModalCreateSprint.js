@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './ModalCreateSprint.module.scss';
 import ModalIcon from '~/pages/DetailProject/ModalIcon/ModalIcon';
@@ -35,6 +35,10 @@ function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_a
       isClose();
       setIsLoading(false);
    };
+   useEffect(() => {
+      form.setValue('startDate', data?.startDate?.substring(0, 10));
+      form.setValue('endDate', data?.endDate?.substring(0, 10));
+   }, []);
 
    return (
       <ModalIcon
@@ -53,7 +57,13 @@ function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_a
             </div>
             <div style={{ marginTop: 'var(--ds-space-100, 8px)' }}>
                <ControllerForm form={form} name="startDate" label="Start date" required id="sprint_start">
-                  <Input type="date" id="sprint_start" search="search" style={{ width: '250px' }} />
+                  <Input
+                     type="date"
+                     id="sprint_start"
+                     search="search"
+                     style={{ width: '250px' }}
+                     value={form.watch('startDate')}
+                  />
                </ControllerForm>
             </div>
             <div style={{ marginTop: 'var(--ds-space-100, 8px)' }}>

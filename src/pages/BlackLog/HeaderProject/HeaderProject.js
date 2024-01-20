@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './HeaderProject.module.scss';
 import NavUrl from '~/component/NavUrl/NavUrl';
@@ -78,10 +78,9 @@ function HeaderProject({
 
    const renderMember = members?.map((member, index) => {
       return (
-         <>
+         <Fragment key={member?._id}>
             <div
                className={cx('item-icon')}
-               key={member?._id}
                data-tooltip-id="member-tooltip"
                data-tooltip-content={member?.name}
                data-tooltip-place="top"
@@ -121,7 +120,7 @@ function HeaderProject({
                   maxWidth: '240px',
                }}
             />
-         </>
+         </Fragment>
       );
    });
 

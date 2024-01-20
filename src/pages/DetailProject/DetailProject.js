@@ -11,19 +11,22 @@ import Skeleton from 'react-loading-skeleton';
 import { UserContext } from '~/contexts/user/userContext';
 import WorkService from '~/services/work/workServices';
 import { ProjectContext } from '~/contexts/project/projectContext';
+import ModalAccept from '~/component/ModalAccept/ModalAccept';
 const cx = classNames.bind(style);
 function DetailProject() {
    const navigate = useNavigate();
    const { loadingDetailsProject, parseuser } = useContext(UserContext);
    const { detailProject } = useContext(ProjectContext);
    const [toggle, setToggle] = useState(false);
+   const [toggleMoveToTrash, setToggleMoveToTrash] = useState(false);
+
    const params = useParams();
    const projectService = new WorkService();
 
    // 3. Func
    const handleMoveToTrash = async (id) => {
       const moveToTrash = await projectService.deleteProject(id, parseuser?._id);
-      if (moveToTrash === 200) {
+      if (moveToTrash.status === 200) {
          navigate('/project');
       }
    };
@@ -63,16 +66,30 @@ function DetailProject() {
                            </div>
                            <div className={cx('details-button')}>
                               <div onClick={() => setToggle(true)}>
-                                 <Button noChildren backgroundNone leftIcon={<MenuIcon />}></Button>
+                                 <Button backgroundNone leftIcon={<MenuIcon />} style={{ height: '32px' }}></Button>
                               </div>
                               <MenuProject
-                                 onClick={() => handleMoveToTrash(params?.id)}
+                                 onClick={() => {
+                                    setToggleMoveToTrash(true);
+                                    setToggle(false);
+                                 }}
                                  isOpen={toggle}
                                  onClose={() => setToggle(false)}
                               />
                            </div>
                         </div>
                      </div>
+                     {toggleMoveToTrash && (
+                        <ModalAccept
+                           waring
+                           btn="Move"
+                           headerTitle={`Move to trash?“`}
+                           isOpen={toggleMoveToTrash}
+                           isClose={() => setToggleMoveToTrash(false)}
+                           title="The project along with its issues, components, attachments, and versions will be available in the trash for 60 days after which it will be permanently deleted."
+                           handleAccept={() => handleMoveToTrash(params?.id)}
+                        />
+                     )}
                      <div className={cx('details-form')}>
                         <FormChangeProject id={params?.id} />
                      </div>

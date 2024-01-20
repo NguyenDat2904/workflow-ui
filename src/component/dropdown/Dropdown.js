@@ -14,7 +14,6 @@ const Dropdown = ({ children, actions, target, className }) => {
             setIsOpen(false); // Close the dropdown explicitly
          }
       };
-
       // If the dropdown is open, listen for clicks on the page
       if (isOpen) {
          window.addEventListener('click', pageClickEvent);

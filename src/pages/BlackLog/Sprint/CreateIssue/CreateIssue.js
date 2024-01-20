@@ -13,7 +13,7 @@ import style from '../../BlackLog.module.scss';
 
 const cx = classNames.bind(style);
 
-function CreateIssue({ setIssues, idPrint, idParent, paramsFunc = () => {}, children = false }) {
+function CreateIssue({ setIssues, idPrint, idParent, paramsFunc = () => {}, children = false, title }) {
    const { detailProject } = useContext(ProjectContext);
    const issueService = new IssueService();
    const [loading, setLoading] = useState(false);
@@ -37,15 +37,18 @@ function CreateIssue({ setIssues, idPrint, idParent, paramsFunc = () => {}, chil
       }
       const dataIssue = {
          ...dataForm,
+         img: children
+            ? 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium'
+            : valueTask.img,
          issueType: children ? 'SUB_TASK' : valueTask.key,
-         sprint: idPrint,
+         sprint: title === 'Blacklog' ? null : idPrint,
          parentIssue: idParent ? idParent : null,
       };
       setLoading(true);
       const createIssue = await issueService.createIssue(detailProject?.codeProject, dataIssue);
       if (createIssue.status === 200) {
          const listIssue = await issueService.getIssue(detailProject?.codeProject, {
-            sprintID: idPrint,
+            sprintID: title === 'Blacklog' ? 'null' : idPrint,
             parentIssueID: idParent,
             ...paramsFunc(),
          });

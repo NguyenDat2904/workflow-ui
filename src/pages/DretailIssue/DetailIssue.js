@@ -539,22 +539,7 @@ function DetailIssue() {
                      </div>
                   )}
                </div>
-               <div className={cx('issue-children-header', 'issue-children')}>
-                  <h2>Active</h2>
-               </div>
-               <div className={cx('issue-children-header')}>
-                  <div className={cx('flex-start', 'show')}>
-                     <span>Show: </span>
-                     <div className={cx('comment')}>
-                        <span> Comment</span>
-                     </div>
-                  </div>
-                  <div className={cx('sort-comment')}>
-                     <Button backgroundNone rightIcon={<DownIcon />} style={{ height: '24px' }}>
-                        Newest first
-                     </Button>
-                  </div>
-               </div>
+               <h2 className={cx('issue-children-header', 'issue-children')}>Comment</h2>
                <div className={cx('flex-start', 'issue-children')}>
                   <div className={cx('img-comment')}>
                      <img

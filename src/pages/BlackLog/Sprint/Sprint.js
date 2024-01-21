@@ -89,6 +89,7 @@ function Sprint({
    // 4. Render
    const renderIssue = issues
       ?.map((issue) => {
+         console.log(title);
          return (
             <RowIssue
                title={title}

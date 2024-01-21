@@ -209,6 +209,11 @@ function HeaderProject({
                                     key: 'TASK',
                                     img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium',
                                  },
+                                 {
+                                    label: 'Subtask',
+                                    key: 'SUB_TASK',
+                                    img: 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium',
+                                 },
                               ]}
                            />
                         </Modal>

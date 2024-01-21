@@ -8,8 +8,6 @@ import { LoadingIcon } from '~/component/icon/icon';
 import SprintService from '~/services/sprint/SprintService';
 const cx = classNames.bind(style);
 function ModalCompleteSprint({ isOpen, isClose, issues, data, detailProject, getListIssue, setPrints }) {
-   console.log({ isOpen, isClose, issues, data, detailProject, getListIssue, setPrints });
-
    const sprintService = new SprintService();
    const [isLoading, setIsLoading] = useState(false);
 

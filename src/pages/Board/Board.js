@@ -27,7 +27,6 @@ export default function Board() {
    useEffect(() => {
       async function getIssues() {
          const listIssuesData = await BoardWorkService.getListIssuesOfBoard(id, {});
-         console.log(listIssuesData.data);
          const listIssues = listIssuesData.data.issuesBroad;
          console.log(listIssues);
          const parentIssues = {};
@@ -47,7 +46,6 @@ export default function Board() {
             }
          }
          const uncategorizedIssues = listIssues.filter((issue) => !categorizedIssues.has(issue));
-         console.log(parentIssues, uncategorizedIssues);
          setAllIssues(listIssues);
          setListIssues(parentIssues);
          setListSingleIssues(uncategorizedIssues);
@@ -61,6 +59,10 @@ export default function Board() {
       getIssues();
       getMembers();
    }, []);
+
+   useEffect(() => {
+      console.log(checkedTypes);
+   }, [checkedTypes]);
 
    const rightSection = (
       <div className={cx('sprint-buttons')}>

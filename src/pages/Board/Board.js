@@ -15,6 +15,7 @@ const cx = classNames.bind(style);
 export default function Board() {
    const { detailProject } = useContext(ProjectContext);
    const BoardWorkService = new WorkService();
+   const [allIssues, setAllIssues] = useState([]);
    const [listIssues, setListIssues] = useState({});
    const [listSingleIssues, setListSingleIssues] = useState([]);
    const [isToggleComplete, setIsToggleComplete] = useState(false);
@@ -26,7 +27,9 @@ export default function Board() {
    useEffect(() => {
       async function getIssues() {
          const listIssuesData = await BoardWorkService.getListIssuesOfBoard(id, {});
+         console.log(listIssuesData.data);
          const listIssues = listIssuesData.data.issuesBroad;
+         console.log(listIssues);
          const parentIssues = {};
          const categorizedIssues = new Set();
          for (const issue of listIssues) {
@@ -44,6 +47,8 @@ export default function Board() {
             }
          }
          const uncategorizedIssues = listIssues.filter((issue) => !categorizedIssues.has(issue));
+         console.log(parentIssues, uncategorizedIssues);
+         setAllIssues(listIssues);
          setListIssues(parentIssues);
          setListSingleIssues(uncategorizedIssues);
       }
@@ -59,17 +64,39 @@ export default function Board() {
 
    const rightSection = (
       <div className={cx('sprint-buttons')}>
-         <Button buttonStyle="filled" onClick={() => setIsToggleComplete(true)}>
+         <Button
+            buttonStyle="filled"
+            onClick={() => {
+               setIsToggleComplete(true);
+            }}
+         >
             Complete Sprint
          </Button>
-         <Button>Edit Sprint</Button>
+         {/* <Button>Edit Sprint</Button> */}
       </div>
    );
+
+   function mappingSubIssue(issuesList, status) {
+      if (checkedTypes.length === 0) {
+         return issuesList
+            .filter((issue) => issue.status === status)
+            .map((issue, index) => <Issue key={index} projectId={id} issueDetail={issue} />);
+      }
+
+      return issuesList
+         .filter((issue) => checkedTypes.includes(issue.issueType))
+         .map((issue, index) => issue.status === status && <Issue key={index} projectId={id} issueDetail={issue} />);
+   }
 
    return (
       <div className={cx('board')}>
          {isToggleComplete && (
-            <ModalCompleteSprint isOpen={isToggleComplete} isClose={() => setIsToggleComplete(false)} />
+            <ModalCompleteSprint
+               detailProject={detailProject}
+               isClose={() => setIsToggleComplete(false)}
+               isOpen={isToggleComplete}
+               issues={allIssues}
+            />
          )}
          <HeaderProject
             headerName={'Board'}
@@ -95,32 +122,12 @@ export default function Board() {
                         <span>{listIssues[key].summary}</span>
                      </div>
                      <div className={cx('sub-tasks-container')}>
+                        <div className={cx('sub-tasks')}>{mappingSubIssue(listIssues[key].subIssues, 'TODO')}</div>
                         <div className={cx('sub-tasks')}>
-                           {listIssues[key].subIssues.map(
-                              (issue, index) =>
-                                 issue.status === 'TODO' && <Issue key={index} projectId={id} issueDetail={issue} />,
-                           )}
+                           {mappingSubIssue(listIssues[key].subIssues, 'INPROGRESS')}
                         </div>
-                        <div className={cx('sub-tasks')}>
-                           {listIssues[key].subIssues.map(
-                              (issue, index) =>
-                                 issue.status === 'INPROGRESS' && (
-                                    <Issue key={index} projectId={id} issueDetail={issue} />
-                                 ),
-                           )}
-                        </div>
-                        <div className={cx('sub-tasks')}>
-                           {listIssues[key].subIssues.map(
-                              (issue, index) =>
-                                 issue.status === 'REVIEW' && <Issue key={index} projectId={id} issueDetail={issue} />,
-                           )}
-                        </div>
-                        <div className={cx('sub-tasks')}>
-                           {listIssues[key].subIssues.map(
-                              (issue, index) =>
-                                 issue.status === 'DONE' && <Issue key={index} projectId={id} issueDetail={issue} />,
-                           )}
-                        </div>
+                        <div className={cx('sub-tasks')}>{mappingSubIssue(listIssues[key].subIssues, 'REVIEW')}</div>
+                        <div className={cx('sub-tasks')}>{mappingSubIssue(listIssues[key].subIssues, 'DONE')}</div>
                      </div>
                   </div>
                ))}
@@ -130,30 +137,10 @@ export default function Board() {
                      <span>Everything else</span>
                   </div>
                   <div className={cx('sub-tasks-container')}>
-                     <div className={cx('sub-tasks', 'final')}>
-                        {listSingleIssues.map(
-                           (issue, index) =>
-                              issue.status === 'TODO' && <Issue key={index} projectId={id} issueDetail={issue} />,
-                        )}
-                     </div>
-                     <div className={cx('sub-tasks', 'final')}>
-                        {listSingleIssues.map(
-                           (issue, index) =>
-                              issue.status === 'INPROGRESS' && <Issue key={index} projectId={id} issueDetail={issue} />,
-                        )}
-                     </div>
-                     <div className={cx('sub-tasks', 'final')}>
-                        {listSingleIssues.map(
-                           (issue, index) =>
-                              issue.status === 'REVIEW' && <Issue key={index} projectId={id} issueDetail={issue} />,
-                        )}
-                     </div>
-                     <div className={cx('sub-tasks', 'final')}>
-                        {listSingleIssues.map(
-                           (issue, index) =>
-                              issue.status === 'DONE' && <Issue key={index} projectId={id} issueDetail={issue} />,
-                        )}
-                     </div>
+                     <div className={cx('sub-tasks', 'final')}>{mappingSubIssue(listSingleIssues, 'TODO')}</div>
+                     <div className={cx('sub-tasks', 'final')}>{mappingSubIssue(listSingleIssues, 'INPROGRESS')}</div>
+                     <div className={cx('sub-tasks', 'final')}>{mappingSubIssue(listSingleIssues, 'REVIEW')}</div>
+                     <div className={cx('sub-tasks', 'final')}>{mappingSubIssue(listSingleIssues, 'DONE')}</div>
                   </div>
                </div>
             </div>

@@ -177,9 +177,6 @@ function HeaderProject({
                      </div>
                   </div>
                   <div className={cx('filter-sprint')}>
-                     <Button rightIcon={<DownIcon />} backgroundNone style={{ padding: '0 14px', height: '32px' }}>
-                        Epic
-                     </Button>
                      <div className={cx('filter-sprint-type')}>
                         <Button
                            rightIcon={<DownIcon />}

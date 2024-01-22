@@ -1,0 +1,18 @@
+.text-desc {
+    p {
+       font-size: 14px;
+    }
+    b {
+       font-weight: bold;
+    }
+ }
+ .btn-group {
+    display: flex;
+    padding: 24px 0;
+    position: relative;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    gap: var(--ds-space-100, 8px);
+ }

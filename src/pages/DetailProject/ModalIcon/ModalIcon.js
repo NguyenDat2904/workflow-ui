@@ -4,7 +4,7 @@ import style from './ModalIcon.module.scss';
 import Modal from '~/component/Modal/Modal';
 
 const cx = classNames.bind(style);
-function ModalIcon({ width, isOpen, isClose, children, header, imgBanner, leftIcon, height }) {
+function ModalIcon({ width, isOpen, isClose, children, header, imgBanner, leftIcon, height, style }) {
    return (
       <div className={cx('wrapper')}>
          <Modal
@@ -21,7 +21,7 @@ function ModalIcon({ width, isOpen, isClose, children, header, imgBanner, leftIc
                   alt=""
                />
             )}
-            <div className={cx('main')}>
+            <div className={cx('main')} style={style}>
                <div className={cx('nav')}>
                   <div className={cx('header-popup')}>
                      {leftIcon && <span className={cx('left-icon')}>{leftIcon}</span>}

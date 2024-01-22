@@ -11,6 +11,7 @@ import Modal from '~/component/Modal/Modal';
 import Dropdown from '~/component/dropdown/Dropdown';
 import ModalAccept from '~/component/ModalAccept/ModalAccept';
 import { Tooltip } from 'react-tooltip';
+import ModalAcceptChangeParent from '~/component/ModalAcceptChangeParent/ModalAcceptChangeParent';
 
 const cx = classNames.bind(style);
 function RowIssue({
@@ -33,6 +34,7 @@ function RowIssue({
    const [isTogglePrior, setIsTogglePrior] = useState(false);
    const [isToggleAssignee, setIsToggleAssignee] = useState(false);
    const [isDropDownMenu, setIsDropDownMenu] = useState(false);
+   const [isChangeParent, setIsChangeParent] = useState(false);
    const [isPending, setIsPending] = useState(false);
    const getListIssueSprint = async () => {
       // Get listIssue
@@ -388,23 +390,32 @@ function RowIssue({
                   maxWidth: '240px',
                }}
             />
-            {roleUser?.role !== 'member' && (
-               <div className={cx('menu-issue')}>
-                  <Dropdown
-                     isClose={roleUser?.role === 'member'}
-                     className={cx('custom-dropdown')}
-                     actions={[{ label: 'Delete issue', method: () => setIsDropDownMenu(true) }]}
-                  >
-                     <Button
-                        backgroundNone
-                        leftIcon={<MenuIcon />}
-                        style={{
-                           height: '32px',
-                           padding: '0 4px',
-                        }}
-                     ></Button>
-                  </Dropdown>
-               </div>
+            <div className={cx('menu-issue')}>
+               <Dropdown
+                  className={cx('custom-dropdown')}
+                  actions={[
+                     data.issueType === 'SUB_TASK'
+                        ? { label: 'Change parent', method: () => setIsChangeParent(true) }
+                        : undefined,
+                     { label: 'Delete issue', method: () => setIsDropDownMenu(true) },
+                  ]}
+               >
+                  <Button backgroundNone leftIcon={<MenuIcon />} style={{ height: '32px' }}></Button>
+               </Dropdown>
+            </div>
+            {isChangeParent && (
+               <ModalAcceptChangeParent
+                  isOpen={isChangeParent}
+                  isClose={() => setIsChangeParent(false)}
+                  headerTitle={`Change parent`}
+                  blue
+                  title={title}
+                  getListIssueChildren={getListIssueChildren}
+                  getListIssueSprint={getListIssueSprint}
+                  getListIssue={getListIssue}
+                  data={data}
+                  setIsChangeParent={setIsChangeParent}
+               />
             )}
             {isDropDownMenu && (
                <ModalAccept

@@ -9,7 +9,6 @@ import Button from '~/component/Buttton/Button';
 import WorkService from '~/services/work/workServices';
 import Navigation from '~/component/Navigation/Navigation';
 import { UserContext } from '~/contexts/user/userContext';
-import ModalAccept from '~/component/ModalAccept/ModalAccept';
 
 const cx = classNames.bind(style);
 export default function ProjectAccess() {
@@ -17,7 +16,6 @@ export default function ProjectAccess() {
    const { dataUserProfile } = useContext(UserContext);
    const [members, setMembers] = useState([]);
    const [isToggle, setIsToggle] = useState(false);
-   const [isToggleDeleteMember, setIsToggleDeleteMember] = useState(false);
 
    const projectService = new WorkService();
 
@@ -31,9 +29,6 @@ export default function ProjectAccess() {
          const listMembers = await projectService.getMember({ codeProject: detailProject?.codeProject });
          if (listMembers.status === 200) setMembers(listMembers.data);
       }
-   };
-   const handleDeleteMember = async () => {
-      // const response = await remove(`work/delete-existing-members/${user._id}`);
    };
 
    const roleUsers = members?.filter((user) => {
@@ -75,27 +70,14 @@ export default function ProjectAccess() {
                      {isToggle && <Navigation isOpen={isToggle} onClose={() => setIsToggle(false)} />}
                   </div>
                   <Table
+                     detailProject={detailProject}
                      roleUser={roleUser}
-                     actions={[
-                        { label: 'Change role', method: () => setIsToggleDeleteMember(false) },
-                        { label: 'Delete member', method: () => setIsToggleDeleteMember(true) },
-                     ]}
                      data={members}
                      colWidthRatio={[30, 40, 20]}
                      colType={['string', 'string', 'string']}
                      labels={['Name', 'Email', 'Role', 'Action']}
+                     getMembers={getMembers}
                   />
-                  {isToggleDeleteMember && (
-                     <ModalAccept
-                        btn="Delete"
-                        warning
-                        headerTitle={`Delete "${roleUser?.name}" ?`}
-                        isOpen={isToggleDeleteMember}
-                        isClose={() => setIsToggleDeleteMember(false)}
-                        title="Members removed from a project will not be able to access the project until they are invited back to the project."
-                        handleAccept={() => handleDeleteMember()}
-                     />
-                  )}
                </div>
             </div>
          </div>

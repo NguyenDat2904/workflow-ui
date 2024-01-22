@@ -8,7 +8,6 @@ function ModalSelect({
    width,
    widthImg,
    setValue,
-   active,
    onClose,
    handleSubmit,
    status,
@@ -19,7 +18,7 @@ function ModalSelect({
    handleChange,
    checkedTypes,
    updateQueryParams,
-   style
+   style,
 }) {
    const renderOptions = data?.map((option, index) => {
       const handleOptionClick = (option) => {
@@ -60,7 +59,7 @@ function ModalSelect({
                            src={option?.img}
                            alt=""
                            className={cx('img-icon')}
-                           style={{ '--_zb0g5d': widthImg, borderRadius: percent50 && '50%' }}
+                           style={{ '--_zb0g5d': widthImg, borderRadius: percent50 === true && '50%' }}
                         />
                      ) : option?.backgroundProfile ? (
                         <div
@@ -74,7 +73,7 @@ function ModalSelect({
                            src="https://avatar-management.services.atlassian.com/default/48"
                            alt=""
                            className={cx('img-icon')}
-                           style={{ '--_zb0g5d': widthImg, borderRadius: percent50 && '50%' }}
+                           style={{ '--_zb0g5d': widthImg, borderRadius: percent50 === true && '50%' }}
                         />
                      ) : (
                         ''

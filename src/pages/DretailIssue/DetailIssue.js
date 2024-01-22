@@ -768,6 +768,7 @@ function DetailIssue() {
                                           width="100%"
                                           heightRow="48px"
                                           widthImg="32px"
+                                          percent50
                                           onClose={() => setIsToggleAssignee(false)}
                                           data={listMember}
                                           handleSubmit={(option) =>
@@ -807,6 +808,7 @@ function DetailIssue() {
                                           width="100%"
                                           heightRow="48px"
                                           widthImg="32px"
+                                          percent50
                                           onClose={() => setIsToggleReporter(false)}
                                           data={listMember}
                                           handleSubmit={(option) =>

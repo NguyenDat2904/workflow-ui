@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ReactComponent as DotMenu } from '~/asset/icons/dotMenu.svg';
 import Dropdown from '../dropdown/Dropdown';
 import classNames from 'classnames/bind';
@@ -6,9 +6,31 @@ import style from './Tables.module.scss';
 import Button from '../Buttton/Button';
 import { MenuIcon } from '../icon/icon';
 import { Tooltip } from 'react-tooltip';
+import ModalAccept from '../ModalAccept/ModalAccept';
+import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(style);
-export function Table({ actions, data, colWidthRatio, colType, idList, labels, roleUser, ...props }) {
+export function Table({
+   actions,
+   data,
+   colWidthRatio,
+   colType,
+   idList,
+   labels,
+   roleUser,
+   detailProject,
+   getMembers,
+   ...props
+}) {
+   const projectService = new WorkService();
+   const [isToggleDeleteMember, setIsToggleDeleteMember] = useState(null);
+
    const renderTdTable = data?.map((member, index) => {
+      const handleDeleteMember = async (codeProject, idMember) => {
+         const deleteMember = await projectService.deleteMember(codeProject, idMember);
+         if (deleteMember.status === 200) {
+            getMembers();
+         }
+      };
       return (
          <tr key={index} className={cx('tr-table')}>
             <td className={cx('td-table')}>
@@ -45,7 +67,19 @@ export function Table({ actions, data, colWidthRatio, colType, idList, labels, r
             <td>
                {member?.role !== 'admin' && (
                   <div style={{ textAlign: 'end' }}>
-                     <Dropdown isClose={roleUser?.role !== 'admin'} className={cx('custom-dropdown')} actions={actions}>
+                     <Dropdown
+                        isClose={roleUser?.role !== 'admin'}
+                        className={cx('custom-dropdown')}
+                        actions={[
+                           { label: 'Change role', method: () => setIsToggleDeleteMember(false) },
+                           {
+                              label: 'Delete member',
+                              method: () => {
+                                 if (index) setIsToggleDeleteMember(index);
+                              },
+                           },
+                        ]}
+                     >
                         <Button
                            data-tooltip-id="change-role"
                            data-tooltip-content="You are not an admin."
@@ -61,6 +95,17 @@ export function Table({ actions, data, colWidthRatio, colType, idList, labels, r
                            }}
                         ></Button>
                      </Dropdown>
+                     {isToggleDeleteMember === index && (
+                        <ModalAccept
+                           btn="Delete"
+                           warning
+                           headerTitle={`Delete "${roleUser?.name}" ?`}
+                           isOpen={isToggleDeleteMember === index}
+                           isClose={() => setIsToggleDeleteMember(null)}
+                           title="Members removed from a project will not be able to access the project until they are invited back to the project."
+                           handleAccept={() => handleDeleteMember(detailProject?.codeProject, member?._id)}
+                        />
+                     )}
                      {roleUser?.role !== 'admin' && (
                         <Tooltip
                            id="change-role"

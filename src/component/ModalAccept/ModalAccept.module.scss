@@ -1,5 +1,6 @@
 .text-desc {
    p {
+      text-align: start;
       font-size: 14px;
       font-weight: 400;
    }
@@ -17,4 +18,3 @@
    justify-content: flex-end;
    gap: var(--ds-space-100, 8px);
 }
-

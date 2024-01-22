@@ -72,5 +72,10 @@ class WorkService extends BaseServices {
          },
       );
    }
+
+   // delete Member
+   deleteMember(codeProject, idMember) {
+      return this.delete(`/projects/${codeProject}/members/${idMember}`);
+   }
 }
 export default WorkService;

@@ -193,7 +193,8 @@
    position: relative;
 }
 .control-header-right {
-   text-align: end;
+   display: flex;
+   justify-content: end;
 }
 .detail-content-right {
    margin-bottom: var(--ds-space-100, 8px);
@@ -262,4 +263,5 @@
    font-size: 14px;
    color: var(--ds-text, #091e42);
    font-weight: 400;
+   width: fit-content;
 }

@@ -23,6 +23,7 @@ function RowIssue({
    idParent,
    title,
    getListIssue,
+   roleUser,
 }) {
    const { detailProject } = useContext(ProjectContext);
 
@@ -33,12 +34,11 @@ function RowIssue({
    const [isToggleAssignee, setIsToggleAssignee] = useState(false);
    const [isDropDownMenu, setIsDropDownMenu] = useState(false);
    const [isPending, setIsPending] = useState(false);
-
    const getListIssueSprint = async () => {
       // Get listIssue
       if (sprintID) {
          const listIssue = await issueService.getIssue(detailProject?.codeProject, {
-            sprintID: title === 'Backlog' ? null : sprintID,
+            sprintID: title === 'Backlog' ? 'null' : sprintID,
          });
          if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
       }
@@ -388,14 +388,24 @@ function RowIssue({
                   maxWidth: '240px',
                }}
             />
-            <div className={cx('menu-issue')}>
-               <Dropdown
-                  className={cx('custom-dropdown')}
-                  actions={[{ label: 'Delete issue', method: () => setIsDropDownMenu(true) }]}
-               >
-                  <Button backgroundNone leftIcon={<MenuIcon />} style={{ height: '32px' }}></Button>
-               </Dropdown>
-            </div>
+            {roleUser?.role !== 'member' && (
+               <div className={cx('menu-issue')}>
+                  <Dropdown
+                     isClose={roleUser?.role === 'member'}
+                     className={cx('custom-dropdown')}
+                     actions={[{ label: 'Delete issue', method: () => setIsDropDownMenu(true) }]}
+                  >
+                     <Button
+                        backgroundNone
+                        leftIcon={<MenuIcon />}
+                        style={{
+                           height: '32px',
+                           padding: '0 4px',
+                        }}
+                     ></Button>
+                  </Dropdown>
+               </div>
+            )}
             {isDropDownMenu && (
                <ModalAccept
                   btn="Delete"

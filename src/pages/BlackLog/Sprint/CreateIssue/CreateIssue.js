@@ -8,7 +8,6 @@ import { DownIcon } from '~/component/icon/icon';
 import { ProjectContext } from '~/contexts/project/projectContext';
 import IssueService from '~/services/issue/issueService';
 import classNames from 'classnames/bind';
-
 import style from '../../BlackLog.module.scss';
 
 const cx = classNames.bind(style);
@@ -41,14 +40,14 @@ function CreateIssue({ setIssues, idPrint, idParent, paramsFunc = () => {}, chil
             ? 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium'
             : valueTask.img,
          issueType: children ? 'SUB_TASK' : valueTask.key,
-         sprint: title === 'Blacklog' ? null : idPrint,
+         sprint: title === 'Backlog' ? null : idPrint,
          parentIssue: idParent ? idParent : null,
       };
       setLoading(true);
       const createIssue = await issueService.createIssue(detailProject?.codeProject, dataIssue);
       if (createIssue.status === 200) {
          const listIssue = await issueService.getIssue(detailProject?.codeProject, {
-            sprintID: title === 'Blacklog' ? 'null' : idPrint,
+            sprintID: title === 'Backlog' ? 'null' : idPrint,
             parentIssueID: idParent,
             ...paramsFunc(),
          });

@@ -1,6 +1,7 @@
 $subtext-color: gray;
 $task-container-background: #f4f5f7;
 $color-border: rgba(9, 30, 66, 0.08);
+$color-border-dark: rgba(9, 30, 66, 0.2);
 
 .flex-1 {
    flex: 1;
@@ -137,8 +138,12 @@ $color-border: rgba(9, 30, 66, 0.08);
    padding: 0.5rem !important;
    border-radius: 3px;
    align-items: baseline !important;
-   p {
-      &:hover {
+   border: 2px solid transparent;
+   transition: border 0.3s;
+
+   &:hover {
+      border: 2px solid $color-border-dark;
+      p {
          text-decoration: underline;
       }
    }
@@ -163,7 +168,6 @@ $color-border: rgba(9, 30, 66, 0.08);
       }
    }
 }
-
 // Issue Icon
 
 .issue-icon {

@@ -28,18 +28,19 @@ export default function Issue({ issueDetail, projectId, ...props }) {
    }
 
    return (
-      <Card className={cx('task')} {...props}>
-         {console.log(issueDetail)}
-         <p onClick={handleChangingPage}>{issueDetail.summary}</p>
-         <div className={cx('metadata')}>
-            <span style={{ display: 'flex', alignItems: 'center' }}>
-               <IssueIcon type={issueDetail.issueType} />
-               <span style={{ fontSize: '0.8rem', fontWeight: '500' }}>{issueDetail.name}</span>
-            </span>
-            <span>
-               <img src={priorityIcon} alt="" style={{ width: '1.25rem' }} />
-            </span>
-         </div>
-      </Card>
+      <div className={cx('task-container')} onClick={handleChangingPage}>
+         <Card className={cx('task')} {...props}>
+            <p>{issueDetail.summary}</p>
+            <div className={cx('metadata')}>
+               <span style={{ display: 'flex', alignItems: 'center' }}>
+                  <IssueIcon type={issueDetail.issueType} />
+                  <span style={{ fontSize: '0.8rem', fontWeight: '500' }}>{issueDetail.name}</span>
+               </span>
+               <span>
+                  <img src={priorityIcon} alt="" style={{ width: '1.25rem' }} />
+               </span>
+            </div>
+         </Card>
+      </div>
    );
 }

@@ -3,11 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import style from './Board.scss';
 import classNames from 'classnames/bind';
 import { Card } from '~/component/cards/Cards';
-import { ReactComponent as VeryUpArrow } from '../../asset/icons/veryUpArrow.svg';
-import { ReactComponent as UpArrow } from '../../asset/icons/upArrow.svg';
-import { ReactComponent as DownArrow } from '../../asset/icons/downArrow.svg';
-import { ReactComponent as Equal } from '../../asset/icons/equal.svg';
-import { ReactComponent as VeryDownArrow } from '../../asset/icons/veryDownArrow.svg';
 import { IssueIcon } from './IssueIcon';
 
 const cx = classNames.bind(style);
@@ -21,15 +16,15 @@ export default function Issue({ issueDetail, projectId, ...props }) {
 
    let priorityIcon;
    if (issueDetail.priority === 'High') {
-      priorityIcon = <UpArrow />;
+      priorityIcon = 'https://tcx19.atlassian.net/images/icons/priorities/high.svg';
    } else if (issueDetail.priority === 'Medium') {
-      priorityIcon = <Equal />;
+      priorityIcon = 'https://tcx19.atlassian.net/images/icons/priorities/medium.svg';
    } else if (issueDetail.priority === 'Low') {
-      priorityIcon = <DownArrow />;
+      priorityIcon = 'https://tcx19.atlassian.net/images/icons/priorities/low.svg';
    } else if (issueDetail.priority === 'Highest') {
-      priorityIcon = <VeryUpArrow />;
+      priorityIcon = 'https://tcx19.atlassian.net/images/icons/priorities/high.svg';
    } else if (issueDetail.priority === 'Lowest') {
-      priorityIcon = <VeryDownArrow />;
+      priorityIcon = 'https://tcx19.atlassian.net/images/icons/priorities/lowest.svg';
    }
 
    return (
@@ -42,8 +37,7 @@ export default function Issue({ issueDetail, projectId, ...props }) {
                <span style={{ fontSize: '0.8rem', fontWeight: '500' }}>{issueDetail.name}</span>
             </span>
             <span>
-               {priorityIcon}
-               {/* <img src={`${issueDetail.assignee.img}`} alt="" /> */}
+               <img src={priorityIcon} alt="" style={{ width: '1.25rem' }} />
             </span>
          </div>
       </Card>

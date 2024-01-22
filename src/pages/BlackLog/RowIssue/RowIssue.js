@@ -24,6 +24,7 @@ function RowIssue({
    idParent,
    title,
    getListIssue,
+   roleUser,
 }) {
    const { detailProject } = useContext(ProjectContext);
 
@@ -35,12 +36,11 @@ function RowIssue({
    const [isDropDownMenu, setIsDropDownMenu] = useState(false);
    const [isChangeParent, setIsChangeParent] = useState(false);
    const [isPending, setIsPending] = useState(false);
-
    const getListIssueSprint = async () => {
       // Get listIssue
       if (sprintID) {
          const listIssue = await issueService.getIssue(detailProject?.codeProject, {
-            sprintID: title === 'Blacklog' ? null : sprintID,
+            sprintID: title === 'Backlog' ? 'null' : sprintID,
          });
          if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
       }
@@ -67,7 +67,7 @@ function RowIssue({
       if (updateIssue.status === 200) {
          getListIssueSprint();
          getListIssueChildren();
-         if (title === 'Blacklog') getListIssue();
+         if (title === 'Backlog') getListIssue();
       }
       setIsPending(false);
    };
@@ -82,7 +82,7 @@ function RowIssue({
       if (updateIssue.status === 200) {
          getListIssueSprint();
          getListIssueChildren();
-         if (title === 'Blacklog') getListIssue();
+         if (title === 'Backlog') getListIssue();
       }
       setIsPending(false);
    };
@@ -96,7 +96,7 @@ function RowIssue({
       if (updateIssue.status === 200) {
          getListIssueSprint();
          getListIssueChildren();
-         if (title === 'Blacklog') getListIssue();
+         if (title === 'Backlog') getListIssue();
       }
       setIsPending(false);
    };
@@ -120,7 +120,7 @@ function RowIssue({
       if (deleteIssue.status === 200) {
          getListIssueSprint();
          getListIssueChildren();
-         if (title === 'Blacklog') getListIssue();
+         if (title === 'Backlog') getListIssue();
       }
       setIsPending(false);
    };

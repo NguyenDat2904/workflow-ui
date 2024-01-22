@@ -177,9 +177,6 @@ function HeaderProject({
                      </div>
                   </div>
                   <div className={cx('filter-sprint')}>
-                     <Button rightIcon={<DownIcon />} backgroundNone style={{ padding: '0 14px', height: '32px' }}>
-                        Epic
-                     </Button>
                      <div className={cx('filter-sprint-type')}>
                         <Button
                            rightIcon={<DownIcon />}
@@ -211,6 +208,11 @@ function HeaderProject({
                                     label: 'Task',
                                     key: 'TASK',
                                     img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium',
+                                 },
+                                 {
+                                    label: 'Subtask',
+                                    key: 'SUB_TASK',
+                                    img: 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium',
                                  },
                               ]}
                            />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './DetailIssue.module.scss';
 import NavUrl from '~/component/NavUrl/NavUrl';
@@ -21,9 +21,14 @@ import moment from 'moment';
 import ModalAccept from '~/component/ModalAccept/ModalAccept';
 import CommentService from '../../services/comment/CommentService';
 import Dropdown from '~/component/dropdown/Dropdown';
+import { ProjectContext } from '~/contexts/project/projectContext';
+import { UserContext } from '~/contexts/user/userContext';
+import { Tooltip } from 'react-tooltip';
 const cx = classNames.bind(style);
 function DetailIssue() {
    const param = useParams();
+   const { members, setMembers } = useContext(ProjectContext);
+   const { dataUserProfile } = useContext(UserContext);
 
    const navigate = useNavigate();
 
@@ -37,7 +42,6 @@ function DetailIssue() {
    const [detailIssueParent, setDetailIssueParent] = useState({});
    const [issueChildren, setIssueChildren] = useState([]);
    const [sprints, setSprints] = useState([]);
-   const [members, setMembers] = useState([]);
    const [comments, setComments] = useState([]);
 
    const [isEditComments, setIsEditComments] = useState(null);
@@ -228,9 +232,14 @@ function DetailIssue() {
    };
    // 3.7 Get Member
    const getMembers = async () => {
-      const listMembers = await projectService.getMember(param?.id, {});
+      const listMembers = await projectService.getMember({ codeProject: param?.id });
       if (listMembers.status === 200) setMembers(listMembers.data);
    };
+
+   const roleUsers = members?.filter((user) => {
+      return user._id === dataUserProfile?._id;
+   });
+   const roleUser = roleUsers[0];
 
    const listMember = members?.map((member) => {
       return {
@@ -482,12 +491,36 @@ function DetailIssue() {
                   {detailIssue?.parentIssue === null && (
                      <div className={cx('issue-header')}>
                         <Button
+                           data-tooltip-id="create-issue-tooltip"
+                           data-tooltip-content="You are not an admin or a manager."
+                           data-tooltip-place="bottom"
                            leftIcon={<TreeIcon />}
-                           style={{ height: '32px', fontSize: '14px' }}
-                           onClick={() => setIsToggleCreateIssue(!isToggleCreateIssue)}
+                           disable={roleUser?.role === 'member'}
+                           style={{
+                              cursor: roleUser?.role !== 'member' ? 'pointer' : 'not-allowed',
+                              height: '32px',
+                              background: 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                              fontSize: '14px',
+                           }}
+                           onClick={() => {
+                              if (roleUser?.role !== 'member') setIsToggleCreateIssue(!isToggleCreateIssue);
+                           }}
                         >
                            Add a child issue
                         </Button>
+                        {roleUser?.role === 'member' && (
+                           <Tooltip
+                              id="create-issue-tooltip"
+                              style={{
+                                 backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                                 color: 'var(--ds-text-inverse, #FFFFFF)',
+                                 padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                                 fontSize: 'var(--ds-font-size-075, 12px)',
+                                 maxWidth: '240px',
+                                 textAlign: 'center',
+                              }}
+                           />
+                        )}
                      </div>
                   )}
                   <div className={cx('issue-header')}>
@@ -523,13 +556,37 @@ function DetailIssue() {
                         <div className={cx('issue-children-header')}>
                            <h2>Children issues</h2>
                            <Button
+                              data-tooltip-id="create-issue"
+                              data-tooltip-content={
+                                 roleUser?.role !== 'member'
+                                    ? 'Add a children issue'
+                                    : 'You are not an admin or a manager.'
+                              }
+                              data-tooltip-place="bottom"
                               leftIcon={<AddIcon />}
+                              disable={roleUser?.role === 'member'}
+                              style={{
+                                 cursor: roleUser?.role !== 'member' ? 'pointer' : 'not-allowed',
+                                 background: 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                              }}
                               backgroundNone
                               className={cx('custom-btn')}
                               onClick={() => {
-                                 setIsToggleCreateIssue(!isToggleCreateIssue);
+                                 if (roleUser?.role !== 'member') setIsToggleCreateIssue(!isToggleCreateIssue);
                               }}
                            ></Button>
+
+                           <Tooltip
+                              id="create-issue"
+                              style={{
+                                 backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                                 color: 'var(--ds-text-inverse, #FFFFFF)',
+                                 padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                                 fontSize: 'var(--ds-font-size-075, 12px)',
+                                 maxWidth: '140px',
+                                 textAlign: 'center',
+                              }}
+                           />
                         </div>
                         <div className={cx('issue-children-list')}>{renderChildrenIssue}</div>
                         {isToggleCreateIssue && (
@@ -575,7 +632,7 @@ function DetailIssue() {
                      className={cx('custom-dropdown')}
                      actions={[{ label: 'Delete issue', method: () => setIsToggleAcceptDeleteIssue(true) }]}
                   >
-                     <Button noChildren backgroundNone leftIcon={<MenuIcon />} style={{ height: '32px' }}></Button>
+                     <Button backgroundNone leftIcon={<MenuIcon />} style={{ height: '32px' }}></Button>
                   </Dropdown>
                </div>
                {isToggleAcceptDeleteIssue && (

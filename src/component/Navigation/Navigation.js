@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import style from './Navigation.module.scss';
 import Modal from '../Modal/Modal';
 import Button from '../Buttton/Button';
-import { DownIcon } from '../icon/icon';
+import { DownIcon, LoadingIcon } from '../icon/icon';
 import Input from '../Input/Input';
 import { Link } from 'react-router-dom';
 import ControllerForm from '../ControllerForm/ControllerForm';
@@ -17,8 +17,10 @@ function Navigation({ isOpen, onClose }) {
 
    const projectService = new WorkService();
    const [toggle, setToggle] = useState(false);
+   const [isLoading, setIsLoading] = useState(false);
    const [role, setRole] = useState({
       label: 'Member',
+      key: 'member',
    });
    const form = useForm({
       mode: 'all',
@@ -32,9 +34,12 @@ function Navigation({ isOpen, onClose }) {
       form.setValue('role', role.label);
    }, [role]);
    const handleAddPeople = async (dataForm) => {
+      if (isLoading) return;
+      setIsLoading(true);
       const data = { ...dataForm, role: role.key };
       const addPeople = await projectService.addMember(detailProject?.codeProject, data);
       if (addPeople.status === 200) onClose();
+      setIsLoading(false);
    };
 
    return (
@@ -98,9 +103,11 @@ function Navigation({ isOpen, onClose }) {
                         <Link className={cx('text-link')}>Terms of Service</Link> apply.
                      </div>
                      <div className={cx('btn-group')}>
-                        <Button onClick={onClose}>Cancel</Button>
-                        <Button blue type="submit">
-                           Update
+                        <Button onClick={onClose} style={{ height: '32px' }}>
+                           Cancel
+                        </Button>
+                        <Button blue type="submit" style={{ height: '32px', minWidth: '55px' }}>
+                           {isLoading ? <LoadingIcon /> : 'Add'}
                         </Button>
                      </div>
                   </form>

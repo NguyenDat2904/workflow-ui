@@ -93,15 +93,16 @@ function Projects() {
             </div>
          )}
 
-         <div className={cx('project-list')}>
-            <ProjectList
-               projectsList={projectsList}
-               setProjectsList={setProjectsList}
-               handleMoveToTrash={handleMoveToTrash}
-               trash={false}
-            />
-         </div>
-
+         {projectsList?.length !== 0 && (
+            <div className={cx('project-list')}>
+               <ProjectList
+                  projectsList={projectsList}
+                  setProjectsList={setProjectsList}
+                  handleMoveToTrash={handleMoveToTrash}
+                  trash={false}
+               />
+            </div>
+         )}
          {projectsList?.length !== 0 && !loading && <Pagination page={page} />}
       </Main>
    );

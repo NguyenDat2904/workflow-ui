@@ -14,6 +14,7 @@ import ModalAccept from '~/component/ModalAccept/ModalAccept';
 import SprintService from '~/services/sprint/SprintService';
 import CreateIssue from './CreateIssue/CreateIssue';
 import Modal from '~/component/Modal/Modal';
+import { Tooltip } from 'react-tooltip';
 const cx = classNames.bind(style);
 
 function Sprint({
@@ -26,6 +27,7 @@ function Sprint({
    selectedMembers,
    title,
    sprints,
+   roleUser = {},
 }) {
    const { detailProject } = useContext(ProjectContext);
    // 1. State
@@ -41,7 +43,7 @@ function Sprint({
    // 2. UseEffect
    useEffect(() => {
       getListIssue();
-   }, [checkedTypes, selectedMembers, sprints, title]);
+   }, [checkedTypes, selectedMembers, sprints]);
    // 3. Handle
    const handleDropDown = () => {
       setDropdownOpen(!isDropdownOpen);
@@ -65,12 +67,14 @@ function Sprint({
    // 3.1. GetIssue
    const getListIssue = async () => {
       const assignee = selectedMembers?.map((item) => encodeURIComponent(item)).join('-');
-      const listIssue = await issueService.getIssue(detailProject?.codeProject, {
-         sprintID: title === 'Blacklog' ? 'null' : data._id,
-         assignee: assignee ? assignee : null,
-         ...params(),
-      });
-      if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
+      if (detailProject?.codeProject) {
+         const listIssue = await issueService.getIssue(detailProject?.codeProject, {
+            sprintID: title === 'Backlog' ? 'null' : data._id,
+            assignee: assignee ? assignee : null,
+            ...params(),
+         });
+         if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
+      }
    };
    // 3.2. DeleSprint
    const handleDeleteSprint = async (key, id) => {
@@ -82,7 +86,7 @@ function Sprint({
    };
 
    useEffect(() => {
-      if (title === 'Blacklog') setDropdownOpen(true);
+      if (title === 'Backlog') setDropdownOpen(true);
       if (start) setDropdownOpen(true);
    }, []);
 
@@ -91,6 +95,7 @@ function Sprint({
       ?.map((issue) => {
          return (
             <RowIssue
+               roleUser={roleUser}
                title={title}
                key={issue._id}
                data={issue}
@@ -132,8 +137,8 @@ function Sprint({
                   noHover
                   style={{ cursor: 'pointer', height: '32px' }}
                ></Button>
-               <div className={cx('name-sprint')}>{title === 'Blacklog' ? 'Blacklog' : data.name}</div>
-               {title !== 'Blacklog' && (
+               <div className={cx('name-sprint')}>{title === 'Backlog' ? 'Backlog' : data.name}</div>
+               {title !== 'Backlog' && (
                   <div className={cx('date-sprint')}>
                      {formattedDateStart} - {formattedDateEnd}
                   </div>
@@ -155,9 +160,35 @@ function Sprint({
                <div className={cx('setting-issue')}>
                   {title === 'Backlog' ? (
                      <>
-                        <Button style={{ cursor: 'pointer', height: '32px' }} onClick={handleCreateSprint}>
+                        <Button
+                           data-tooltip-id="create-sprint-tooltip"
+                           data-tooltip-content="You are not an admin or a manager."
+                           data-tooltip-place="top"
+                           disable={roleUser?.role === 'member'}
+                           style={{
+                              cursor: roleUser?.role !== 'member' ? 'pointer' : 'not-allowed',
+                              height: '32px',
+                              background: 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                           }}
+                           onClick={() => {
+                              if (roleUser?.role !== 'member') handleCreateSprint();
+                           }}
+                        >
                            Create sprint
                         </Button>
+                        {roleUser?.role === 'member' && (
+                           <Tooltip
+                              id="create-sprint-tooltip"
+                              style={{
+                                 backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                                 color: 'var(--ds-text-inverse, #FFFFFF)',
+                                 padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                                 fontSize: 'var(--ds-font-size-075, 12px)',
+                                 maxWidth: '140px',
+                                 textAlign: 'center',
+                              }}
+                           />
+                        )}
                      </>
                   ) : (
                      <>
@@ -193,18 +224,34 @@ function Sprint({
                            </>
                         )}
                         {data.status === 'PENDING' && issues?.length === 0 && (
-                           <Button
-                              style={{
-                                 height: '32px',
-                                 background: 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
-                              }}
-                              disable
-                           >
-                              Start sprint
-                           </Button>
+                           <>
+                              <Button
+                                 data-tooltip-id="start-sprint-tooltip"
+                                 data-tooltip-content="Sprint cannot be started because it contains no issues"
+                                 data-tooltip-place="top"
+                                 style={{
+                                    height: '32px',
+                                    background: 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                                 }}
+                                 disable
+                              >
+                                 Start sprint
+                              </Button>
+                              <Tooltip
+                                 id="start-sprint-tooltip"
+                                 style={{
+                                    backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                                    color: 'var(--ds-text-inverse, #FFFFFF)',
+                                    padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                                    fontSize: 'var(--ds-font-size-075, 12px)',
+                                    maxWidth: '240px',
+                                    textAlign: 'center',
+                                 }}
+                              />
+                           </>
                         )}
-
                         <Dropdown
+                           isClose={roleUser?.role === 'member'}
                            className={cx('custom-dropdown')}
                            actions={[
                               { label: 'Edit sprint', method: () => setIsToggle(true) },
@@ -212,11 +259,32 @@ function Sprint({
                            ]}
                         >
                            <Button
+                              data-tooltip-id="edit-sprint-tooltip"
+                              data-tooltip-content="You are not an admin or a manager."
+                              data-tooltip-place="top"
                               leftIcon={<MenuIcon />}
-                              noChildren
-                              style={{ cursor: 'pointer', height: '32px' }}
+                              disable={roleUser?.role === 'member'}
+                              style={{
+                                 cursor: roleUser?.role !== 'member' ? 'pointer' : 'not-allowed',
+                                 height: '32px',
+                                 background: 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                                 padding: '0 4px',
+                              }}
                            ></Button>
                         </Dropdown>
+                        {roleUser?.role === 'member' && (
+                           <Tooltip
+                              id="edit-sprint-tooltip"
+                              style={{
+                                 backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                                 color: 'var(--ds-text-inverse, #FFFFFF)',
+                                 padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                                 fontSize: 'var(--ds-font-size-075, 12px)',
+                                 maxWidth: '140px',
+                                 textAlign: 'center',
+                              }}
+                           />
+                        )}
                         {isToggle && (
                            <ModalCreateSprint
                               btn_acpt="Update"
@@ -278,14 +346,23 @@ function Sprint({
                            backgroundNone
                            viewAll
                            className={cx('custom-btn')}
-                           onClick={() => setIsFocus(false)}
+                           onClick={() => {
+                              if (roleUser.role !== 'member') setIsFocus(false);
+                           }}
                         >
                            Create issue
                         </Button>
                      ) : (
-                        <Modal isOpen={true} relative onClose={() => setIsFocus(true)}>
-                           <CreateIssue title={title} setIssues={setIssues} idPrint={data?._id} paramsFunc={params} />
-                        </Modal>
+                        <>
+                           <Modal isOpen={true} relative onClose={() => setIsFocus(true)}>
+                              <CreateIssue
+                                 title={title}
+                                 setIssues={setIssues}
+                                 idPrint={data?._id}
+                                 paramsFunc={params}
+                              />
+                           </Modal>
+                        </>
                      )}
                   </div>
                </div>

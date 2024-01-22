@@ -7,14 +7,16 @@ import Sprint from './Sprint/Sprint';
 import SprintService from '~/services/sprint/SprintService';
 import { ProjectContext } from '~/contexts/project/projectContext';
 import WorkService from '~/services/work/workServices';
+import { UserContext } from '~/contexts/user/userContext';
 
 const cx = classNames.bind(style);
 function BlackLog() {
-   const { detailProject } = useContext(ProjectContext);
+   const { detailProject, members, setMembers } = useContext(ProjectContext);
+   const { dataUserProfile } = useContext(UserContext);
    const sprintService = new SprintService();
    const projectService = new WorkService();
    const [sprints, setPrints] = useState([]);
-   const [members, setMembers] = useState([]);
+
    const [checkedTypes, setCheckedTypes] = useState([]);
    const [selectedMembers, setSelectedMembers] = useState([]);
 
@@ -37,6 +39,11 @@ function BlackLog() {
       getMembers();
       getListSprints();
    }, [detailProject]);
+   const roleUsers = members?.filter((user) => {
+      return user._id === dataUserProfile._id;
+   });
+   const roleUser = roleUsers[0];
+
    const renderSprint = sprints
       ?.map((sprint, index) => {
          return (
@@ -50,6 +57,7 @@ function BlackLog() {
                selectedMembers={selectedMembers}
                sprints={sprints}
                getListSprints={getListSprints}
+               roleUser={roleUser}
             />
          );
       })
@@ -88,6 +96,7 @@ function BlackLog() {
                      checkedTypes={checkedTypes}
                      selectedMembers={selectedMembers}
                      getListSprints={getListSprints}
+                     roleUser={roleUser}
                   />
                </div>
             </div>

@@ -1,15 +1,21 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import style from './RowProject.module.scss';
 import Button from '../Buttton/Button';
 import { MenuIcon } from '../icon/icon';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import MenuProject from './MenuProject/MenuProject';
 import moment from 'moment';
 import ModalAccept from '../ModalAccept/ModalAccept';
+import { ProjectContext } from '~/contexts/project/projectContext';
+import WorkService from '~/services/work/workServices';
 const cx = classNames.bind(style);
 
 function RowProject({ project, handleMoveToTrash, trash, handleDeletePer, handleRestore }) {
+   const { members, setMembers } = useContext(ProjectContext);
+
+   const projectService = new WorkService();
+
    // 1. State
    const [toggle, setToggle] = useState(false);
    const [isToggleAcceptRestore, setIsToggleAcceptRestore] = useState(false);
@@ -23,6 +29,18 @@ function RowProject({ project, handleMoveToTrash, trash, handleDeletePer, handle
    const remainingTime = moment.duration(futureDate.diff(currentDate));
    const remainingDays = remainingTime.asDays();
    const remainingText = `In ${Math.floor(remainingDays)} days`;
+
+   useEffect(() => {
+      getMembers();
+   }, [project]);
+
+   // Get Member
+   const getMembers = async () => {
+      if (project.codeProject) {
+         const listMembers = await projectService.getMember({ codeProject: project?.codeProject });
+         if (listMembers.status === 200) setMembers(listMembers.data);
+      }
+   };
 
    return (
       <>

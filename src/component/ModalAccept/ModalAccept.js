@@ -8,7 +8,6 @@ import Button from '../Buttton/Button';
 const cx = classNames.bind(style);
 function ModalAccept({ isOpen, isClose, name, title, handleAccept, headerTitle, blue, btn }) {
    const [isLoading, setIsLoading] = useState(false);
-   console.log(isLoading);
    return (
       <ModalIcon
          width="400px"
@@ -20,7 +19,7 @@ function ModalAccept({ isOpen, isClose, name, title, handleAccept, headerTitle, 
          <div className={cx('text-desc')}>
             <p>
                {title}
-               <b>{name}</b>?
+               <b>{name}</b>
             </p>
          </div>
          <div className={cx('btn-group')}>
@@ -35,6 +34,7 @@ function ModalAccept({ isOpen, isClose, name, title, handleAccept, headerTitle, 
                   setIsLoading(true);
                   await handleAccept();
                   setIsLoading(false);
+                  isClose();
                }}
             >
                {isLoading ? <LoadingIcon /> : <span>{blue ? 'Restore' : btn}</span>}

@@ -9,6 +9,7 @@ import ModalSelect from '../ModalSelect/ModalSelect';
 import IssueService from '~/services/issue/issueService';
 import { ProjectContext } from '~/contexts/project/projectContext';
 import Input from '../Input/Input';
+import { useParams } from 'react-router-dom';
 
 const cx = classNames.bind(style);
 const issueService = new IssueService();
@@ -28,8 +29,9 @@ function ModalAcceptChangeParent({
    const { detailProject } = useContext(ProjectContext);
    const [isLoading, setIsLoading] = useState(false);
    const [isToggle, setIsToggle] = useState(false);
-
    const [issues, setIssues] = useState([]);
+   
+   let { id_issue } = useParams()
 
    const getIssueParent = async () => {
       const listIssue = await issueService.getIssue(detailProject?.codeProject, { parentIssueID: 'null' });
@@ -65,7 +67,7 @@ function ModalAcceptChangeParent({
          label: issue?.name,
       };
    });
-   const newListIssues = listIssue.filter((issue) => issue?.idIssue !== data?._id);
+   const newListIssues = listIssue.filter((issue) => issue?.label !== id_issue);
 
    return (
       <ModalIcon

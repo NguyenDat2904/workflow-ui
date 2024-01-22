@@ -3,10 +3,10 @@ import classNames from 'classnames/bind';
 import style from './Dropdown.module.scss';
 const cx = classNames.bind(style);
 
-const Dropdown = ({ children, actions, target, className }) => {
+const Dropdown = ({ children, actions, target, className, style }) => {
    const [isOpen, setIsOpen] = useState(false);
    const dropdownRef = useRef(null);
-
+   const newActions = actions.filter((value) => value !== null && value !== undefined && value !== '');
    useEffect(() => {
       const pageClickEvent = (e) => {
          // Check if the click is outside the dropdown
@@ -32,7 +32,7 @@ const Dropdown = ({ children, actions, target, className }) => {
          </div>
          {isOpen && (
             <div className={cx('dropdown-menu')}>
-               {actions.map((action, index) => (
+               {newActions.map((action, index) => (
                   <div
                      key={index}
                      className={cx('dropdown-item')}

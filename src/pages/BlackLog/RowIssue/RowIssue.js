@@ -394,7 +394,9 @@ function RowIssue({
                <Dropdown
                   className={cx('custom-dropdown')}
                   actions={[
-                     { label: 'Change parent', method: () => setIsChangeParent(true) },
+                     data.issueType === 'SUB_TASK'
+                        ? { label: 'Change parent', method: () => setIsChangeParent(true) }
+                        : undefined,
                      { label: 'Delete issue', method: () => setIsDropDownMenu(true) },
                   ]}
                >
@@ -407,6 +409,12 @@ function RowIssue({
                   isClose={() => setIsChangeParent(false)}
                   headerTitle={`Change parent`}
                   blue
+                  title={title}
+                  getListIssueChildren={getListIssueChildren}
+                  getListIssueSprint={getListIssueSprint}
+                  getListIssue={getListIssue}
+                  data={data}
+                  setIsChangeParent={setIsChangeParent}
                />
             )}
             {isDropDownMenu && (

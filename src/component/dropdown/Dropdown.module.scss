@@ -14,6 +14,8 @@ $light-background: rgba(9, 30, 66, 0.04);
          padding: 0.5rem 1rem;
          cursor: pointer;
          white-space: nowrap;
+         display: flex;
+         justify-content: start;
          &:hover {
             background-color: $light-background;
          }

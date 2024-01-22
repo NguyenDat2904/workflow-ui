@@ -19,6 +19,7 @@ function ModalSelect({
    handleChange,
    checkedTypes,
    updateQueryParams,
+   style
 }) {
    const renderOptions = data?.map((option, index) => {
       const handleOptionClick = (option) => {
@@ -96,7 +97,7 @@ function ModalSelect({
       );
    });
    return (
-      <div className={cx('main')} style={{ width: width, right: right }}>
+      <div className={cx('main')} style={{ width: width, right: right, ...style }}>
          <div className={cx('wrapper')}>{renderOptions}</div>
       </div>
    );

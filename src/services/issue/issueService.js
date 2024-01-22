@@ -20,6 +20,9 @@ class IssueService extends BaseServices {
    updateIssue(key, id, fillName) {
       return this.patch(`/issues/${key}/edit-information/${id}`, fillName);
    }
+   changeParent(key, idIssue, param) {
+      return this.patch(`/issues/${key}/change-parent/${idIssue}`, { params: { ...param } });
+   }
 
    deleteIssue(codeProject, id_issue) {
       return this.delete(`/issues/${codeProject}/${id_issue}`);

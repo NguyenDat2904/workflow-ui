@@ -83,3 +83,16 @@
 .filter-sprint-type {
    position: relative;
 }
+.number-type {
+   background-color: var(--ds-background-brand-bold, #0052cc);
+   padding-inline: var(--ds-space-075, 6px);
+   border-radius: var(--ds-border-radius-200, 8px);
+   color: var(--ds-text-inverse, #ffffff);
+   font-size: var(--ds-font-size-075, 12px);
+   height: 16px;
+   width: 16px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-left: 4px;
+}

@@ -48,7 +48,7 @@ function CreateIssue({ setIssues, idPrint, idParent, paramsFunc = () => {}, chil
       if (createIssue.status === 200) {
          const listIssue = await issueService.getIssue(detailProject?.codeProject, {
             sprintID: title === 'Backlog' ? 'null' : idPrint,
-            parentIssueID: idParent,
+            parentIssueID: idParent || 'null',
             ...paramsFunc(),
          });
          if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);

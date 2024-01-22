@@ -60,6 +60,8 @@ function Sprint({
             queryParams['typeUserStory'] = 'USER_STORY';
          } else if (element === 'TASK') {
             queryParams['typeTask'] = 'TASK';
+         } else if (element === 'SUB_TASK') {
+            queryParams['typeSubTask'] = 'SUB_TASK';
          }
       });
       return queryParams;
@@ -71,6 +73,7 @@ function Sprint({
          const listIssue = await issueService.getIssue(detailProject?.codeProject, {
             sprintID: title === 'Backlog' ? 'null' : data._id,
             assignee: assignee ? assignee : null,
+            parentIssueID: 'null',
             ...params(),
          });
          if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);

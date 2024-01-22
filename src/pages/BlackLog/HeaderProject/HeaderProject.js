@@ -53,11 +53,13 @@ function HeaderProject({
       queryParams.delete('typeBug');
       queryParams.delete('typeTask');
       queryParams.delete('typeUserStory');
+      queryParams.delete('typeSubTask');
       queryParams.delete('assignee');
       checkedTypes?.forEach((value) => {
          if (value === 'BUG') queryParams.append(`typeBug`, 'BUG');
          else if (value === 'TASK') queryParams.append(`typeTask`, 'TASK');
          else if (value === 'USER_STORY') queryParams.append(`typeUserStory`, 'USER_STORY');
+         else if (value === 'SUB_TASK') queryParams.append(`typeSubTask`, 'SUB_TASK');
       });
       const assignee = selectedMembers?.map((item) => encodeURIComponent(item)).join('-');
       if (assignee) queryParams.append(`assignee`, assignee);
@@ -185,6 +187,9 @@ function HeaderProject({
                            onClick={() => setIsToggleType(!isToggleType)}
                         >
                            Type
+                           {checkedTypes?.length !== 0 && (
+                              <span className={cx('number-type')}>{checkedTypes?.length}</span>
+                           )}
                         </Button>
                         <Modal relative isOpen={isToggleType} onClose={() => setIsToggleType(false)}>
                            <ModalSelect

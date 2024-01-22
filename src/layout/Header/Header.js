@@ -119,7 +119,7 @@ function Header() {
                      className={cx('menu', location.pathname === '/your-work' && 'active')}
                      onClick={() => handleToggle('yourWork')}
                   >
-                     <Button rightIcon={<DownIcon />} backgroundNone to="/your-work">
+                     <Button backgroundNone to="/your-work">
                         Your work
                      </Button>
                   </div>
@@ -140,7 +140,6 @@ function Header() {
                         Projects
                      </Button>
                   </div>
-
                   <ModalProject
                      handleToggle={() =>
                         setToggleMenu((pre) => ({

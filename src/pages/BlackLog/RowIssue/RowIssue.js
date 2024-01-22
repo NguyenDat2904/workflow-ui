@@ -45,7 +45,6 @@ function RowIssue({
          if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
       }
    };
-
    const getListIssueChildren = async () => {
       // Get children
       if (idParent) {

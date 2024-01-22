@@ -7,7 +7,7 @@ $light-background: rgba(9, 30, 66, 0.04);
    .dropdown-menu {
       position: absolute;
       right: 0;
-      z-index: 10;
+      z-index: 30;
       background-color: white;
       box-shadow: $box-shadow;
       .dropdown-item {

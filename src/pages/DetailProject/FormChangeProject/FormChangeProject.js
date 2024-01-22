@@ -15,11 +15,12 @@ import { ProjectContext } from '~/contexts/project/projectContext';
 import FormIcon from '../FormIcon/FormIcon';
 
 const cx = classNames.bind(style);
-function FormChangeProject({ id }) {
+function FormChangeProject({ id, roleUser }) {
    const { parseuser, loadingDetailsProject, setLoadingDetailsProject } = useContext(UserContext);
    const { setDetailProject, detailProject } = useContext(ProjectContext);
    const [toggle, setToggle] = useState(false);
    const workService = new WorkService();
+   const [isLoading, setIsLoading] = useState(false);
    // useForm
    const form = useForm({
       mode: 'all',
@@ -52,11 +53,15 @@ function FormChangeProject({ id }) {
    }, [detailProject]);
 
    const changeDetailProject = async (data) => {
+      if (roleUser?.role === 'member') return;
+      if (isLoading) return;
+      setIsLoading(true);
       const dataForm = { name: data.name, userID: parseuser?._id };
       setLoadingIconSummit(true);
       const changeProject = await workService.changeProject(detailProject?.codeProject, dataForm);
       if (changeProject.status === 200) getDetailProject();
       setLoadingIconSummit(false);
+      setIsLoading(false);
    };
 
    return (
@@ -84,7 +89,21 @@ function FormChangeProject({ id }) {
                      event.preventDefault();
                   }}
                >
-                  <Button onClick={() => setToggle(true)}>Change icon</Button>
+                  <Button
+                     disable={roleUser?.role === 'member'}
+                     style={{
+                        cursor: roleUser?.role !== 'member' ? 'pointer' : 'not-allowed',
+                        height: '32px',
+                        background:
+                           roleUser?.role === 'member' && 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                        fontSize: '14px',
+                     }}
+                     onClick={() => {
+                        if (roleUser?.role !== 'member') setToggle(true);
+                     }}
+                  >
+                     Change icon
+                  </Button>
                </div>
             </div>
             <div className={cx('change-input')}>
@@ -96,10 +115,11 @@ function FormChangeProject({ id }) {
                         <div className={cx('form')}>
                            <div className={cx('form-input')}>
                               <input
-                                 style={{ height: '40px' }}
+                                 style={{ height: '40px', cursor: roleUser?.role === 'member' && 'not-allowed' }}
                                  className="input"
                                  id="name"
                                  defaultValue={form.watch('name')}
+                                 disabled={roleUser?.role === 'member'}
                               />
                            </div>
                         </div>
@@ -132,7 +152,18 @@ function FormChangeProject({ id }) {
                {loadingDetailsProject ? (
                   <Skeleton width="38px" height="32px" />
                ) : (
-                  <Button type="submit" blue style={{ minWidth: '58px' }}>
+                  <Button
+                     type="submit"
+                     disable={roleUser?.role === 'member'}
+                     blue
+                     style={{
+                        minWidth: '58px',
+                        cursor: roleUser?.role !== 'member' ? 'pointer' : 'not-allowed',
+                        height: '32px',
+                        background:
+                           roleUser?.role === 'member' && 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                     }}
+                  >
                      {loadingIconSummit ? <LoadingIcon /> : 'Save'}
                   </Button>
                )}

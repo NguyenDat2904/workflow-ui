@@ -24,6 +24,7 @@ import Dropdown from '~/component/dropdown/Dropdown';
 import { ProjectContext } from '~/contexts/project/projectContext';
 import { UserContext } from '~/contexts/user/userContext';
 import { Tooltip } from 'react-tooltip';
+import ModalAcceptChangeParent from '~/component/ModalAcceptChangeParent/ModalAcceptChangeParent';
 const cx = classNames.bind(style);
 function DetailIssue() {
    const param = useParams();
@@ -58,6 +59,7 @@ function DetailIssue() {
    const [valueDesc, setValueDesc] = useState('');
    const [valueComment, setValueComment] = useState('');
    const [isPendingSubmit, setIsPendingSubmit] = useState(false);
+   const [isChangeParent, setIsChangeParent] = useState(false);
 
    const form = useForm({
       mode: 'all',
@@ -562,7 +564,7 @@ function DetailIssue() {
                                     ? 'Add a children issue'
                                     : 'You are not an admin or a manager.'
                               }
-                              data-tooltip-place="bottom"
+                              data-tooltip-place="top"
                               leftIcon={<AddIcon />}
                               disable={roleUser?.role === 'member'}
                               style={{
@@ -629,12 +631,58 @@ function DetailIssue() {
             <div className={cx('wrapper-right')}>
                <div className={cx('control-header-right')}>
                   <Dropdown
+                     isClose={roleUser?.role === 'member'}
                      className={cx('custom-dropdown')}
-                     actions={[{ label: 'Delete issue', method: () => setIsToggleAcceptDeleteIssue(true) }]}
+                     actions={[
+                        { label: 'Delete issue', method: () => setIsToggleAcceptDeleteIssue(true) },
+                        detailIssue.issueType === 'SUB_TASK'
+                           ? {
+                                label: 'Change parent',
+                                method: () => setIsChangeParent(true),
+                             }
+                           : undefined,
+                     ]}
                   >
-                     <Button backgroundNone leftIcon={<MenuIcon />} style={{ height: '32px' }}></Button>
+                     <Button
+                        data-tooltip-id="edit-issue"
+                        data-tooltip-content="You are not an admin or a manager."
+                        data-tooltip-place="top"
+                        backgroundNone
+                        leftIcon={<MenuIcon />}
+                        disable={roleUser?.role === 'member'}
+                        style={{
+                           cursor: roleUser?.role !== 'member' ? 'pointer' : 'not-allowed',
+                           height: '32px',
+                           background: 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                        }}
+                     ></Button>
                   </Dropdown>
                </div>
+               {roleUser?.role === 'member' && (
+                  <Tooltip
+                     id="edit-issue"
+                     style={{
+                        backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                        color: 'var(--ds-text-inverse, #FFFFFF)',
+                        padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                        fontSize: 'var(--ds-font-size-075, 12px)',
+                        maxWidth: '240px',
+                        textAlign: 'center',
+                     }}
+                  />
+               )}
+               {isChangeParent && (
+                  <ModalAcceptChangeParent
+                     isOpen={isChangeParent}
+                     isClose={() => setIsChangeParent(false)}
+                     headerTitle={`Change parent`}
+                     blue
+                     getIssueDetail={getIssueDetail}
+                     data={detailIssue}
+                     setIsChangeParent={setIsChangeParent}
+                  />
+               )}
+
                {isToggleAcceptDeleteIssue && (
                   <ModalAccept
                      btn="Delete"
@@ -768,30 +816,32 @@ function DetailIssue() {
                                     </Modal>
                                  </div>
                               </div>
-                              <div className={cx('assignee-select')}>
-                                 <label htmlFor="">Sprint</label>
-                                 <div className={cx('wrapper-input')}>
-                                    <Input
-                                       className={cx('custom-input')}
-                                       style={{ color: 'var(--ds-link, #0052CC)' }}
-                                       onFocus={() => setIsToggleSprint(true)}
-                                       onClick={() => setIsToggleSprint(true)}
-                                       value={detailIssue.sprint?.name ? detailIssue.sprint?.name : 'None'}
-                                    />
-                                    <Modal isOpen={isToggleSprint} relative onClose={() => setIsToggleSprint(false)}>
-                                       <ModalSelect
-                                          width="100%"
-                                          onClose={() => setIsToggleSprint(false)}
-                                          handleSubmit={(option) =>
-                                             handleChangeSprint(param?.id, detailIssue?._id, option)
-                                          }
-                                          status
-                                          active={detailIssue.sprint?.name}
-                                          data={dataLabelSprint.reverse()}
+                              {detailIssue?.parentIssue === null && (
+                                 <div className={cx('assignee-select')}>
+                                    <label htmlFor="">Sprint</label>
+                                    <div className={cx('wrapper-input')}>
+                                       <Input
+                                          className={cx('custom-input')}
+                                          style={{ color: 'var(--ds-link, #0052CC)' }}
+                                          onFocus={() => setIsToggleSprint(true)}
+                                          onClick={() => setIsToggleSprint(true)}
+                                          value={detailIssue.sprint?.name ? detailIssue.sprint?.name : 'None'}
                                        />
-                                    </Modal>
+                                       <Modal isOpen={isToggleSprint} relative onClose={() => setIsToggleSprint(false)}>
+                                          <ModalSelect
+                                             width="100%"
+                                             onClose={() => setIsToggleSprint(false)}
+                                             handleSubmit={(option) =>
+                                                handleChangeSprint(param?.id, detailIssue?._id, option)
+                                             }
+                                             status
+                                             active={detailIssue.sprint?.name}
+                                             data={[...dataLabelSprint.reverse(), { label: 'Backlog', key: null }]}
+                                          />
+                                       </Modal>
+                                    </div>
                                  </div>
-                              </div>
+                              )}
                               <div className={cx('assignee-select')}>
                                  <label htmlFor="">Priority</label>
                                  <div className={cx('wrapper-input')}>

@@ -7,12 +7,13 @@ import { Link } from 'react-router-dom';
 import MenuProject from './MenuProject/MenuProject';
 import moment from 'moment';
 import ModalAccept from '../ModalAccept/ModalAccept';
-import { ProjectContext } from '~/contexts/project/projectContext';
 import WorkService from '~/services/work/workServices';
+import { UserContext } from '~/contexts/user/userContext';
+import { Tooltip } from 'react-tooltip';
 const cx = classNames.bind(style);
 
 function RowProject({ project, handleMoveToTrash, trash, handleDeletePer, handleRestore }) {
-   const { members, setMembers } = useContext(ProjectContext);
+   const { dataUserProfile } = useContext(UserContext);
 
    const projectService = new WorkService();
 
@@ -29,10 +30,11 @@ function RowProject({ project, handleMoveToTrash, trash, handleDeletePer, handle
    const remainingTime = moment.duration(futureDate.diff(currentDate));
    const remainingDays = remainingTime.asDays();
    const remainingText = `In ${Math.floor(remainingDays)} days`;
+   const [members, setMembers] = useState([]);
 
    useEffect(() => {
       getMembers();
-   }, [project]);
+   }, [project, dataUserProfile]);
 
    // Get Member
    const getMembers = async () => {
@@ -41,6 +43,10 @@ function RowProject({ project, handleMoveToTrash, trash, handleDeletePer, handle
          if (listMembers.status === 200) setMembers(listMembers.data);
       }
    };
+   const roleUsers = members?.filter((user) => {
+      return user._id === dataUserProfile._id;
+   });
+   const roleUser = roleUsers[0];
 
    return (
       <>
@@ -136,9 +142,37 @@ function RowProject({ project, handleMoveToTrash, trash, handleDeletePer, handle
             )}
 
             <td className={cx('menu-icon')}>
-               <div onClick={() => setToggle(true)}>
-                  <Button noChildren backgroundNone leftIcon={<MenuIcon />} />
+               <div>
+                  <Button
+                     data-tooltip-id="delete-project-tooltip"
+                     data-tooltip-content={roleUser?.role !== 'admin' ? 'You are not an admin.' : ''}
+                     data-tooltip-place="top"
+                     backgroundNone
+                     leftIcon={<MenuIcon />}
+                     disable={roleUser?.role !== 'admin'}
+                     style={{
+                        cursor: roleUser?.role === 'admin' ? 'pointer' : 'not-allowed',
+                        background: roleUser?.role !== 'admin' && 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                     }}
+                     onClick={() => {
+                        if (roleUser?.role === 'admin') setToggle(true);
+                     }}
+                  />
                </div>
+               {
+                  <Tooltip
+                     id="delete-project-tooltip"
+                     style={{
+                        backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                        color: 'var(--ds-text-inverse, #FFFFFF)',
+                        padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                        fontSize: 'var(--ds-font-size-075, 12px)',
+                        maxWidth: '140px',
+                        textAlign: 'center',
+                        fontWeight: '400',
+                     }}
+                  />
+               }
                <div>
                   <MenuProject
                      trash={trash}

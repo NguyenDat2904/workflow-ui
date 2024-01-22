@@ -25,13 +25,14 @@ function ModalAcceptChangeParent({
    getListIssueChildren,
    data,
    setIsChangeParent,
+   getIssueDetail,
 }) {
    const { detailProject } = useContext(ProjectContext);
    const [isLoading, setIsLoading] = useState(false);
    const [isToggle, setIsToggle] = useState(false);
    const [issues, setIssues] = useState([]);
-   
-   let { id_issue } = useParams()
+
+   let { id_issue } = useParams();
 
    const getIssueParent = async () => {
       const listIssue = await issueService.getIssue(detailProject?.codeProject, { parentIssueID: 'null' });
@@ -43,9 +44,10 @@ function ModalAcceptChangeParent({
       const dataForm = { parentIssue: option.idIssue };
       const updateIssue = await issueService.changeParent(key, id, dataForm);
       if (updateIssue.status === 200) {
-         getListIssueSprint();
-         getListIssueChildren();
+         if (getListIssueSprint) getListIssueSprint();
+         if (getListIssueChildren) getListIssueChildren();
          if (title === 'Blacklog') getListIssue();
+         getIssueDetail();
       }
       setIsLoading(false);
       setIsChangeParent(false);

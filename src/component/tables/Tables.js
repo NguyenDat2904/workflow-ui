@@ -5,8 +5,9 @@ import classNames from 'classnames/bind';
 import style from './Tables.module.scss';
 import Button from '../Buttton/Button';
 import { MenuIcon } from '../icon/icon';
+import { Tooltip } from 'react-tooltip';
 const cx = classNames.bind(style);
-export function Table({ actions, data, colWidthRatio, colType, idList, labels, ...props }) {
+export function Table({ actions, data, colWidthRatio, colType, idList, labels, roleUser, ...props }) {
    const renderTdTable = data?.map((member, index) => {
       return (
          <tr key={index} className={cx('tr-table')}>
@@ -33,27 +34,48 @@ export function Table({ actions, data, colWidthRatio, colType, idList, labels, .
             <td className={cx('td-table')}>
                <div className={cx('td-table-email')}>
                   {member?.role === 'admin'
-                     ? 'Adminitrator'
+                     ? 'Administrator'
                      : member?.role === 'member'
                      ? 'Member'
-                     : member?.role === 'manager'
+                     : member?.role === 'managers'
                      ? 'Manager'
                      : ''}
                </div>
             </td>
             <td>
-               <div style={{ textAlign: 'end' }}>
-                  <Dropdown
-                     className={cx('custom-dropdown')}
-                     actions={[{ label: 'Change role' }, { label: 'Delete member' }]}
-                  >
-                     <Button
-                        leftIcon={<MenuIcon />}
-                        backgroundNone
-                        style={{ height: '32px', margin: 'var(--ds-space-050, 4px) var(--ds-space-100, 8px)' }}
-                     ></Button>
-                  </Dropdown>
-               </div>
+               {member?.role !== 'admin' && (
+                  <div style={{ textAlign: 'end' }}>
+                     <Dropdown isClose={roleUser?.role !== 'admin'} className={cx('custom-dropdown')} actions={actions}>
+                        <Button
+                           data-tooltip-id="change-role"
+                           data-tooltip-content="You are not an admin."
+                           data-tooltip-place="top"
+                           leftIcon={<MenuIcon />}
+                           backgroundNone
+                           disable={roleUser?.role !== 'admin'}
+                           style={{
+                              cursor: roleUser?.role === 'admin' ? 'pointer' : 'not-allowed',
+                              height: '32px',
+                              background:
+                                 roleUser?.role !== 'admin' && 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                           }}
+                        ></Button>
+                     </Dropdown>
+                     {roleUser?.role !== 'admin' && (
+                        <Tooltip
+                           id="change-role"
+                           style={{
+                              backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                              color: 'var(--ds-text-inverse, #FFFFFF)',
+                              padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                              fontSize: 'var(--ds-font-size-075, 12px)',
+                              maxWidth: '240px',
+                              textAlign: 'center',
+                           }}
+                        />
+                     )}
+                  </div>
+               )}
             </td>
          </tr>
       );

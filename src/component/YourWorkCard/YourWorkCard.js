@@ -18,7 +18,7 @@ function YourWorkCard({ data }) {
                      width="24px"
                      height="24px"
                      className={cx('img-project')}
-                     alt="image project"
+                     alt=" project"
                      style={{ borderRadius: '3px' }}
                   />
                </span>

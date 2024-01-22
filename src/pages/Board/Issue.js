@@ -34,9 +34,13 @@ export default function Issue({ issueDetail, projectId, ...props }) {
 
    return (
       <Card className={cx('task')} {...props}>
+         {console.log(issueDetail)}
          <p onClick={handleChangingPage}>{issueDetail.summary}</p>
          <div className={cx('metadata')}>
-            <IssueIcon type={issueDetail.issueType} />
+            <span style={{ display: 'flex', alignItems: 'center' }}>
+               <IssueIcon type={issueDetail.issueType} />
+               <span style={{ fontSize: '0.8rem', fontWeight: '500' }}>{issueDetail.name}</span>
+            </span>
             <span>
                {priorityIcon}
                {/* <img src={`${issueDetail.assignee.img}`} alt="" /> */}

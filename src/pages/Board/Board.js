@@ -121,7 +121,11 @@ export default function Board() {
                   <div key={key}>
                      <div className={cx('main-task')}>
                         <IssueIcon type={listIssues[key].issueType} style={{ width: '1.5rem', height: '1.5rem' }} />
+                        <span style={{ color: 'gray', fontWeight: '400' }}>{listIssues[key].name}</span>
                         <span>{listIssues[key].summary}</span>
+                        <span style={{ color: 'gray', fontWeight: '400' }}>
+                           ({listIssues[key].subIssues.length} subtasks)
+                        </span>
                      </div>
                      <div className={cx('sub-tasks-container')}>
                         <div className={cx('sub-tasks')}>{mappingSubIssue(listIssues[key].subIssues, 'TODO')}</div>
@@ -137,6 +141,7 @@ export default function Board() {
                   <div className={cx('main-task')}>
                      <IssueIcon type="EPIC" style={{ width: '1.5rem', height: '1.5rem' }} />
                      <span>Everything else</span>
+                     <span style={{ color: 'gray', fontWeight: '400' }}>({listSingleIssues.length} subtasks)</span>
                   </div>
                   <div className={cx('sub-tasks-container')}>
                      <div className={cx('sub-tasks', 'final')}>{mappingSubIssue(listSingleIssues, 'TODO')}</div>

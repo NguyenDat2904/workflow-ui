@@ -73,10 +73,10 @@ function ModalProject({ handleToggle, isOpen }) {
          <div className={cx('bottom', '.modal-bottom ')}>
             <span>
                <Button viewAll to="/project" onClick={handleToggle}>
-                  View all projects
+                  All Projects
                </Button>
                <Button viewAll to="/project/trash" onClick={handleToggle}>
-                  View all projects in the trash
+                  Deleted Project
                </Button>
                <Button viewAll to="/project/create">
                   Create project

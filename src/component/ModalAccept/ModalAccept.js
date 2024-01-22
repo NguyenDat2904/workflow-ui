@@ -8,7 +8,6 @@ import Button from '../Buttton/Button';
 const cx = classNames.bind(style);
 function ModalAccept({ isOpen, isClose, name, title, handleAccept, headerTitle, blue, btn }) {
    const [isLoading, setIsLoading] = useState(false);
-   console.log(isLoading);
    return (
       <ModalIcon
          width="400px"
@@ -31,9 +30,10 @@ function ModalAccept({ isOpen, isClose, name, title, handleAccept, headerTitle, 
                blue={blue ? true : false}
                warning={blue ? false : true}
                type="submit"
-               onClick={() => {
+               onClick={async () => {
                   setIsLoading(true);
-                  handleAccept();
+                  await handleAccept();
+                  setIsLoading(false);
                   isClose();
                }}
             >

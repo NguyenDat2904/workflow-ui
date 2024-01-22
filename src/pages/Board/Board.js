@@ -13,52 +13,52 @@ import { ProjectContext } from '~/contexts/project/projectContext';
 const cx = classNames.bind(style);
 
 export default function Board() {
-   const { detailProject } = useContext(ProjectContext);
+   const { detailProject, members, setMembers } = useContext(ProjectContext);
    const BoardWorkService = new WorkService();
+
    const [allIssues, setAllIssues] = useState([]);
    const [listIssues, setListIssues] = useState({});
    const [listSingleIssues, setListSingleIssues] = useState([]);
    const [isToggleComplete, setIsToggleComplete] = useState(false);
    const [checkedTypes, setCheckedTypes] = useState([]);
-   const [members, setMembers] = useState([]);
    const [selectedMembers, setSelectedMembers] = useState([]);
    const { id } = useParams();
 
-   useEffect(() => {
-      async function getIssues() {
-         const listIssuesData = await BoardWorkService.getListIssuesOfBoard(id, {});
-         const listIssues = listIssuesData.data.issuesBroad;
-         console.log(listIssues);
-         const parentIssues = {};
-         const categorizedIssues = new Set();
-         for (const issue of listIssues) {
-            if (issue.parentIssue) {
-               if (!parentIssues[issue.parentIssue]) {
-                  const parent = listIssues.filter((item) => item._id === issue.parentIssue)[0];
-                  parentIssues[issue.parentIssue] = {
-                     ...parent,
-                     subIssues: [],
-                  };
-                  categorizedIssues.add(parent);
-               }
-               parentIssues[issue.parentIssue].subIssues.push(issue);
-               categorizedIssues.add(issue);
+   async function getIssues() {
+      const listIssuesData = await BoardWorkService.getListIssuesOfBoard(id, {});
+      const listIssues = listIssuesData.data.issuesBroad;
+      const parentIssues = {};
+      const categorizedIssues = new Set();
+      for (const issue of listIssues) {
+         if (issue.parentIssue) {
+            if (!parentIssues[issue.parentIssue]) {
+               const parent = listIssues.filter((item) => item._id === issue.parentIssue)[0];
+               parentIssues[issue.parentIssue] = {
+                  ...parent,
+                  subIssues: [],
+               };
+               categorizedIssues.add(parent);
             }
+            parentIssues[issue.parentIssue].subIssues.push(issue);
+            categorizedIssues.add(issue);
          }
-         const uncategorizedIssues = listIssues.filter((issue) => !categorizedIssues.has(issue));
-         setAllIssues(listIssues);
-         setListIssues(parentIssues);
-         setListSingleIssues(uncategorizedIssues);
       }
+      const uncategorizedIssues = listIssues.filter((issue) => !categorizedIssues.has(issue));
+      setAllIssues(listIssues);
+      setListIssues(parentIssues);
+      setListSingleIssues(uncategorizedIssues);
+   }
 
-      async function getMembers() {
+   async function getMembers() {
+      if (detailProject.codeProject) {
          const listMembers = await BoardWorkService.getMember({ codeProject: detailProject?.codeProject });
          if (listMembers.status === 200) setMembers(listMembers.data);
       }
-
+   }
+   useEffect(() => {
       getIssues();
       getMembers();
-   }, []);
+   }, [detailProject]);
 
    useEffect(() => {
       console.log(checkedTypes);

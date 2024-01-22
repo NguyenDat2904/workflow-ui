@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import style from './Dropdown.module.scss';
 const cx = classNames.bind(style);
 
-const Dropdown = ({ children, actions, target, className }) => {
+const Dropdown = ({ children, actions, target, className, isClose }) => {
    const [isOpen, setIsOpen] = useState(false);
    const dropdownRef = useRef(null);
 
@@ -27,7 +27,16 @@ const Dropdown = ({ children, actions, target, className }) => {
 
    return (
       <div className={cx('dropdown', className)} ref={dropdownRef}>
-         <div className={cx('dropdown-trigger')} onClick={() => setIsOpen(!isOpen)}>
+         <div
+            className={cx('dropdown-trigger')}
+            onClick={() => {
+               if (isClose) {
+                  setIsOpen(isOpen);
+               } else {
+                  setIsOpen(!isOpen);
+               }
+            }}
+         >
             {children}
          </div>
          {isOpen && (

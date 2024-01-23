@@ -20,6 +20,6 @@ Bùi Nhật Minh:
 - **Email**: *buinhatminh2k52005@gmail.com*
 - **Github**: [https://github.com/Piceratop](https://github.com/Piceratop)
 
-Nguyễn Thành Đạ:
+Nguyễn Thành Đạt:
 - **Email**: **
 - **Github**: []()

@@ -50,6 +50,11 @@ class WorkService extends BaseServices {
       return this.patch(`/projects/edit-project/${id}`, { nameProject: name, codeProject: key, _idUser: userID });
    }
 
+   // Change Role Member
+   changeRole(key, body) {
+      return this.patch(`/projects/${key}/update-permissions`, body);
+   }
+
    // Get Member
    getMember(param) {
       return this.get(`/projects/list-member`, { params: { ...param } });

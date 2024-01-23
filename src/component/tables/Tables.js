@@ -8,6 +8,7 @@ import { MenuIcon } from '../icon/icon';
 import { Tooltip } from 'react-tooltip';
 import ModalAccept from '../ModalAccept/ModalAccept';
 import WorkService from '~/services/work/workServices';
+import ModalChangeRole from '../ModalChangeRole/ModalChangeRole';
 const cx = classNames.bind(style);
 export function Table({
    actions,
@@ -23,6 +24,7 @@ export function Table({
 }) {
    const projectService = new WorkService();
    const [isToggleDeleteMember, setIsToggleDeleteMember] = useState(null);
+   const [isToggleChangeRole, setIsToggleChangeRole] = useState(false);
 
    const renderTdTable = data?.map((member, index) => {
       const handleDeleteMember = async (codeProject, idMember) => {
@@ -71,7 +73,12 @@ export function Table({
                         isClose={roleUser?.role !== 'admin'}
                         className={cx('custom-dropdown')}
                         actions={[
-                           { label: 'Change role', method: () => setIsToggleDeleteMember(false) },
+                           {
+                              label: 'Change role',
+                              method: () => {
+                                 if (index) setIsToggleChangeRole(index);
+                              },
+                           },
                            {
                               label: 'Delete member',
                               method: () => {
@@ -95,6 +102,15 @@ export function Table({
                            }}
                         ></Button>
                      </Dropdown>
+                     {isToggleChangeRole === index && (
+                        <ModalChangeRole
+                           isOpen={isToggleChangeRole}
+                           isClose={() => setIsToggleChangeRole(null)}
+                           getMembers={getMembers}
+                           member={member}
+                           setIsToggleChangeRole={setIsToggleChangeRole}
+                        />
+                     )}
                      {isToggleDeleteMember === index && (
                         <ModalAccept
                            btn="Delete"

@@ -194,7 +194,7 @@
 }
 .control-header-right {
    display: flex;
-   justify-content: end;
+   justify-content: space-between;
 }
 .detail-content-right {
    margin-bottom: var(--ds-space-100, 8px);

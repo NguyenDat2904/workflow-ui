@@ -630,6 +630,23 @@ function DetailIssue() {
          <div className={cx('section-right')}>
             <div className={cx('wrapper-right')}>
                <div className={cx('control-header-right')}>
+                  <Button
+                     onClick={() => setIsToggleStatus(!isToggleStatus)}
+                     blue={(detailIssue?.status === 'INPROGRESS' || detailIssue?.status === 'REVIEW') && true}
+                     success={detailIssue?.status === 'DONE' && true}
+                     rightIcon={<DownIcon />}
+                     style={{ height: '32px', fontSize: '14px' }}
+                  >
+                     {detailIssue?.status === 'TODO'
+                        ? 'To Do'
+                        : detailIssue?.status === 'INPROGRESS'
+                        ? 'In Progress'
+                        : detailIssue?.status === 'REVIEW'
+                        ? 'In Review'
+                        : detailIssue?.status === 'DONE'
+                        ? 'Done'
+                        : ''}
+                  </Button>
                   <Dropdown
                      isClose={roleUser?.role === 'member'}
                      className={cx('custom-dropdown')}
@@ -695,23 +712,6 @@ function DetailIssue() {
                )}
                <div className={cx('content-right')}>
                   <div className={cx('control-content-right')}>
-                     <Button
-                        onClick={() => setIsToggleStatus(!isToggleStatus)}
-                        blue={(detailIssue?.status === 'INPROGRESS' || detailIssue?.status === 'REVIEW') && true}
-                        success={detailIssue?.status === 'DONE' && true}
-                        rightIcon={<DownIcon />}
-                        style={{ height: '32px', fontSize: '14px' }}
-                     >
-                        {detailIssue?.status === 'TODO'
-                           ? 'To Do'
-                           : detailIssue?.status === 'INPROGRESS'
-                           ? 'In Progress'
-                           : detailIssue?.status === 'REVIEW'
-                           ? 'In Review'
-                           : detailIssue?.status === 'DONE'
-                           ? 'Done'
-                           : ''}
-                     </Button>
                      {isToggleStatus && (
                         <Modal isOpen={isToggleStatus} relative onClose={() => setIsToggleStatus(false)}>
                            <ModalSelect

@@ -1,0 +1,97 @@
+.wrapper {
+   position: relative;
+   margin: var(--ds-space-025, 2px) 0;
+   display: block;
+
+   .container {
+      cursor: pointer;
+      user-select: none;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      margin: var(--ds-space-025, 2px) 0;
+      margin-bottom: 4px;
+      border-radius: 3px;
+      box-shadow: var(--ds-shadow-raised, 0 1px 1px rgba(23, 43, 77, 0.2), 0 0 1px rgba(23, 43, 77, 0.2));
+      transition: background-color 140ms ease-in-out 0s, color 140ms ease-in-out 0s;
+      background-color: var(--ds-background-selected, #fff);
+      --jsw-card-background-color: var(--ds-background-selected, #deebff);
+      color: var(--ds-text, #172b4d);
+      filter: none;
+      max-width: 270px;
+      &:hover {
+         background-color: var(--ds-background-neutral-subtle-hovered, #091e420f);
+         --jsw-card-background-color: var(--ds-background-neutral-subtle-hovered, #091e420f);
+         color: var(--ds-text, #172b4d);
+      }
+      .card-content {
+         display: flex;
+         flex-direction: column;
+         padding: var(--ds-space-150, 12px);
+         .card-top {
+            margin-bottom: var(--ds-space-100, 8px);
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            .card-summary {
+               font-size: 14px;
+               &:hover {
+                  text-decoration: underline;
+               }
+            }
+         }
+         .card-bottom {
+            margin-top: 4.8px;
+            .card-bottom-row {
+               display: grid;
+               grid-template-rows: 1fr;
+               gap: 8px 4px;
+               min-height: 28px;
+               grid-template-columns: minmax(0, 1fr) auto auto;
+            }
+         }
+      }
+   }
+}
+.card-issue-name {
+   display: flex;
+   align-items: center;
+   justify-content: start;
+   gap: var(--ds-space-100, 8px);
+   .issue-name {
+      font-size: 12px;
+      color: #44546f;
+      font-weight: 600;
+      span {
+         &:hover {
+            text-decoration: underline;
+         }
+      }
+   }
+   .issue-status {
+      position: relative;
+      background-color: var(--ds-background-neutral, #dfe1e6);
+      border-radius: var(--ds-border-radius, 3px);
+      padding: 0 4px;
+      span {
+         color: var(--ds-text-subtle, #42526e);
+         font-size: 11px;
+         font-weight: 700;
+      }
+   }
+   .card-issue-assignee {
+      position: relative;
+      height: 28px;
+      width: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+         height: 24px;
+         width: 24px;
+         border-radius: 50%;
+         object-fit: cover;
+      }
+   }
+}

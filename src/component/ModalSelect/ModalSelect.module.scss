@@ -74,16 +74,16 @@
       padding: 2px 4px;
    }
    .text-todo {
-      color: var(--ds-text, #42526e);
-      background-color: var(--ds-background-neutral, #dfe1e6);
+      color: var(--ds-text, #42526e) !important;
+      background-color: var(--ds-background-neutral, #dfe1e6) !important;
    }
    .text-in-process {
-      color: var(--ds-text-information, #0747a6);
-      background-color: var(--ds-background-information, #deebff);
+      color: var(--ds-text-information, #0747a6) !important;
+      background-color: var(--ds-background-information, #deebff) !important;
    }
    .text-done {
-      color: var(--ds-text-success, #006644);
-      background-color: var(--ds-background-success, #e3fcef);
+      color: var(--ds-text-success, #006644) !important;
+      background-color: var(--ds-background-success, #e3fcef) !important;
    }
 }
 .custom-input-checkbox {

@@ -5,7 +5,7 @@ import { ReactComponent as Task } from '../../asset/icons/task.svg';
 import { ReactComponent as Subtask } from '../../asset/icons/subtask.svg';
 import { StoryIcon as Story } from '~/component/icon/icon';
 import classNames from 'classnames/bind';
-import style from './Board.scss';
+import style from './Board.module.scss';
 
 const cx = classNames.bind(style);
 

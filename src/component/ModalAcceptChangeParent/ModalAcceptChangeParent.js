@@ -47,7 +47,7 @@ function ModalAcceptChangeParent({
          if (getListIssueSprint) getListIssueSprint();
          if (getListIssueChildren) getListIssueChildren();
          if (title === 'Blacklog') getListIssue();
-         getIssueDetail();
+         if (getIssueDetail) getIssueDetail();
       }
       setIsLoading(false);
       setIsChangeParent(false);

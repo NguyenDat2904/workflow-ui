@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import style from './Board.scss';
+import style from './Board.module.scss';
 import classNames from 'classnames/bind';
 import { Card } from '~/component/cards/Cards';
 import { ReactComponent as VeryUpArrow } from '../../asset/icons/veryUpArrow.svg';

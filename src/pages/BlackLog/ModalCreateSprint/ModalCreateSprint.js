@@ -8,11 +8,13 @@ import { useForm } from 'react-hook-form';
 import Button from '~/component/Buttton/Button';
 import SprintService from '~/services/sprint/SprintService';
 import { LoadingIcon } from '~/component/icon/icon';
+import { Navigate } from 'react-router-dom';
 
 const cx = classNames.bind(style);
-function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_acpt, checkedTypes }) {
+function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_acpt }) {
    const sprintService = new SprintService();
    const [isLoading, setIsLoading] = useState(false);
+   const navigate = Navigate();
 
    const form = useForm({
       mode: 'all',
@@ -31,6 +33,7 @@ function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_a
       if (updateSprint.status === 200) {
          const listPrints = await sprintService.getSprint(keyProject, {});
          if (listPrints.status === 200) setPrints(listPrints.data.sprint);
+         if (btn_acpt === 'Start') navigate(`/project/${keyProject}/black-log`);
       }
       isClose();
       setIsLoading(false);

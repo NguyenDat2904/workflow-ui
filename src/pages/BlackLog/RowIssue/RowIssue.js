@@ -228,17 +228,6 @@ function RowIssue({
                               handleSubmit={(option) =>
                                  handleChangeStatus(detailProject?.codeProject, data?._id, option)
                               }
-                              active={
-                                 data?.status === 'TODO'
-                                    ? 'TO DO'
-                                    : data?.status === 'INPROGRESS'
-                                    ? 'IN PROGRESS'
-                                    : data?.status === 'REVIEW'
-                                    ? 'IN REVIEW'
-                                    : data?.status === 'DONE'
-                                    ? 'DONE'
-                                    : ''
-                              }
                               status
                               data={[
                                  data?.status !== 'TODO' ? { label: 'TO DO', key: 'TODO' } : null,

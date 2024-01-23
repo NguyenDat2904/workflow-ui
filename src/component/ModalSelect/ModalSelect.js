@@ -12,6 +12,7 @@ function ModalSelect({
    handleSubmit,
    status,
    right,
+   left,
    percent50,
    heightRow,
    checkbox,
@@ -96,7 +97,7 @@ function ModalSelect({
       );
    });
    return (
-      <div className={cx('main')} style={{ width: width, right: right, ...style }}>
+      <div className={cx('main')} style={{ width: width, right: right, left: left, ...style }}>
          <div className={cx('wrapper')}>{renderOptions}</div>
       </div>
    );

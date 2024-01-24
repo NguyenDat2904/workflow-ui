@@ -156,10 +156,14 @@ function RowIssue({
                }}
             />
             <div className={cx('name-issue', data?.issueType === 'SUB_TASK' && 'name-sub-task')}>
-               <Link to={`/projects/${detailProject?.codeProject}/issues/${data?.name}`}>{data?.name}</Link>
+               <Link to={`/projects/${detailProject?.codeProject}/issues/${data?.name}`} target="_blank">
+                  {data?.name}
+               </Link>
             </div>
             <div className={cx('name-work')}>
-               <Link to={`/projects/${detailProject?.codeProject}/issues/${data?.name}`}>{data?.summary}</Link>
+               <Link to={`/projects/${detailProject?.codeProject}/issues/${data?.name}`} target="_blank">
+                  {data?.summary}
+               </Link>
             </div>
             <div className={cx('control-issue')}>
                {!children && <div className={cx('children-issue')}>{/* <TreeIcon /> */}</div>}

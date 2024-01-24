@@ -8,13 +8,13 @@ import { useForm } from 'react-hook-form';
 import Button from '~/component/Buttton/Button';
 import SprintService from '~/services/sprint/SprintService';
 import { LoadingIcon } from '~/component/icon/icon';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(style);
 function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_acpt }) {
    const sprintService = new SprintService();
    const [isLoading, setIsLoading] = useState(false);
-   const navigate = Navigate();
+   const navigate = useNavigate();
 
    const form = useForm({
       mode: 'all',
@@ -33,7 +33,7 @@ function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_a
       if (updateSprint.status === 200) {
          const listPrints = await sprintService.getSprint(keyProject, {});
          if (listPrints.status === 200) setPrints(listPrints.data.sprint);
-         if (btn_acpt === 'Start') navigate(`/project/${keyProject}/black-log`);
+         if (btn_acpt === 'Start') navigate(`/project/${keyProject}/board`);
       }
       isClose();
       setIsLoading(false);
@@ -50,7 +50,7 @@ function ModalCreateSprint({ data, isOpen, isClose, keyProject, setPrints, btn_a
          maxWidth="600px"
          isOpen={isOpen}
          isClose={isClose}
-         header="Edit sprint: WF12 Sprint 1"
+         header={`Edit sprint: ${data?.name}`}
       >
          <form action="" onSubmit={form.handleSubmit(handleSubmit)}>
             <div style={{ marginTop: 'var(--ds-space-100, 8px)' }}>

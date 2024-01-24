@@ -365,6 +365,7 @@ $color-border: rgba(9, 30, 66, 0.08);
       align-items: center;
       img {
          height: 24px;
+         width: 24px;
       }
    }
    .img-name {
@@ -372,6 +373,9 @@ $color-border: rgba(9, 30, 66, 0.08);
       color: #44546f;
       font-size: 9pt;
       font-weight: 600;
+      &:hover {
+         text-decoration: underline;
+      }
    }
    .img-summary {
       font-size: 14px;
@@ -392,6 +396,34 @@ $color-border: rgba(9, 30, 66, 0.08);
          color: var(--ds-text-subtle, #42526e);
          font-size: 11px;
          font-weight: 700;
+      }
+   }
+   .btn-blue {
+      background-color: var(--ds-background-information, #deebff);
+      span {
+         color: var(--ds-text-information, #0747a6);
+      }
+   }
+   .btn-todo {
+      background-color: var(--ds-background-neutral, #dfe1e6);
+      span {
+         color: var(--ds-text, #42526e);
+      }
+   }
+   .btn-done {
+      background-color: var(--ds-background-success, #e3fcef);
+      span {
+         color: var(--ds-text-success, #006644);
+      }
+   }
+   .img-assignee {
+      margin-left: var(--ds-space-100, 8px);
+      display: flex;
+      align-items: center;
+      img {
+         height: 24px;
+         width: 24px;
+         border-radius: 50%;
       }
    }
 }

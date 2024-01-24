@@ -10,22 +10,37 @@ import ModalSelect from '~/component/ModalSelect/ModalSelect';
 import Input from '~/component/Input/Input';
 import IssueService from '~/services/issue/issueService';
 const cx = classNames.bind(style);
-function ModalCompleteSprint({ isOpen, isClose, issues, data, detailProject, getListIssue, setPrints }) {
+function ModalCompleteSprintBoard({
+   isOpen,
+   isClose,
+   sprints,
+   detailProject,
+   getIssuesFilter,
+   getIssues,
+   getListSprint,
+}) {
    const sprintService = new SprintService();
    const issueService = new IssueService();
    const [isLoading, setIsLoading] = useState(false);
    const [listSprints, setListSprint] = useState([]);
    const [isToggleModalSprint, setIsToggleModalSprint] = useState(false);
+   const [isToggleModalSprintComplete, setIsToggleModalSprintComplete] = useState(false);
+   const [issues, setIssues] = useState([]);
+   const [valueChooseSprint, setValueChooseSprint] = useState({});
    const [valueSprintComplete, setValueSprintComplete] = useState({});
-
-   const issuesDone = issues?.filter((issue) => issue?.status === 'DONE');
-   const issuesOpen = issues?.filter((issue) => issue?.status !== 'DONE');
 
    useEffect(() => {
       getListSprints();
-   }, []);
+      if (Object.keys(valueChooseSprint).length !== 0) getListIssues();
+   }, [valueChooseSprint]);
 
-   console.log(valueSprintComplete);
+   const getListIssues = async () => {
+      const issue = await issueService.getIssue(detailProject?.codeProject, { sprintID: valueChooseSprint?.id });
+      if (issue.status === 200) setIssues(issue.data.dataListIssues);
+   };
+
+   const issuesDone = issues?.filter((issue) => issue?.status === 'DONE');
+   const issuesOpen = issues?.filter((issue) => issue?.status !== 'DONE');
 
    const handleSubmitComplete = async (event) => {
       event.preventDefault();
@@ -39,26 +54,31 @@ function ModalCompleteSprint({ isOpen, isClose, issues, data, detailProject, get
             issueService.updateIssue(detailProject?.codeProject, issue?._id, { sprint: valueSprintComplete?.id }),
          );
       }
-      const deleteSprint = await sprintService.deleteSprint(detailProject?.codeProject, data?._id);
+      const deleteSprint = await sprintService.deleteSprint(detailProject?.codeProject, valueChooseSprint?.id);
       if (deleteSprint.status === 200) {
          isClose();
-         const listPrints = await sprintService.getSprint(detailProject?.codeProject);
-         if (listPrints.status === 200) {
-            if (setPrints) setPrints(listPrints.data.sprint);
-            if (getListIssue) getListIssue();
-         }
+         if (getIssuesFilter) getIssuesFilter();
+         if (getIssues) getIssues();
+         if (getListSprint) getListSprint();
       }
       setIsLoading(false);
    };
+
    // GetSprint
    const getListSprints = async () => {
       if (detailProject.codeProject) {
          const listPrints = await sprintService.getSprint(detailProject?.codeProject);
          if (listPrints.status === 200)
-            setListSprint(listPrints.data.sprint?.filter((sprint) => sprint?._id !== data?._id));
+            setListSprint(listPrints.data.sprint?.filter((sprint) => sprint?._id !== valueChooseSprint?.id));
       }
    };
    const listSprint = listSprints?.map((sprint) => {
+      return {
+         label: sprint?.name,
+         id: sprint?._id,
+      };
+   });
+   const listSprintComplete = sprints?.map((sprint) => {
       return {
          label: sprint?.name,
          id: sprint?._id,
@@ -75,6 +95,42 @@ function ModalCompleteSprint({ isOpen, isClose, issues, data, detailProject, get
             imgBanner
          >
             <form onSubmit={handleSubmitComplete}>
+               <div
+                  style={{ marginTop: '10px' }}
+                  onClick={() => setIsToggleModalSprintComplete(!isToggleModalSprintComplete)}
+               >
+                  <Input
+                     className={cx('transparentInput')}
+                     placeholder="Select a sprint to complete"
+                     type="text"
+                     style={{
+                        width: '100%',
+                        height: '40px',
+                        border: '2px solid var(--ds-border-input, #dfe1e6)',
+                        margin: '10px 0',
+                     }}
+                     rightIcon={<DownIcon nameCss={cx('iconDownBotton')} />}
+                     value={valueChooseSprint?.label}
+                  />
+                  <Modal
+                     maxHeight={'260px'}
+                     width={'auto'}
+                     relative
+                     isOpen={isToggleModalSprintComplete}
+                     onClose={() => setIsToggleModalSprintComplete(false)}
+                  >
+                     <ModalSelect
+                        style={{ top: 'auto', position: 'fixed', transition: 'all 0.2s else' }}
+                        width="553px"
+                        widthImg="20px"
+                        heightRow="35px"
+                        onClose={() => setIsToggleModalSprintComplete(false)}
+                        setValue={setValueChooseSprint}
+                        percent50
+                        data={listSprintComplete}
+                     />
+                  </Modal>
+               </div>
                <div className={cx('equal-issue')}>
                   <p>This sprint contains:</p>
                   <ul className={cx('list-issue')}>
@@ -131,4 +187,4 @@ function ModalCompleteSprint({ isOpen, isClose, issues, data, detailProject, get
    );
 }
 
-export default ModalCompleteSprint;
+export default ModalCompleteSprintBoard;

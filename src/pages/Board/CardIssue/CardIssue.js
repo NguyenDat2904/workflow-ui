@@ -12,7 +12,7 @@ import Modal from '~/component/Modal/Modal';
 import IssueService from '~/services/issue/issueService';
 const cx = classNames.bind(style);
 
-function CardIssue({ issue, codeProject, getIssues, getIssueSubtask, members }) {
+function CardIssue({ issue, codeProject, getIssues, getIssueSubtask, members, getIssuesFilter }) {
    const issueService = new IssueService();
 
    const [isPending, setIsPending] = useState(false);
@@ -32,6 +32,7 @@ function CardIssue({ issue, codeProject, getIssues, getIssueSubtask, members }) 
       if (updateIssue.status === 200) {
          getIssues();
          if (getIssueSubtask) getIssueSubtask();
+         if (getIssuesFilter) getIssuesFilter();
       }
       setIsPending(false);
    };
@@ -46,6 +47,7 @@ function CardIssue({ issue, codeProject, getIssues, getIssueSubtask, members }) 
       if (updateIssue.status === 200) {
          getIssues();
          if (getIssueSubtask) getIssueSubtask();
+         if (getIssuesFilter) getIssuesFilter();
       }
       setIsPending(false);
    };
@@ -71,6 +73,7 @@ function CardIssue({ issue, codeProject, getIssues, getIssueSubtask, members }) 
       if (deleteIssue.status === 200) {
          getIssues();
          if (getIssueSubtask) getIssueSubtask();
+         if (getIssuesFilter) getIssuesFilter();
       }
       setIsPending(false);
    };
@@ -129,7 +132,15 @@ function CardIssue({ issue, codeProject, getIssues, getIssueSubtask, members }) 
                         </div>
                      </div>
                      <div className={cx('card-issue-name')}>
-                        <div className={cx('issue-status')} onClick={() => setIsToggleStatus(!isToggleStatus)}>
+                        <div
+                           className={cx(
+                              'issue-status',
+                              (issue?.status === 'INPROGRESS') | (issue?.status === 'REVIEW') && 'btn-blue',
+                              issue?.status === 'TODO' && 'btn-todo',
+                              issue?.status === 'DONE' && 'btn-done',
+                           )}
+                           onClick={() => setIsToggleStatus(!isToggleStatus)}
+                        >
                            <span>{issue?.status}</span>
                            {isToggleStatus && (
                               <Modal isOpen={isToggleStatus} onClose={() => setIsToggleStatus(false)} relative>

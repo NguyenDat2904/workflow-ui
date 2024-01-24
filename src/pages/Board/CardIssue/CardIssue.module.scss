@@ -80,6 +80,24 @@
          font-weight: 700;
       }
    }
+   .btn-blue {
+      background-color: var(--ds-background-information, #deebff);
+      span {
+         color: var(--ds-text-information, #0747a6);
+      }
+   }
+   .btn-todo {
+      background-color: var(--ds-background-neutral, #dfe1e6);
+      span {
+         color: var(--ds-text, #42526e);
+      }
+   }
+   .btn-done {
+      background-color: var(--ds-background-success, #e3fcef);
+      span {
+         color: var(--ds-text-success, #006644);
+      }
+   }
    .card-issue-assignee {
       position: relative;
       height: 28px;

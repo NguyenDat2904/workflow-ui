@@ -8,20 +8,39 @@ import { Link, useParams } from 'react-router-dom';
 import CardIssue from '../CardIssue/CardIssue';
 const cx = classNames.bind(style);
 
-function IssueSubtask({ issue, codeProject, getIssues, members }) {
+function IssueSubtask({ issue, codeProject, getIssues, members, checkedTypes, selectedMembers, sprints }) {
    const param = useParams();
    const issueService = new IssueService();
    const [getIssueChildren, setIssueChildren] = useState([]);
    const [isToggleDownIssue, setIsToggleDownIssue] = useState(false);
 
+   const params = () => {
+      const queryParams = {};
+      checkedTypes?.forEach((element) => {
+         if (element === 'BUG') {
+            queryParams['typeBug'] = 'BUG';
+         } else if (element === 'USER_STORY') {
+            queryParams['typeUserStory'] = 'USER_STORY';
+         } else if (element === 'TASK') {
+            queryParams['typeTask'] = 'TASK';
+         } else if (element === 'SUB_TASK') {
+            queryParams['typeSubTask'] = 'SUB_TASK';
+         }
+      });
+      return queryParams;
+   };
+
    useEffect(() => {
       getIssueSubtask();
-   }, [param]);
+   }, [param, checkedTypes, selectedMembers]);
 
    const getIssueSubtask = async () => {
+      const assignee = selectedMembers?.map((item) => encodeURIComponent(item)).join('-');
       if (issue?.parentIssue === null) {
          const issueChildren = await issueService.getIssue(param?.id, {
+            assignee: assignee ? assignee : null,
             parentIssueID: issue?._id,
+            ...params(),
          });
          if (issueChildren.status === 200) setIssueChildren(issueChildren.data.dataListIssues);
       }
@@ -36,6 +55,7 @@ function IssueSubtask({ issue, codeProject, getIssues, members }) {
             codeProject={codeProject}
             getIssues={getIssues}
             getIssueSubtask={getIssueSubtask}
+            members={members}
          />
       );
    });
@@ -89,7 +109,17 @@ function IssueSubtask({ issue, codeProject, getIssues, members }) {
       <>
          {getIssueChildren?.length > 0 && (
             <>
-               <div className={cx('section-board')} style={{ padding: '0px 0px 0 34px', height: '38px' }}>
+               <div
+                  className={cx('section-board')}
+                  style={{
+                     padding: '0px 0px 0 34px',
+                     height: '38px',
+                     position: 'sticky',
+                     top: '48px',
+                     zIndex: '10',
+                     background: '#fff',
+                  }}
+               >
                   <div className={cx('section-left')}></div>
                   <div style={{ flex: '1' }}>
                      <div style={{ display: 'flex', gap: '0px', flex: '1' }}>
@@ -114,10 +144,7 @@ function IssueSubtask({ issue, codeProject, getIssues, members }) {
                            </>
                            <div className={cx('bggktO')}>
                               <div className={cx('img-issue')}>
-                                 <img
-                                    src="https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium"
-                                    alt=""
-                                 />
+                                 <img src={issue?.img} alt="" />
                               </div>
                               <Link
                                  target="_blank"
@@ -128,8 +155,25 @@ function IssueSubtask({ issue, codeProject, getIssues, members }) {
                               </Link>
                               <div className={cx('img-summary')}>{issue?.summary}</div>
                               <div className={cx('img-subtask')}>{`(${getIssueChildren?.length || '0'} subtask)`}</div>
-                              <div className={cx('img-status')}>
+                              <div
+                                 className={cx(
+                                    'img-status',
+                                    (issue?.status === 'INPROGRESS') | (issue?.status === 'REVIEW') && 'btn-blue',
+                                    issue?.status === 'TODO' && 'btn-todo',
+                                    issue?.status === 'DONE' && 'btn-done',
+                                 )}
+                              >
                                  <span>{issue?.status}</span>
+                              </div>
+                              <div className={cx('img-assignee')}>
+                                 <img
+                                    src={
+                                       issue?.infoAssignee?.img
+                                          ? issue?.infoAssignee?.img
+                                          : 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
+                                    }
+                                    alt=""
+                                 />
                               </div>
                            </div>
                         </div>

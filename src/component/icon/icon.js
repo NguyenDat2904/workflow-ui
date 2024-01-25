@@ -407,7 +407,7 @@ export const Phone = ({ nameCss }) => {
       </svg>
    );
 };
-export const LoadingIcon = ({ nameCss }) => {
+export const LoadingIcon = ({ nameCss, color }) => {
    return (
       <span className={cx('wrapper')}>
          <span className={cx('loading')}>
@@ -419,7 +419,7 @@ export const LoadingIcon = ({ nameCss }) => {
                className={cx('icon-loading', nameCss)}
                style={{ animationDelay: '0ms' }}
             >
-               <circle cx={8} cy={8} r={7} style={{ stroke: 'var(--ds-icon-subtle, #fff)' }} />
+               <circle cx={8} cy={8} r={7} style={{ stroke: color ? color : `var(--ds-icon-subtle,  #fff)` }} />
             </svg>
          </span>
       </span>

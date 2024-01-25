@@ -40,7 +40,7 @@ function ModalAccount({ handleToggle, position, getUserData, isOpen }) {
                      </div>
                   </div>
                </Button>
-               <Button viewAll to="/profile/profile-and-visibility" onClick={handleToggle}>
+               <Button viewAll to="/manage-profile/profile-and-visibility" onClick={handleToggle}>
                   <div className={cx('manager')}>
                      <span>Manager account</span>
                      <span className={cx('manager-icon')}>

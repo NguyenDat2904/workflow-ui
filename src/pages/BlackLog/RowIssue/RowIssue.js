@@ -155,7 +155,13 @@ function RowIssue({
                   maxWidth: '240px',
                }}
             />
-            <div className={cx('name-issue', data?.issueType === 'SUB_TASK' && 'name-sub-task')}>
+            <div
+               className={cx(
+                  'name-issue',
+                  data?.issueType === 'SUB_TASK' && 'name-sub-task',
+                  data?.status === 'DONE' && 'name-issue-done',
+               )}
+            >
                <Link to={`/projects/${detailProject?.codeProject}/issues/${data?.name}`} target="_blank">
                   {data?.name}
                </Link>
@@ -166,7 +172,7 @@ function RowIssue({
                </Link>
             </div>
             <div className={cx('control-issue')}>
-               {!children && <div className={cx('children-issue')}>{/* <TreeIcon /> */}</div>}
+               {!children && <div className={cx('children-issue')}></div>}
                {!children && (
                   <div
                      style={{ minWidth: '100px', padding: '0px 12px', display: 'grid', gridTemplateColumns: '150px' }}

@@ -10,9 +10,10 @@ import ModalAcceptChangeParent from '~/component/ModalAcceptChangeParent/ModalAc
 import ModalSelect from '~/component/ModalSelect/ModalSelect';
 import Modal from '~/component/Modal/Modal';
 import IssueService from '~/services/issue/issueService';
+import { Tooltip } from 'react-tooltip';
 const cx = classNames.bind(style);
 
-function CardIssue({ issue, codeProject, getIssues, getIssueSubtask, members, getIssuesFilter }) {
+function CardIssue({ issue, codeProject, getIssues, getIssueSubtask, members, getIssuesFilter, roleUser }) {
    const issueService = new IssueService();
 
    const [isPending, setIsPending] = useState(false);
@@ -87,6 +88,7 @@ function CardIssue({ issue, codeProject, getIssues, getIssueSubtask, members, ge
                      <div className={cx('card-summary')}>{issue?.summary}</div>
                   </Link>
                   <Dropdown
+                     isClose={roleUser?.role === 'member'}
                      actions={[
                         { label: 'Change parent', method: () => setIsChangeParent(true) },
                         {
@@ -95,8 +97,33 @@ function CardIssue({ issue, codeProject, getIssues, getIssueSubtask, members, ge
                         },
                      ]}
                   >
-                     <Button leftIcon={<MenuIcon />} style={{ height: '32px', width: '32px' }}></Button>
+                     <Button
+                        data-tooltip-id="edit-issue-board"
+                        data-tooltip-content="You are not an admin or a manager."
+                        data-tooltip-place="left"
+                        disable={roleUser?.role === 'member'}
+                        leftIcon={<MenuIcon />}
+                        style={{
+                           height: '32px',
+                           width: '32px',
+                           cursor: roleUser?.role !== 'member' ? 'pointer' : 'not-allowed',
+                           background: 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                        }}
+                     ></Button>
                   </Dropdown>
+                  {roleUser?.role === 'member' && (
+                     <Tooltip
+                        id="edit-issue-board"
+                        style={{
+                           backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                           color: 'var(--ds-text-inverse, #FFFFFF)',
+                           padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                           fontSize: 'var(--ds-font-size-075, 12px)',
+                           maxWidth: '240px',
+                           textAlign: 'center',
+                        }}
+                     />
+                  )}
                   {isToggleAcceptDelete && (
                      <ModalAccept
                         btn="Delete"
@@ -113,7 +140,6 @@ function CardIssue({ issue, codeProject, getIssues, getIssueSubtask, members, ge
                         isClose={() => setIsChangeParent(false)}
                         headerTitle={`Change parent`}
                         blue
-                        // getIssueDetail={getIssueDetail}
                         data={issue}
                         setIsChangeParent={setIsChangeParent}
                      />
@@ -123,9 +149,37 @@ function CardIssue({ issue, codeProject, getIssues, getIssueSubtask, members, ge
                   <div className={cx('card-bottom-row')}>
                      <div className={cx('card-issue-name')}>
                         <div className={cx('card-issue-img')}>
-                           <img src={issue?.img} alt="" />
+                           <img
+                              data-tooltip-id="img-type-tooltip"
+                              data-tooltip-content={
+                                 issue?.issueType === 'USER_STORY'
+                                    ? 'Story'
+                                    : issue?.issueType === 'BUG'
+                                    ? 'Bug'
+                                    : issue?.issueType === 'TASK'
+                                    ? 'Task'
+                                    : issue?.issueType === 'SUB_TASK'
+                                    ? 'Subtask'
+                                    : ''
+                              }
+                              data-tooltip-place="bottom"
+                              src={issue?.img}
+                              alt=""
+                           />
+                           <Tooltip
+                              id="img-type-tooltip"
+                              style={{
+                                 backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                                 color: 'var(--ds-text-inverse, #FFFFFF)',
+                                 padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                                 fontSize: 'var(--ds-font-size-075, 12px)',
+                                 maxWidth: '140px',
+                                 textAlign: 'center',
+                                 fontWeight: '400',
+                              }}
+                           />
                         </div>
-                        <div className={cx('issue-name')}>
+                        <div className={cx('issue-name', issue?.status === 'DONE' && 'issue-name-done')}>
                            <Link target="_blank" to={`/projects/${codeProject}/issues/${issue?.name}`}>
                               <span>{issue?.name}</span>
                            </Link>
@@ -166,12 +220,29 @@ function CardIssue({ issue, codeProject, getIssues, getIssueSubtask, members, ge
                            onClick={() => setIsToggleAssignee(!isToggleAssignee)}
                         >
                            <img
+                              data-tooltip-id="img-assignee-tooltip"
+                              data-tooltip-content={
+                                 issue?.infoAssignee?.name ? issue?.infoAssignee?.name : 'Unassigned'
+                              }
+                              data-tooltip-place="bottom"
                               src={
                                  issue?.infoAssignee?.img
                                     ? issue?.infoAssignee?.img
                                     : 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
                               }
                               alt=""
+                           />
+                           <Tooltip
+                              id="img-assignee-tooltip"
+                              style={{
+                                 backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                                 color: 'var(--ds-text-inverse, #FFFFFF)',
+                                 padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                                 fontSize: 'var(--ds-font-size-075, 12px)',
+                                 maxWidth: '140px',
+                                 textAlign: 'center',
+                                 fontWeight: '400',
+                              }}
                            />
                            {isToggleAssignee && (
                               <Modal relative isOpen={isToggleAssignee} onClose={() => setIsToggleAssignee(false)}>

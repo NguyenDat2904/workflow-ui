@@ -10,6 +10,7 @@ import Pagination from '~/component/Pagination/Pagination';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '~/contexts/user/userContext';
 import WorkService from '~/services/work/workServices';
+import LoadingBox from '~/component/LoadingBox/LoadingBox';
 
 const cx = classNames.bind(style);
 
@@ -17,7 +18,6 @@ function Projects() {
    const { setLoadingGetProject } = useContext(UserContext);
    const projectService = new WorkService();
    const [search, setSearch] = useState('');
-
    const navigate = useNavigate();
 
    // 1. State
@@ -25,10 +25,19 @@ function Projects() {
    const [page, setPage] = useState(null);
    const [loading, setLoading] = useState(true);
    // 2. useEffect
+   useEffect(() => {
+      getProjects();
+   }, [search, page]);
+
+   // 3. Func
    const getProjects = async () => {
       setLoading(true);
       setLoadingGetProject(true);
-      const projects = await projectService.getListProject({ deleteProject: false, search: search, page: page });
+      const projects = await projectService.getListProject({
+         deleteProject: false,
+         search: search,
+         page: page,
+      });
       if (projects.status === 200) {
          setProjectsList(projects.data.data);
          setPage(projects.data.page);
@@ -36,10 +45,6 @@ function Projects() {
       setLoadingGetProject(false);
       setLoading(false);
    };
-   useEffect(() => {
-      getProjects();
-   }, [search, page]);
-   // 3. Func
    // Move to Trash
    const handleMoveToTrash = async (id) => {
       const moveToTrash = await projectService.deleteProject(id);
@@ -47,6 +52,9 @@ function Projects() {
          getProjects();
       }
    };
+   if (loading) {
+      return <LoadingBox />;
+   }
 
    return (
       <Main>
@@ -82,7 +90,7 @@ function Projects() {
                />
             </div>
          </div>
-         {projectsList?.length === 0 && !loading && (
+         {projectsList?.length === 0 && (
             <div className={cx('project-none')}>
                <img
                   src="https://jira-frontend-bifrost.prod-east.frontend.public.atl-paas.net/assets/jira-laptop-done.35194f30.svg"
@@ -92,8 +100,7 @@ function Projects() {
                <p className={cx('txt-none')}></p>
             </div>
          )}
-
-         {projectsList?.length !== 0 && (
+         {projectsList?.length > 0 && (
             <div className={cx('project-list')}>
                <ProjectList
                   projectsList={projectsList}
@@ -103,7 +110,7 @@ function Projects() {
                />
             </div>
          )}
-         {projectsList?.length !== 0 && !loading && <Pagination page={page} />}
+         {projectsList?.length > 0 && <Pagination page={page} />}
       </Main>
    );
 }

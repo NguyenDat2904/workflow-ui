@@ -38,7 +38,6 @@
          .info {
             margin-top: 20px;
             padding: 20px 20px 0 20px;
-
             .fillView {
                padding: 20px 0px 20px 10px;
                display: flex;
@@ -48,22 +47,22 @@
                   display: flex;
                   align-items: center;
                   gap: 5px;
-
                   svg {
                      margin-top: 3px;
                      width: 28px;
                      height: 28px;
                      color: #626f86;
                   }
-
                   .showProfile {
+                     flex: 1;
                      overflow-wrap: break-word;
                      word-break: break-word;
                      color: inherit;
                      padding: var(--ds-space-100, 8px) var(--ds-space-075, 6px) var(--ds-space-100, 8px)
                         var(--ds-space-100, 8px);
                      line-height: 20px;
-                     font-size: 16px;
+                     font-size: 14px;
+
                      .infoDefault {
                         font-size: 14px;
                         color: #626f86;

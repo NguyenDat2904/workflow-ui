@@ -30,11 +30,14 @@
          flex: 1 0 0px;
       }
       .homePage {
-         height: auto;
-
-         font-size: 28px;
-         color: black;
-         font-weight: 600;
+         padding: 6px 4px;
+         min-height: 24px;
+         span {
+            height: 24px;
+            svg {
+               height: 100%;
+            }
+         }
       }
    }
 }

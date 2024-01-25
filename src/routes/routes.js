@@ -26,7 +26,7 @@ import ProfileAndPhone from '~/pages/ProfileAndPhone/ProfileAndPhone';
 
 const privateRoutes = [
    { path: '/', component: YourWork },
-   { path: '/project/:id/settings/details', component: DetailProject, layout: LayoutSideBarChildren },
+   { path: '/project/:id/setting/details', component: DetailProject, layout: LayoutSideBarChildren },
    {
       path: '/project/:id/black-log',
       component: BlackLog,

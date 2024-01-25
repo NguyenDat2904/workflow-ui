@@ -15,15 +15,12 @@ import IssueService from '~/services/issue/issueService';
 import { UserContext } from '~/contexts/user/userContext';
 import { Tooltip } from 'react-tooltip';
 const cx = classNames.bind(style);
-const projectService = new WorkService();
-
 function Header() {
    const location = useLocation();
    const elementRef = useRef(null);
    const { dataUserProfile, getUser } = useContext(UserContext);
    // 1. useState
    const issueService = new IssueService();
-   const [projects, getProjects] = useState([]);
    const [isToggleCreateIssue, setToggleCreateIssue] = useState(false);
    const [isModalSearch, setIsModalSearch] = useState(false);
    const [toggleMenu, setToggleMenu] = useState({
@@ -35,17 +32,9 @@ function Header() {
    });
    const [position, setPosition] = useState({ left: 0 });
    const [getIssueSearch, setGetIssueSearch] = useState([]);
-
    const [search, setSearch] = useState('');
    // 2. useEffect
-   const getProject = async () => {
-      const projects = await projectService.getListProject({ deleteProject: false });
-      if (projects.status === 200) {
-         getProjects(projects.data.data);
-      }
-   };
    useEffect(() => {
-      getProject();
       getUser();
    }, []);
    useEffect(() => {
@@ -102,13 +91,6 @@ function Header() {
       }
    };
 
-   const listProject = projects?.map((project) => {
-      return {
-         label: `${project.nameProject} - (${project.codeProject})` || '',
-         img: project.imgProject,
-         codeProject: project.codeProject,
-      };
-   });
    return (
       <div className={cx('header-nav')}>
          <header className={cx('header-layout')}>
@@ -153,11 +135,7 @@ function Header() {
                      <Button blue>Create</Button>
                   </div>
                   {isToggleCreateIssue && (
-                     <ModalCreateIssue
-                        isOpen={isToggleCreateIssue}
-                        data={listProject}
-                        onClose={() => setToggleCreateIssue(false)}
-                     />
+                     <ModalCreateIssue isOpen={isToggleCreateIssue} onClose={() => setToggleCreateIssue(false)} />
                   )}
                </div>
             </nav>

@@ -15,6 +15,7 @@ import SprintService from '~/services/sprint/SprintService';
 import CreateIssue from './CreateIssue/CreateIssue';
 import Modal from '~/component/Modal/Modal';
 import { Tooltip } from 'react-tooltip';
+import LoadingBox from '~/component/LoadingBox/LoadingBox';
 const cx = classNames.bind(style);
 
 function Sprint({
@@ -28,6 +29,8 @@ function Sprint({
    title,
    sprints,
    roleUser = {},
+   setIsLoading,
+   loading,
 }) {
    const { detailProject } = useContext(ProjectContext);
    // 1. State
@@ -68,6 +71,7 @@ function Sprint({
    };
    // 3.1. GetIssue
    const getListIssue = async () => {
+      setIsLoading(true);
       const assignee = selectedMembers?.map((item) => encodeURIComponent(item)).join('-');
       if (detailProject?.codeProject) {
          const listIssue = await issueService.getIssue(detailProject?.codeProject, {
@@ -78,6 +82,7 @@ function Sprint({
          });
          if (listIssue.status === 200) setIssues(listIssue.data.dataListIssues);
       }
+      if (title !== 'Backlog') setIsLoading(false);
    };
    // 3.2. DeleSprint
    const handleDeleteSprint = async (key, id) => {
@@ -92,6 +97,9 @@ function Sprint({
       if (title === 'Backlog') setDropdownOpen(true);
       if (start) setDropdownOpen(true);
    }, []);
+   if (loading) {
+      return <LoadingBox />;
+   }
 
    // 4. Render
    const renderIssue = issues
@@ -341,34 +349,36 @@ function Sprint({
                ) : (
                   <>{renderIssue}</>
                )}
-               <div className={cx('create-issue')}>
-                  <div className={cx('create-btn')}>
-                     {isFocus ? (
-                        <Button
-                           leftIcon={<AddIcon />}
-                           backgroundNone
-                           viewAll
-                           className={cx('custom-btn')}
-                           onClick={() => {
-                              if (roleUser.role !== 'member') setIsFocus(false);
-                           }}
-                        >
-                           Create issue
-                        </Button>
-                     ) : (
-                        <>
-                           <Modal isOpen={true} relative onClose={() => setIsFocus(true)}>
-                              <CreateIssue
-                                 title={title}
-                                 setIssues={setIssues}
-                                 idPrint={data?._id}
-                                 paramsFunc={params}
-                              />
-                           </Modal>
-                        </>
-                     )}
+               {roleUser.role !== 'member' && (
+                  <div className={cx('create-issue')}>
+                     <div className={cx('create-btn')}>
+                        {isFocus ? (
+                           <Button
+                              leftIcon={<AddIcon />}
+                              backgroundNone
+                              viewAll
+                              className={cx('custom-btn')}
+                              onClick={() => {
+                                 setIsFocus(false);
+                              }}
+                           >
+                              Create issue
+                           </Button>
+                        ) : (
+                           <>
+                              <Modal isOpen={true} relative onClose={() => setIsFocus(true)}>
+                                 <CreateIssue
+                                    title={title}
+                                    setIssues={setIssues}
+                                    idPrint={data?._id}
+                                    paramsFunc={params}
+                                 />
+                              </Modal>
+                           </>
+                        )}
+                     </div>
                   </div>
-               </div>
+               )}
             </div>
          )}
       </div>

@@ -11,10 +11,13 @@ import CardIssue from './CardIssue/CardIssue';
 import IssueSubtask from './IssueSubtask/IssueSubtask';
 import SprintService from '~/services/sprint/SprintService';
 import ModalCompleteSprintBoard from '../BlackLog/ModalCompleteSprint/ModalCompleteSprintBoard';
+import { UserContext } from '~/contexts/user/userContext';
+import LoadingBox from '~/component/LoadingBox/LoadingBox';
 
 const cx = classNames.bind(style);
 export default function Board() {
    const { detailProject, members, setMembers } = useContext(ProjectContext);
+   const { dataUserProfile } = useContext(UserContext);
    const BoardWorkService = new WorkService();
    const sprintService = new SprintService();
 
@@ -26,6 +29,7 @@ export default function Board() {
    const [isToggleAllIssue, setIsToggleAllIssue] = useState(true);
    const [sprints, setSprints] = useState([]);
    const { id } = useParams();
+   const [loading, setLoading] = useState(true);
 
    const params = () => {
       const queryParams = {};
@@ -75,11 +79,23 @@ export default function Board() {
    useEffect(() => {
       getIssuesFilter();
    }, [detailProject, checkedTypes, selectedMembers]);
+
+   const pendingApi = async () => {
+      setLoading(true);
+      await getMembers();
+      await getIssues();
+      await getListSprints();
+      setLoading(false);
+   };
+
    useEffect(() => {
-      getMembers();
-      getIssues();
-      getListSprints();
+      pendingApi();
    }, [detailProject]);
+
+   const roleUsers = members?.filter((user) => {
+      return user._id === dataUserProfile._id;
+   });
+   const roleUser = roleUsers[0];
 
    const rightSection = (
       <div>
@@ -107,6 +123,7 @@ export default function Board() {
             checkedTypes={checkedTypes}
             selectedMembers={selectedMembers}
             sprints={sprints}
+            roleUser={roleUser}
          />
       );
    });
@@ -121,6 +138,7 @@ export default function Board() {
             getIssues={getIssues}
             members={members}
             getIssuesFilter={getIssuesFilter}
+            roleUser={roleUser}
          />
       );
    });
@@ -134,6 +152,7 @@ export default function Board() {
             getIssues={getIssues}
             members={members}
             getIssuesFilter={getIssuesFilter}
+            roleUser={roleUser}
          />
       );
    });
@@ -147,6 +166,7 @@ export default function Board() {
             getIssues={getIssues}
             members={members}
             getIssuesFilter={getIssuesFilter}
+            roleUser={roleUser}
          />
       );
    });
@@ -160,9 +180,13 @@ export default function Board() {
             getIssues={getIssues}
             members={members}
             getIssuesFilter={getIssuesFilter}
+            roleUser={roleUser}
          />
       );
    });
+   if (loading) {
+      return <LoadingBox />;
+   }
 
    return (
       <div className={cx('board')}>

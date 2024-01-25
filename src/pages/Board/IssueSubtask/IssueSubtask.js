@@ -6,9 +6,20 @@ import { DownIcon, RightArrowIcon } from '~/component/icon/icon';
 import IssueService from '~/services/issue/issueService';
 import { Link, useParams } from 'react-router-dom';
 import CardIssue from '../CardIssue/CardIssue';
+import { Tooltip } from 'react-tooltip';
 const cx = classNames.bind(style);
 
-function IssueSubtask({ issue, codeProject, getIssues, members, checkedTypes, selectedMembers, sprints }) {
+function IssueSubtask({
+   issue,
+   codeProject,
+   getIssues,
+   members,
+   checkedTypes,
+   selectedMembers,
+   sprints,
+   roleUser,
+ 
+}) {
    const param = useParams();
    const issueService = new IssueService();
    const [getIssueChildren, setIssueChildren] = useState([]);
@@ -45,7 +56,6 @@ function IssueSubtask({ issue, codeProject, getIssues, members, checkedTypes, se
          if (issueChildren.status === 200) setIssueChildren(issueChildren.data.dataListIssues);
       }
    };
-
    const IssueTodo = getIssueChildren?.filter((issue) => issue?.status === 'TODO');
    const renderIssueTodo = IssueTodo?.map((issue) => {
       return (
@@ -56,6 +66,7 @@ function IssueSubtask({ issue, codeProject, getIssues, members, checkedTypes, se
             getIssues={getIssues}
             getIssueSubtask={getIssueSubtask}
             members={members}
+            roleUser={roleUser}
          />
       );
    });
@@ -69,6 +80,7 @@ function IssueSubtask({ issue, codeProject, getIssues, members, checkedTypes, se
             getIssues={getIssues}
             getIssueSubtask={getIssueSubtask}
             members={members}
+            roleUser={roleUser}
          />
       );
    });
@@ -82,6 +94,7 @@ function IssueSubtask({ issue, codeProject, getIssues, members, checkedTypes, se
             getIssues={getIssues}
             getIssueSubtask={getIssueSubtask}
             members={members}
+            roleUser={roleUser}
          />
       );
    });
@@ -95,6 +108,7 @@ function IssueSubtask({ issue, codeProject, getIssues, members, checkedTypes, se
             getIssues={getIssues}
             getIssueSubtask={getIssueSubtask}
             members={members}
+            roleUser={roleUser}
          />
       );
    });
@@ -144,7 +158,35 @@ function IssueSubtask({ issue, codeProject, getIssues, members, checkedTypes, se
                            </>
                            <div className={cx('bggktO')}>
                               <div className={cx('img-issue')}>
-                                 <img src={issue?.img} alt="" />
+                                 <img
+                                    data-tooltip-id="img-type-tooltip"
+                                    data-tooltip-content={
+                                       issue?.issueType === 'USER_STORY'
+                                          ? 'Story'
+                                          : issue?.issueType === 'BUG'
+                                          ? 'Bug'
+                                          : issue?.issueType === 'TASK'
+                                          ? 'Task'
+                                          : issue?.issueType === 'SUB_TASK'
+                                          ? 'Subtask'
+                                          : ''
+                                    }
+                                    data-tooltip-place="bottom"
+                                    src={issue?.img}
+                                    alt=""
+                                 />
+                                 <Tooltip
+                                    id="img-type-tooltip"
+                                    style={{
+                                       backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                                       color: 'var(--ds-text-inverse, #FFFFFF)',
+                                       padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                                       fontSize: 'var(--ds-font-size-075, 12px)',
+                                       maxWidth: '140px',
+                                       textAlign: 'center',
+                                       fontWeight: '400',
+                                    }}
+                                 />
                               </div>
                               <Link
                                  target="_blank"
@@ -165,7 +207,14 @@ function IssueSubtask({ issue, codeProject, getIssues, members, checkedTypes, se
                               >
                                  <span>{issue?.status}</span>
                               </div>
-                              <div className={cx('img-assignee')}>
+                              <div
+                                 className={cx('img-assignee')}
+                                 data-tooltip-id="img-assignee-tooltip"
+                                 data-tooltip-content={
+                                    issue?.infoAssignee?.name ? issue?.infoAssignee?.name : 'Unassigned'
+                                 }
+                                 data-tooltip-place="bottom"
+                              >
                                  <img
                                     src={
                                        issue?.infoAssignee?.img
@@ -175,6 +224,18 @@ function IssueSubtask({ issue, codeProject, getIssues, members, checkedTypes, se
                                     alt=""
                                  />
                               </div>
+                              <Tooltip
+                                 id="img-assignee-tooltip"
+                                 style={{
+                                    backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                                    color: 'var(--ds-text-inverse, #FFFFFF)',
+                                    padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                                    fontSize: 'var(--ds-font-size-075, 12px)',
+                                    maxWidth: '140px',
+                                    textAlign: 'center',
+                                    fontWeight: '400',
+                                 }}
+                              />
                            </div>
                         </div>
                      </div>

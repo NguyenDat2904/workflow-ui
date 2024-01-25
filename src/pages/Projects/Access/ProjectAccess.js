@@ -9,6 +9,7 @@ import Button from '~/component/Buttton/Button';
 import WorkService from '~/services/work/workServices';
 import Navigation from '~/component/Navigation/Navigation';
 import { UserContext } from '~/contexts/user/userContext';
+import { Tooltip } from 'react-tooltip';
 
 const cx = classNames.bind(style);
 export default function ProjectAccess() {
@@ -59,14 +60,37 @@ export default function ProjectAccess() {
                   <div className={cx('access-header')}>
                      <h1>Access</h1>
                      <Button
+                        data-tooltip-id="add-people"
+                        data-tooltip-content="You are not an admin or a manager."
+                        data-tooltip-place="bottom"
                         blue
-                        style={{ height: '32px', fontSize: '14px' }}
+                        disable={roleUser?.role === 'member'}
+                        style={{
+                           fontSize: '14px',
+                           cursor: roleUser?.role === 'admin' ? 'pointer' : 'not-allowed',
+                           height: '32px',
+                           background:
+                              roleUser?.role !== 'admin' && 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                        }}
                         onClick={() => {
-                           setIsToggle(!isToggle);
+                           if (roleUser?.role !== 'member') setIsToggle(!isToggle);
                         }}
                      >
                         Add people
                      </Button>
+                     {roleUser?.role === 'member' && (
+                        <Tooltip
+                           id="add-people"
+                           style={{
+                              backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                              color: 'var(--ds-text-inverse, #FFFFFF)',
+                              padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                              fontSize: 'var(--ds-font-size-075, 12px)',
+                              maxWidth: '240px',
+                              textAlign: 'center',
+                           }}
+                        />
+                     )}
                      {isToggle && <Navigation isOpen={isToggle} onClose={() => setIsToggle(false)} />}
                   </div>
                   <Table

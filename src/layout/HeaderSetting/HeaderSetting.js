@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import style from './HeaderSetting.module.scss';
 import { AuthContext } from '~/contexts/auth/authContext';
 import UserService from '~/services/user/userServices';
-import {  UserIcon } from '~/component/icon/icon';
+import { LogoIcon, UserIcon } from '~/component/icon/icon';
 import { useLocation } from 'react-router-dom';
 import ModalAccount from '~/pages/Profile/ModalAccount/ModalAccount';
 const cx = classNames.bind(style);
@@ -100,10 +100,7 @@ function HeaderSetting() {
    return (
       <header className={cx('header-layout')}>
          <nav>
-            <Button className={cx('homePage')} backgroundNone noChildren to="/">
-               {' '}
-               WorkFlow
-            </Button>
+            <Button className={cx('homePage')} backgroundNone noChildren to="/" leftIcon={<LogoIcon />}></Button>
             <div className={cx('list-menu')}>
                <Link to={'/manage-profile/profile-and-visibility'}>
                   <div

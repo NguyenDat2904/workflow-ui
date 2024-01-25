@@ -8,6 +8,7 @@ import SprintService from '~/services/sprint/SprintService';
 import { ProjectContext } from '~/contexts/project/projectContext';
 import WorkService from '~/services/work/workServices';
 import { UserContext } from '~/contexts/user/userContext';
+import LoadingBox from '~/component/LoadingBox/LoadingBox';
 
 const cx = classNames.bind(style);
 function BlackLog() {
@@ -16,9 +17,13 @@ function BlackLog() {
    const sprintService = new SprintService();
    const projectService = new WorkService();
    const [sprints, setPrints] = useState([]);
-
    const [checkedTypes, setCheckedTypes] = useState([]);
    const [selectedMembers, setSelectedMembers] = useState([]);
+   const [loading, setIsLoading] = useState(true);
+
+   useEffect(() => {
+      pendingData();
+   }, [detailProject]);
 
    // GetSprint
    const getListSprints = async () => {
@@ -27,7 +32,6 @@ function BlackLog() {
          if (listPrints.status === 200) setPrints(listPrints.data.sprint);
       }
    };
-
    // Get Member
    const getMembers = async () => {
       if (detailProject.codeProject) {
@@ -35,10 +39,12 @@ function BlackLog() {
          if (listMembers.status === 200) setMembers(listMembers.data);
       }
    };
-   useEffect(() => {
-      getMembers();
-      getListSprints();
-   }, [detailProject]);
+   const pendingData = async () => {
+      setIsLoading(true);
+      await getMembers();
+      await getListSprints();
+   };
+
    const roleUsers = members?.filter((user) => {
       return user._id === dataUserProfile._id;
    });
@@ -58,10 +64,13 @@ function BlackLog() {
                sprints={sprints}
                getListSprints={getListSprints}
                roleUser={roleUser}
+               setIsLoading={setIsLoading}
+               loading={loading}
             />
          );
       })
       .reverse();
+
    // Create Sprint
    const handleCreateSprint = async () => {
       const createSprint = await sprintService.createSprint(detailProject?.codeProject);
@@ -97,6 +106,8 @@ function BlackLog() {
                      selectedMembers={selectedMembers}
                      getListSprints={getListSprints}
                      roleUser={roleUser}
+                     setIsLoading={setIsLoading}
+                     loading={loading}
                   />
                </div>
             </div>

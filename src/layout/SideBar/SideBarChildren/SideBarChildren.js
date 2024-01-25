@@ -9,6 +9,7 @@ const cx = classNames.bind(style);
 function SideBarChildren() {
    const { id } = useParams();
    const location = useLocation();
+
    return (
       <SideBar>
          <div className={cx('sidebar-menu')}>
@@ -28,18 +29,16 @@ function SideBarChildren() {
                   <div className={cx('list')}>
                      <div className={cx('line')}>
                         <Button
-                           to={`/project/${id}/settings/details`}
+                           to={`/project/${id}/setting/details`}
                            backgroundNone
                            viewAll
                            className={cx(
                               'custom-button',
-                              location.pathname === `/project/${id}/settings/details` && 'active',
+                              location.pathname === `/project/${id}/setting/details` && 'active',
                            )}
                            style={{ marginTop: '6px' }}
                         >
-                           <span
-                              className={cx(location.pathname === `/project/${id}/settings/details` && 'css-active')}
-                           >
+                           <span className={cx(location.pathname === `/project/${id}/setting/details` && 'css-active')}>
                               Details
                            </span>
                         </Button>
@@ -53,7 +52,7 @@ function SideBarChildren() {
                            )}
                            style={{ marginTop: '6px' }}
                         >
-                           <span className={cx(location.pathname === `/project/${id}/settings/access` && 'css-active')}>
+                           <span className={cx(location.pathname === `/project/${id}/setting/access` && 'css-active')}>
                               Access
                            </span>
                         </Button>

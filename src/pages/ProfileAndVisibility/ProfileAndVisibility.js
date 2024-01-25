@@ -86,14 +86,10 @@ const ProfileAndVisibility = () => {
       <>
          <HeaderSetting />
          <div className={cx('ProfileAndVisibility')}>
-            <p className={cx('headerWorkOn')}>
-               <Link to="/profile">
-                  <span className={cx('linkProfile')}>Page profile</span>
-               </Link>
-               / Change
-            </p>
             <h1 className={cx('titleProfileAndVisibility')}>Profile and change</h1>
-
+            <p className={cx('text-setting')}>
+               Manage your personal information, and control which information other people see and apps may access.
+            </p>
             <h3 className={cx('ProfilePhotoAndHeaderImage')}>Profile photo and header image</h3>
             <ProfileHeaderImg
                dataUserProfile={dataUserProfile}

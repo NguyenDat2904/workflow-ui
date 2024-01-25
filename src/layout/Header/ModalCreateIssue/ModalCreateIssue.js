@@ -18,7 +18,7 @@ const workService = new WorkService();
 const sprintService = new SprintService();
 const issueService = new IssueService();
 
-function ModalCreateIssue({ data, onClose, isOpen }) {
+function ModalCreateIssue({ onClose, isOpen }) {
    const { id } = useParams();
 
    const popupRef = useRef(null);
@@ -26,6 +26,12 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
    const [memberData, setMemberData] = useState([]);
    const [userProject, setUserProject] = useState({});
    const [sprint, setSprint] = useState([]);
+   const [projects, getProjects] = useState([]);
+
+   useEffect(() => {
+      getProject();
+   }, []);
+
    const [project, setProject] = useState({
       img: '',
       label: '',
@@ -75,7 +81,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
          sprint: null,
          storyPointEstimate: '',
          startDate: null,
-         dueDate:null,
+         dueDate: null,
          description: '',
          img: '',
          parentIssue: null,
@@ -121,9 +127,23 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
          label: 'Lowest',
       },
    ];
+   const getProject = async () => {
+      const projects = await workService.getListProject({ deleteProject: false });
+      if (projects.status === 200) {
+         getProjects(projects.data.data);
+      }
+   };
+
+   const listProject = projects?.map((project) => {
+      return {
+         label: `${project.nameProject} - (${project.codeProject})` || '',
+         img: project.imgProject,
+         codeProject: project.codeProject,
+      };
+   });
 
    const listMemberProject = async () => {
-      const member = await workService.getMember({codeProject:project.codeProject});
+      const member = await workService.getMember({ codeProject: project.codeProject });
       const infoMember = member?.data.message
          ? []
          : member?.data?.map((product) => {
@@ -181,7 +201,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
       };
 
       if (isOpen) {
-         data.forEach((element) => {
+         listProject.forEach((element) => {
             if (element.codeProject === id) {
                console.log(element);
                setProject({
@@ -326,7 +346,7 @@ function ModalCreateIssue({ data, onClose, isOpen }) {
             break;
       }
    };
-   const filterDataproject = data.filter((product) => {
+   const filterDataproject = listProject.filter((product) => {
       if (indexSelect.codeProject === false && form.watch('codeProject') !== '') {
          return (
             form.watch('codeProject') &&

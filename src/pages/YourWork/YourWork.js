@@ -6,6 +6,7 @@ import YourWorkCard from '~/component/YourWorkCard/YourWorkCard';
 import WorkService from '~/services/work/workServices';
 import ItemIssue from '~/component/ItemIssue/ItemIssue';
 import Skeleton from 'react-loading-skeleton';
+import LoadingBox from '~/component/LoadingBox/LoadingBox';
 
 const cx = classNames.bind(styles);
 const projectService = new WorkService();
@@ -38,16 +39,20 @@ const YourWork = () => {
          setIssuesCount(getIssue.data.length);
       }
    };
-
+   const get = async () => {
+      setLoading(true);
+      await getProject();
+      await getIssues();
+      setLoading(false);
+   };
    useEffect(() => {
-      const get = async () => {
-         setLoading(true);
-         await getProject();
-         await getIssues();
-         setLoading(false);
-      };
       get();
    }, []);
+
+   if (loading) {
+      return <LoadingBox />;
+   }
+
    return (
       <div className={cx('wrapper')}>
          <div className={cx('header')}>

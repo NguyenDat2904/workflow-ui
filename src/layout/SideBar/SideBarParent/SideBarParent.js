@@ -43,7 +43,7 @@ function SideBarParent() {
                   <div className={cx('list')}>
                      <div className={cx('line')}>
                         <Button
-                           to={`/project/${id}/settings/details`}
+                           to={`/project/${id}/setting/details`}
                            backgroundNone
                            viewAll
                            leftIcon={<SettingIcon />}

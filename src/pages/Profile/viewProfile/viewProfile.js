@@ -22,7 +22,7 @@ const ViewProfile = ({ dataUserProfile }) => {
                         <BagIcon />
                         <span className={cx('showProfile')}>
                            {dataUserProfile.jopTitle ? (
-                              dataUserProfile.jopTitle?.slice(0, 20)
+                              dataUserProfile.jopTitle
                            ) : (
                               <span className={cx('infoDefault')}>Your name of your</span>
                            )}
@@ -32,7 +32,7 @@ const ViewProfile = ({ dataUserProfile }) => {
                         <TreeIcon />
                         <span className={cx('showProfile')}>
                            {dataUserProfile.department ? (
-                              dataUserProfile.department?.slice(0, 20)
+                              dataUserProfile.department
                            ) : (
                               <span className={cx('infoDefault')}>Your department</span>
                            )}
@@ -42,7 +42,7 @@ const ViewProfile = ({ dataUserProfile }) => {
                         <Buiding />
                         <span className={cx('showProfile')}>
                            {dataUserProfile.organization ? (
-                              dataUserProfile.organization?.slice(0, 20)
+                              dataUserProfile.organization
                            ) : (
                               <span className={cx('infoDefault')}>Your organization</span>
                            )}
@@ -53,7 +53,7 @@ const ViewProfile = ({ dataUserProfile }) => {
 
                         <span className={cx('showProfile')}>
                            {dataUserProfile.location ? (
-                              dataUserProfile.location?.slice(0, 20)
+                              dataUserProfile.location
                            ) : (
                               <span className={cx('infoDefault')}>Your location</span>
                            )}

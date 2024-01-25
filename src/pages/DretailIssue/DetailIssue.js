@@ -25,6 +25,7 @@ import { ProjectContext } from '~/contexts/project/projectContext';
 import { UserContext } from '~/contexts/user/userContext';
 import { Tooltip } from 'react-tooltip';
 import ModalAcceptChangeParent from '~/component/ModalAcceptChangeParent/ModalAcceptChangeParent';
+import LoadingBox from '~/component/LoadingBox/LoadingBox';
 const cx = classNames.bind(style);
 function DetailIssue() {
    const param = useParams();
@@ -60,6 +61,7 @@ function DetailIssue() {
    const [valueComment, setValueComment] = useState('');
    const [isPendingSubmit, setIsPendingSubmit] = useState(false);
    const [isChangeParent, setIsChangeParent] = useState(false);
+   const [loading, setIsLoading] = useState(true);
 
    const form = useForm({
       mode: 'all',
@@ -74,11 +76,16 @@ function DetailIssue() {
    });
    // 2. UseEffect
    useEffect(() => {
-      getIssueDetail();
-      getListSprint();
-      getMembers();
-      getListComment();
+      pendingData();
    }, [param]);
+
+   const pendingData = async () => {
+      await getIssueDetail();
+      await getListSprint();
+      await getMembers();
+      await getListComment();
+      setIsLoading(false);
+   };
    useEffect(() => {
       form.setValue('storyPointEstimate', detailIssue?.storyPointEstimate);
       form.setValue('startDate', detailIssue?.startDate?.substring(0, 10));
@@ -459,6 +466,10 @@ function DetailIssue() {
          </div>
       );
    });
+
+   if (loading) {
+      return <LoadingBox />;
+   }
 
    return (
       <div className={cx('container-issue')}>

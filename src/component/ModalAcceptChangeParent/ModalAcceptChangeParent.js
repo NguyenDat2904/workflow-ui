@@ -14,21 +14,19 @@ import { useParams } from 'react-router-dom';
 const cx = classNames.bind(style);
 const issueService = new IssueService();
 
-function ModalAcceptChangeParent(props) {
-   const {
-      isOpen,
-      isClose,
-      blue,
-      headerTitle,
-      title,
-      getListIssue,
-      getListIssueSprint,
-      getListIssueChildren,
-      data,
-      setIsChangeParent,
-      getIssueDetail,
-   } = props;
-   console.log('🚀 ~ ModalAcceptChangeParent ~ props:', props);
+function ModalAcceptChangeParent({
+   isOpen,
+   isClose,
+   blue,
+   headerTitle,
+   title,
+   getListIssue,
+   getListIssueSprint,
+   getListIssueChildren,
+   data,
+   setIsChangeParent,
+   getIssueDetail,
+}) {
    const { detailProject } = useContext(ProjectContext);
    const [isLoading, setIsLoading] = useState(false);
    const [isToggle, setIsToggle] = useState(false);

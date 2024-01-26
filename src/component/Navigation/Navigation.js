@@ -36,7 +36,7 @@ function Navigation({ isOpen, onClose }) {
    const handleAddPeople = async (dataForm) => {
       if (isLoading) return;
       setIsLoading(true);
-      const data = { ...dataForm, role: role.key };
+      const data = { role: role.key };
       const addPeople = await projectService.addMember(detailProject?.codeProject, data);
       if (addPeople.status === 200) onClose();
       setIsLoading(false);

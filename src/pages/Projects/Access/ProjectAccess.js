@@ -67,10 +67,10 @@ export default function ProjectAccess() {
                         disable={roleUser?.role === 'member'}
                         style={{
                            fontSize: '14px',
-                           cursor: roleUser?.role === 'admin' ? 'pointer' : 'not-allowed',
+                           cursor: roleUser?.role !== 'member' ? 'pointer' : 'not-allowed',
                            height: '32px',
                            background:
-                              roleUser?.role !== 'admin' && 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                              roleUser?.role === 'member' && 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
                         }}
                         onClick={() => {
                            if (roleUser?.role !== 'member') setIsToggle(!isToggle);

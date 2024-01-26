@@ -17,8 +17,8 @@ function Input({ className, inputClass, type, search, leftIcon, rightIcon, width
                <span>{leftIcon}</span>
             </span>
          )}
-         <input className={classes} type={type} {...passProps} />
-         {rightIcon && (
+         <input  className={classes} type={type} {...passProps} />
+         {rightIcon && ( 
             <span className={cx('input-icon', 'right-icon')}>
                <span>{rightIcon}</span>
             </span>

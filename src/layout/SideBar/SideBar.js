@@ -49,16 +49,6 @@ function SideBar({ children }) {
                </div>
             </div>
             {children}
-            <div className={cx('sidebar-footer')}>
-               <div className={cx('block-footer')}>
-                  <span>You're in a team-managed project</span>
-                  <p className={cx('desc-footer')}>
-                     <Button backgroundNone noHover>
-                        Learn more
-                     </Button>
-                  </p>
-               </div>
-            </div>
          </nav>
       </WrapperSideBar>
    );

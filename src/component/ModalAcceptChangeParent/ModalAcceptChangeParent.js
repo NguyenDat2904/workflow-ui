@@ -111,11 +111,7 @@ function ModalAcceptChangeParent({
             </Modal>
          </div>
          <div className={cx('btn-group')}>
-            <Button
-               style={{ minWidth: '71px', cursor: isLoading ? 'no-drop' : '' }}
-               blue={blue ? true : false}
-               type={isLoading ? 'button' : 'submit'}
-            >
+            <Button style={{ minWidth: '71px', cursor: 'no-drop' }} type={'button'}>
                {isLoading ? <LoadingIcon /> : <span style={{ paddingLeft: '4px' }}>Done</span>}
             </Button>
             <Button onClick={isClose}>Cancel</Button>

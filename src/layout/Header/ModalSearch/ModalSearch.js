@@ -11,18 +11,7 @@ function ModalSearch({ isOpen, onClose, getIssueSearch }) {
             <Link to={`/projects/${issue?.projectID?.codeProject}/issues/${issue?.name}`} onClick={onClose}>
                <div className={cx('list-search')}>
                   <div className={cx('item-search-img')}>
-                     <img
-                        src={
-                           issue?.issueType === 'USER_STORY'
-                              ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium'
-                              : issue?.issueType === 'BUG'
-                              ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium'
-                              : issue?.issueType === 'TASK'
-                              ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium'
-                              : ''
-                        }
-                        alt=""
-                     />
+                     <img src={issue?.img} alt="" />
                   </div>
                   <div className={cx('item-search-name')}>
                      <span>

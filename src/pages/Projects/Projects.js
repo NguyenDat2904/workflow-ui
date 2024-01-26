@@ -26,12 +26,20 @@ function Projects() {
    const [loading, setLoading] = useState(true);
    // 2. useEffect
    useEffect(() => {
+      pending();
+   }, [page]);
+   const pending = async () => {
+      setLoading(true);
+      await getProjects();
+      setLoading(false);
+   };
+
+   useEffect(() => {
       getProjects();
-   }, [search, page]);
+   }, [search]);
 
    // 3. Func
    const getProjects = async () => {
-      setLoading(true);
       setLoadingGetProject(true);
       const projects = await projectService.getListProject({
          deleteProject: false,
@@ -43,7 +51,6 @@ function Projects() {
          setPage(projects.data.page);
       }
       setLoadingGetProject(false);
-      setLoading(false);
    };
    // Move to Trash
    const handleMoveToTrash = async (id) => {

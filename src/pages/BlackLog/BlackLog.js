@@ -8,7 +8,6 @@ import SprintService from '~/services/sprint/SprintService';
 import { ProjectContext } from '~/contexts/project/projectContext';
 import WorkService from '~/services/work/workServices';
 import { UserContext } from '~/contexts/user/userContext';
-import LoadingBox from '~/component/LoadingBox/LoadingBox';
 
 const cx = classNames.bind(style);
 function BlackLog() {

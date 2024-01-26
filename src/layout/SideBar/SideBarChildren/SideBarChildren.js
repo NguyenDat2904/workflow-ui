@@ -56,15 +56,6 @@ function SideBarChildren() {
                               Access
                            </span>
                         </Button>
-                        <Button backgroundNone viewAll className={cx('custom-button')} style={{ marginTop: '6px' }}>
-                           Notifications
-                        </Button>
-                        <Button backgroundNone viewAll className={cx('custom-button')} style={{ marginTop: '6px' }}>
-                           Issue types
-                        </Button>
-                        <Button backgroundNone viewAll className={cx('custom-button')} style={{ marginTop: '6px' }}>
-                           Column and status
-                        </Button>
                      </div>
                   </div>
                </div>

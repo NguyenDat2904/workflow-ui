@@ -26,7 +26,7 @@ function SideBar({ children }) {
          <nav className={cx('sidebar-nav')}>
             <div className={cx('sidebar-info')}>
                <div className={cx('project-info')}>
-                  <Button viewAll noHover>
+                  <Button viewAll noHover style={{ padding: '0' }}>
                      <div className={cx('block')}>
                         <div className={cx('img')}>
                            <span>

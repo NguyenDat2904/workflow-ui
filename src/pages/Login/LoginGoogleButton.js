@@ -7,7 +7,6 @@ import { useGoogleLogin } from '@react-oauth/google';
 import 'react-toastify/dist/ReactToastify.css';
 import style from './Login.module.scss';
 import classNames from 'classnames/bind';
-import { UserContext } from '~/contexts/user/userContext';
 import { AuthContext } from '~/contexts/auth/authContext';
 import AuthService from '~/services/auth/authServices';
 
@@ -17,7 +16,6 @@ const cx = classNames.bind(style);
 
 export default function LoginGoogleButton() {
    const navigate = useNavigate();
-   const { setDataUserProfile } = useContext(UserContext);
    const { setIsAuthenticated } = useContext(AuthContext);
 
    const googleLogin = useGoogleLogin({
@@ -47,7 +45,18 @@ export default function LoginGoogleButton() {
    return (
       <Button buttonStyle={'light'} className={cx('login-google-button')} onClick={() => googleLogin()}>
          <GoogleIcon />
-         <span>Continue with Google</span>
+         <span
+            style={{
+               marginLeft: '8px',
+               fontSize: '16px',
+               fontWeight: '500',
+               color: 'rgb(66, 82, 110)',
+               fontFamily:
+                  '"Charlie Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif',
+            }}
+         >
+            Continue with Google
+         </span>
       </Button>
    );
 }

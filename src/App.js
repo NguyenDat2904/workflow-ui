@@ -15,8 +15,6 @@ function App() {
          setTitle('Project - WorkFlow');
       } else if (window.location.pathname === '/your-work') {
          setTitle('Your work - WorkFlow');
-      } else if (window.location.pathname === '/project/:id/board') {
-         setTitle('Agile Board - WorkFlow');
       } else {
          setTitle('WorkFlow');
       }

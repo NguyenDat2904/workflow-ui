@@ -388,19 +388,21 @@ function RowIssue({
                   maxWidth: '240px',
                }}
             />
-            <div className={cx('menu-issue')}>
-               <Dropdown
-                  className={cx('custom-dropdown')}
-                  actions={[
-                     data.issueType === 'SUB_TASK'
-                        ? { label: 'Change parent', method: () => setIsChangeParent(true) }
-                        : undefined,
-                     { label: 'Delete issue', method: () => setIsDropDownMenu(true) },
-                  ]}
-               >
-                  <Button backgroundNone leftIcon={<MenuIcon />} style={{ height: '32px' }}></Button>
-               </Dropdown>
-            </div>
+            {roleUser?.role !== 'member' && (
+               <div className={cx('menu-issue')}>
+                  <Dropdown
+                     className={cx('custom-dropdown')}
+                     actions={[
+                        data.issueType === 'SUB_TASK'
+                           ? { label: 'Change parent', method: () => setIsChangeParent(true) }
+                           : undefined,
+                        { label: 'Delete issue', method: () => setIsDropDownMenu(true) },
+                     ]}
+                  >
+                     <Button backgroundNone leftIcon={<MenuIcon />} style={{ height: '32px' }}></Button>
+                  </Dropdown>
+               </div>
+            )}
             {isChangeParent && (
                <ModalAcceptChangeParent
                   isOpen={isChangeParent}

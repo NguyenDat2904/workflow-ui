@@ -48,10 +48,9 @@
 
 .img {
    border: 2px solid var(--ds-border-input, #dfe1e6);
-
    background-color: #fff;
    width: 50%;
-   padding-left: 15px;
+   padding-left: 6px;
    height: 40px;
    display: flex;
    align-items: center;
@@ -63,8 +62,13 @@
       gap: 10px;
       .imgProject {
          border-radius: 3px;
-         width: 28px;
-         height: 28px;
+         width: 16px;
+         height: 16px;
+      }
+      .imgUser {
+         border-radius: 50%;
+         width: 24px;
+         height: 24px;
       }
       .bgrImg {
          border-radius: 50%;

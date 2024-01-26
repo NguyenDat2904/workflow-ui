@@ -4,8 +4,9 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(style);
 
 function NotificationCard({ data, index, onClickButton }) {
-   const { link, content, title, read, createdAt, reporter = '', _id } = data;
-   const { imgCover = '' } = reporter;
+   const { link, content, title, read, createdAt, _id } = data;
+
+   console.log(data);
 
    const compareDateTime = (targetDateTime) => {
       const targetDate = new Date(targetDateTime);
@@ -48,8 +49,8 @@ function NotificationCard({ data, index, onClickButton }) {
                               <span className="css-11dcpko">
                                  <img
                                     src={
-                                       imgCover
-                                          ? imgCover
+                                       data?.userID?.img
+                                          ? data?.userID?.img
                                           : 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
                                     }
                                     alt="reporter"

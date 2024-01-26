@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import ControllerForm from '~/component/ControllerForm/ControllerForm';
 import Input from '~/component/Input/Input';
 import WorkService from '~/services/work/workServices';
@@ -11,6 +11,9 @@ import SprintService from '~/services/sprint/SprintService';
 import TinyText from '~/component/TinyText/TinyText';
 import IssueService from '~/services/issue/issueService';
 import { useParams } from 'react-router-dom';
+import { UserContext } from '~/contexts/user/userContext';
+import { LoadingIcon } from '~/component/icon/icon';
+import Button from '~/component/Buttton/Button';
 
 const cx = classNames.bind(style);
 const userService = new UserService();
@@ -20,6 +23,7 @@ const issueService = new IssueService();
 
 function ModalCreateIssue({ onClose, isOpen }) {
    const { id } = useParams();
+   const { dataUserProfile } = useContext(UserContext);
 
    const popupRef = useRef(null);
    const [loading, setLoading] = useState(true);
@@ -33,13 +37,13 @@ function ModalCreateIssue({ onClose, isOpen }) {
    }, []);
 
    const [project, setProject] = useState({
-      img: '',
       label: '',
       codeProject: id || '',
    });
    const [issueTypeData, setIssuesTypeDate] = useState({
-      label: 'USER_STORY',
+      label: 'Story',
       img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium',
+      key: 'USER_STORY',
    });
    const [assigneeData, setAssigneeData] = useState({
       img: 'https://avatar-management.services.atlassian.com/default/48',
@@ -51,7 +55,7 @@ function ModalCreateIssue({ onClose, isOpen }) {
    });
    const [reporterData, setReporterData] = useState({});
    const [sprintData, setSprintData] = useState({
-      imgNone: 'none',
+      img: '',
       label: 'Select sprint',
       id: '',
    });
@@ -89,20 +93,19 @@ function ModalCreateIssue({ onClose, isOpen }) {
    });
    const dataTypeIssues = [
       {
-         label: 'USER_STORY',
+         label: 'Story',
          img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium',
+         key: 'USER_STORY',
       },
       {
-         label: 'TASK',
+         label: 'Task',
          img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium',
+         key: 'TASK',
       },
       {
-         label: 'BUG',
+         label: 'Bug',
          img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium',
-      },
-      {
-         label: 'EPIC',
-         img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10307?size=medium',
+         key: 'BUG',
       },
    ];
    const dataPriority = [
@@ -133,8 +136,11 @@ function ModalCreateIssue({ onClose, isOpen }) {
          getProjects(projects.data.data);
       }
    };
+   const filterListProjectAdmin = projects?.filter((project) => {
+      return project?.infoUserAdmin?._id === dataUserProfile?._id;
+   });
 
-   const listProject = projects?.map((project) => {
+   const listProject = filterListProjectAdmin?.map((project) => {
       return {
          label: `${project.nameProject} - (${project.codeProject})` || '',
          img: project.imgProject,
@@ -173,7 +179,6 @@ function ModalCreateIssue({ onClose, isOpen }) {
       if (listSprint.status === 200) {
          const infoSprint = listSprint?.data?.sprint.map((product) => {
             return {
-               imgNone: 'none',
                label: product?.name,
                id: product?._id,
             };
@@ -184,7 +189,7 @@ function ModalCreateIssue({ onClose, isOpen }) {
       }
    };
    useEffect(() => {
-      listMemberProject();
+      if (project?.codeProject) listMemberProject();
    }, [project]);
 
    useEffect(() => {
@@ -229,7 +234,7 @@ function ModalCreateIssue({ onClose, isOpen }) {
             form.setValue('codeProject', '', { shouldDirty: true });
          }
          if (indexSelect.issueType) {
-            form.setValue('issueType', `${issueTypeData.label}`, { shouldDirty: true });
+            form.setValue('issueType', `${issueTypeData.key}`, { shouldDirty: true });
          } else {
             form.setValue('issueType', '', { shouldDirty: true });
          }
@@ -390,6 +395,7 @@ function ModalCreateIssue({ onClose, isOpen }) {
    };
    const handleSubmit = async (dataForm) => {
       try {
+         if (!loading) return;
          setLoading(false);
          if (form.getValues('summary') === '') {
             form.setError('summary', {
@@ -408,7 +414,6 @@ function ModalCreateIssue({ onClose, isOpen }) {
             form.getValues('codeProject') !== '' ||
             form.getValues('issueType') !== ''
          ) {
-            console.log(dataForm);
             const createIssue = await issueService.createIssue(form.getValues('codeProject'), dataForm);
             if (createIssue.status === 200) {
                onClose();
@@ -489,7 +494,7 @@ function ModalCreateIssue({ onClose, isOpen }) {
                                  data={flterDataTypeIssues}
                                  setValue={setIssuesTypeDate}
                                  width="50%"
-                                 widthImg="24px"
+                                 widthImg="16px"
                               />
                            </div>
                         </div>
@@ -521,6 +526,7 @@ function ModalCreateIssue({ onClose, isOpen }) {
                               form={form}
                               name="assignee"
                               onClick={() => handleBooleanSelect('assignee')}
+                              imgUser
                            >
                               <Input
                                  onBlur={() => handleBooleanSelect('assignee')}
@@ -539,6 +545,7 @@ function ModalCreateIssue({ onClose, isOpen }) {
                                  width="50%"
                                  widthImg="30px"
                                  data={filterDataMemberData}
+                                 percent50
                               />
                            </div>
                         </div>
@@ -551,6 +558,7 @@ function ModalCreateIssue({ onClose, isOpen }) {
                               form={form}
                               name="reporter"
                               onClick={() => handleBooleanSelect('reporter')}
+                              imgUser
                            >
                               <Input
                                  onBlur={() => handleBooleanSelect('reporter')}
@@ -567,6 +575,7 @@ function ModalCreateIssue({ onClose, isOpen }) {
                                  width="50%"
                                  widthImg="30px"
                                  data={filterDataMemberData}
+                                 percent50
                               />
                            </div>
                         </div>
@@ -593,7 +602,7 @@ function ModalCreateIssue({ onClose, isOpen }) {
                                  onClose={() => handleBooleanSelect('priority')}
                                  setValue={setPriorityData}
                                  width="50%"
-                                 widthImg="30px"
+                                 widthImg="16px"
                                  data={filterDataPriority}
                               />
                            </div>
@@ -649,16 +658,12 @@ function ModalCreateIssue({ onClose, isOpen }) {
                   </div>
                </div>
                <div className={cx('footerModalCreate')}>
-                  <button className={cx('buttonCancel')} type="button" onClick={onClose}>
+                  <Button type="button" onClick={onClose} style={{ height: '32px' }}>
                      Cancel
-                  </button>
-                  <button
-                     className={cx('buttonSubmit')}
-                     style={{ cursor: loading ? 'pointer' : 'not-allowed' }}
-                     type={loading ? 'submit' : 'button'}
-                  >
-                     {loading ? 'Create' : 'Creating...'}
-                  </button>
+                  </Button>
+                  <Button className={cx('buttonSubmit')} style={{ minWidth: '71px', height: '32px' }} type="submit">
+                     {loading ? 'Create' : <LoadingIcon />}
+                  </Button>
                </div>
             </form>
          </div>

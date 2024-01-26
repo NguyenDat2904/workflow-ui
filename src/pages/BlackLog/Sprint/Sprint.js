@@ -206,22 +206,69 @@ function Sprint({
                         {data.status === 'RUNNING' && (
                            <>
                               <Button
-                                 style={{ cursor: 'pointer', height: '32px' }}
-                                 onClick={() => setIsToggleComplete(true)}
+                                 data-tooltip-id="complete-sprint-tooltip"
+                                 data-tooltip-content="You are not an admin or a manager"
+                                 data-tooltip-place="left"
+                                 disable={roleUser?.role === 'member'}
+                                 style={{
+                                    cursor: roleUser?.role !== 'member' ? 'pointer' : 'not-allowed',
+                                    height: '32px',
+                                    background: 'var(--ds-background-neutral, rgba(9, 30, 66, 0.04))',
+                                 }}
+                                 onClick={() => {
+                                    if (roleUser?.role !== 'member') setIsToggleComplete(true);
+                                 }}
                               >
                                  Complete sprint
                               </Button>
+                              {roleUser?.role === 'member' && (
+                                 <Tooltip
+                                    id="complete-sprint-tooltip"
+                                    style={{
+                                       backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                                       color: 'var(--ds-text-inverse, #FFFFFF)',
+                                       padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                                       fontSize: 'var(--ds-font-size-075, 12px)',
+                                       maxWidth: '240px',
+                                       textAlign: 'center',
+                                    }}
+                                 />
+                              )}
                            </>
                         )}
                         {data.status === 'PENDING' && issues?.length !== 0 && (
                            <>
                               <Button
-                                 style={{ cursor: 'pointer', height: '32px' }}
+                                 data-tooltip-id="start-sprint"
+                                 data-tooltip-content="You are not an admin or a manager"
+                                 data-tooltip-place="left"
+                                 style={{
+                                    cursor: roleUser?.role !== 'member' ? 'pointer' : 'not-allowed',
+                                    height: '32px',
+                                    background:
+                                       roleUser?.role === 'member' &&
+                                       'var(--ds-background-neutral, rgba(12, 102, 228, 0.5))',
+                                 }}
                                  blue
-                                 onClick={() => setIsToggleStartSprint(true)}
+                                 onClick={() => {
+                                    if (roleUser?.role !== 'member') setIsToggleStartSprint(true);
+                                 }}
                               >
                                  Start sprint
                               </Button>
+                              {roleUser?.role === 'member' && (
+                                 <Tooltip
+                                    id="start-sprint"
+                                    style={{
+                                       backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                                       color: 'var(--ds-text-inverse, #FFFFFF)',
+                                       padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                                       fontSize: 'var(--ds-font-size-075, 12px)',
+                                       maxWidth: '240px',
+                                       textAlign: 'center',
+                                    }}
+                                 />
+                              )}
                               {isToggleStartSprint && (
                                  <ModalCreateSprint
                                     btn_acpt="Start"

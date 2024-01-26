@@ -76,6 +76,7 @@ function DetailIssue() {
    });
    // 2. UseEffect
    useEffect(() => {
+      getListComment();
       pendingData();
    }, [param]);
 
@@ -83,7 +84,6 @@ function DetailIssue() {
       await getIssueDetail();
       await getListSprint();
       await getMembers();
-      await getListComment();
       setIsLoading(false);
    };
    useEffect(() => {

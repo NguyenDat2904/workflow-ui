@@ -17,6 +17,7 @@ function ControllerForm({
    className,
    labelLarge,
    widthImg,
+   imgUser,
 }) {
    return (
       <Controller
@@ -37,39 +38,36 @@ function ControllerForm({
                            </label>
                         )}
                         <div className={cx('field-edit')}>
-                           
-                              {data ? (
-                                 <div onClick={onClick} className={cx('img')} style={{ zIndex: indexSelect ? 10 : 0 }}>
-                                    {' '}
-                                    <div className={cx('imgProjectAndName')}>
-                                       {data?.img ? (
-                                          <img src={data?.img} alt="" className={cx('imgProject')} />
-                                       ) : data?.backgroundProfile ? (
-                                          <div
-                                             className={cx('bgrImg')}
-                                             style={{ '--_zb0g5d': widthImg, '--bgr': data?.backgroundProfile }}
-                                          >
-                                             <p className={cx('textBgr')}>{data?.textInBackgroundProfile}</p>
-                                          </div>
-                                       ) : data?.imgNone === 'none' ? (
-                                          <img
-                                             src="https://avatar-management.services.atlassian.com/default/48"
-                                             alt=""
-                                             className={cx('imgProject')}
-                                          />
-                                       ) : (
-                                         ""
-                                       )}
-                                       <span className={cx('nameProject')}>{data?.label}</span>
-                                       <span className={cx('iconDown')}>
-                                          <DownIcon />
-                                       </span>
-                                    </div>
+                           {data ? (
+                              <div onClick={onClick} className={cx('img')} style={{ zIndex: indexSelect ? 10 : 0 }}>
+                                 <div className={cx('imgProjectAndName')}>
+                                    {data?.img ? (
+                                       <img src={data?.img} alt="" className={cx('imgProject', imgUser && 'imgUser')} />
+                                    ) : data?.backgroundProfile ? (
+                                       <div
+                                          className={cx('bgrImg')}
+                                          style={{ '--_zb0g5d': widthImg, '--bgr': data?.backgroundProfile }}
+                                       >
+                                          <p className={cx('textBgr')}>{data?.textInBackgroundProfile}</p>
+                                       </div>
+                                    ) : data?.imgNone === 'none' ? (
+                                       <img
+                                          src="https://avatar-management.services.atlassian.com/default/48"
+                                          alt=""
+                                          className={cx('imgProject', imgUser && 'imgUser')}
+                                       />
+                                    ) : (
+                                       ''
+                                    )}
+                                    <span className={cx('nameProject')}>{data?.label}</span>
+                                    <span className={cx('iconDown')}>
+                                       <DownIcon />
+                                    </span>
                                  </div>
-                              ) : (
-                                 ''
-                              )}
-                          
+                              </div>
+                           ) : (
+                              ''
+                           )}
 
                            {cloneElement(children, { ...field, ...children.props })}
                            {fieldState?.error?.message && (

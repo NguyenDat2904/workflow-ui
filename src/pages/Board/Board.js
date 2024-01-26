@@ -18,6 +18,7 @@ const cx = classNames.bind(style);
 export default function Board() {
    const { detailProject, members, setMembers } = useContext(ProjectContext);
    const { dataUserProfile } = useContext(UserContext);
+
    const BoardWorkService = new WorkService();
    const sprintService = new SprintService();
 
@@ -76,6 +77,7 @@ export default function Board() {
          if (listMembers.status === 200) setMembers(listMembers.data);
       }
    }
+
    useEffect(() => {
       getIssuesFilter();
    }, [detailProject, checkedTypes, selectedMembers]);

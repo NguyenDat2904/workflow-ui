@@ -70,6 +70,12 @@
    min-width: 0px;
    font-size: 14px;
    line-height: 16px;
+   a {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+   }
    &:hover {
       text-decoration: underline;
    }

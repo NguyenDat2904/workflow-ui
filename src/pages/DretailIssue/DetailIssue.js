@@ -614,7 +614,11 @@ function DetailIssue() {
                <div className={cx('flex-start', 'issue-children')}>
                   <div className={cx('img-comment')}>
                      <img
-                        src="https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1"
+                        src={
+                           dataUserProfile?.img
+                              ? dataUserProfile?.img
+                              : 'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar-5.png?ssl=1'
+                        }
                         alt=""
                      />
                   </div>

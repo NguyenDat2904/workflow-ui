@@ -166,10 +166,28 @@ function RowIssue({
                   {data?.name}
                </Link>
             </div>
+
             <div className={cx('name-work')}>
                <Link to={`/projects/${detailProject?.codeProject}/issues/${data?.name}`} target="_blank">
-                  {data?.summary}
+                  <span
+                     data-tooltip-id="name-work-tooltip"
+                     data-tooltip-content={data?.summary}
+                     data-tooltip-place="bottom"
+                  >
+                     {data?.summary}
+                  </span>
                </Link>
+               <Tooltip
+                  id="name-work-tooltip"
+                  style={{
+                     backgroundColor: 'var(--ds-background-neutral-bold, #44546f)',
+                     color: 'var(--ds-text-inverse, #FFFFFF)',
+                     padding: 'var(--ds-space-025, 2px) var(--ds-space-075, 6px)',
+                     fontSize: 'var(--ds-font-size-075, 12px)',
+                     maxWidth: '300px',
+                     textAlign: 'center',
+                  }}
+               />
             </div>
             <div className={cx('control-issue')}>
                {!children && <div className={cx('children-issue')}></div>}

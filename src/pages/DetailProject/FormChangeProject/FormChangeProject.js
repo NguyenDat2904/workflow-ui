@@ -56,7 +56,7 @@ function FormChangeProject({ id, roleUser }) {
       if (roleUser?.role === 'member') return;
       if (isLoading) return;
       setIsLoading(true);
-      const dataForm = { name: data.name, userID: parseuser?._id };
+      const dataForm = { nameProject: data.name, userID: parseuser?._id };
       setLoadingIconSummit(true);
       const changeProject = await workService.changeProject(detailProject?.codeProject, dataForm);
       if (changeProject.status === 200) getDetailProject();

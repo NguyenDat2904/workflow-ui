@@ -13,3 +13,37 @@
    background: fixed;
    cursor: pointer;
 }
+.profile-security {
+   width: 65%;
+   margin: 0 auto;
+}
+.title-security {
+   margin: var(--ds-space-300, 24px) 0 var(--ds-space-200, 16px) 0;
+   font-size: 24px;
+   font-style: inherit;
+   color: rgb(23, 43, 77);
+   font-weight: var(--ds-font-weight-medium, 500);
+   letter-spacing: -0.24px;
+   line-height: var(--ds-font-lineHeight-500, 32px);
+   outline: none;
+}
+.change-password {
+   font-size: 16px;
+   font-style: inherit;
+   line-height: 1.25;
+   color: rgb(23, 43, 77);
+   font-weight: var(--ds-font-weight-semibold, 600);
+   letter-spacing: -0.096px;
+   margin-top: 24px;
+}
+.desc-change-password {
+   margin: 12px 0px;
+   font-size: 14px;
+   font-weight: 400;
+}
+.buttonSubmit {
+   margin-top: var(--ds-space-300, 24px);
+}
+.security-form {
+   max-width: 400px;
+}

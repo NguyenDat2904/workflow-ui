@@ -42,10 +42,10 @@ const ProfileAndPhone = () => {
             });
          }
          if (formData.phone !== '' && regexPhone.test(formData.phone)) {
-          const result=  await userServices.updateUser('phone', formData.phone);
-          if(result.status===200){
-            callApi()
-          }
+            const result = await userServices.updateUser('phone', formData.phone);
+            if (result.status === 200) {
+               callApi();
+            }
          }
       } catch (error) {
          console.log('can not update new phone');
@@ -57,22 +57,22 @@ const ProfileAndPhone = () => {
       <>
          <HeaderSetting />
          <form className={cx('profileAndPhone')} onSubmit={form.handleSubmit(handleSubmit)}>
-            <h3 className={cx('titlePhone')}>Số điện thoại</h3>
-            <p className={cx('currentPhoneNumber')}>Số điện thoại hiện tại</p>
+            <h3 className={cx('titlePhone')}>Phone number</h3>
+            <p className={cx('currentPhoneNumber')}>Current phone number</p>
             <p className={cx('currentPhone')}>
-               Số điện thoại hiện tại của bạn là <span className={cx('phoneNumber')}>{dataUser.phone}</span>
+               Your current phone number is <span className={cx('phoneNumber')}>{dataUser.phone}</span>
             </p>
-            <ControllerForm form={form} name="phone" label="Số điện thoại mới">
+            <ControllerForm form={form} name="phone" label="New phone number">
                <Input
-                  placeholder="Nhập số điện thoại mới"
+                  placeholder="Enter new phone number"
                   type="text"
                   search="search"
-                  style={{ width: '100%' }}
+                  style={{ minWidth: '400px' }}
                   className={cx(form.formState.dirtyFields?.phone ? '' : 'summaryInput')}
                />
             </ControllerForm>
             <Button className={cx('buttonSubmit')} blue type={loading ? 'submit' : 'button'}>
-               {loading ? 'Lưu thay đổi' : 'Đang lưu...'}
+               {loading ? 'Save change' : 'Đang lưu...'}
             </Button>
          </form>
       </>

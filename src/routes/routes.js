@@ -6,7 +6,6 @@ import Forgot from '~/pages/Forgot/Forgot';
 import Login from '~/pages/Login/Login';
 import Register from '~/pages/Register/Register';
 import Profile from '~/pages/Profile/profile';
-import TestComponent from '~/component/TestComponent';
 import Verify from '~/pages/Verify/Verify';
 import ProfileAndVisibility from '~/pages/ProfileAndVisibility/ProfileAndVisibility';
 import Notification from '~/pages/Notication/Notication';
@@ -54,7 +53,6 @@ const publicRoutes = [
    { path: '/login', component: Login, layout: null },
    { path: '/register', component: Register, layout: null },
    { path: '/register/verify', component: Notification, layout: null },
-   { path: '/test', component: TestComponent, layout: null },
 ];
 
 export { privateRoutes, publicRoutes };

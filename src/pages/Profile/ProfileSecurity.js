@@ -1,34 +1,38 @@
 import { useState } from 'react';
-import { Article } from '~/component/articles/Articles';
-import { Form, Input, Button } from '~/component/Inputs/Inputs';
-import './profileSecurity.scss';
 import HeaderSetting from '~/layout/HeaderSetting/HeaderSetting';
 import { toast } from 'react-toastify';
 import UserService from '~/services/user/userServices';
-import { EyeIconPassword, EyeIconText } from '~/component/icon/icon';
+import { EyeIconPassword, EyeIconText, LoadingIcon } from '~/component/icon/icon';
 import style from './profile.module.scss';
 import classNames from 'classnames/bind';
+import Input from '~/component/Input/Input';
+import Button from '~/component/Buttton/Button';
+import ControllerForm from '~/component/ControllerForm/ControllerForm';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import schema from './ChangePasswordValidation';
 const cx = classNames.bind(style);
 
 const userService = new UserService();
 
 export default function ProfileSecurity() {
-   const [currentPassword, setCurrentPassword] = useState('');
-   const [password, setPassword] = useState('');
-   const [blockClicks, setBlockClicks] = useState(false);
+   const form = useForm({
+      mode: 'all',
+      defaultValues: {
+         currentPassword: '',
+         password: '',
+      },
+      resolver: yupResolver(schema),
+   });
+
+   const [loading, setLoading] = useState(false);
    const [showPass, setShowPass] = useState(false);
 
-   const handleChangePassword = async (e) => {
-      e.preventDefault();
-      setBlockClicks(true);
-      if (password.length < 8) {
-         toast.error('Password is too short.');
-         setBlockClicks(false);
-         return;
-      }
-
-      const response = await userService.changePassword(currentPassword, password);
-      setBlockClicks(false);
+   const handleChangePassword = async (data) => {
+      if (loading) return;
+      setLoading(true);
+      const response = await userService.changePassword(data?.currentPassword, data?.password);
+      setLoading(false);
       if (response.status === 200) {
          toast.success('Password changed successfully.');
       } else {
@@ -47,44 +51,57 @@ export default function ProfileSecurity() {
    return (
       <>
          <HeaderSetting />
-         <Article className="profile-security">
-            <h2>Security</h2>
-            <h4>Change your password</h4>
-            <Form className="security-form" onSubmit={(e) => handleChangePassword(e)}>
-               <div style={{ position: 'relative' }}>
+         <div className={cx('profile-security')}>
+            <h2 className={cx('title-security')}>Security</h2>
+            <h4 className={cx('change-password')}>Change your password</h4>
+            <p className={cx('desc-change-password')}>
+               When you change your password, we keep you logged in to this device but may log you out from your other
+               devices.
+            </p>
+            <form className={cx('security-form')} onSubmit={form.handleSubmit(handleChangePassword)}>
+               <ControllerForm
+                  form={form}
+                  name="currentPassword"
+                  required
+                  id="currentPassword"
+                  label="Current password"
+               >
+                  <div style={{ position: 'relative', marginBottom: '8px' }}>
+                     <Input
+                        id="currentPassword"
+                        placeholder="Enter current password"
+                        type={showPass ? 'text' : 'password'}
+                        search={'search'}
+                        style={{ width: '100%' }}
+                     />
+                     <button type="button" className={cx('button')} onClick={handleShowPassword}>
+                        {!showPass ? <EyeIconText /> : <EyeIconPassword />}
+                     </button>
+                  </div>
+               </ControllerForm>
+               <ControllerForm form={form} name="password" id="password" label="New password" required>
                   <Input
-                     id="currentPassword"
-                     label="Current password"
-                     onChange={(e) => setCurrentPassword(e.target.value)}
-                     placeholder="Current password"
-                     type={showPass ? 'text' : 'password'}
+                     id="password"
+                     label="New password"
+                     placeholder="Enter new password"
+                     type="password"
+                     search={'search'}
+                     style={{ width: '100%' }}
                   />
-                  <button type="button" className={cx('button')} onClick={handleShowPassword}>
-                     {!showPass ? <EyeIconText /> : <EyeIconPassword />}
-                  </button>
-               </div>
-               <Input
-                  id="password"
-                  label="New password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="New password"
-                  type={showPass ? 'text' : 'password'}
-               />
+               </ControllerForm>
                <Button
-                  className="buttonSubmit"
-                  buttonStyle={'filled'}
-                  type={blockClicks ? 'button' : 'submit'}
+                  blue
                   style={{
-                     cursor: blockClicks ? 'no-drop' : 'pointer',
+                     height: '32px',
+                     marginTop: '24px',
                      fontSize: '14px',
-                     fontWeight: '600',
-                     padding: '10px',
+                     minWidth: '110px',
                   }}
                >
-                  {blockClicks ? 'Loading...' : 'Change Password'}
+                  {loading ? <LoadingIcon /> : 'Save changes'}
                </Button>
-            </Form>
-         </Article>
+            </form>
+         </div>
       </>
    );
 }

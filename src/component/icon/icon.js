@@ -575,3 +575,4 @@ export const StoryIcon = () => (
       </g>
    </svg>
 );
+

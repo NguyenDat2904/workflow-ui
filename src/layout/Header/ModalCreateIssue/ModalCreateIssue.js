@@ -42,7 +42,7 @@ function ModalCreateIssue({ onClose, isOpen }) {
    });
    const [issueTypeData, setIssuesTypeDate] = useState({
       label: 'Story',
-      img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium',
+      img: '/imgs/types/story.svg',
       key: 'USER_STORY',
    });
    const [assigneeData, setAssigneeData] = useState({

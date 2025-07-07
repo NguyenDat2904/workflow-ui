@@ -366,23 +366,23 @@ function DetailIssue() {
 
    const imgIssue =
       detailIssue?.issueType === 'USER_STORY'
-         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium'
+         ? '/imgs/types/story.svg'
          : detailIssue?.issueType === 'BUG'
-         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium'
+         ? '/imgs/types/bug.svg'
          : detailIssue?.issueType === 'TASK'
-         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium'
+         ? '/imgs/types/task.svg'
          : detailIssue?.issueType === 'SUB_TASK'
-         ? 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium'
+         ? '/imgs/types/subtask.svg'
          : '';
    const imgIssueParent =
       detailIssueParent?.issueType === 'USER_STORY'
-         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium'
+         ? '/imgs/types/story.svg'
          : detailIssueParent?.issueType === 'BUG'
-         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium'
+         ? '/imgs/types/bug.svg'
          : detailIssueParent?.issueType === 'TASK'
-         ? 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium'
+         ? '/imgs/types/task.svg'
          : detailIssueParent?.issueType === 'SUB_TASK'
-         ? 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium'
+         ? '/imgs/types/subtask.svg'
          : '';
    const renderComment = comments?.map((comment) => {
       const currentTime = moment();
@@ -871,14 +871,14 @@ function DetailIssue() {
                                           <img
                                              src={
                                                 detailIssue?.priority === 'Highest'
-                                                   ? 'https://tcx19.atlassian.net/images/icons/priorities/highest.svg'
+                                                   ? '/imgs/priorities/highest.svg'
                                                    : detailIssue?.priority === 'High'
-                                                   ? 'https://tcx19.atlassian.net/images/icons/priorities/high.svg'
+                                                   ? '/imgs/priorities/high.svg'
                                                    : detailIssue?.priority === 'Low'
-                                                   ? 'https://tcx19.atlassian.net/images/icons/priorities/low.svg'
+                                                   ? '/imgs/priorities/low.svg'
                                                    : detailIssue?.priority === 'Lowest'
-                                                   ? 'https://tcx19.atlassian.net/images/icons/priorities/lowest.svg'
-                                                   : 'https://tcx19.atlassian.net/images/icons/priorities/medium.svg'
+                                                   ? '/imgs/priorities/lowest.svg'
+                                                   : '/imgs/priorities/medium.svg'
                                              }
                                              alt=""
                                              style={{ width: '16px', height: '16px' }}
@@ -898,31 +898,31 @@ function DetailIssue() {
                                              detailIssue?.priority !== 'Highest'
                                                 ? {
                                                      label: 'Highest',
-                                                     img: 'https://tcx19.atlassian.net/images/icons/priorities/highest.svg',
+                                                     img: '/imgs/priorities/highest.svg',
                                                   }
                                                 : null,
                                              detailIssue?.priority !== 'High'
                                                 ? {
                                                      label: 'High',
-                                                     img: 'https://tcx19.atlassian.net/images/icons/priorities/high.svg',
+                                                     img: '/imgs/priorities/high.svg',
                                                   }
                                                 : null,
                                              detailIssue?.priority !== 'Low'
                                                 ? {
                                                      label: 'Low',
-                                                     img: 'https://tcx19.atlassian.net/images/icons/priorities/low.svg',
+                                                     img: '/imgs/priorities/low.svg',
                                                   }
                                                 : null,
                                              detailIssue?.priority !== 'Lowest'
                                                 ? {
                                                      label: 'Lowest',
-                                                     img: 'https://tcx19.atlassian.net/images/icons/priorities/lowest.svg',
+                                                     img: '/imgs/priorities/lowest.svg',
                                                   }
                                                 : null,
                                              detailIssue?.priority !== 'Medium'
                                                 ? {
                                                      label: 'Medium',
-                                                     img: 'https://tcx19.atlassian.net/images/icons/priorities/medium.svg',
+                                                     img: '/imgs/priorities/medium.svg',
                                                   }
                                                 : null,
                                           ].filter((item) => item !== null)}

@@ -20,7 +20,7 @@ function CreateIssue({ setIssues, idPrint, idParent, paramsFunc = () => {}, chil
    const [valueTask, setValueTask] = useState({
       label: 'Story',
       key: 'USER_STORY',
-      img: 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium',
+      img: '/imgs/types/story.svg',
    });
 
    const form = useForm({
@@ -77,13 +77,7 @@ function CreateIssue({ setIssues, idPrint, idParent, paramsFunc = () => {}, chil
                }}
                type="button"
             >
-               <img
-                  src={
-                     valueTask?.img ||
-                     'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium'
-                  }
-                  alt=""
-               />
+               <img src={valueTask?.img || '/imgs/types/story.svg'} alt="" />
             </Button>
          )}
          {isToggleIssue && !children && (
@@ -97,21 +91,21 @@ function CreateIssue({ setIssues, idPrint, idParent, paramsFunc = () => {}, chil
                      ? {
                           label: 'Story',
                           key: 'USER_STORY',
-                          img: 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium',
+                          img: '/imgs/types/story.svg',
                        }
                      : null,
                   valueTask?.label !== 'Bug'
                      ? {
                           label: 'Bug',
                           key: 'BUG',
-                          img: 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium',
+                          img: '/imgs/types/bug.svg',
                        }
                      : null,
                   valueTask?.label !== 'Task'
                      ? {
                           label: 'Task',
                           key: 'TASK',
-                          img: 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium',
+                          img: '/imgs/types/task.svg',
                        }
                      : null,
                ].filter((item) => item !== null)}

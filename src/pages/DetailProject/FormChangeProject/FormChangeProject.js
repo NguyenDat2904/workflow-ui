@@ -80,7 +80,7 @@ function FormChangeProject({ id, roleUser }) {
                   {loadingDetailsProject ? (
                      <Skeleton width="128px" height="128px" />
                   ) : (
-                     <img src={detailProject?.imgProject} alt="icon" />
+                     <img src={`/imgs/projects/${detailProject?.imgProject}`} alt="icon" />
                   )}
                </div>
                <div

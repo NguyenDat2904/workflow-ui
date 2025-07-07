@@ -88,7 +88,7 @@ function RowProject({ project, handleMoveToTrash, trash, handleDeletePer, handle
                   <div className={cx('block')}>
                      <div className={cx('img')}>
                         <span style={{ borderRadius: '3px' }}>
-                           <img src={project.imgProject} alt="" />
+                           <img src={`/imgs/projects/${project.imgProject}`} alt="" />
                         </span>
                      </div>
                      <div className={cx('name')}>

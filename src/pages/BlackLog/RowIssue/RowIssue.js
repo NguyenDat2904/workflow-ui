@@ -288,14 +288,14 @@ function RowIssue({
                         <img
                            src={
                               data?.priority === 'Highest'
-                                 ? 'https://tcx19.atlassian.net/images/icons/priorities/highest.svg'
+                                 ? '/imgs/priorities/highest.svg'
                                  : data?.priority === 'High'
-                                 ? 'https://tcx19.atlassian.net/images/icons/priorities/high.svg'
+                                 ? '/imgs/priorities/high.svg'
                                  : data?.priority === 'Low'
-                                 ? 'https://tcx19.atlassian.net/images/icons/priorities/low.svg'
+                                 ? '/imgs/priorities/low.svg'
                                  : data?.priority === 'Lowest'
-                                 ? 'https://tcx19.atlassian.net/images/icons/priorities/lowest.svg'
-                                 : 'https://tcx19.atlassian.net/images/icons/priorities/medium.svg'
+                                 ? '/imgs/priorities/lowest.svg'
+                                 : '/imgs/priorities/medium.svg'
                            }
                            alt=""
                         />
@@ -314,31 +314,31 @@ function RowIssue({
                                  data?.priority !== 'Highest'
                                     ? {
                                          label: 'Highest',
-                                         img: 'https://tcx19.atlassian.net/images/icons/priorities/highest.svg',
+                                         img: '/imgs/priorities/highest.svg',
                                       }
                                     : null,
                                  data?.priority !== 'High'
                                     ? {
                                          label: 'High',
-                                         img: 'https://tcx19.atlassian.net/images/icons/priorities/high.svg',
+                                         img: '/imgs/priorities/high.svg',
                                       }
                                     : null,
                                  data?.priority !== 'Low'
                                     ? {
                                          label: 'Low',
-                                         img: 'https://tcx19.atlassian.net/images/icons/priorities/low.svg',
+                                         img: '/imgs/priorities/low.svg',
                                       }
                                     : null,
                                  data?.priority !== 'Lowest'
                                     ? {
                                          label: 'Lowest',
-                                         img: 'https://tcx19.atlassian.net/images/icons/priorities/lowest.svg',
+                                         img: '/imgs/priorities/lowest.svg',
                                       }
                                     : null,
                                  data?.priority !== 'Medium'
                                     ? {
                                          label: 'Medium',
-                                         img: 'https://tcx19.atlassian.net/images/icons/priorities/medium.svg',
+                                         img: '/imgs/priorities/medium.svg',
                                       }
                                     : null,
                               ].filter((item) => item !== null)}

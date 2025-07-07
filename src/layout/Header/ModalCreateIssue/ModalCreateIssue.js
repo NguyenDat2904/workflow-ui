@@ -94,39 +94,39 @@ function ModalCreateIssue({ onClose, isOpen }) {
    const dataTypeIssues = [
       {
          label: 'Story',
-         img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium',
+         img: '/imgs/types/story.svg',
          key: 'USER_STORY',
       },
       {
          label: 'Task',
-         img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium',
+         img: '/imgs/types/task.svg',
          key: 'TASK',
       },
       {
          label: 'Bug',
-         img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium',
+         img: '/imgs/types/bug.svg',
          key: 'BUG',
       },
    ];
    const dataPriority = [
       {
-         img: 'https://tcx19.atlassian.net/images/icons/priorities/highest.svg',
+         img: '/imgs/priorities/highest.svg',
          label: 'Highest',
       },
       {
-         img: 'https://tcx19.atlassian.net/images/icons/priorities/high.svg',
+         img: '/imgs/priorities/high.svg',
          label: 'High',
       },
       {
-         img: 'https://tcx19.atlassian.net/images/icons/priorities/medium.svg',
+         img: '/imgs/priorities/medium.svg',
          label: 'Medium',
       },
       {
-         img: 'https://tcx19.atlassian.net/images/icons/priorities/low.svg',
+         img: '/imgs/priorities/low.svg',
          label: 'Low',
       },
       {
-         img: 'https://tcx19.atlassian.net/images/icons/priorities/lowest.svg',
+         img: '/imgs/priorities/lowest.svg',
          label: 'Lowest',
       },
    ];

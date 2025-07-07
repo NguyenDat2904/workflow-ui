@@ -117,7 +117,7 @@ const ViewAllListWork = () => {
                   return (
                      <div key={product?._id} className={cx('viewWorkSelect')}>
                         <div className={cx('nameProject')}>
-                           <img className={cx('imgFile')} src={product?.img} alt="" />
+                           <img className={cx('imgFile')} src={`/imgs/projects/${product?.img}`} alt="" />
                            <div className={cx('nameProjectRight')}>
                               <h6 className={cx('nameP')}>{product.summary}</h6>
                               <p className={cx('nameUser')}>go to maker sample</p>

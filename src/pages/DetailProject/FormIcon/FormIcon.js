@@ -45,7 +45,7 @@ function FormIcon({ isOpen, isClose, id, getDetailProject }) {
                      onChange={() => handleImageClick(index, icon)}
                   />
                   <img
-                     src={icon}
+                     src={`/imgs/projects/${icon}`}
                      alt=""
                      className={cx(watchImageSrc === icon && 'active')}
                      onClick={() => handleImageClick(index, icon)}

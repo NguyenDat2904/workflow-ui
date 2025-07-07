@@ -63,9 +63,7 @@ function ModalAcceptChangeParent({
    const listIssue = issues?.map((issue) => {
       return {
          idIssue: issue?._id,
-         img: issue?.img
-            ? issue?.img
-            : 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium',
+         img: issue?.img ? issue?.img : '/imgs/types/story.svg',
          label: issue?.name,
       };
    });

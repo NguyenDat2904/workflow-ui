@@ -51,7 +51,7 @@ export default function ProjectAccess() {
                         },
                         {
                            name: 'Project settings',
-                           link: `/project/${detailProject?.codeProject}/settings/details`,
+                           link: `/project/${detailProject?.codeProject}/setting/details`,
                         },
                      ]}
                   />

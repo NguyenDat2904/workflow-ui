@@ -517,26 +517,20 @@ export const RightIcon = () => {
    );
 };
 export const imgProject = [
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10418?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10410?size=medium',
-   'https://tcx19.atlassian.net/secure/viewavatar?size=xxxlarge@2x&avatarId=10422&avatarType=project',
-   'https://tcx19.atlassian.net/secure/viewavatar?size=xxxlarge@2x&avatarId=10415&avatarType=project',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10403?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10421?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10402?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10404?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10401?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10408?size=medium',
-   'https://tcx19.atlassian.net/secure/viewavatar?size=xxxlarge@2x&avatarId=10424&avatarType=project',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10400?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10411?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10405?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10412?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10425?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10407?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10413?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10406?size=medium',
-   'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10409?size=medium',
+   'pr1.svg',
+   'pr2.svg',
+   'pr3.svg',
+   'pr4.svg',
+   'pr5.svg',
+   'pr6.svg',
+   'pr7.svg',
+   'pr8.svg',
+   'pr9.svg',
+   'pr10.svg',
+   'pr11.svg',
+   'pr12.svg',
+   'pr13.svg',
+   'pr14.svg',
 ];
 export const WarningIcon = () => {
    return (
@@ -575,4 +569,3 @@ export const StoryIcon = () => (
       </g>
    </svg>
 );
-

@@ -14,7 +14,7 @@ function YourWorkCard({ data }) {
             <div className={cx('link')}>
                <span className={cx('span')}>
                   <img
-                     src={imgProject}
+                     src={`/imgs/projects/${imgProject}`}
                      width="24px"
                      height="24px"
                      className={cx('img-project')}

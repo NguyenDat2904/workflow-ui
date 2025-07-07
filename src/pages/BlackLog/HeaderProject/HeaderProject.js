@@ -202,22 +202,22 @@ function HeaderProject({
                                  {
                                     label: 'Bug',
                                     key: 'BUG',
-                                    img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10303?size=medium',
+                                    img: '/imgs/types/bug.svg',
                                  },
                                  {
                                     label: 'Story',
                                     key: 'USER_STORY',
-                                    img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10315?size=medium',
+                                    img: '/imgs/types/story.svg',
                                  },
                                  {
                                     label: 'Task',
                                     key: 'TASK',
-                                    img: 'https://tcx19.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium',
+                                    img: '/imgs/types/task.svg',
                                  },
                                  {
                                     label: 'Subtask',
                                     key: 'SUB_TASK',
-                                    img: 'https://dathhcc2.atlassian.net/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium',
+                                    img: '/imgs/types/subtask.svg',
                                  },
                               ]}
                            />

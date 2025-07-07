@@ -40,7 +40,7 @@ function ModalProject({ handleToggle, isOpen }) {
             <div className={cx('block')}>
                <div className={cx('img')}>
                   <span>
-                     <img src={project.imgProject} alt="" />
+                     <img src={`/imgs/projects/${project.imgProject}`} alt="" />
                   </span>
                </div>
                <div className={cx('name')}>

@@ -33,8 +33,8 @@ function SideBar({ children }) {
                               <img
                                  src={
                                     detailProject?.imgProject
-                                       ? detailProject?.imgProject
-                                       : 'https://secure.gravatar.com/avatar/96bd7f66bb5903b12b40d3696a36bd7a?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Fdefault-avatar-5.png'
+                                       ? `/imgs/projects/${detailProject?.imgProject}`
+                                       : '/imgs/projects/default.png'
                                  }
                                  alt=""
                               />

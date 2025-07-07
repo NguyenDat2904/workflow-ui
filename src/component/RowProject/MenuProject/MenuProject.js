@@ -43,7 +43,7 @@ function MenuProject({ onClick, codeProject, disable, isOpen, onClose, trash, ha
             ) : (
                <>
                   {disable && (
-                     <Button viewAll backgroundNone to={`/project/${codeProject}/settings/details`}>
+                     <Button viewAll backgroundNone to={`/project/${codeProject}/setting/details`}>
                         Project setting
                      </Button>
                   )}
